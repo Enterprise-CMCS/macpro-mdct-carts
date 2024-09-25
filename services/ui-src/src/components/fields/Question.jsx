@@ -1,16 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
-
+import { useSelector, shallowEqual, useDispatch } from "react-redux";
+// components
 import { Checkbox } from "./Checkbox";
 import { CheckboxFlag } from "./CheckboxFlag";
 import { CMSLegend } from "./CMSLegend";
 import { DateRange } from "./DateRange";
 import { Email } from "./Email";
 import { Fieldset } from "./Fieldset";
-//import { FileUpload } from "./FileUpload";
 import UploadComponent from "../layout/UploadComponent";
-import { Integer } from "./Integer";
+import Integer from "./Integer";
 import { MailingAddress } from "./MailingAddress";
 import { Money } from "./Money";
 import { Objectives } from "./Objectives";
@@ -22,7 +21,7 @@ import { Repeatables } from "./Repeatables";
 import { SkipText } from "./SkipText";
 import Text from "./Text";
 import { TextMedium, TextMultiline, TextSmall } from "./TextOther";
-
+// utils
 import { setAnswerEntry } from "../../actions/initial";
 import { selectIsFormEditable } from "../../store/selectors";
 import { showQuestionByPath } from "../utils/helperFunctions";
@@ -61,10 +60,9 @@ Container.propTypes = {
 const Question = ({
   hideNumber,
   question,
-  readonly,
-  setAnswer,
   prevYear,
   tableTitle,
+  printView,
   ...props
 }) => {
   let Component = Text;
@@ -72,17 +70,35 @@ const Question = ({
     Component = questionTypes.get(question.type);
   }
 
+  const [stateUser, formData, formYear, reportStatus] = useSelector(
+    (state) => [
+      state.stateUser,
+      state.formData,
+      state.global.formYear,
+      state.reportStatus,
+    ],
+    shallowEqual
+  );
+  const dispatch = useDispatch();
+
+  const readonly = !selectIsFormEditable(
+    reportStatus,
+    formData,
+    stateUser,
+    formYear
+  );
+
   const prevYearDisabled = prevYear ? prevYear.disabled : false;
 
   const onChange = ({ target: { name: id, value } }) => {
-    setAnswer(id, value);
+    dispatch(setAnswerEntry(id, value));
   };
 
   const onClick = (e) => {
     if (e.target.checked) {
-      setAnswer(e.target.name, "");
+      dispatch(setAnswerEntry(e.target.name, ""));
     } else if (e.target.checked !== undefined) {
-      setAnswer(e.target.name, e.target.value);
+      dispatch(setAnswerEntry(e.target.name, e.target.value));
     }
   };
 
@@ -117,7 +133,6 @@ const Question = ({
             questionType={question.type}
           />
         )}
-
         <Component
           {...props}
           id={props?.id || question?.id}
@@ -136,6 +151,7 @@ const Question = ({
             false
           }
           prevYear={prevYear}
+          printView={printView}
         />
 
         {/* If there are subquestions, wrap them so they are indented with the
@@ -145,7 +161,12 @@ const Question = ({
         {shouldRenderChildren && (
           <div className="ds-c-choice__checkedChild">
             {question.questions.map((q) => (
-              <Question key={q.id} question={q} setAnswer={setAnswer} />
+              <Question
+                key={q.id}
+                question={q}
+                setAnswer={setAnswerEntry}
+                printView={printView}
+              />
             ))}
           </div>
         )}
@@ -153,24 +174,16 @@ const Question = ({
     </div>
   );
 };
+
 Question.propTypes = {
   hideNumber: PropTypes.bool,
   question: PropTypes.object.isRequired,
-  readonly: PropTypes.bool.isRequired,
-  setAnswer: PropTypes.func.isRequired,
   prevYear: PropTypes.object,
   tableTitle: PropTypes.string,
+  printView: PropTypes.bool,
 };
 Question.defaultProps = {
   hideNumber: false,
 };
 
-const mapState = (state) => ({
-  readonly: !selectIsFormEditable(state),
-});
-
-const mapDispatchToProps = {
-  setAnswer: setAnswerEntry,
-};
-
-export default connect(mapState, mapDispatchToProps)(Question);
+export default Question;

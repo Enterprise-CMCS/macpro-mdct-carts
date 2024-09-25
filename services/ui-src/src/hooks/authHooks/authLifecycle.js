@@ -1,10 +1,10 @@
 import { Auth, Hub } from "aws-amplify";
-import moment from "moment";
+import { add } from "date-fns";
 import { setAuthTimeout } from "../../store/stateUser";
 
 /*
  * After the token expires, refresh tokens will be used in the allotted idle window.
- * If not retireved, they will bre prompted at the specified time to refresh or logout.
+ * If not retrieved, they will be prompted at the specified time to refresh or logout.
  */
 const IDLE_WINDOW = 30 * 60 * 1000; // ms
 const PROMPT_AT = 29 * 60 * 1000; //ms
@@ -22,9 +22,10 @@ class AuthManager {
   updateTimeout = debounce(() => this.setTimer());
 
   constructor(store) {
-    // Force users with stale tokens > then the timeout to log in for a fresh session
-    const exp = localStorage.getItem("mdctcarts_session_exp");
-    if (exp && moment(exp).isBefore()) {
+    // Force users with stale tokens greater than the timeout to log in for a fresh session
+    const expiration = localStorage.getItem("mdctcarts_session_exp");
+    const isExpired = expiration && new Date(expiration).valueOf() < Date.now();
+    if (isExpired) {
       localStorage.removeItem("mdctcarts_session_exp");
       Auth.signOut().then(() => {
         window.location.href = "/";
@@ -63,7 +64,7 @@ class AuthManager {
    * Timer function for idle timeout, keeps track of an idle timer that triggers a forced logout timer if not reset.
    */
   setTimer() {
-    const expiration = moment().add(IDLE_WINDOW, "milliseconds");
+    const expiration = add(Date.now(), { seconds: IDLE_WINDOW / 1000 });
     if (this.timeoutPromptId) {
       clearTimeout(this.timeoutPromptId);
       clearTimeout(this.timeoutForceId);

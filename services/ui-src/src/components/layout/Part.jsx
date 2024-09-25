@@ -1,54 +1,89 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 import { Alert } from "@cmsgov/design-system";
-
-import { selectFragment } from "../../store/formData";
+// components
 import Question from "../fields/Question";
+import Text from "./Text";
+// utils
+import { selectFragment } from "../../store/formData";
 import { selectQuestionsForPart } from "../../store/selectors";
 import { shouldDisplay } from "../../util/shouldDisplay";
-import Text from "./Text";
 
-const Part = ({
-  context_data: contextData,
-  partId,
-  partNumber,
-  questions,
-  show,
-  text,
-  title,
-  nestedSubsectionTitle,
-}) => {
-  let innards = null;
-
+const Part = ({ partId, partNumber, nestedSubsectionTitle, printView }) => {
   const [, section] = partId.split("-");
 
-  if (show) {
-    innards = (
-      <>
-        {text ? <Text data-testid="part-text">{text}</Text> : null}
+  const [
+    formData,
+    currentUserRole,
+    reportStatus,
+    allStatesData,
+    stateUserAbbr,
+    chipEnrollments,
+  ] = useSelector(
+    (state) => [
+      state.formData,
+      state.stateUser.currentUser.role,
+      state.reportStatus,
+      state.allStatesData,
+      state.stateUser.abbr,
+      state.enrollmentCounts.chipEnrollments,
+    ],
+    shallowEqual
+  );
 
-        {questions.map((question) => (
-          <Question
-            key={question.id}
-            question={question}
-            tableTitle={title}
-            data-testid="part-question"
-          />
-        ))}
-      </>
-    );
-  } else {
-    if (contextData) {
-      innards = (
-        <Alert>
-          <div className="ds-c-alert__text" data-testid="part-alert">
-            {contextData.skip_text ? <p>{contextData.skip_text}</p> : null}
-          </div>
-        </Alert>
+  const part = selectFragment(formData, partId);
+  const partContextData = part.context_data;
+
+  const contextData = partContextData;
+  const questions = selectQuestionsForPart(
+    formData,
+    currentUserRole,
+    reportStatus,
+    allStatesData,
+    stateUserAbbr,
+    chipEnrollments,
+    partId
+  );
+  const show = shouldDisplay(
+    currentUserRole,
+    formData,
+    reportStatus,
+    allStatesData,
+    stateUserAbbr,
+    chipEnrollments,
+    partContextData
+  );
+  const text = part ? part.text : null;
+  const title = part ? part.title : null;
+
+  const getPartContent = () => {
+    if (show) {
+      return (
+        <>
+          {text && <Text data-testid="part-text">{text}</Text>}
+          {questions.map((question) => (
+            <Question
+              key={question.id}
+              question={question}
+              tableTitle={title}
+              data-testid="part-question"
+              printView={printView}
+            />
+          ))}
+        </>
       );
+    } else {
+      if (contextData) {
+        return (
+          <Alert>
+            <div className="ds-c-alert__text" data-testid="part-alert">
+              {contextData.skip_text && <p>{contextData.skip_text}</p>}
+            </div>
+          </Alert>
+        );
+      }
     }
-  }
+  };
 
   return (
     <div id={partId} data-testid="part">
@@ -64,38 +99,8 @@ const Part = ({
             {title}
           </h3>
         ))}
-      {innards}
+      {getPartContent()}
     </div>
   );
 };
-Part.propTypes = {
-  context_data: PropTypes.object,
-  partId: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
-  partNumber: PropTypes.number,
-  questions: PropTypes.array.isRequired,
-  show: PropTypes.bool.isRequired,
-  text: PropTypes.string,
-  title: PropTypes.string,
-};
-Part.defaultProps = {
-  context_data: null,
-  text: "",
-  title: "",
-};
-
-const mapStateToProps = (state, { partId }) => {
-  const part = selectFragment(state, partId);
-  const questions = selectQuestionsForPart(state, partId);
-  const contextData = part.context_data;
-
-  return {
-    context_data: part.context_data,
-    questions,
-    show: shouldDisplay(state, contextData),
-    text: part ? part.text : null,
-    title: part ? part.title : null,
-    isFetching: state.global.isFetching,
-  };
-};
-
-export default connect(mapStateToProps)(Part);
+export default Part;
