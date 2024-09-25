@@ -1,28 +1,17 @@
 import React from "react";
-import { useSelector, shallowEqual } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
-
-//components
+import PropTypes from "prop-types";
 import { Button } from "@cmsgov/design-system";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
-//selectors
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { selectSectionsForNav } from "../../store/selectors";
-//types
 import { AppRoles } from "../../types";
 
 const idToUrl = (id) => `/sections/${id.replace(/-/g, "/")}`;
 
-const FormNavigation = () => {
-  const history = useHistory();
-  const location = useLocation();
-
-  const [formData, role] = useSelector(
-    (state) => [state.formData, state.stateUser?.currentUser?.role],
-    shallowEqual
-  );
-
-  const sections = selectSectionsForNav(formData);
+const FormNavigation = (props) => {
+  const { history, location, sections, role } = props;
 
   const items = [];
   sections.forEach((section) => {
@@ -131,4 +120,16 @@ const FormNavigation = () => {
   );
 };
 
-export default FormNavigation;
+FormNavigation.propTypes = {
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  sections: PropTypes.array.isRequired,
+  role: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  sections: selectSectionsForNav(state),
+  role: state.stateUser?.currentUser?.role,
+});
+
+export default connect(mapStateToProps)(withRouter(FormNavigation));

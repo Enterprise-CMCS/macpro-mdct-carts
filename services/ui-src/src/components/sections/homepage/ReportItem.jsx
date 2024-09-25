@@ -1,32 +1,30 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Dialog } from "@cmsgov/design-system";
-// utils
-import { uncertifyReport } from "../../../actions/uncertify";
-import useModal from "../../../hooks/useModal";
-// types
+import { theUncertify } from "../../../actions/uncertify";
 import { AppRoles } from "../../../types";
+import { Dialog } from "@cmsgov/design-system";
+import useModal from "../../../hooks/useModal";
 
 const ReportItem = ({
-  link1Text = "View",
-  link1URL = "#",
+  link1Text,
+  link1URL,
   name,
-  statusText = "Missing Status",
+  statusText,
+  theUncertify: uncertifyAction,
   userRole,
   year,
   username,
   lastChanged,
   timeZone,
 }) => {
-  const dispatch = useDispatch();
   const anchorTarget = "_self";
   const stateCode = link1URL.toString().split("/")[3];
   const stateYear = link1URL.toString().split("/")[4];
   const { isShowing, toggleModal } = useModal();
   let lastEditedNote = "";
-  const isStateUser = userRole === AppRoles.STATE_USER;
+  let stateUser = userRole === AppRoles.STATE_USER;
 
   if (lastChanged) {
     const date = new Date(lastChanged);
@@ -49,7 +47,7 @@ const ReportItem = ({
   }
 
   const uncertify = async () => {
-    await dispatch(uncertifyReport(stateCode, stateYear));
+    await uncertifyAction(stateCode, stateYear);
     toggleModal();
     window.location.reload(false);
   };
@@ -62,7 +60,7 @@ const ReportItem = ({
 
   return (
     <>
-      {!isStateUser && (
+      {!stateUser && (
         <div className="report-item ds-l-row">
           <div className="name ds-l-col--1">{year}</div>
           <div className="name ds-l-col--2">{name}</div>
@@ -114,7 +112,7 @@ const ReportItem = ({
           )}
         </div>
       )}
-      {isStateUser && (
+      {stateUser && (
         <div className="report-item ds-l-row">
           <div className="name ds-l-col--2">{name}</div>
           <div className="status ds-l-col--2">{statusText}</div>
@@ -135,6 +133,7 @@ const ReportItem = ({
 };
 
 ReportItem.propTypes = {
+  theUncertify: PropTypes.func.isRequired,
   link1Text: PropTypes.string,
   link1URL: PropTypes.string.isRequired,
   name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
@@ -145,5 +144,16 @@ ReportItem.propTypes = {
   lastChanged: PropTypes.string.isRequired,
   timeZone: PropTypes.string,
 };
+ReportItem.defaultProps = {
+  link1Text: "View",
+  link1URL: "#",
+  statusText: "Missing Status",
+};
 
-export default ReportItem;
+const mapState = (state) => ({
+  user: state.reportStatus.username,
+});
+
+const mapDispatch = { theUncertify };
+
+export default connect(mapState, mapDispatch)(ReportItem);

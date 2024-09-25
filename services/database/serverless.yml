@@ -21,6 +21,7 @@ custom:
   serverlessTerminationProtection:
     stages:
       - main
+      - master
       - val
       - production
   acsTableName: ${self:custom.stage}-acs

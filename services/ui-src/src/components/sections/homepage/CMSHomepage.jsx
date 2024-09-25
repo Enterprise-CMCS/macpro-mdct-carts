@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { getAllStateStatuses } from "../../../actions/initial";
+import ReportItem from "./ReportItem";
+import { selectFormStatuses, selectYears } from "../../../store/selectors";
 import { Button } from "@cmsgov/design-system";
 import { MultiSelect } from "react-multi-select-component";
-// components
-import ReportItem from "./ReportItem";
 import { DropdownOption } from "../../fields/DropdownOption";
-// utils
-import { getAllStateStatuses } from "../../../actions/initial";
-import { selectFormStatuses, selectYears } from "../../../store/selectors";
-// types
 import { STATUS_MAPPING, AppRoles } from "../../../types";
 
-const CMSHomepage = () => {
+const CMSHomepage = ({
+  getStatuses,
+  allStateStatuses,
+  currentUserRole,
+  stateList,
+  yearList,
+}) => {
   const statusList = [
     { label: "Certified", value: "certified" },
     { label: "In Progress", value: "in_progress" },
@@ -28,21 +32,8 @@ const CMSHomepage = () => {
   const [statusIds, setStatusIds] = useState([]);
   const [filteredStatuses, setFilteredStatuses] = useState([]);
 
-  const dispatch = useDispatch();
-  const [allStateStatuses, stateList, currentUserRole, yearList] = useSelector(
-    (state) => [
-      selectFormStatuses(state),
-      state.allStatesData.map((element) => {
-        return { label: element.name, value: element.code };
-      }),
-      state.stateUser.currentUser.role,
-      selectYears(state.global.currentYear),
-    ],
-    shallowEqual
-  );
-
   useEffect(() => {
-    dispatch(getAllStateStatuses());
+    getStatuses();
     setFilteredStatuses(allStateStatuses);
   }, []);
 
@@ -247,4 +238,29 @@ const CMSHomepage = () => {
   );
 };
 
-export default CMSHomepage;
+CMSHomepage.propTypes = {
+  getStatuses: PropTypes.func.isRequired,
+  allStateStatuses: PropTypes.object.isRequired,
+  currentYear: PropTypes.number.isRequired,
+  currentUserRole: PropTypes.string.isRequired,
+  stateList: PropTypes.array.isRequired,
+  yearList: PropTypes.array.isRequired,
+  reportState: PropTypes.object.isRequired,
+};
+
+const mapState = (state) => ({
+  allStateStatuses: selectFormStatuses(state),
+  currentYear: state.global.formYear,
+  stateList: state.allStatesData.map((element) => {
+    return { label: element.name, value: element.code };
+  }),
+  currentUserRole: state.stateUser.currentUser.role,
+  reportstate: state.reportStatus,
+  yearList: selectYears(state),
+});
+
+const mapDispatch = {
+  getStatuses: getAllStateStatuses ?? {},
+};
+
+export default connect(mapState, mapDispatch)(CMSHomepage);

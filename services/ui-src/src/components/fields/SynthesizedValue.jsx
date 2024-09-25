@@ -1,34 +1,11 @@
 import React from "react";
-import { useSelector, shallowEqual } from "react-redux";
-//components
-import Question from "./Question";
-//utils
-import synthesizeValue from "../../util/synthesize";
-//types
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-const SynthesizedValue = ({ question, ...props }) => {
-  const [allStatesData, stateName, stateUserAbbr, chipEnrollments, formData] =
-    useSelector(
-      (state) => [
-        state.allStatesData,
-        state.global.stateName,
-        state.stateUser.abbr,
-        state.enrollmentCounts.chipEnrollments,
-        state.formData,
-      ],
-      shallowEqual
-    );
+import Question from "./Question";
+import synthesizeValue from "../../util/synthesize";
 
-  const value = synthesizeValue(
-    question.fieldset_info,
-    allStatesData,
-    stateName,
-    stateUserAbbr,
-    chipEnrollments,
-    formData
-  ).contents;
-
+const SynthesizedValue = ({ question, value, ...props }) => {
   return (
     <div>
       <strong>Computed:</strong> {value}
@@ -41,6 +18,17 @@ const SynthesizedValue = ({ question, ...props }) => {
 };
 SynthesizedValue.propTypes = {
   question: PropTypes.object.isRequired,
+  value: PropTypes.oneOf([PropTypes.number, PropTypes.string]).isRequired,
 };
 
-export default SynthesizedValue;
+const mapStateToProps = (state, { question: { fieldset_info: fsInfo } }) => {
+  return {
+    value: synthesizeValue(fsInfo, state).contents,
+  };
+};
+
+const ConnectedSynthesizedValue = connect(mapStateToProps)(SynthesizedValue);
+
+export { ConnectedSynthesizedValue as SynthesizedValue };
+
+export default ConnectedSynthesizedValue;

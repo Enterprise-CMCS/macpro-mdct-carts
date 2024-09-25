@@ -29,6 +29,7 @@ custom:
   serverlessTerminationProtection:
     stages:
       - main
+      - master
       - val
       - production
   api_region: ${param:ApiRegion}

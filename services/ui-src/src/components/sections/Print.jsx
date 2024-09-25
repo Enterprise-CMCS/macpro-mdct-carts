@@ -1,35 +1,28 @@
 import React, { useEffect } from "react";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@cmsgov/design-system";
-import { useLocation } from "react-router-dom";
-import { Helmet } from "react-helmet";
-// components
+import PropTypes from "prop-types";
 import Title from "../layout/Title";
 import Section from "../layout/Section";
-// utils
 import statesArray from "../utils/statesArray";
 import { loadEnrollmentCounts, loadSections } from "../../actions/initial";
+import { useLocation } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import requestOptions from "../../hooks/authHooks/requestOptions";
 import { apiLib } from "../../util/apiLib";
 
 /**
  * Generate data and load entire form based on user information
  *
+ * @param currentUser
+ * @param state
  * @returns {JSX.Element}
  * @constructor
  */
-const Print = () => {
+const Print = ({ currentUser, state, name }) => {
   const dispatch = useDispatch();
-  const [formData, currentUser, name] = useSelector(
-    (state) => [
-      state.formData,
-      state.stateUser.currentUser,
-      state.stateUser.name,
-    ],
-    shallowEqual
-  );
   const search = useLocation().search;
   const searchParams = new URLSearchParams(search);
   const stateInitials = searchParams.get("state");
@@ -40,22 +33,22 @@ const Print = () => {
   const subsectionId = searchParams.get("subsectionId");
 
   const openPdf = (basePdf) => {
-    const byteCharacters = atob(basePdf);
+    let byteCharacters = atob(basePdf);
     let byteNumbers = new Array(byteCharacters.length);
     for (let i = 0; i < byteCharacters.length; i++) {
       byteNumbers[i] = byteCharacters.charCodeAt(i);
     }
-    const byteArray = new Uint8Array(byteNumbers);
-    const file = new Blob([byteArray], { type: "application/pdf;base64" });
-    const fileURL = URL.createObjectURL(file);
+    let byteArray = new Uint8Array(byteNumbers);
+    let file = new Blob([byteArray], { type: "application/pdf;base64" });
+    let fileURL = URL.createObjectURL(file);
     window.open(fileURL);
   };
 
   const getPdfFriendlyDocument = async () => {
-    // get html element and remove noscript tag
-    const html = document.querySelector("html");
-    html.querySelector("noscript")?.remove();
-
+    const noscriptTag = document.querySelector("noscript");
+    if (noscriptTag) {
+      noscriptTag.remove();
+    }
     document.querySelectorAll("input").forEach((element) => {
       if (element.type === "text") {
         element.style.height = "50px";
@@ -66,22 +59,18 @@ const Print = () => {
         element.remove();
       }
     });
-
-    if (!document.querySelector("base")) {
-      const base = document.createElement("base");
-      base.href = `https://${window.location.host}`;
-      document.querySelector("head").prepend(base);
-    }
-
     const htmlString = document
       .querySelector("html")
-      .outerHTML.replaceAll(`’`, `'`)
+      .outerHTML.replaceAll(
+        '<link href="',
+        `<link href="https://${window.location.host}`
+      )
+      .replaceAll(`’`, `'`)
       .replaceAll(`‘`, `'`)
       .replaceAll(`”`, `"`)
       .replaceAll(`“`, `"`)
       .replaceAll("\u2013", "-")
       .replaceAll("\u2014", "-");
-
     const base64String = btoa(unescape(encodeURIComponent(htmlString)));
     const opts = await requestOptions();
     opts.body = {
@@ -96,12 +85,13 @@ const Print = () => {
     // Create function to call data to prevent return data from useEffect
     const retrieveUserData = async () => {
       // Get user details
+      const { stateUser } = state;
       const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString);
       const selectedYear = urlParams.get("year");
       let stateCode;
-      if (currentUser.state.id) {
-        stateCode = currentUser.state.id;
+      if (stateUser.currentUser.state.id) {
+        stateCode = stateUser.currentUser.state.id;
       } else {
         stateCode = urlParams.get("state");
       }
@@ -129,6 +119,7 @@ const Print = () => {
   const sections = [];
 
   // Check if formData has values
+  const { formData } = state;
   if (formData !== undefined && formData.length !== 0) {
     sections.push(<Title urlStateName={stateName} />);
 
@@ -140,7 +131,6 @@ const Print = () => {
           sectionId={sectionId}
           subsectionId={subsectionId}
           readonly="false"
-          printView="true"
         />
       );
     } else {
@@ -165,7 +155,6 @@ const Print = () => {
               sectionId={sectionId}
               subsectionId={subsectionId}
               readonly="false"
-              printView="true"
             />
           );
         }
@@ -186,6 +175,7 @@ const Print = () => {
           <FontAwesomeIcon icon={faPrint} /> Print
         </Button>
       </div>
+
       <Helmet>
         <title>
           {stateName} CARTS FY{formYear} Report
@@ -205,4 +195,16 @@ const Print = () => {
   );
 };
 
-export default Print;
+Print.propTypes = {
+  state: PropTypes.object.isRequired,
+  currentUser: PropTypes.object.isRequired,
+  name: PropTypes.string,
+};
+
+const mapStateToProps = (state) => ({
+  state,
+  currentUser: state.stateUser,
+  name: state.stateUser.name,
+});
+
+export default connect(mapStateToProps)(Print);

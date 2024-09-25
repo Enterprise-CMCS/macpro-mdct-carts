@@ -14,8 +14,8 @@
   z-index: 9;
 
   &.alert--unexpected-error__active {
-    position: sticky;
-    margin-top: 20px;
+    top: 60px;
+    margin-top: 0;
   }
 
   .flex {

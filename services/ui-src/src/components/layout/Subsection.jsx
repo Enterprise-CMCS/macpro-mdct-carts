@@ -1,22 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux";
-//components
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { selectSubsectionTitleAndPartIDs } from "../../store/selectors";
 import Part from "./Part";
 import Text from "./Text";
-//selectors
-import { selectSubsectionTitleAndPartIDs } from "../../store/selectors";
-//types
-import PropTypes from "prop-types";
 
-const Subsection = ({ subsectionId, printView }) => {
-  const formData = useSelector((state) => state.formData);
-
-  const subsection = selectSubsectionTitleAndPartIDs(formData, subsectionId);
-
-  const partIds = subsection ? subsection.parts : [];
-  const title = subsection ? subsection.title : null;
-  const text = subsection ? subsection.text : null;
-
+const Subsection = ({ partIds, subsectionId, title, text }) => {
   return (
     <div id={subsectionId}>
       {title && <h3 className="h3-pdf-bookmark">{title}</h3>}
@@ -31,18 +20,31 @@ const Subsection = ({ subsectionId, printView }) => {
           partId={partId}
           partNumber={partIds.length > 1 ? index + 1 : null}
           nestedSubsectionTitle={!!title}
-          printView={printView}
         />
       ))}
     </div>
   );
 };
 Subsection.propTypes = {
+  partIds: PropTypes.array.isRequired,
   subsectionId: PropTypes.string.isRequired,
-  printView: PropTypes.bool,
+  text: PropTypes.oneOf([PropTypes.string, null]),
+  title: PropTypes.string,
 };
 Subsection.defaultProps = {
   text: null,
 };
 
-export default Subsection;
+const mapStateToProps = (state, ownProps) => {
+  const subsection = selectSubsectionTitleAndPartIDs(
+    state,
+    ownProps.subsectionId
+  );
+  return {
+    partIds: subsection ? subsection.parts : [],
+    title: subsection ? subsection.title : null,
+    text: subsection ? subsection.text : null,
+  };
+};
+
+export default connect(mapStateToProps)(Subsection);

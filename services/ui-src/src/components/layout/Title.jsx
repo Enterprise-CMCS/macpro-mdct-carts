@@ -1,17 +1,8 @@
 import React from "react";
-import { useSelector, shallowEqual } from "react-redux";
-//types
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-const Title = ({ urlStateName }) => {
-  const [name, stateName, formYear] = useSelector(
-    (state) => [
-      state.stateUser.name,
-      state.global.stateName,
-      state.global.formYear,
-    ],
-    shallowEqual
-  );
+const Title = ({ name, stateName, formYear, urlStateName }) => {
   const displayStateName = name || urlStateName || stateName || "";
 
   return (
@@ -23,7 +14,16 @@ const Title = ({ urlStateName }) => {
   );
 };
 Title.propTypes = {
+  name: PropTypes.string,
+  stateName: PropTypes.string,
   urlStateName: PropTypes.string,
+  formYear: PropTypes.number.isRequired,
 };
 
-export default Title;
+const mapStateToProps = (state) => ({
+  name: state.stateUser.name,
+  stateName: state.global.stateName,
+  formYear: state.global.formYear,
+});
+
+export default connect(mapStateToProps)(Title);
