@@ -13,7 +13,7 @@ import PropTypes from "prop-types";
 const TemplateDownload = ({ getTemplate }) => (
   <div className="ds-l-row">
     <div className="updates ds-l-col--12">
-      <h4>Updates from Central Office</h4>
+      <p className="update-title">Updates from Central Office</p>
       {useFlags().release2024 && (
         <div className="preamble">
           <p>
