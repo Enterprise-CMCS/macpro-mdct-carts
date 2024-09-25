@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector, shallowEqual } from "react-redux";
 //utils
 import synthesizeValue from "../../util/synthesize";
+import { Mask } from "../../util/constants";
 //types
 import PropTypes from "prop-types";
 
@@ -21,7 +22,7 @@ const SynthesizedTable = ({ question, tableTitle, printView }) => {
   const rows = question.fieldset_info.rows.map((row) => {
     let contents = row;
     if (printView) {
-      contents = row.filter((cell) => cell?.mask !== "lessThanEleven");
+      contents = row.filter((cell) => cell?.mask !== Mask.lessThanEleven);
     }
     return contents.map((cell) => {
       const value = synthesizeValue(
@@ -41,7 +42,7 @@ const SynthesizedTable = ({ question, tableTitle, printView }) => {
 
   const headers = printView
     ? question.fieldset_info.headers.filter(
-        (header) => header?.mask !== "lessThanEleven"
+        (header) => header?.mask !== Mask.lessThanEleven
       )
     : question.fieldset_info.headers;
 

@@ -4,6 +4,7 @@ import { useSelector, shallowEqual } from "react-redux";
 import Question from "./Question";
 //utils
 import synthesizeValue from "../../util/synthesize";
+import { Mask } from "util/constants";
 //types
 import PropTypes from "prop-types";
 
@@ -21,7 +22,7 @@ const SynthesizedValue = ({ question, printView, ...props }) => {
     );
 
   const showValue = !(
-    printView && question.fieldset_info.mask === "lessThanEleven"
+    printView && question.fieldset_info.mask === Mask.lessThanEleven
   );
 
   const renderValue = () => {

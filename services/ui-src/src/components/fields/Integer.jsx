@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { TextField } from "@cmsgov/design-system";
 import { useSelector } from "react-redux";
+import { TextField } from "@cmsgov/design-system";
+//utils
 import { generateQuestionNumber } from "../utils/helperFunctions";
+import { Mask } from "util/constants";
+//types
+import PropTypes from "prop-types";
 
 const getPrevYearValue = (question, lastYearFormData) => {
   let prevYearValue;
@@ -70,7 +73,7 @@ const Integer = ({ onChange, question, prevYear, printView, ...props }) => {
   const isLessThanElevenMask = (value) => {
     return (
       printView &&
-      question.mask === "lessThanEleven" &&
+      question.mask === Mask.lessThanEleven &&
       value <= 10 &&
       value > 0
     );
