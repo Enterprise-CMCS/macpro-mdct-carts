@@ -4,7 +4,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/f1775f53aedf747e85b2/maintainability)](https://codeclimate.com/repos/6449718c21275100df510ea9/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/f1775f53aedf747e85b2/test_coverage)](https://codeclimate.com/repos/6449718c21275100df510ea9/test_coverage)
 
-### Integration Environment Deploy Status:
+## Integration Environment Deploy Status:
 | Branch  | Build Status |
 | ------------- | ------------- |
 | main  | ![deploy](https://github.com/Enterprise-CMCS/macpro-mdct-carts/actions/workflows/deploy.yml/badge.svg)  |
@@ -16,7 +16,7 @@ CARTS is the CMCS MDCT application for collecting state data related to coverage
 
 Under section 2108(a) of the Act, states must assess the operation of their separate CHIP and Medicaid expansion programs and the progress made in reducing the number of uncovered, low-income children. The results of the assessment are reported to the Secretary by January 1 following the end of the FY in the CHIP Annual Reporting Template System (CARTS). CARTS collects information about programmatic changes, performance goals, program operation, program financing, program challenges and accomplishments.
 
-_Note: The [`main`](https://github.com/Enterprise-CMCS/macpro-mdct-carts/tree/main) branch contains CARTSv3. All code related to CARTSv2 (legacy) can be found in the [`master`](https://github.com/Enterprise-CMCS/macpro-mdct-carts/tree/master) branch._
+_Note: The [`main`](https://github.com/Enterprise-CMCS/macpro-mdct-carts/tree/main) branch contains CARTSv3. All code related to CARTSv2 (legacy) can be found in the [`skipci-archive-carts-v2`](https://github.com/Enterprise-CMCS/macpro-mdct-carts/tree/skipci-archive-carts-v2) branch._
 
 ## Table of contents
 
@@ -115,10 +115,7 @@ On the SEDS side, this topic is updated on every submission of seds data, but CA
 - 4th quarter data.
 - The rollover for a "new year" is October, and future submissions are not recognized until that threshold
 
-Updates outside of that time frame will need to be manually corrected in CARTS, or the integration will need to be modifed to collect data for old forms. CARTS additionally looks for the `enrollmentCounts` property which is only included in forms 21E and 64.21E (question 7), either by manual trigger or update. See SEDS files:
-
-- [generateEnrollmentTotals](https://github.com/Enterprise-CMCS/macpro-mdct-seds/blob/master/services/app-api/handlers/state-forms/post/generateEnrollmentTotals.js)
-- [updateStateForms](https://github.com/Enterprise-CMCS/macpro-mdct-seds/blob/master/services/app-api/handlers/state-forms/post/updateStateForms.js)
+Updates outside of that time frame will need to be manually corrected in CARTS, or the integration will need to be modifed to collect data for old forms. CARTS additionally looks for the `enrollmentCounts` property which is only included in forms 21E and 64.21E (question 7), either by manual trigger or update.
 
 For testing convenience, stateuser2 points at AL in CARTS and the stateuser points at AL in SEDS.
 

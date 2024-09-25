@@ -46,7 +46,6 @@ custom:
   serverlessTerminationProtection:
     stages:
       - main
-      - master
       - val
       - production
   scripts:

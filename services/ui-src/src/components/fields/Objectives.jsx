@@ -16,9 +16,9 @@ const Objectives = ({
   disabled,
   question,
   removeObjectiveFrom,
+  printView,
 }) => {
   const ref = useRef();
-
   const add = () => {
     addObjectiveTo(question.id);
 
@@ -47,7 +47,12 @@ const Objectives = ({
       >
         {question.questions.map((q, i) => (
           <AccordionItem key={q.id}>
-            <Objective headerRef={ref} objective={q} objectiveNumber={i + 1} />
+            <Objective
+              headerRef={ref}
+              objective={q}
+              objectiveNumber={i + 1}
+              printView={printView}
+            />
           </AccordionItem>
         ))}
 
@@ -92,6 +97,7 @@ Objectives.propTypes = {
   disabled: PropTypes.bool.isRequired,
   question: PropTypes.object.isRequired,
   removeObjectiveFrom: PropTypes.func.isRequired,
+  printView: PropTypes.bool,
 };
 
 const mapDispatchToProps = {

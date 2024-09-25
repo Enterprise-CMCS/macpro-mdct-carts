@@ -11,7 +11,9 @@ const store = mockStore({
     status: null,
   },
   save: {
-    lastSave: "01/01/2002",
+    lastSave: new Date(
+      "Mon Jan 1 2024 12:00:00 GMT-0400 (Eastern Daylight Time)"
+    ),
   },
 });
 jest.mock("./Title", () => () => {
