@@ -3,7 +3,7 @@
  * register() is not called by default.
  */
 
-import { MODE, BASE_URL } from "./util/constants";
+import { MODE, BASE_URL } from "./util/metaEnv";
 
 /*
  * This lets the app load faster on subsequent visits in production, and gives

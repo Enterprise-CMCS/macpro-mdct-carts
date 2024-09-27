@@ -13,7 +13,7 @@ import fiscalYearTemplate from "./fiscalYearTemplate";
 import reportStatus from "./reportStatus";
 import enrollmentCounts from "./enrollmentCounts";
 import { initAuthManager } from "../hooks/authHooks";
-import { MODE } from "../util/constants";
+import { MODE } from "../util/metaEnv";
 import { logger } from "redux-logger";
 // Consolidate reducers
 export const reducer = combineReducers({

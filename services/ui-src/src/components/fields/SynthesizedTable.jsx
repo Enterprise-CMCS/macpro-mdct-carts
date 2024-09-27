@@ -2,10 +2,11 @@ import React from "react";
 import { useSelector, shallowEqual } from "react-redux";
 //utils
 import synthesizeValue from "../../util/synthesize";
+import { lteMask } from "../../util/constants";
 //types
 import PropTypes from "prop-types";
 
-const SynthesizedTable = ({ question, tableTitle }) => {
+const SynthesizedTable = ({ question, tableTitle, printView }) => {
   const [allStatesData, stateName, stateUserAbbr, chipEnrollments, formData] =
     useSelector(
       (state) => [
@@ -18,8 +19,12 @@ const SynthesizedTable = ({ question, tableTitle }) => {
       shallowEqual
     );
 
-  const rows = question.fieldset_info.rows.map((row) =>
-    row.map((cell) => {
+  const rows = question.fieldset_info.rows.map((row) => {
+    let contents = row;
+    if (printView) {
+      contents = row.filter((cell) => cell?.mask !== lteMask);
+    }
+    return contents.map((cell) => {
       const value = synthesizeValue(
         cell,
         allStatesData,
@@ -32,8 +37,14 @@ const SynthesizedTable = ({ question, tableTitle }) => {
       return typeof value.contents === "number" && Number.isNaN(value.contents)
         ? { contents: "Not Available" }
         : value;
-    })
-  );
+    });
+  });
+
+  const headers = printView
+    ? question.fieldset_info.headers.filter(
+        (header) => header?.mask !== lteMask
+      )
+    : question.fieldset_info.headers;
 
   return (
     <div className="synthesized-table ds-u-margin-top--2">
@@ -48,7 +59,7 @@ const SynthesizedTable = ({ question, tableTitle }) => {
       >
         <thead>
           <tr>
-            {question.fieldset_info.headers.map((header, index) => (
+            {headers.map((header, index) => (
               <th scope="col" key={index}>
                 {header.contents}
               </th>
