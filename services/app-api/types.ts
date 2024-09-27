@@ -153,6 +153,7 @@ export const ReportPdfs = {
   2021: "FFY_2021_CARTS_Template.pdf",
   2022: "FFY_2022_CARTS_Template.pdf",
   2023: "FFY_2023_CARTS_Template.pdf",
+  2024: "FFY_2024_CARTS_Template.pdf",
 };
 /* eslint-enable no-unused-vars */
 

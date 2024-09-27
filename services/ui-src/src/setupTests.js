@@ -34,7 +34,7 @@ Object.defineProperty(window, "matchMedia", {
 
 Object.defineProperty(window, "crypto", { value: require("node:crypto") });
 
-jest.mock("./util/constants", () => ({
+jest.mock("./util/metaEnv", () => ({
   MODE: "production",
   BASE_URL: "mdctcartsdev.cms.gov",
 }));
