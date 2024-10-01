@@ -31,8 +31,7 @@ const getSections = (formData) => {
   if (!formData) {
     return [];
   }
-  const sections = formData;
-  return sections.map(
+  return formData.map(
     ({
       contents: {
         section: { id: sectionId, ordinal, subsections, title: sectionTitle },

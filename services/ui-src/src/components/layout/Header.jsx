@@ -18,10 +18,8 @@ export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const { currentReportStatus, currentUser } = useSelector((state) => {
-    const stateUser = state.stateUser;
-    const formData = state.formData;
+    const { stateUser, formData, reportStatus } = state;
     const formYear = state.global.formYear;
-    const reportStatus = state.reportStatus;
     const currentReportStatus = getCurrentReportStatus(
       reportStatus,
       formData,

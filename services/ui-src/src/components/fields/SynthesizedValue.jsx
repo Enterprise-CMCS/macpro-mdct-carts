@@ -9,23 +9,10 @@ import { lteMask } from "../../util/constants";
 import PropTypes from "prop-types";
 
 const SynthesizedValue = ({ question, printView, ...props }) => {
-  const value = useSelector((state) => {
-    const allStatesData = state.allStatesData;
-    const stateName = state.global.stateName;
-    const stateUserAbbr = state.stateUser.abbr;
-    const chipEnrollments = state.enrollmentCounts.chipEnrollments;
-    const formData = state.formData;
-    return synthesizeValue(
-      question.fieldset_info,
-      allStatesData,
-      stateName,
-      stateUserAbbr,
-      chipEnrollments,
-      formData
-    ).contents;
-  }, shallowEqual);
-
-  const showValue = !(printView && question.fieldset_info.mask === lteMask);
+  const { value, showValue } = useSelector(
+    (state) => getValue(state, question, printView),
+    shallowEqual
+  );
 
   return (
     showValue && (
@@ -41,6 +28,23 @@ const SynthesizedValue = ({ question, printView, ...props }) => {
 };
 SynthesizedValue.propTypes = {
   question: PropTypes.object.isRequired,
+};
+
+const getValue = (state, question, printView) => {
+  const { allStatesData, formData } = state;
+  const stateName = state.global.stateName;
+  const stateUserAbbr = state.stateUser.abbr;
+  const chipEnrollments = state.enrollmentCounts.chipEnrollments;
+  const value = synthesizeValue(
+    question.fieldset_info,
+    allStatesData,
+    stateName,
+    stateUserAbbr,
+    chipEnrollments,
+    formData
+  ).contents;
+  const showValue = !(printView && question.fieldset_info.mask === lteMask);
+  return { value, showValue };
 };
 
 export default SynthesizedValue;

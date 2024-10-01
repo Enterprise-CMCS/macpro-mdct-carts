@@ -70,10 +70,8 @@ const Question = ({
   }
 
   const readonly = useSelector((state) => {
-    const stateUser = state.stateUser;
-    const formData = state.formData;
+    const { stateUser, formData, reportStatus } = state;
     const formYear = state.global.formYear;
-    const reportStatus = state.reportStatus;
     return !selectIsFormEditable(reportStatus, formData, stateUser, formYear);
   }, shallowEqual);
   const dispatch = useDispatch();

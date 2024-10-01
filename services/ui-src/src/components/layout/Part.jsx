@@ -66,10 +66,8 @@ const Part = ({ partId, partNumber, nestedSubsectionTitle, printView }) => {
 };
 
 const getPartInfo = (state, partId) => {
-  const formData = state.formData;
+  const { formData, reportStatus, allStatesData } = state;
   const currentUserRole = state.stateUser.currentUser.role;
-  const reportStatus = state.reportStatus;
-  const allStatesData = state.allStatesData;
   const stateUserAbbr = state.stateUser.abbr;
   const chipEnrollments = state.enrollmentCounts.chipEnrollments;
 
