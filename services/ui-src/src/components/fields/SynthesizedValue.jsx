@@ -9,20 +9,12 @@ import { lteMask } from "../../util/constants";
 import PropTypes from "prop-types";
 
 const SynthesizedValue = ({ question, printView, ...props }) => {
-  const [allStatesData, stateName, stateUserAbbr, chipEnrollments, formData] =
-    useSelector(
-      (state) => [
-        state.allStatesData,
-        state.global.stateName,
-        state.stateUser.abbr,
-        state.enrollmentCounts.chipEnrollments,
-        state.formData,
-      ],
-      shallowEqual
-    );
-
-  const showValue = !(printView && question.fieldset_info.mask === lteMask);
-  const renderValue = () => {
+  const value = useSelector((state) => {
+    const allStatesData = state.allStatesData;
+    const stateName = state.global.stateName;
+    const stateUserAbbr = state.stateUser.abbr;
+    const chipEnrollments = state.enrollmentCounts.chipEnrollments;
+    const formData = state.formData;
     return synthesizeValue(
       question.fieldset_info,
       allStatesData,
@@ -31,12 +23,14 @@ const SynthesizedValue = ({ question, printView, ...props }) => {
       chipEnrollments,
       formData
     ).contents;
-  };
+  }, shallowEqual);
+
+  const showValue = !(printView && question.fieldset_info.mask === lteMask);
 
   return (
     showValue && (
       <div>
-        <strong>Computed:</strong> {renderValue()}
+        <strong>Computed:</strong> {value}
         {question.questions &&
           question.questions.map((q) => (
             <Question key={q.id} question={q} {...props} />

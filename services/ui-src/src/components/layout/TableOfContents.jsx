@@ -7,46 +7,53 @@ import { VerticalNav } from "@cmsgov/design-system";
 import { AppRoles } from "../../types";
 
 const TableOfContents = () => {
-  const [userRole, formYear, formData] = useSelector(
-    (state) => [
-      state.stateUser.currentUser.role,
-      state.global.formYear,
-      state.formData,
-    ],
-    shallowEqual
-  );
+  const { items, selectedId } = useSelector((state) => {
+    const userRole = state.stateUser.currentUser.role;
+    const formYear = state.global.formYear;
+    const sections = getSections(state.formData);
+    const items = getItems(sections, formYear, userRole);
+    const selectedId = items.find((item) => item.selected)?.id;
+    return { items, selectedId };
+  }, shallowEqual);
 
+  return (
+    <div className="toc" data-testid="toc" aria-label="Table of Contents">
+      <VerticalNav
+        selectedId={selectedId}
+        ariaNavLabel="Vertical Navigation Element"
+        items={items}
+      />
+    </div>
+  );
+};
+
+const getSections = (formData) => {
+  if (!formData) {
+    return [];
+  }
+  const sections = formData;
+  return sections.map(
+    ({
+      contents: {
+        section: { id: sectionId, ordinal, subsections, title: sectionTitle },
+      },
+    }) => ({
+      id: sectionId,
+      ordinal,
+      title: sectionTitle,
+      subsections: subsections.map(
+        ({ id: subsectionId, title: subsectionTitle }) => ({
+          id: subsectionId,
+          title: subsectionTitle,
+        })
+      ),
+    })
+  );
+};
+
+const getItems = (sections, formYear, userRole) => {
   const location = useLocation();
   const history = useHistory();
-
-  const sections = () => {
-    if (formData) {
-      const sections = formData;
-      return sections.map(
-        ({
-          contents: {
-            section: {
-              id: sectionId,
-              ordinal,
-              subsections,
-              title: sectionTitle,
-            },
-          },
-        }) => ({
-          id: sectionId,
-          ordinal,
-          title: sectionTitle,
-          subsections: subsections.map(
-            ({ id: subsectionId, title: subsectionTitle }) => ({
-              id: subsectionId,
-              title: subsectionTitle,
-            })
-          ),
-        })
-      );
-    }
-    return [];
-  };
 
   const idToUrl = (location, id) => {
     const endOfPath = id.replace(/-/g, "/");
@@ -66,7 +73,7 @@ const TableOfContents = () => {
     history.push(url);
   };
 
-  const items = sections()
+  const items = sections
     .map(({ id: sectionId, ordinal, subsections, title: sectionTitle }) => ({
       id: sectionId,
       items:
@@ -108,16 +115,7 @@ const TableOfContents = () => {
     });
   }
 
-  const foundSelectedId = items.find((item) => item.selected)?.id;
-  return (
-    <div className="toc" data-testid="toc" aria-label="Table of Contents">
-      <VerticalNav
-        selectedId={foundSelectedId}
-        ariaNavLabel="Vertical Navigation Element"
-        items={items}
-      />
-    </div>
-  );
+  return items;
 };
 
 export default TableOfContents;

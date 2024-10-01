@@ -7,38 +7,36 @@ import { lteMask } from "../../util/constants";
 import PropTypes from "prop-types";
 
 const SynthesizedTable = ({ question, tableTitle, printView }) => {
-  const [allStatesData, stateName, stateUserAbbr, chipEnrollments, formData] =
-    useSelector(
-      (state) => [
-        state.allStatesData,
-        state.global.stateName,
-        state.stateUser.abbr,
-        state.enrollmentCounts.chipEnrollments,
-        state.formData,
-      ],
-      shallowEqual
-    );
+  const rows = useSelector((state) => {
+    const allStatesData = state.allStatesData;
+    const stateName = state.global.stateName;
+    const stateUserAbbr = state.stateUser.abbr;
+    const chipEnrollments = state.enrollmentCounts.chipEnrollments;
+    const formData = state.formData;
 
-  const rows = question.fieldset_info.rows.map((row) => {
-    let contents = row;
-    if (printView) {
-      contents = row.filter((cell) => cell?.mask !== lteMask);
-    }
-    return contents.map((cell) => {
-      const value = synthesizeValue(
-        cell,
-        allStatesData,
-        stateName,
-        stateUserAbbr,
-        chipEnrollments,
-        formData
-      );
+    const rows = question.fieldset_info.rows.map((row) => {
+      let contents = row;
+      if (printView) {
+        contents = row.filter((cell) => cell?.mask !== lteMask);
+      }
+      return contents.map((cell) => {
+        const value = synthesizeValue(
+          cell,
+          allStatesData,
+          stateName,
+          stateUserAbbr,
+          chipEnrollments,
+          formData
+        );
 
-      return typeof value.contents === "number" && Number.isNaN(value.contents)
-        ? { contents: "Not Available" }
-        : value;
+        return typeof value.contents === "number" &&
+          Number.isNaN(value.contents)
+          ? { contents: "Not Available" }
+          : value;
+      });
     });
-  });
+    return rows;
+  }, shallowEqual);
 
   const headers = printView
     ? question.fieldset_info.headers.filter(

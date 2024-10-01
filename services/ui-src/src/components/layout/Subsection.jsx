@@ -9,13 +9,16 @@ import { selectSubsectionTitleAndPartIDs } from "../../store/selectors";
 import PropTypes from "prop-types";
 
 const Subsection = ({ subsectionId, printView }) => {
-  const formData = useSelector((state) => state.formData);
-
-  const subsection = selectSubsectionTitleAndPartIDs(formData, subsectionId);
-
-  const partIds = subsection ? subsection.parts : [];
-  const title = subsection ? subsection.title : null;
-  const text = subsection ? subsection.text : null;
+  const { partIds, title, text } = useSelector((state) => {
+    const subsection = selectSubsectionTitleAndPartIDs(
+      state.formData,
+      subsectionId
+    );
+    const partIds = subsection ? subsection.parts : [];
+    const title = subsection ? subsection.title : null;
+    const text = subsection ? subsection.text : null;
+    return { partIds, title, text };
+  });
 
   return (
     <div id={subsectionId}>

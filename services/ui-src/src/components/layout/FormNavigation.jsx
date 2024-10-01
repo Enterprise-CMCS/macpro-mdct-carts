@@ -17,12 +17,13 @@ const FormNavigation = () => {
   const history = useHistory();
   const location = useLocation();
 
-  const [formData, role] = useSelector(
-    (state) => [state.formData, state.stateUser?.currentUser?.role],
+  const [sections, role] = useSelector(
+    (state) => [
+      selectSectionsForNav(state.formData),
+      state.stateUser?.currentUser?.role,
+    ],
     shallowEqual
   );
-
-  const sections = selectSectionsForNav(formData);
 
   const items = [];
   sections.forEach((section) => {
