@@ -12,49 +12,10 @@ import { shouldDisplay } from "../../util/shouldDisplay";
 const Part = ({ partId, partNumber, nestedSubsectionTitle, printView }) => {
   const [, section] = partId.split("-");
 
-  const [
-    formData,
-    currentUserRole,
-    reportStatus,
-    allStatesData,
-    stateUserAbbr,
-    chipEnrollments,
-  ] = useSelector(
-    (state) => [
-      state.formData,
-      state.stateUser.currentUser.role,
-      state.reportStatus,
-      state.allStatesData,
-      state.stateUser.abbr,
-      state.enrollmentCounts.chipEnrollments,
-    ],
+  const { contextData, questions, show, text, title } = useSelector(
+    (state) => getPartInfo(state, partId),
     shallowEqual
   );
-
-  const part = selectFragment(formData, partId);
-  const partContextData = part.context_data;
-
-  const contextData = partContextData;
-  const questions = selectQuestionsForPart(
-    formData,
-    currentUserRole,
-    reportStatus,
-    allStatesData,
-    stateUserAbbr,
-    chipEnrollments,
-    partId
-  );
-  const show = shouldDisplay(
-    currentUserRole,
-    formData,
-    reportStatus,
-    allStatesData,
-    stateUserAbbr,
-    chipEnrollments,
-    partContextData
-  );
-  const text = part ? part.text : null;
-  const title = part ? part.title : null;
 
   const getPartContent = () => {
     if (show) {
@@ -103,4 +64,44 @@ const Part = ({ partId, partNumber, nestedSubsectionTitle, printView }) => {
     </div>
   );
 };
+
+const getPartInfo = (state, partId) => {
+  const { formData, reportStatus, allStatesData } = state;
+  const currentUserRole = state.stateUser.currentUser.role;
+  const stateUserAbbr = state.stateUser.abbr;
+  const chipEnrollments = state.enrollmentCounts.chipEnrollments;
+
+  const part = selectFragment(formData, partId);
+  const partContextData = part.context_data;
+
+  const questions = selectQuestionsForPart(
+    formData,
+    currentUserRole,
+    reportStatus,
+    allStatesData,
+    stateUserAbbr,
+    chipEnrollments,
+    partId
+  );
+  const show = shouldDisplay(
+    currentUserRole,
+    formData,
+    reportStatus,
+    allStatesData,
+    stateUserAbbr,
+    chipEnrollments,
+    partContextData
+  );
+  const text = part ? part.text : null;
+  const title = part ? part.title : null;
+
+  return {
+    contextData: partContextData,
+    questions,
+    show,
+    text,
+    title,
+  };
+};
+
 export default Part;

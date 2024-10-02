@@ -17,22 +17,18 @@ import appLogo from "../../assets/images/MDCT_CARTS_2x.png";
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const [stateUser, formData, formYear, reportStatus] = useSelector(
-    (state) => [
-      state.stateUser,
-      state.formData,
-      state.global.formYear,
-      state.reportStatus,
-    ],
-    shallowEqual
-  );
-  const { currentUser } = stateUser;
-  const currentReportStatus = getCurrentReportStatus(
-    reportStatus,
-    formData,
-    stateUser,
-    formYear
-  );
+  const { currentReportStatus, currentUser } = useSelector((state) => {
+    const { stateUser, formData, reportStatus } = state;
+    const formYear = state.global.formYear;
+    const currentReportStatus = getCurrentReportStatus(
+      reportStatus,
+      formData,
+      stateUser,
+      formYear
+    );
+    const currentUser = stateUser.currentUser;
+    return { currentReportStatus, currentUser };
+  }, shallowEqual);
   const location = useLocation();
 
   const showAutoSaveOnReport = (location, currentUser, currentReportStatus) => {

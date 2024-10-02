@@ -53,7 +53,6 @@ const Container = ({ children }) => (
   <fieldset className="ds-c-fieldset">{children}</fieldset>
 );
 Container.propTypes = {
-  question: PropTypes.object.isRequired,
   children: PropTypes.node.isRequired,
 };
 
@@ -70,23 +69,12 @@ const Question = ({
     Component = questionTypes.get(question.type);
   }
 
-  const [stateUser, formData, formYear, reportStatus] = useSelector(
-    (state) => [
-      state.stateUser,
-      state.formData,
-      state.global.formYear,
-      state.reportStatus,
-    ],
-    shallowEqual
-  );
+  const readonly = useSelector((state) => {
+    const { stateUser, formData, reportStatus } = state;
+    const formYear = state.global.formYear;
+    return !selectIsFormEditable(reportStatus, formData, stateUser, formYear);
+  }, shallowEqual);
   const dispatch = useDispatch();
-
-  const readonly = !selectIsFormEditable(
-    reportStatus,
-    formData,
-    stateUser,
-    formYear
-  );
 
   const prevYearDisabled = prevYear ? prevYear.disabled : false;
 
@@ -155,9 +143,9 @@ const Question = ({
         />
 
         {/* If there are subquestions, wrap them so they are indented with the
-             blue line. But don't do it for the subquestions of a fieldset. If
-             the fieldset is a subchild, it will already be indented; if it's
-             not, then its children shouldn't be indented either. */}
+            blue line. But don't do it for the subquestions of a fieldset. If
+            the fieldset is a subchild, it will already be indented; if it's
+            not, then its children shouldn't be indented either. */}
         {shouldRenderChildren && (
           <div className="ds-c-choice__checkedChild">
             {question.questions.map((q) => (
