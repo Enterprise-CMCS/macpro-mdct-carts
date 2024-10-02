@@ -9,9 +9,8 @@ import FormActions from "./FormActions";
 import Autosave from "../fields/Autosave";
 
 const Section = ({ subsectionId, sectionId, printView }) => {
-  const title = useSelector((state) =>
-    selectSectionTitle(state.formData, sectionId)
-  );
+  const formData = useSelector((state) => state.formData);
+  const title = selectSectionTitle(formData, sectionId);
 
   return (
     <div className="section-basic-info ds-l-col--9 content">

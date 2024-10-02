@@ -9,15 +9,34 @@ import { lteMask } from "../../util/constants";
 import PropTypes from "prop-types";
 
 const SynthesizedValue = ({ question, printView, ...props }) => {
-  const { value, showValue } = useSelector(
-    (state) => getValue(state, question, printView),
-    shallowEqual
-  );
+  const [allStatesData, stateName, stateUserAbbr, chipEnrollments, formData] =
+    useSelector(
+      (state) => [
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData,
+      ],
+      shallowEqual
+    );
+
+  const showValue = !(printView && question.fieldset_info.mask === lteMask);
+  const renderValue = () => {
+    return synthesizeValue(
+      question.fieldset_info,
+      allStatesData,
+      stateName,
+      stateUserAbbr,
+      chipEnrollments,
+      formData
+    ).contents;
+  };
 
   return (
     showValue && (
       <div>
-        <strong>Computed:</strong> {value}
+        <strong>Computed:</strong> {renderValue()}
         {question.questions &&
           question.questions.map((q) => (
             <Question key={q.id} question={q} {...props} />
@@ -28,23 +47,6 @@ const SynthesizedValue = ({ question, printView, ...props }) => {
 };
 SynthesizedValue.propTypes = {
   question: PropTypes.object.isRequired,
-};
-
-const getValue = (state, question, printView) => {
-  const { allStatesData, formData } = state;
-  const stateName = state.global.stateName;
-  const stateUserAbbr = state.stateUser.abbr;
-  const chipEnrollments = state.enrollmentCounts.chipEnrollments;
-  const value = synthesizeValue(
-    question.fieldset_info,
-    allStatesData,
-    stateName,
-    stateUserAbbr,
-    chipEnrollments,
-    formData
-  ).contents;
-  const showValue = !(printView && question.fieldset_info.mask === lteMask);
-  return { value, showValue };
 };
 
 export default SynthesizedValue;
