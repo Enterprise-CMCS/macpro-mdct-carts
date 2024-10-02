@@ -704,6 +704,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -725,6 +729,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -747,6 +755,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -769,6 +781,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -790,6 +806,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -812,6 +832,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -834,6 +858,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -856,6 +884,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -865,28 +897,6 @@
                   },
                   {
                     "id": "2024-01-a-03-09",
-                    "hint": "For example: removing a waiting period.",
-                    "type": "radio",
-                    "label": "Have you made any changes to the substitution of coverage policies?",
-                    "answer": {
-                      "entry": null,
-                      "options": [
-                        {
-                          "label": "Yes",
-                          "value": "yes"
-                        },
-                        {
-                          "label": "No",
-                          "value": "no"
-                        }
-                      ]
-                    },
-                    "context_data": {
-                      "bullet_text": "Subsitution of coverage policies"
-                    }
-                  },
-                  {
-                    "id": "2024-01-a-03-10",
                     "type": "radio",
                     "label": "Have you made any changes to the enrollment process for health plan selection?",
                     "answer": {
@@ -899,6 +909,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -907,7 +921,7 @@
                     }
                   },
                   {
-                    "id": "2024-01-a-03-11",
+                    "id": "2024-01-a-03-10",
                     "hint": "For example: changing from the Medicaid Fair Hearing process to the review process used by all health insurance issuers statewide.",
                     "type": "radio",
                     "label": "Have you made any changes to the protections for applicants and enrollees?",
@@ -921,6 +935,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -929,7 +947,7 @@
                     }
                   },
                   {
-                    "id": "2024-01-a-03-12",
+                    "id": "2024-01-a-03-11",
                     "hint": "For example: adding premium assistance or changing the population that receives premium assistance.",
                     "type": "radio",
                     "label": "Have you made any changes to premium assistance?",
@@ -943,6 +961,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -951,7 +973,7 @@
                     }
                   },
                   {
-                    "id": "2024-01-a-03-13",
+                    "id": "2024-01-a-03-12",
                     "type": "radio",
                     "label": "Have you made any changes to the methods and procedures for preventing, investigating, or referring fraud or abuse cases?",
                     "answer": {
@@ -964,6 +986,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -972,7 +998,7 @@
                     }
                   },
                   {
-                    "id": "2024-01-a-03-14",
+                    "id": "2024-01-a-03-13",
                     "type": "radio",
                     "label": "Have you made any changes to eligibility for “lawfully residing pregnant individuals”?",
                     "answer": {
@@ -985,6 +1011,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -993,7 +1023,7 @@
                     }
                   },
                   {
-                    "id": "2024-01-a-03-15",
+                    "id": "2024-01-a-03-14",
                     "type": "radio",
                     "label": "Have you made any changes to eligibility for “lawfully residing” children?",
                     "answer": {
@@ -1006,6 +1036,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1014,7 +1048,7 @@
                     }
                   },
                   {
-                    "id": "2024-01-a-03-16",
+                    "id": "2024-01-a-03-15",
                     "type": "radio",
                     "label": "Have you made changes to any other policy or program areas?",
                     "answer": {
@@ -1027,6 +1061,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1038,15 +1076,7 @@
                     "type": "fieldset",
                     "questions": [
                       {
-                        "id": "2024-01-a-03-17",
-                        "type": "text_multiline",
-                        "label": "Briefly describe why you made changes to your Medicaid expansion CHIP program (if applicable).",
-                        "answer": {
-                          "entry": null
-                        }
-                      },
-                      {
-                        "id": "2024-01-a-03-18",
+                        "id": "2024-01-a-03-16",
                         "type": "radio",
                         "label": "Have you already submitted a State Plan Amendment (SPA) to reflect any changes that require a SPA?",
                         "answer": {
@@ -1059,8 +1089,20 @@
                             {
                               "label": "No",
                               "value": "no"
+                            },
+                            {
+                              "label": "N/A",
+                              "value": "n/a"
                             }
                           ]
+                        }
+                      },
+                      {
+                        "id": "2024-01-a-03-17",
+                        "type": "text_multiline",
+                        "label": "Briefly describe why you made changes to your Medicaid expansion CHIP program (if applicable).",
+                        "answer": {
+                          "entry": null
                         }
                       }
                     ],
@@ -1087,13 +1129,12 @@
                             "$..[?(@ && @.id=='2024-01-a-03-12')].answer.entry",
                             "$..[?(@ && @.id=='2024-01-a-03-13')].answer.entry",
                             "$..[?(@ && @.id=='2024-01-a-03-14')].answer.entry",
-                            "$..[?(@ && @.id=='2024-01-a-03-15')].answer.entry",
-                            "$..[?(@ && @.id=='2024-01-a-03-16')].answer.entry"
+                            "$..[?(@ && @.id=='2024-01-a-03-15')].answer.entry"
                           ]
                         }
                       },
-                      "interactive_conditional": "Show if any 2024-01-a-03 questions 1–16 has a yes answer, hide otherwise.",
-                      "noninteractive_conditional": "Show if any 2024-01-a-03 questions 1–16 has a yes answer, hide otherwise."
+                      "interactive_conditional": "Show if any 2024-01-a-03 questions 1–15 has a yes answer, hide otherwise.",
+                      "noninteractive_conditional": "Show if any 2024-01-a-03 questions 1–15 has a yes answer, hide otherwise."
                     }
                   }
                 ],
@@ -1125,6 +1166,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1146,6 +1191,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1168,6 +1217,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1179,7 +1232,7 @@
                     "id": "2024-01-a-04-04",
                     "hint": "For example: adding benefits or removing benefit limits.",
                     "type": "radio",
-                    "label": "Have you made any changes to the benefits available to enrolees?",
+                    "label": "Have you made any changes to the benefits available to enrollees?",
                     "answer": {
                       "entry": null,
                       "options": [
@@ -1190,6 +1243,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1211,6 +1268,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1233,6 +1294,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1255,6 +1320,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1266,7 +1335,7 @@
                     "id": "2024-01-a-04-08",
                     "hint": "For example: changing amounts, populations, or the collection process.",
                     "type": "radio",
-                    "label": "Have you made any changes to your cost sharing requirements?",
+                    "label": "Have you made any changes to cost sharing requirements?",
                     "answer": {
                       "entry": null,
                       "options": [
@@ -1277,6 +1346,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1299,6 +1372,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1309,7 +1386,7 @@
                   {
                     "id": "2024-01-a-04-10",
                     "type": "radio",
-                    "label": "Have you made any changes to an enrollment freeze and/or enrollment cap?",
+                    "label": "Have you made any changes to the implementation of an enrollment freeze and/or enrollment cap?",
                     "answer": {
                       "entry": null,
                       "options": [
@@ -1320,6 +1397,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1341,6 +1422,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1363,6 +1448,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1385,6 +1474,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1395,7 +1488,7 @@
                   {
                     "id": "2024-01-a-04-14",
                     "type": "radio",
-                    "label": "Have you made any changes to the methods and procedures for preventing, investigating, or referring fraud or abuse cases?",
+                    "label": "Have you made any changes to the methods/procedures for the prevention, investigation, or referral of fraud or abuse cases?",
                     "answer": {
                       "entry": null,
                       "options": [
@@ -1406,6 +1499,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1428,6 +1525,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1450,6 +1551,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1471,6 +1576,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1492,6 +1601,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1513,6 +1626,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1525,16 +1642,8 @@
                     "questions": [
                       {
                         "id": "2024-01-a-04-20",
-                        "type": "text_multiline",
-                        "label": "Briefly describe why you made these changes to your separate CHIP program (if applicable).",
-                        "answer": {
-                          "entry": null
-                        }
-                      },
-                      {
-                        "id": "2024-01-a-04-21",
                         "type": "radio",
-                        "label": "Have you already submitted a State Plan Amendment (SPA) to reflect any changes that require a SPA?",
+                        "label": "Have you already submitted a SPA to reflect any of the changes addressed in this section that require a SPA?",
                         "answer": {
                           "entry": null,
                           "options": [
@@ -1545,8 +1654,20 @@
                             {
                               "label": "No",
                               "value": "no"
+                            },
+                            {
+                              "label": "N/A",
+                              "value": "n/a"
                             }
                           ]
+                        }
+                      },
+                      {
+                        "id": "2024-01-a-04-21",
+                        "type": "text_multiline",
+                        "label": "Briefly describe why you made changes to your separate CHIP program (if applicable).",
+                        "answer": {
+                          "entry": null
                         }
                       }
                     ],
