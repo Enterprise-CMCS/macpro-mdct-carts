@@ -704,6 +704,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -725,6 +729,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -747,6 +755,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -769,6 +781,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -790,6 +806,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -812,6 +832,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -834,6 +858,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -856,6 +884,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -877,6 +909,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -899,6 +935,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -921,6 +961,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -942,6 +986,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -963,6 +1011,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -984,6 +1036,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1005,6 +1061,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1017,14 +1077,6 @@
                     "questions": [
                       {
                         "id": "2024-01-a-03-16",
-                        "type": "text_multiline",
-                        "label": "Briefly describe why you made changes to your Medicaid expansion CHIP program (if applicable).",
-                        "answer": {
-                          "entry": null
-                        }
-                      },
-                      {
-                        "id": "2024-01-a-03-17",
                         "type": "radio",
                         "label": "Have you already submitted a State Plan Amendment (SPA) to reflect any changes that require a SPA?",
                         "answer": {
@@ -1037,8 +1089,20 @@
                             {
                               "label": "No",
                               "value": "no"
+                            },
+                            {
+                              "label": "N/A",
+                              "value": "n/a"
                             }
                           ]
+                        }
+                      },
+                      {
+                        "id": "2024-01-a-03-17",
+                        "type": "text_multiline",
+                        "label": "Briefly describe why you made changes to your Medicaid expansion CHIP program (if applicable).",
+                        "answer": {
+                          "entry": null
                         }
                       }
                     ],
@@ -1102,6 +1166,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1123,6 +1191,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1145,6 +1217,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1156,7 +1232,7 @@
                     "id": "2024-01-a-04-04",
                     "hint": "For example: adding benefits or removing benefit limits.",
                     "type": "radio",
-                    "label": "Have you made any changes to the benefits available to enrolees?",
+                    "label": "Have you made any changes to the benefits available to enrollees?",
                     "answer": {
                       "entry": null,
                       "options": [
@@ -1167,6 +1243,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1188,6 +1268,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1210,6 +1294,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1232,6 +1320,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1243,7 +1335,7 @@
                     "id": "2024-01-a-04-08",
                     "hint": "For example: changing amounts, populations, or the collection process.",
                     "type": "radio",
-                    "label": "Have you made any changes to your cost sharing requirements?",
+                    "label": "Have you made any changes to cost sharing requirements?",
                     "answer": {
                       "entry": null,
                       "options": [
@@ -1254,6 +1346,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1276,6 +1372,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1286,7 +1386,7 @@
                   {
                     "id": "2024-01-a-04-10",
                     "type": "radio",
-                    "label": "Have you made any changes to an enrollment freeze and/or enrollment cap?",
+                    "label": "Have you made any changes to the implementation of an enrollment freeze and/or enrollment cap?",
                     "answer": {
                       "entry": null,
                       "options": [
@@ -1297,6 +1397,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1318,6 +1422,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1340,6 +1448,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1362,6 +1474,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1372,7 +1488,7 @@
                   {
                     "id": "2024-01-a-04-14",
                     "type": "radio",
-                    "label": "Have you made any changes to the methods and procedures for preventing, investigating, or referring fraud or abuse cases?",
+                    "label": "Have you made any changes to the methods/procedures for the prevention, investigation, or referral of fraud or abuse cases?",
                     "answer": {
                       "entry": null,
                       "options": [
@@ -1383,6 +1499,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1405,6 +1525,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1427,6 +1551,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1448,6 +1576,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1469,6 +1601,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1490,6 +1626,10 @@
                         {
                           "label": "No",
                           "value": "no"
+                        },
+                        {
+                          "label": "N/A",
+                          "value": "n/a"
                         }
                       ]
                     },
@@ -1502,16 +1642,8 @@
                     "questions": [
                       {
                         "id": "2024-01-a-04-20",
-                        "type": "text_multiline",
-                        "label": "Briefly describe why you made these changes to your separate CHIP program (if applicable).",
-                        "answer": {
-                          "entry": null
-                        }
-                      },
-                      {
-                        "id": "2024-01-a-04-21",
                         "type": "radio",
-                        "label": "Have you already submitted a State Plan Amendment (SPA) to reflect any changes that require a SPA?",
+                        "label": "Have you already submitted a SPA to reflect any of the changes addressed in this section that require a SPA?",
                         "answer": {
                           "entry": null,
                           "options": [
@@ -1522,8 +1654,20 @@
                             {
                               "label": "No",
                               "value": "no"
+                            },
+                            {
+                              "label": "N/A",
+                              "value": "n/a"
                             }
                           ]
+                        }
+                      },
+                      {
+                        "id": "2024-01-a-04-21",
+                        "type": "text_multiline",
+                        "label": "Briefly describe why you made changes to your separate CHIP program (if applicable).",
+                        "answer": {
+                          "entry": null
                         }
                       }
                     ],
