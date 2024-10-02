@@ -7,10 +7,44 @@ import { lteMask } from "../../util/constants";
 import PropTypes from "prop-types";
 
 const SynthesizedTable = ({ question, tableTitle, printView }) => {
-  const { headers, rows } = useSelector(
-    (state) => getTableContents(state, question, printView),
-    shallowEqual
-  );
+  const [allStatesData, stateName, stateUserAbbr, chipEnrollments, formData] =
+    useSelector(
+      (state) => [
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData,
+      ],
+      shallowEqual
+    );
+
+  const rows = question.fieldset_info.rows.map((row) => {
+    let contents = row;
+    if (printView) {
+      contents = row.filter((cell) => cell?.mask !== lteMask);
+    }
+    return contents.map((cell) => {
+      const value = synthesizeValue(
+        cell,
+        allStatesData,
+        stateName,
+        stateUserAbbr,
+        chipEnrollments,
+        formData
+      );
+
+      return typeof value.contents === "number" && Number.isNaN(value.contents)
+        ? { contents: "Not Available" }
+        : value;
+    });
+  });
+
+  const headers = printView
+    ? question.fieldset_info.headers.filter(
+        (header) => header?.mask !== lteMask
+      )
+    : question.fieldset_info.headers;
 
   return (
     <div className="synthesized-table ds-u-margin-top--2">
@@ -69,40 +103,6 @@ const SynthesizedTable = ({ question, tableTitle, printView }) => {
 SynthesizedTable.propTypes = {
   question: PropTypes.object.isRequired,
   tableTitle: PropTypes.string.isOptional,
-};
-
-const getTableContents = (state, question, printView) => {
-  const { allStatesData, formData } = state;
-  const stateName = state.global.stateName;
-  const stateUserAbbr = state.stateUser.abbr;
-  const chipEnrollments = state.enrollmentCounts.chipEnrollments;
-  const { headers: questionHeaders, rows: questionRows } =
-    question.fieldset_info;
-
-  const rows = questionRows.map((row) => {
-    let contents = row;
-    if (printView) {
-      contents = row.filter((cell) => cell?.mask !== lteMask);
-    }
-    return contents.map((cell) => {
-      const value = synthesizeValue(
-        cell,
-        allStatesData,
-        stateName,
-        stateUserAbbr,
-        chipEnrollments,
-        formData
-      );
-
-      return typeof value.contents === "number" && Number.isNaN(value.contents)
-        ? { contents: "Not Available" }
-        : value;
-    });
-  });
-  const headers = printView
-    ? questionHeaders.filter((header) => header?.mask !== lteMask)
-    : questionHeaders;
-  return { headers, rows };
 };
 
 export default SynthesizedTable;
