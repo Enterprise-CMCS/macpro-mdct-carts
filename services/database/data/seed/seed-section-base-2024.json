@@ -864,29 +864,7 @@
                     }
                   },
                   {
-                    "id": "2024-01-a-03-09",
-                    "hint": "For example: removing a waiting period.",
-                    "type": "radio",
-                    "label": "Have you made any changes to the substitution of coverage policies?",
-                    "answer": {
-                      "entry": null,
-                      "options": [
-                        {
-                          "label": "Yes",
-                          "value": "yes"
-                        },
-                        {
-                          "label": "No",
-                          "value": "no"
-                        }
-                      ]
-                    },
-                    "context_data": {
-                      "bullet_text": "Subsitution of coverage policies"
-                    }
-                  },
-                  {
-                    "id": "2024-01-a-03-10",
+                    "id": "2024-01-a-03-9",
                     "type": "radio",
                     "label": "Have you made any changes to the enrollment process for health plan selection?",
                     "answer": {
@@ -907,7 +885,7 @@
                     }
                   },
                   {
-                    "id": "2024-01-a-03-11",
+                    "id": "2024-01-a-03-10",
                     "hint": "For example: changing from the Medicaid Fair Hearing process to the review process used by all health insurance issuers statewide.",
                     "type": "radio",
                     "label": "Have you made any changes to the protections for applicants and enrollees?",
@@ -929,7 +907,7 @@
                     }
                   },
                   {
-                    "id": "2024-01-a-03-12",
+                    "id": "2024-01-a-03-11",
                     "hint": "For example: adding premium assistance or changing the population that receives premium assistance.",
                     "type": "radio",
                     "label": "Have you made any changes to premium assistance?",
@@ -951,7 +929,7 @@
                     }
                   },
                   {
-                    "id": "2024-01-a-03-13",
+                    "id": "2024-01-a-03-12",
                     "type": "radio",
                     "label": "Have you made any changes to the methods and procedures for preventing, investigating, or referring fraud or abuse cases?",
                     "answer": {
@@ -972,7 +950,7 @@
                     }
                   },
                   {
-                    "id": "2024-01-a-03-14",
+                    "id": "2024-01-a-03-13",
                     "type": "radio",
                     "label": "Have you made any changes to eligibility for “lawfully residing pregnant individuals”?",
                     "answer": {
@@ -993,7 +971,7 @@
                     }
                   },
                   {
-                    "id": "2024-01-a-03-15",
+                    "id": "2024-01-a-03-14",
                     "type": "radio",
                     "label": "Have you made any changes to eligibility for “lawfully residing” children?",
                     "answer": {
@@ -1014,7 +992,7 @@
                     }
                   },
                   {
-                    "id": "2024-01-a-03-16",
+                    "id": "2024-01-a-03-15",
                     "type": "radio",
                     "label": "Have you made changes to any other policy or program areas?",
                     "answer": {
@@ -1038,7 +1016,7 @@
                     "type": "fieldset",
                     "questions": [
                       {
-                        "id": "2024-01-a-03-17",
+                        "id": "2024-01-a-03-16",
                         "type": "text_multiline",
                         "label": "Briefly describe why you made changes to your Medicaid expansion CHIP program (if applicable).",
                         "answer": {
@@ -1046,7 +1024,7 @@
                         }
                       },
                       {
-                        "id": "2024-01-a-03-18",
+                        "id": "2024-01-a-03-17",
                         "type": "radio",
                         "label": "Have you already submitted a State Plan Amendment (SPA) to reflect any changes that require a SPA?",
                         "answer": {
@@ -1087,13 +1065,12 @@
                             "$..[?(@ && @.id=='2024-01-a-03-12')].answer.entry",
                             "$..[?(@ && @.id=='2024-01-a-03-13')].answer.entry",
                             "$..[?(@ && @.id=='2024-01-a-03-14')].answer.entry",
-                            "$..[?(@ && @.id=='2024-01-a-03-15')].answer.entry",
-                            "$..[?(@ && @.id=='2024-01-a-03-16')].answer.entry"
+                            "$..[?(@ && @.id=='2024-01-a-03-15')].answer.entry"
                           ]
                         }
                       },
-                      "interactive_conditional": "Show if any 2024-01-a-03 questions 1–16 has a yes answer, hide otherwise.",
-                      "noninteractive_conditional": "Show if any 2024-01-a-03 questions 1–16 has a yes answer, hide otherwise."
+                      "interactive_conditional": "Show if any 2024-01-a-03 questions 1–15 has a yes answer, hide otherwise.",
+                      "noninteractive_conditional": "Show if any 2024-01-a-03 questions 1–15 has a yes answer, hide otherwise."
                     }
                   }
                 ],
