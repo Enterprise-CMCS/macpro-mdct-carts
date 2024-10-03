@@ -70,7 +70,7 @@
     "@smithy/util-utf8" "^2.0.0"
     tslib "^2.6.2"
 
-"@aws-sdk/client-dynamodb@^3.649.0":
+"@aws-sdk/client-dynamodb@^3.662.0":
   version "3.662.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/client-dynamodb/-/client-dynamodb-3.662.0.tgz#462c8155eb2cc38f894a87c4f06d2371d4bf6b1b"
   integrity sha512-d5t6hDQkVYqRvp6Cf6WygbseY8gln7Ca/tI4+1B6JXSl2UzffX5ovx2SOjNEPlyGGtZYIiOfqOnKnFlaj0+Gxg==
@@ -120,7 +120,7 @@
     tslib "^2.6.2"
     uuid "^9.0.1"
 
-"@aws-sdk/client-s3@^3.649.0":
+"@aws-sdk/client-s3@^3.662.0":
   version "3.663.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/client-s3/-/client-s3-3.663.0.tgz#02ee62efd49a11aaae66e805dd446f3f2ea43fab"
   integrity sha512-XWoy6wglrxFngdswGbccR7cwmafe3ycx2/vIRDuVnIeSYdj/PgYACBt5JEM5NEzW26kFtlJpeN9hUH1i6tyfuQ==
@@ -184,7 +184,7 @@
     "@smithy/util-waiter" "^3.1.6"
     tslib "^2.6.2"
 
-"@aws-sdk/client-ssm@^3.649.0":
+"@aws-sdk/client-ssm@^3.662.0":
   version "3.662.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/client-ssm/-/client-ssm-3.662.0.tgz#fa15013e4485a5e2a5dd726e45afd7eb08f60feb"
   integrity sha512-69rDJozJRBuUjvejZceoG1Xdm0L7elsH7OIPVoNyHwN7CyPzIY1j0fm7+G+3GK9N4VdPC4m0xge5mNVfEeV7hQ==
@@ -486,7 +486,7 @@
     mnemonist "0.38.3"
     tslib "^2.6.2"
 
-"@aws-sdk/lib-dynamodb@^3.649.0":
+"@aws-sdk/lib-dynamodb@^3.662.0":
   version "3.662.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/lib-dynamodb/-/lib-dynamodb-3.662.0.tgz#425073c71c284cff3636faf8daa07e692c8b0504"
   integrity sha512-DCmhc9hccIsMbYl8xINLtxYmsUlSVCUKcDA19Z+7901Jlu8OwzidwMBy4ZK8wAmy6/aG4agH67FY4i0Hee3z9g==
@@ -638,7 +638,7 @@
     "@smithy/util-middleware" "^3.0.7"
     tslib "^2.6.2"
 
-"@aws-sdk/s3-request-presigner@^3.649.0":
+"@aws-sdk/s3-request-presigner@^3.662.0":
   version "3.663.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/s3-request-presigner/-/s3-request-presigner-3.663.0.tgz#472920fc8deea330672a83f11e2da02c954c8f7d"
   integrity sha512-Z29C20dDEFo8e+j8zrk826cguY/n1WMzGSGhv8/m49zqLCgrrkYkv2/peTv+jl46lLOhFigsToYn+G+46YBOdw==

@@ -40,7 +40,7 @@
     "@smithy/util-utf8" "^2.0.0"
     tslib "^2.6.2"
 
-"@aws-sdk/client-cognito-identity-provider@^3.649.0":
+"@aws-sdk/client-cognito-identity-provider@^3.662.0":
   version "3.662.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/client-cognito-identity-provider/-/client-cognito-identity-provider-3.662.0.tgz#8699f4f37fb23fef07729a86ab934998c19e059d"
   integrity sha512-GqKKoVIBwkGqIxFJh5gJY7aMZhijjJkk/hmI1eIuS4vex7LpS941uYH/3CpyuI0u3hq+ABjwul2W6dDNleVq4Q==
