@@ -139,7 +139,7 @@ functions:
     handler: handlers/fiscalYearTemplate/get.getFiscalYearTemplateLink
     events:
       - http:
-          path: fiscalYearTemplate
+          path: fiscalYearTemplate/{year}
           method: get
           cors: true
           authorizer: aws_iam
