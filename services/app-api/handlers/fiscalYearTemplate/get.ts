@@ -3,8 +3,7 @@ import s3 from "../../libs/s3-lib";
 import { ReportPdfs } from "../../types";
 
 export const getFiscalYearTemplateLink = handler(async (event, _context) => {
-  if (!event.pathParameters) throw new Error("No Path Parameters Object");
-  if (!event.pathParameters.year) {
+  if (!event.pathParameters?.year) {
     throw new Error("Be sure to include year in the path");
   }
 

@@ -26,4 +26,24 @@ describe("Test Get Fiscal Year Template Handlers", () => {
       psurl: "mock url",
     });
   });
+
+  test("fetching fiscal year template without params should return server error", async () => {
+    const event: APIGatewayProxyEvent = {
+      ...testEvent,
+    };
+
+    event.pathParameters = null;
+
+    const res = await getFiscalYearTemplateLink(event, null);
+    expect(res.statusCode).toBe(500);
+  });
+
+  test("fetching fiscal year template without year should return server error", async () => {
+    const event: APIGatewayProxyEvent = {
+      ...testEvent,
+    };
+
+    const res = await getFiscalYearTemplateLink(event, null);
+    expect(res.statusCode).toBe(500);
+  });
 });
