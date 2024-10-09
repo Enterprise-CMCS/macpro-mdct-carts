@@ -8116,7 +8116,7 @@
                             "type": "text_multiline",
                             "label": "What is the next objective listed in your CHIP State Plan?",
                             "answer": {
-                              "entry": "Increase the use of preventative care"
+                              "entry": "Increase the use of preventive care"
                             }
                           },
                           {
@@ -18302,7 +18302,7 @@
                             "label": "What is the next objective listed in your CHIP State Plan?",
                             "type": "text_multiline",
                             "answer": {
-                              "entry": "Increase the use of preventative care"
+                              "entry": "Increase the use of preventive care"
                             },
                             "hint": "You can edit the suggested objective to match what’s in your CHIP State Plan."
                           },
@@ -29659,7 +29659,7 @@
                             "type": "text_multiline",
                             "label": "What is the next objective listed in your CHIP State Plan?",
                             "answer": {
-                              "entry": "Increase the use of preventative care "
+                              "entry": "Increase the use of preventive care "
                             }
                           },
                           {
@@ -29672,7 +29672,7 @@
                                 "questions": [
                                   {
                                     "id": "2021-04-a-01-01-03-02-01-01",
-                                    "hint": "For example: In an effort to increase the use of preventative care, our goal is to increase the number of children who receive one or more well child visits by 5%.",
+                                    "hint": "For example: In an effort to increase the use of preventive care, our goal is to increase the number of children who receive one or more well child visits by 5%.",
                                     "type": "text_multiline",
                                     "label": "Briefly describe your goal for this objective.",
                                     "answer": {
@@ -29850,7 +29850,7 @@
                                 "questions": [
                                   {
                                     "id": "2021-04-a-01-01-03-02-02-01",
-                                    "hint": "For example: In an effort to increase the use of preventative care, our goal is to increase the number of children who receive one or more well child visits by 5%.",
+                                    "hint": "For example: In an effort to increase the use of preventive care, our goal is to increase the number of children who receive one or more well child visits by 5%.",
                                     "type": "text_multiline",
                                     "label": "Briefly describe your goal for this objective.",
                                     "answer": {
@@ -30030,7 +30030,7 @@
                                 "questions": [
                                   {
                                     "id": "2021-04-a-01-01-03-02-03-01",
-                                    "hint": "For example: In an effort to increase the use of preventative care, our goal is to increase the number of children who receive one or more well child visits by 5%.",
+                                    "hint": "For example: In an effort to increase the use of preventive care, our goal is to increase the number of children who receive one or more well child visits by 5%.",
                                     "type": "text_multiline",
                                     "label": "Briefly describe your goal for this objective.",
                                     "answer": {
@@ -41398,7 +41398,7 @@
                             "type": "text_multiline",
                             "label": "What is the next objective listed in your CHIP State Plan?",
                             "answer": {
-                              "entry": "Increase the use of preventative care "
+                              "entry": "Increase the use of preventive care "
                             }
                           },
                           {
@@ -41411,7 +41411,7 @@
                                 "questions": [
                                   {
                                     "id": "2020-04-a-01-01-03-02-01-01",
-                                    "hint": "For example: In an effort to increase the use of preventative care, our goal is to increase the number of children who receive one or more well child visits by 5%.",
+                                    "hint": "For example: In an effort to increase the use of preventive care, our goal is to increase the number of children who receive one or more well child visits by 5%.",
                                     "type": "text_multiline",
                                     "label": "Briefly describe your goal for this objective.",
                                     "answer": {
@@ -41589,7 +41589,7 @@
                                 "questions": [
                                   {
                                     "id": "2020-04-a-01-01-03-02-02-01",
-                                    "hint": "For example: In an effort to increase the use of preventative care, our goal is to increase the number of children who receive one or more well child visits by 5%.",
+                                    "hint": "For example: In an effort to increase the use of preventive care, our goal is to increase the number of children who receive one or more well child visits by 5%.",
                                     "type": "text_multiline",
                                     "label": "Briefly describe your goal for this objective.",
                                     "answer": {
@@ -41769,7 +41769,7 @@
                                 "questions": [
                                   {
                                     "id": "2020-04-a-01-01-03-02-03-01",
-                                    "hint": "For example: In an effort to increase the use of preventative care, our goal is to increase the number of children who receive one or more well child visits by 5%.",
+                                    "hint": "For example: In an effort to increase the use of preventive care, our goal is to increase the number of children who receive one or more well child visits by 5%.",
                                     "type": "text_multiline",
                                     "label": "Briefly describe your goal for this objective.",
                                     "answer": {
