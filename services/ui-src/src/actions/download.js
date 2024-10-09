@@ -5,11 +5,15 @@ export const GET_TEMPLATE = "GET_TEMPLATE";
 export const GET_TEMPLATE_SUCCESS = "GET_TEMPLATE_SUCCESS";
 export const GET_TEMPLATE_FAILURE = "GET_TEMPLATE_FAILURE";
 
-export const getFiscalYearTemplate = () => async (dispatch) => {
+export const getFiscalYearTemplate = (year) => async (dispatch) => {
   dispatch({ type: GET_TEMPLATE, data: "" });
   try {
     const opts = await requestOptions();
-    const data = await apiLib.get("carts-api", `/fiscalYearTemplate`, opts);
+    const data = await apiLib.get(
+      "carts-api",
+      `/fiscalYearTemplate/${year}`,
+      opts
+    );
 
     dispatch({
       type: GET_TEMPLATE_SUCCESS,

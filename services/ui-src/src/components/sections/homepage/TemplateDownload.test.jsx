@@ -3,8 +3,10 @@ import TemplateDownload from "./TemplateDownload";
 
 import { shallow } from "enzyme";
 import { axe } from "jest-axe";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+import userEventLib from "@testing-library/user-event";
 
+const userEvent = userEventLib.setup({ applyAccept: false });
 const myMock = jest.fn();
 const defaultProps = { getTemplate: myMock };
 const wrapper = <TemplateDownload {...defaultProps} />;
@@ -12,6 +14,15 @@ const wrapper = <TemplateDownload {...defaultProps} />;
 describe("<TemplateDownload />", () => {
   it("should render correctly", () => {
     expect(shallow(wrapper).exists()).toBe(true);
+  });
+
+  it("should have download template link", async () => {
+    render(wrapper);
+
+    const downloadTemplateButton = screen.getByRole("button");
+    await userEvent.click(downloadTemplateButton);
+
+    expect(defaultProps.getTemplate).toBeCalledWith("2023");
   });
 });
 
