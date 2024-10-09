@@ -18,6 +18,8 @@ describe("Test Get Fiscal Year Template Handlers", () => {
       ...testEvent,
     };
 
+    event.pathParameters = { year: "2024" };
+
     const res = await getFiscalYearTemplateLink(event, null);
     expect(res.statusCode).toBe(200);
     expect(JSON.parse(res.body)).toEqual({
