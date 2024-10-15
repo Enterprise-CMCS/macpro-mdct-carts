@@ -23,14 +23,27 @@ const FormActions = () => {
   const printDialogeRef = useRef(null);
 
   // Get section IDs and subsection IDs for printing single section
-  let searchParams = document.location.pathname
-    .toString()
-    .replace("/sections/", "")
-    .replace(formYear + "/", "");
+  let searchParams = "";
+  let sectionId = "";
 
-  const sectionId = formYear + "-" + searchParams.substring(0, 2);
+  if (currentUser.role === AppRoles.CMS_ADMIN) {
+    const stateId = window.location.href.split("/")[5];
+    searchParams = document.location.pathname
+      .toString()
+      .replace(`views/sections/${stateId}/`, "")
+      .replace(formYear + "/", "");
+
+    sectionId = formYear + "-" + searchParams.substring(1, 3);
+  } else {
+    searchParams = document.location.pathname
+      .toString()
+      .replace("/sections/", "")
+      .replace(formYear + "/", "");
+
+    sectionId = formYear + "-" + searchParams.substring(0, 2);
+  }
+
   let subsectionId = sectionId + "-";
-
   if (sectionId.slice(-2) === "03") {
     subsectionId += searchParams.slice(-1);
   } else {

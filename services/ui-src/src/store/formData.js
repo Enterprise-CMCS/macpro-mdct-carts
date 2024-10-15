@@ -47,45 +47,48 @@ export default (state = initialState, action) => {
         }
       }
 
-      var chgsection1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
-      for (let x in chgsection1) {
-        updatedData[1].contents.section.subsections[0].parts[2].questions[
-          x
-        ].answer.options = [
-          {
-            label: "Yes",
-            value: "yes",
-          },
-          { label: "No", value: "no" },
-          { label: "N/A", value: "n/a" },
+      if (updatedData[1].year < 2024) {
+        var chgsection1 = [
+          0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
         ];
-      }
-      updatedData[1].contents.section.subsections[0].parts[2].questions[16].questions[1].answer.options =
-        [
-          {
-            label: "Yes",
-            value: "yes",
-          },
-          { label: "No", value: "no" },
-          { label: "N/A", value: "n/a" },
-        ];
+        for (let x in chgsection1) {
+          updatedData[1].contents.section.subsections[0].parts[2].questions[
+            x
+          ].answer.options = [
+            {
+              label: "Yes",
+              value: "yes",
+            },
+            { label: "No", value: "no" },
+            { label: "N/A", value: "n/a" },
+          ];
+        }
+        updatedData[1].contents.section.subsections[0].parts[2].questions[16].questions[1].answer.options =
+          [
+            {
+              label: "Yes",
+              value: "yes",
+            },
+            { label: "No", value: "no" },
+            { label: "N/A", value: "n/a" },
+          ];
 
-      var chgsection2 = [
-        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
-      ];
-      for (let x in chgsection2) {
-        updatedData[1].contents.section.subsections[0].parts[3].questions[
-          x
-        ].answer.options = [
-          {
-            label: "Yes",
-            value: "yes",
-          },
-          { label: "No", value: "no" },
-          { label: "N/A", value: "n/a" },
+        var chgsection2 = [
+          0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
         ];
+        for (let x in chgsection2) {
+          updatedData[1].contents.section.subsections[0].parts[3].questions[
+            x
+          ].answer.options = [
+            {
+              label: "Yes",
+              value: "yes",
+            },
+            { label: "No", value: "no" },
+            { label: "N/A", value: "n/a" },
+          ];
+        }
       }
-
       return updatedData;
     case QUESTION_ANSWERED: {
       const fragment = selectQuestion({ formData: state }, action.fragmentId);
