@@ -26,7 +26,21 @@ const FormActions = () => {
   let searchParams = "";
   let sectionId = "";
 
-  if (currentUser.role === AppRoles.CMS_ADMIN) {
+  const role = currentUser.role;
+  if (
+    role !== AppRoles.CMS_ADMIN &&
+    role !== AppRoles.INTERNAL_USER &&
+    role !== AppRoles.HELP_DESK &&
+    role !== AppRoles.CMS_APPROVER &&
+    role !== AppRoles.CMS_USER
+  ) {
+    searchParams = document.location.pathname
+      .toString()
+      .replace("/sections/", "")
+      .replace(formYear + "/", "");
+
+    sectionId = formYear + "-" + searchParams.substring(0, 2);
+  } else {
     const stateId = window.location.href.split("/")[5];
     searchParams = document.location.pathname
       .toString()
@@ -34,13 +48,6 @@ const FormActions = () => {
       .replace(formYear + "/", "");
 
     sectionId = formYear + "-" + searchParams.substring(1, 3);
-  } else {
-    searchParams = document.location.pathname
-      .toString()
-      .replace("/sections/", "")
-      .replace(formYear + "/", "");
-
-    sectionId = formYear + "-" + searchParams.substring(0, 2);
   }
 
   let subsectionId = sectionId + "-";
