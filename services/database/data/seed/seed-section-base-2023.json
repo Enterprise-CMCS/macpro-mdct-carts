@@ -9257,7 +9257,7 @@
                             "type": "text_multiline",
                             "label": "What is the next objective listed in your CHIP State Plan?",
                             "answer": {
-                              "entry": "Increase the use of preventative care"
+                              "entry": "Increase the use of preventive care"
                             }
                           },
                           {

@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { TextField } from "@cmsgov/design-system";
 import { useSelector } from "react-redux";
+import { TextField } from "@cmsgov/design-system";
+//utils
 import { generateQuestionNumber } from "../utils/helperFunctions";
+import { lteMask } from "../../util/constants";
+//types
+import PropTypes from "prop-types";
 
 const getPrevYearValue = (question, lastYearFormData) => {
   let prevYearValue;
@@ -31,17 +34,17 @@ const getPrevYearValue = (question, lastYearFormData) => {
 
     // Get questions from last years JSON
     const questions =
-      lastYearFormData[3].contents.section.subsections[2].parts[partIndex]
+      lastYearFormData?.[3]?.contents.section.subsections[2].parts[partIndex]
         .questions;
 
     // Filter down to this question
-    const matchingQuestion = questions.filter(
+    const matchingQuestion = questions?.filter(
       (question) => fieldsetId === question?.fieldset_info?.id
     );
 
     // The first will always be correct
-    if (matchingQuestion[0]) {
-      prevYearValue = parseInt(matchingQuestion[0].questions[0].answer?.entry);
+    if (matchingQuestion?.[0]) {
+      prevYearValue = matchingQuestion[0].questions[0].answer?.entry;
     }
   }
   return prevYearValue;
@@ -68,12 +71,7 @@ const Integer = ({ onChange, question, prevYear, printView, ...props }) => {
   };
 
   const isLessThanElevenMask = (value) => {
-    return (
-      printView &&
-      question.mask === "lessThanEleven" &&
-      value <= 10 &&
-      value > 0
-    );
+    return printView && question.mask === lteMask && value <= 10 && value > 0;
   };
 
   const renderAnswer = () => {

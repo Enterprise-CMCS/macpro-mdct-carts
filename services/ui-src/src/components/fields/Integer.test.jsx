@@ -1,9 +1,13 @@
 import React from "react";
 import { Provider } from "react-redux";
-import configureMockStore from "redux-mock-store";
+//testing
 import { shallow, mount } from "enzyme";
-import Integer from "./Integer";
+import configureMockStore from "redux-mock-store";
 import { screen, render, fireEvent } from "@testing-library/react";
+//components
+import Integer from "./Integer";
+//utils
+import { lteMask } from "../../util/constants";
 
 const mockStore = configureMockStore();
 const lastYearFormData = [
@@ -114,7 +118,7 @@ describe("<Integer />", () => {
         id: "2023-00-a-01-01",
         label: "Example Question",
         answer: { entry: "5" },
-        mask: "lessThanEleven",
+        mask: lteMask,
       },
       printView: true,
     };
@@ -130,7 +134,7 @@ describe("<Integer />", () => {
         id: "2023-00-a-01-01",
         label: "Example Question",
         answer: { entry: "12" },
-        mask: "lessThanEleven",
+        mask: lteMask,
       },
       printView: true,
     };
@@ -145,7 +149,7 @@ describe("<Integer />", () => {
         id: "2023-00-a-01-01",
         label: "Example Question",
         answer: { entry: "0" },
-        mask: "lessThanEleven",
+        mask: lteMask,
       },
       printView: true,
     };

@@ -149,10 +149,15 @@ export const enum RequestMethods {
 /**
  * Preseving historic filenames in case we need to make them available on demand or switch between available forms.
  */
-export const ReportPdfs = {
+interface ReportPdfsInterface {
+  [key: string]: string;
+}
+
+export const ReportPdfs: ReportPdfsInterface = {
   2021: "FFY_2021_CARTS_Template.pdf",
   2022: "FFY_2022_CARTS_Template.pdf",
   2023: "FFY_2023_CARTS_Template.pdf",
+  2024: "FFY_2024_CARTS_Template.pdf",
 };
 /* eslint-enable no-unused-vars */
 
