@@ -1,4 +1,4 @@
-import { signOut, getCurrentUser } from "aws-amplify/auth";
+import { fetchAuthSession, signOut } from "aws-amplify/auth";
 import { Hub } from "aws-amplify/utils";
 import { add } from "date-fns";
 import { setAuthTimeout } from "../../store/stateUser";
@@ -57,7 +57,7 @@ class AuthManager {
    * Manual refresh of credentials paired with an instant timer clear
    */
   async refreshCredentials() {
-    await getCurrentUser({ bypassCache: true }); // Force a token refresh
+    await fetchAuthSession({ forceRefresh: true }); // Force a token refresh
     this.setTimer();
   }
 
