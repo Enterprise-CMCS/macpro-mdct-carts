@@ -13,7 +13,8 @@ import fiscalYearTemplate from "./fiscalYearTemplate";
 import reportStatus from "./reportStatus";
 import enrollmentCounts from "./enrollmentCounts";
 import { initAuthManager } from "../hooks/authHooks";
-
+import { MODE } from "../util/metaEnv";
+import { logger } from "redux-logger";
 // Consolidate reducers
 export const reducer = combineReducers({
   formData,
@@ -31,10 +32,7 @@ export const reducer = combineReducers({
 // Consolidate middleware
 let middlewareArray = [thunkMiddleware, saveMiddleware];
 // log redux only in dev environment
-if (process.env.NODE_ENV === "development") {
-  // eslint-disable-next-line global-require
-  const { logger } = require("redux-logger");
-
+if (MODE === "development") {
   middlewareArray = [...middlewareArray, logger];
 }
 const middleware = composeWithDevTools(applyMiddleware(...middlewareArray));

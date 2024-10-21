@@ -6,7 +6,7 @@ export const UNCERTIFY = "UNCERTIFY";
 export const UNCERTIFY_SUCCESS = "UNCERTIFY_SUCCESS";
 export const UNCERTIFY_FAILURE = "UNCERTIFY_FAILURE";
 
-export const theUncertify =
+export const uncertifyReport =
   (stateCode, reportYear) => async (dispatch, getState) => {
     const stateObject = getState();
     const user = stateObject.stateUser.currentUser;

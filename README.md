@@ -4,11 +4,19 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/f1775f53aedf747e85b2/maintainability)](https://codeclimate.com/repos/6449718c21275100df510ea9/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/f1775f53aedf747e85b2/test_coverage)](https://codeclimate.com/repos/6449718c21275100df510ea9/test_coverage)
 
+## Integration Environment Deploy Status:
+| Branch  | Build Status |
+| ------------- | ------------- |
+| main  | ![deploy](https://github.com/Enterprise-CMCS/macpro-mdct-carts/actions/workflows/deploy.yml/badge.svg)  |
+| val  | ![deploy](https://github.com/Enterprise-CMCS/macpro-mdct-carts/actions/workflows/deploy.yml/badge.svg?branch=val)  |
+| production  | ![deploy](https://github.com/Enterprise-CMCS/macpro-mdct-carts/actions/workflows/deploy.yml/badge.svg?branch=production)  |
+
+
 CARTS is the CMCS MDCT application for collecting state data related to coverage of CHIP state plans on an annual basis. The collected data assists CMCS in monitoring, managing, and better understanding Medicaid and CHIP programs.
 
 Under section 2108(a) of the Act, states must assess the operation of their separate CHIP and Medicaid expansion programs and the progress made in reducing the number of uncovered, low-income children. The results of the assessment are reported to the Secretary by January 1 following the end of the FY in the CHIP Annual Reporting Template System (CARTS). CARTS collects information about programmatic changes, performance goals, program operation, program financing, program challenges and accomplishments.
 
-_Note: The [`main`](https://github.com/Enterprise-CMCS/macpro-mdct-carts/tree/main) branch contains CARTSv3. All code related to CARTSv2 (legacy) can be found in the [`master`](https://github.com/Enterprise-CMCS/macpro-mdct-carts/tree/master) branch._
+_Note: The [`main`](https://github.com/Enterprise-CMCS/macpro-mdct-carts/tree/main) branch contains CARTSv3. All code related to CARTSv2 (legacy) can be found in the [`skipci-archive-carts-v2`](https://github.com/Enterprise-CMCS/macpro-mdct-carts/tree/skipci-archive-carts-v2) branch._
 
 ## Table of contents
 
@@ -20,23 +28,22 @@ _Note: The [`main`](https://github.com/Enterprise-CMCS/macpro-mdct-carts/tree/ma
 
 ## Quick Start
 
-### One time only
+### Running MDCT Workspace Setup
+Team members are encouraged to setup all MDCT Products using the script located in the [MDCT Tools Repository](https://github.com/Enterprise-CMCS/macpro-mdct-tools). Please refer to the README for instructions running the MDCT Workspace Setup. After Running workspace setup team members can refer to the Running the project locally section below to proceed with running the application. 
+
+### One time only ( this is not needed if you've run the MDCT Workspace setup)
 
 Before starting the project install some tools
 
 - `brew install nvm`
 - `brew install pre-commit`
+- `pre-commit install`
 
-### Setting up the project locally
+### Running the project locally
 
-TODO: Fix the phone a friend instructions below
-
-1. Clone the repo
-2. In the root directory copy the .env_example file and name it .env
-3. In the services/ui-src directory copy the .env_example file and name it .env
-4. Overwrite the values here with an example from another developer
-5. In the root directory run `pre-commit install`
-6. Also in the root of the project run `./dev local`
+1. Ensure you either have a 1Password account and have 1Password CLI installed. Alternatively, reach out to the team for an example of .env files
+2. In the root of the project run `./run local --update-env` or if you do not have a 1Password account you can simply run `./run local` to use a static .env file
+   note: the `./run local --update-env` pulls secret values using the 1Password CLI and populates a local .env file that is gitignored.
 
 ### Logging in
 
@@ -63,7 +70,7 @@ There are two mechanisms for seeding data.
 
 ### Local Development Random Info
 
-Local dev is configured in typescript project in `./src`. The entrypoint is `./src/dev.ts`, it manages running the moving pieces locally: the API, the database, the filestore, and the frontend.
+Local dev is configured in typescript project in `./src`. The entrypoint is `./src/run.ts`, it manages running the moving pieces locally: the API, the database, the filestore, and the frontend.
 
 Local dev is built around the Serverless plugin [`serverless-offline`](https://github.com/dherault/serverless-offline). `serverless-offline` runs an API gateway locally configured by `./services/app-api/serverless.yml` and hot reloads your lambdas on every save. The plugins [`serverless-dynamodb-local`](https://github.com/99x/serverless-dynamodb-local) and [`serverless-s3-local`](https://github.com/ar90n/serverless-s3-local) stand up the local db and local s3 in a similar fashion.
 
@@ -108,10 +115,7 @@ On the SEDS side, this topic is updated on every submission of seds data, but CA
 - 4th quarter data.
 - The rollover for a "new year" is October, and future submissions are not recognized until that threshold
 
-Updates outside of that time frame will need to be manually corrected in CARTS, or the integration will need to be modifed to collect data for old forms. CARTS additionally looks for the `enrollmentCounts` property which is only included in forms 21E and 64.21E (question 7), either by manual trigger or update. See SEDS files:
-
-- [generateEnrollmentTotals](https://github.com/Enterprise-CMCS/macpro-mdct-seds/blob/master/services/app-api/handlers/state-forms/post/generateEnrollmentTotals.js)
-- [updateStateForms](https://github.com/Enterprise-CMCS/macpro-mdct-seds/blob/master/services/app-api/handlers/state-forms/post/updateStateForms.js)
+Updates outside of that time frame will need to be manually corrected in CARTS, or the integration will need to be modifed to collect data for old forms. CARTS additionally looks for the `enrollmentCounts` property which is only included in forms 21E and 64.21E (question 7), either by manual trigger or update.
 
 For testing convenience, stateuser2 points at AL in CARTS and the stateuser points at AL in SEDS.
 
@@ -193,7 +197,7 @@ This repository uses 3 webhooks to publish to  3 different channels all in CMS S
 
 ## GitHub Actions Secret Management
 - Secrets are added to GitHub secrets by GitHub Admins 
-- Upon editing and adding new secrets Admins should also update the encypted `/github/secret-list` SSM parameter in the CARTS AWS Production Account.
+- Development secrets are maintained in a 1Password vault
 
 ## Architecture
 

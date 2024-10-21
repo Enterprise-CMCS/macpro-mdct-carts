@@ -112,11 +112,10 @@ img {
 }
 
 .omb-info {
-  color: $color-hint;
+  color: $color-hint-dark;
   font-size: 0.85rem;
   line-height: 1.6rem;
-  margin: 64px 0;
-  text-align: center;
+  margin: 1rem 0;
 }
 
 .reports {
@@ -260,10 +259,23 @@ img {
     margin-left: ($margin * 2);
   }
 
+  .preamble {
+    max-width: 730px; 
+    margin-bottom: 2rem;
+  }
+
+  .update-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: $brand-primary;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
   .update-date {
-    color: $color-hint-light;
-    text-align: right;
-    text-transform: uppercase;
+    color: $color-hint-dark;
+    font-size:1.1rem;
+    font-weight: bold;
   }
 
   .updates {
@@ -274,15 +286,16 @@ img {
       margin-top: 0;
     }
     h4 {
-      font-size: 0.85rem;
-      text-transform: uppercase;
+      font-size: 1.25rem;
+      margin-top: 1.5rem;
+      margin-bottom: 2rem;
     }
 
     .update {
       border: 2px solid $color-gray-lightest;
       border-left: none;
       border-right: none;
-      padding: ($padding * 6) 0;
+      padding: 2rem 0;
       text-align: center;
 
       @media only screen and (min-width: 768px) {
@@ -309,6 +322,9 @@ img {
           padding: ($padding * 2) ($padding * 5);
           text-align: center;
           width: auto;
+          @media only screen and (min-width: 768px) {
+            padding-right: 2rem;
+          }
         }
       }
 
@@ -335,6 +351,10 @@ img {
         justify-content: space-between;
       }
     }
+  }
+
+  .carts-report {
+    margin-top: 1rem;
   }
 }
 

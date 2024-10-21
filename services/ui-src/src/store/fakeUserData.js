@@ -7,7 +7,7 @@ const fakeUserData = {
     programType: "medicaid_exp_chip",
     programName: "WTF AK Program Name??",
     // eslint-disable-next-line no-undef
-    imageURI: `${process.env.PUBLIC_URL}/img/states/ak.svg`,
+    imageURI: "/img/states/ak.svg",
     formName: "CARTS FY",
     currentUser: {
       role: AppRoles.STATE_USER,
@@ -24,7 +24,7 @@ const fakeUserData = {
     programType: "separate_chip",
     programName: "AZ Program Name??",
     // eslint-disable-next-line no-undef
-    imageURI: `${process.env.PUBLIC_URL}/img/states/az.svg`,
+    imageURI: "/img/states/az.svg",
     formName: "CARTS FY",
     currentUser: {
       role: AppRoles.STATE_USER,
@@ -41,7 +41,7 @@ const fakeUserData = {
     programType: "combo",
     programName: "MA Program Name??",
     // eslint-disable-next-line no-undef
-    imageURI: `${process.env.PUBLIC_URL}/img/states/ma.svg`,
+    imageURI: "/img/states/ma.svg",
     formName: "CARTS FY",
     currentUser: {
       role: AppRoles.STATE_USER,

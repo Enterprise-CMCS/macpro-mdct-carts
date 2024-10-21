@@ -9,14 +9,11 @@ package:
 plugins:
   - serverless-plugin-typescript
   - serverless-dotenv-plugin
-  - serverless-plugin-warmup
   - serverless-associate-waf
   - serverless-offline
   - serverless-stack-termination-protection
-  - serverless-idempotency-helper
   - serverless-iam-helper
   - serverless-s3-bucket-helper
-  - serverless-api-client-certificate
   - "@enterprise-cmcs/serverless-waf-plugin"
 
 s3BucketHelper:
@@ -25,6 +22,7 @@ s3BucketHelper:
     logFilePrefix: ${env:loggingBucket, ssm:/configuration/${self:custom.stage}/s3/accessLogsPrefix, ssm:/configuration/default/s3/accessLogsPrefix}
 
 custom:
+  project: "carts"
   serverlessPluginTypescript:
     tsConfigFileLocation: "./tsconfig.json"
   stage: ${opt:stage, self:provider.stage}
@@ -42,23 +40,15 @@ custom:
   dotenv:
     path: ../../.env
   accountId: ${AWS::AccountId}
-  acsTableName: ${env:acsTableName, cf:database-${self:custom.stage}.AcsTableName}
-  acsTableArn: ${env:acsTableArn, cf:database-${self:custom.stage}.AcsTableArn}
-  fmapTableName: ${env:fmapTableName, cf:database-${self:custom.stage}.FmapTableName}
-  fmapTableArn: ${env:fmapTableArn, cf:database-${self:custom.stage}.FmapTableArn}
-  stateTableName: ${env:stateTableName, cf:database-${self:custom.stage}.StateTableName}
-  stateTableArn: ${env:stateTableArn, cf:database-${self:custom.stage}.StateTableArn}
-  stateStatusTableName: ${env:stateStatusTableName, cf:database-${self:custom.stage}.StateStatusTableName}
-  stateStatusTableArn: ${env:stateStatusTableArn, cf:database-${self:custom.stage}.StateStatusTableArn}
-  sectionTableName: ${env:sectionTableName, cf:database-${self:custom.stage}.SectionTableName}
-  sectionTableArn: ${env:sectionTableArn, cf:database-${self:custom.stage}.SectionTableArn}
-  sectionBaseTableName: ${env:sectionBaseTableName, cf:database-${self:custom.stage}.SectionBaseTableName}
-  sectionBaseTableArn: ${env:sectionBaseTableArn, cf:database-${self:custom.stage}.SectionBaseTableArn}
-  stageEnrollmentCountsTableName: ${env:stageEnrollmentCountsTableName, cf:database-${self:custom.stage}.StageEnrollmentCountsTableName}
-  stageEnrollmentCountsTableArn: ${env:stageEnrollmentCountsTableArn, cf:database-${self:custom.stage}.StageEnrollmentCountsTableArn}
+  acsTableName: ${env:acsTableName, param:AcsTableName}
+  fmapTableName: ${env:fmapTableName, param:FmapTableName}
+  stateTableName: ${env:stateTableName, param:StateTableName}
+  stateStatusTableName: ${env:stateStatusTableName, param:StateStatusTableName}
+  sectionTableName: ${env:sectionTableName, param:SectionTableName}
+  sectionBaseTableName: ${env:sectionBaseTableName, param:SectionBaseTableName}
+  stageEnrollmentCountsTableName: ${env:stageEnrollmentCountsTableName, param:StageEnrollmentCountsTableName}
   webAclName: ${self:service}-${self:custom.stage}-webacl-waf
-  uploadsTableName: ${env:uploadsTableName, cf:database-${self:custom.stage}.UploadsTableName}
-  uploadsTableArn: ${env:uploadsTableArn, cf:database-${self:custom.stage}.UploadsTableArn}
+  uploadsTableName: ${env:uploadsTableName, param:UploadsTableName}
   docraptorApiKey: ${env:docraptorApiKey, ssm:/${self:custom.stage}/pdf/docraptorApiKey, ssm:/default/pdf/docraptorApiKey}
   associateWaf:
     name: ${self:custom.webAclName}
@@ -69,25 +59,13 @@ custom:
     main: main
     default: main
   fiscalBucketEnv: ${self:custom.fiscalBucketEnvMap.${self:custom.stage}, self:custom.fiscalBucketEnvMap.default}
-  serverlessApiClientCertificate:
-    rotateCerts: true
-    daysLeft: 30
-  warmup:
-    default:
-      enabled: true
-      prewarm: true
-      events:
-        - schedule: rate(${env:warmupSchedule, ssm:/configuration/${self:custom.stage}/warmup/schedule, ssm:/configuration/default/warmup/schedule, "60 minutes"})
-      concurrency: ${env:warmupConcurrency, ssm:/configuration/${self:custom.stage}/warmup/concurrency, ssm:/configuration/default/warmup/concurrency, 5}
-  authValue:
-    main: aws_iam
-    master: aws_iam
-    val: aws_iam
-    prod: aws_iam
 provider:
   name: aws
-  runtime: nodejs18.x
+  runtime: nodejs20.x
   region: us-east-1
+  stackTags:
+    PROJECT: ${self:custom.project}
+    SERVICE: ${self:service}  
   tracing:
     apiGateway: true
   logs:
@@ -148,7 +126,7 @@ functions:
           path: state
           method: get
           cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+          authorizer: aws_iam
   getEnrollmentCounts:
     handler: handlers/enrollmentCounts/get.getEnrollmentCounts
     events:
@@ -156,15 +134,15 @@ functions:
           path: enrollment_counts/{year}/{state}
           method: get
           cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+          authorizer: aws_iam
   getFiscalYearTemplateLink:
     handler: handlers/fiscalYearTemplate/get.getFiscalYearTemplateLink
     events:
       - http:
-          path: fiscalYearTemplate
+          path: fiscalYearTemplate/{year}
           method: get
           cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+          authorizer: aws_iam
   getStateStatus:
     handler: handlers/stateStatus/get.getStateStatus
     events:
@@ -172,7 +150,7 @@ functions:
           path: state_status
           method: get
           cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+          authorizer: aws_iam
   updateStateStatus:
     handler: handlers/stateStatus/update.updateStateStatus
     events:
@@ -180,7 +158,7 @@ functions:
           path: state_status/{year}/{state}
           method: post
           cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+          authorizer: aws_iam
   getSections:
     handler: handlers/section/get.getSections
     events:
@@ -188,7 +166,7 @@ functions:
           path: section/{year}/{state}
           method: get
           cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+          authorizer: aws_iam
   updateSections:
     handler: handlers/section/update.updateSections
     events:
@@ -196,7 +174,7 @@ functions:
           path: save_report/{year}/{state}
           method: put
           cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+          authorizer: aws_iam
   generateFormTemplates:
     handler: handlers/formTemplates/post.post
     timeout: 30
@@ -205,7 +183,7 @@ functions:
           path: formTemplates
           method: post
           cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+          authorizer: aws_iam
   postUpload:
     handler: handlers/uploads/createUploadPsUrl.psUpload
     events:
@@ -213,7 +191,7 @@ functions:
           path: psUrlUpload/{year}/{state}
           method: post
           cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+          authorizer: aws_iam
   postDownload:
     handler: handlers/uploads/createDownloadPsUrl.getSignedFileUrl
     events:
@@ -221,7 +199,7 @@ functions:
           path: psUrlDownload/{year}/{state}
           method: post
           cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+          authorizer: aws_iam
   deleteUpload:
     handler: handlers/uploads/delete.deleteUpload
     events:
@@ -229,7 +207,7 @@ functions:
           path: uploads/{year}/{state}/{fileId}
           method: delete
           cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+          authorizer: aws_iam
   viewUploads:
     handler: handlers/uploads/viewUploaded.viewUploaded
     events:
@@ -237,7 +215,7 @@ functions:
           path: uploads/{year}/{state}
           method: post
           cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+          authorizer: aws_iam
   printPdf:
     handler: handlers/printing/printPdf.print
     timeout: 30
@@ -246,7 +224,7 @@ functions:
           path: print_pdf
           method: post
           cors: true
-          authorizer: ${self:custom.authValue.${self:custom.stage}, ""}
+          authorizer: aws_iam
 resources:
   Resources:
     GatewayResponseDefault4XX:

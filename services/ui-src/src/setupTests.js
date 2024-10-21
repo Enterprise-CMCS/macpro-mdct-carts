@@ -31,3 +31,10 @@ Object.defineProperty(window, "matchMedia", {
     dispatchEvent: jest.fn(),
   })),
 });
+
+Object.defineProperty(window, "crypto", { value: require("node:crypto") });
+
+jest.mock("./util/metaEnv", () => ({
+  MODE: "production",
+  BASE_URL: "mdctcartsdev.cms.gov",
+}));

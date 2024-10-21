@@ -15,12 +15,12 @@ s3BucketHelper:
     logFilePrefix: ${env:loggingBucket, ssm:/configuration/${self:custom.stage}/s3/accessLogsPrefix, ssm:/configuration/default/s3/accessLogsPrefix}
 
 custom:
+  project: "carts"
   stage: ${opt:stage, self:provider.stage}
   region: ${opt:region, self:provider.region}
   serverlessTerminationProtection:
     stages:
       - main
-      - master
       - val
       - production
   acsTableName: ${self:custom.stage}-acs
@@ -69,7 +69,7 @@ custom:
   scripts:
     hooks:
       deploy:finalize: |
-        serverless invoke --stage ${self:custom.stage} --function seed
+        aws lambda invoke --region ${self:provider.region} --function-name ${self:service}-${self:custom.stage}-seed --invocation-type RequestResponse /dev/null
   dynamodb:
     stages:
       - local
@@ -81,8 +81,11 @@ custom:
     seed: ${self:custom.seedOptions.${self:custom.stage}, self:custom.seedOptions.default}
 provider:
   name: aws
-  runtime: nodejs18.x
+  runtime: nodejs20.x
   region: us-east-1
+  stackTags:  
+    PROJECT: ${self:custom.project}
+    SERVICE: ${self:service}  
   iam:
     role:
       path: ${env:iamPath, ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}

@@ -1,8 +1,7 @@
 const { defineConfig } = require("cypress");
-const preprocessor = require("@badeball/cypress-cucumber-preprocessor");
-const browserify = require("@badeball/cypress-cucumber-preprocessor/browserify");
-const { lighthouse } = require("@cypress-audit/lighthouse");
-const { pa11y, prepareAudit } = require("@cypress-audit/pa11y");
+const { lighthouse, prepareAudit } = require("@cypress-audit/lighthouse");
+const { pa11y } = require("@cypress-audit/pa11y");
+require("dotenv").config({ path: "../../.env" });
 
 module.exports = defineConfig({
   redirectionLimit: 20,
@@ -14,8 +13,12 @@ module.exports = defineConfig({
   downloadsFolder: "downloads",
   types: ["cypress", "cypress-axe"],
   env: {
-    STATE_USER_EMAIL: "stateuser2@test.com",
-    ADMIN_USER_EMAIL: "cypressadminuser@test.com",
+    STATE_USER_EMAIL: process.env.CYPRESS_STATE_USER_EMAIL,
+    // pragma: allowlist nextline secret
+    STATE_USER_PASSWORD: process.env.CYPRESS_STATE_USER_PASSWORD,
+    ADMIN_USER_EMAIL: process.env.CYPRESS_ADMIN_USER_EMAIL,
+    // pragma: allowlist nextline secret
+    ADMIN_USER_PASSWORD: process.env.CYPRESS_ADMIN_USER_PASSWORD,
   },
   e2e: {
     baseUrl: "http://localhost:3000/",
@@ -24,8 +27,6 @@ module.exports = defineConfig({
     supportFile: "support/index.js",
     excludeSpecPattern: "**/filterReports.spec.js",
     async setupNodeEvents(on, config) {
-      await preprocessor.addCucumberPreprocessorPlugin(on, config);
-      on("file:preprocessor", browserify.default(config));
       on("before:browser:launch", (_browser = {}, launchOptions) => {
         prepareAudit(launchOptions);
       });

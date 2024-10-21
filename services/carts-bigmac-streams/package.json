@@ -3,19 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.556.0",
-    "@aws-sdk/client-ecs": "^3.556.0",
-    "@aws-sdk/lib-dynamodb": "^3.556.0",
-    "@aws-sdk/util-dynamodb": "^3.556.0",
-    "kafkajs": "^1.15.0",
-    "lodash": "^4.17.21",
-    "uuid": "^8.3.2"
-  },
-  "devDependencies": {
-    "serverless-bundle": "^6.0.0",
-    "serverless-dotenv-plugin": "^3.0.0",
-    "serverless-online": "Enterprise-CMCS/macpro-serverless-online",
-    "serverless-plugin-scripts": "^1.0.2",
-    "serverless-plugin-warmup": "8.2.1"
+    "@aws-sdk/client-dynamodb": "^3.662.0",
+    "@aws-sdk/lib-dynamodb": "^3.662.0",
+    "@aws-sdk/util-dynamodb": "^3.662.0",
+    "kafkajs": "^1.15.0"
   }
 }

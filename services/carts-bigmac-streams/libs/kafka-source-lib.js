@@ -38,12 +38,6 @@ class KafkaSourceLib {
    *version = "some version";
    *tables = [list of tables];
    */
-
-  unmarshallOptions = {
-    convertEmptyValues: true,
-    wrapNumbers: true,
-  };
-
   stringify(e, prettyPrint) {
     if (prettyPrint === true) return JSON.stringify(e, null, 2);
     return JSON.stringify(e);
@@ -56,7 +50,7 @@ class KafkaSourceLib {
   }
 
   doUnmarshall(r) {
-    return unmarshall(r, this.unmarshallOptions);
+    return unmarshall(r);
   }
 
   createPayload(record) {

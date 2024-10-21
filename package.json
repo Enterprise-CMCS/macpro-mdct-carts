@@ -4,6 +4,7 @@
   "type": "module",
   "description": "",
   "main": "index.js",
+  "private": true,
   "directories": {
     "test": "tests"
   },
@@ -22,8 +23,10 @@
   },
   "homepage": "https://github.com/Enterprise-CMCS/macpro-mdct-carts#readme",
   "devDependencies": {
+    "@serverless/compose": "^1.3.0",
+    "@stratiformdigital/serverless-stage-destroyer": "^2.0.0",
     "@types/flat": "^5.0.2",
-    "@types/node": "^18.17.0",
+    "@types/node": "^20.12.7",
     "@types/yargs": "^15.0.10",
     "@typescript-eslint/eslint-plugin": "5.18.0",
     "@typescript-eslint/parser": "5.18.0",
@@ -37,19 +40,17 @@
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^2.x",
     "prettier": "^2.4.1",
-    "serverless": "^3.35.2",
-    "serverless-api-client-certificate": "^1.0.2",
-    "serverless-bundle": "^6.0.0",
+    "serverless": "^3.39.0",
+    "serverless-bundle": "^6.1.0",
     "serverless-cloudfront-invalidate": "^1.12.2",
     "serverless-dotenv-plugin": "^3.0.0",
     "serverless-iam-helper": "github:Enterprise-CMCS/serverless-iam-helper",
-    "serverless-idempotency-helper": "github:Enterprise-CMCS/serverless-idempotency-helper",
-    "serverless-offline": "^12.0.4",
+    "serverless-offline": "^13.5.0",
     "serverless-offline-ssm": "^6.2.0",
     "serverless-online": "Enterprise-CMCS/macpro-serverless-online",
     "serverless-plugin-scripts": "^1.0.2",
     "serverless-s3-bucket-helper": "github:Enterprise-CMCS/serverless-s3-bucket-helper#master",
-    "serverless-s3-sync": "2.0.0",
+    "serverless-s3-sync": "3.2.0",
     "serverless-stack-termination-protection": "^2.0.0",
     "typescript": "^4.6.3",
     "yargs": "^16.1.1"
@@ -58,6 +59,6 @@
     "loader-utils": "^2.0.4"
   },
   "dependencies": {
-    "@enterprise-cmcs/serverless-waf-plugin": "^1.3.2"
+    "@enterprise-cmcs/serverless-waf-plugin": "^1.4.0"
   }
 }
