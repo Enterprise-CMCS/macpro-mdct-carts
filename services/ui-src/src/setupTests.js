@@ -44,28 +44,28 @@ jest.mock("aws-amplify/api", () => ({
   get: jest.fn().mockImplementation(() => ({
     response: Promise.resolve({
       body: {
-        json: () => Promise.resolve(`{"json":"blob"}`),
+        text: () => Promise.resolve(`{"json":"blob"}`),
       },
     }),
   })),
   post: jest.fn().mockImplementation(() => ({
     response: Promise.resolve({
       body: {
-        json: () => Promise.resolve(`{"json":"blob"}`),
+        text: () => Promise.resolve(`{"json":"blob"}`),
       },
     }),
   })),
   put: jest.fn().mockImplementation(() => ({
     response: Promise.resolve({
       body: {
-        json: () => Promise.resolve(`{"json":"blob"}`),
+        text: () => Promise.resolve(`{"json":"blob"}`),
       },
     }),
   })),
   del: jest.fn().mockImplementation(() => ({
     response: Promise.resolve({
       body: {
-        json: () => Promise.resolve(`{"json":"blob"}`),
+        text: () => Promise.resolve(`{"json":"blob"}`),
       },
     }),
   })),

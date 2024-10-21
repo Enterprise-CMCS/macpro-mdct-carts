@@ -14,7 +14,8 @@ const apiRequest = async (request, path, options) => {
     await updateTimeout();
     const { body } = await request({ apiName: "carts-api", path, options })
       .response;
-    return await body.json();
+    const res = await body.text(); // body.json() dies on an empty response, spectacularly
+    return res && res.length > 0 ? JSON.parse(res) : null;
   } catch (e) {
     // Return our own error for handling in the app
     const info = `Request Failed - ${path} - ${e.response?.body}`;
