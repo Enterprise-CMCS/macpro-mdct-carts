@@ -14,8 +14,8 @@ import config from "../../config";
 const cartsProdDomain = "https://mdctcarts.cms.gov";
 const tempEndpoint = "https://dt4brcxdimpa0.cloudfront.net";
 
-const authenticateWithIDM = () => {
-  signInWithRedirect({ provider: { custom: "Okta" } });
+const authenticateWithIDM = async () => {
+  await signInWithRedirect({ provider: { custom: "Okta" } });
 };
 
 export const UserProvider = ({ children }) => {
@@ -70,7 +70,7 @@ export const UserProvider = ({ children }) => {
       dispatch(loadUser(currentUser));
     } catch (e) {
       if (isProduction) {
-        authenticateWithIDM();
+        await authenticateWithIDM();
       } else {
         setShowLocalLogins(true);
       }

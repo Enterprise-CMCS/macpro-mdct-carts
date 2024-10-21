@@ -1,14 +1,7 @@
 import { apiLib } from "./apiLib";
 import { updateTimeout } from "../hooks/authHooks";
-import { mockAmplifyRequest } from "./testing/testUtils";
 
-const mockRequest = mockAmplifyRequest("some response");
-jest.mock("aws-amplify/api", () => ({
-  post: (r) => mockRequest(r),
-  put: (r) => mockRequest(r),
-  get: (r) => mockRequest(r),
-  del: (r) => mockRequest(r),
-}));
+const mockAmplifyApi = require("aws-amplify/api");
 
 jest.mock("../hooks/authHooks", () => ({
   updateTimeout: jest.fn(),
@@ -37,35 +30,40 @@ describe("API lib", () => {
   });
 
   test("Calling post should update the session timeout", async () => {
+    const apiSpy = jest.spyOn(mockAmplifyApi, "post");
     await apiLib.post(path, mockOptions);
 
-    expect(mockRequest).toBeCalledWith(requestObj);
+    expect(apiSpy).toBeCalledWith(requestObj);
     expect(updateTimeout).toBeCalled();
   });
 
   test("Calling put should update the session timeout", async () => {
+    const apiSpy = jest.spyOn(mockAmplifyApi, "put");
     await apiLib.put(path, mockOptions);
 
-    expect(mockRequest).toBeCalledWith(requestObj);
+    expect(apiSpy).toBeCalledWith(requestObj);
     expect(updateTimeout).toBeCalled();
   });
 
   test("Calling get should update the session timeout", async () => {
+    const apiSpy = jest.spyOn(mockAmplifyApi, "get");
     await apiLib.get(path, mockOptions);
 
-    expect(mockRequest).toBeCalledWith(requestObj);
+    expect(apiSpy).toBeCalledWith(requestObj);
     expect(updateTimeout).toBeCalled();
   });
 
   test("Calling del should update the session timeout", async () => {
+    const apiSpy = jest.spyOn(mockAmplifyApi, "del");
     await apiLib.del(path, mockOptions);
 
-    expect(mockRequest).toBeCalledWith(requestObj);
+    expect(apiSpy).toBeCalledWith(requestObj);
     expect(updateTimeout).toBeCalled();
   });
 
   test("API errors should be surfaced for handling", async () => {
-    mockRequest.mockImplementationOnce(() => {
+    const apiSpy = jest.spyOn(mockAmplifyApi, "del");
+    apiSpy.mockImplementationOnce(() => {
       throw new Error("500");
     });
 

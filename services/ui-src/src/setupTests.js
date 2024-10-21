@@ -38,3 +38,52 @@ jest.mock("./util/metaEnv", () => ({
   MODE: "production",
   BASE_URL: "mdctcartsdev.cms.gov",
 }));
+
+/* Mock Amplify */
+jest.mock("aws-amplify/api", () => ({
+  get: jest.fn().mockImplementation(() => ({
+    response: Promise.resolve({
+      body: {
+        json: () => Promise.resolve(`{"json":"blob"}`),
+      },
+    }),
+  })),
+  post: jest.fn().mockImplementation(() => ({
+    response: Promise.resolve({
+      body: {
+        json: () => Promise.resolve(`{"json":"blob"}`),
+      },
+    }),
+  })),
+  put: jest.fn().mockImplementation(() => ({
+    response: Promise.resolve({
+      body: {
+        json: () => Promise.resolve(`{"json":"blob"}`),
+      },
+    }),
+  })),
+  del: jest.fn().mockImplementation(() => ({
+    response: Promise.resolve({
+      body: {
+        json: () => Promise.resolve(`{"json":"blob"}`),
+      },
+    }),
+  })),
+}));
+
+jest.mock("aws-amplify/auth", () => ({
+  fetchAuthSession: jest.fn().mockReturnValue({
+    idToken: () => ({
+      payload: "eyJLongToken",
+    }),
+  }),
+  configure: () => {},
+  signOut: jest.fn().mockImplementation(() => Promise.resolve()),
+  federatedSignIn: () => {},
+}));
+
+jest.mock("aws-amplify/utils", () => ({
+  Hub: {
+    listen: jest.fn(),
+  },
+}));

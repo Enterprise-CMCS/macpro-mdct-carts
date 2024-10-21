@@ -12,10 +12,9 @@ const apiRequest = async (request, path, options) => {
   try {
     // swallow request error codes for aws lib, they'll kill the lib
     await updateTimeout();
-    const response = await request({ apiName: "carts-api", path, options })
+    const { body } = await request({ apiName: "carts-api", path, options })
       .response;
-    const body = await response?.body?.text(); // body.json() dies on an empty response, spectacularly
-    return body && body.length > 0 ? JSON.parse(body) : null;
+    return await body.json();
   } catch (e) {
     // Return our own error for handling in the app
     const info = `Request Failed - ${path} - ${e.response?.body}`;

@@ -2,12 +2,9 @@ import { fetchAuthSession } from "aws-amplify/auth";
 
 async function requestOptions(body = null) {
   try {
-    const apiKey = (await fetchAuthSession()).tokens?.idToken?.toString();
-    if (apiKey === undefined) {
-      throw new Error("Missing API Key from auth session.");
-    }
+    const { idToken } = (await fetchAuthSession()).tokens ?? {};
     const options = {
-      headers: { "x-api-key": apiKey },
+      headers: { "x-api-key": idToken?.toString() },
     };
     if (body) {
       options["body"] = body;
