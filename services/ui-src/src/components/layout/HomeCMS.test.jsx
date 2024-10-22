@@ -3,7 +3,7 @@ import { mount, shallow } from "enzyme";
 import Home from "./Home";
 import Unauthorized from "./Unauthorized";
 import CMSHome from "./HomeCMS";
-import { MemoryRouter } from "react-router";
+import { MemoryRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import { mockInitialState } from "../../util/testing/testUtils";
@@ -20,6 +20,8 @@ jest.mock("../utils/InvokeSection", () => () => {
   const MockName = "default-invoke";
   return <MockName />;
 });
+
+window.scrollTo = jest.fn();
 
 describe("Home CMS Component", () => {
   it("should render correctly", () => {
@@ -38,7 +40,7 @@ describe("Home CMS Component", () => {
         </MemoryRouter>
       </Provider>
     );
-    expect(wrapper.containsMatchingElement(<Unauthorized />)).toEqual(true);
+    expect(wrapper.containsMatchingElement(Unauthorized)).toEqual(true);
   });
   it.each([
     ["/views/sections/pa/2022/3/2", <InvokeSection />],

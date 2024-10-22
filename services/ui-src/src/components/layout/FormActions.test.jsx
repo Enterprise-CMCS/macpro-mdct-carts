@@ -9,6 +9,7 @@ import {
   stateUserWithReportInProgress,
 } from "../../store/fakeStoreExamples";
 import { MemoryRouter } from "react-router";
+
 const firstLocation = "/sections/2021/00";
 const adminFirstLocation = "/views/sections/AL/2021/00";
 
