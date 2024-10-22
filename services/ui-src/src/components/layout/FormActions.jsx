@@ -27,13 +27,7 @@ const FormActions = () => {
   let sectionId = "";
 
   const role = currentUser.role;
-  if (
-    role !== AppRoles.CMS_ADMIN &&
-    role !== AppRoles.INTERNAL_USER &&
-    role !== AppRoles.HELP_DESK &&
-    role !== AppRoles.CMS_APPROVER &&
-    role !== AppRoles.CMS_USER
-  ) {
+  if (role == AppRoles.STATE_USER ) {
     searchParams = document.location.pathname
       .toString()
       .replace("/sections/", "")
