@@ -204,7 +204,7 @@ functions:
     handler: handlers/uploads/delete.deleteUpload
     events:
       - http:
-          path: uploads/{year}/{state}
+          path: uploads/{year}/{state}/{fileId}
           method: delete
           cors: true
           authorizer: aws_iam

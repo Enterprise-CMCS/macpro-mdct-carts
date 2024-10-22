@@ -9,11 +9,7 @@ export const getFiscalYearTemplate = (year) => async (dispatch) => {
   dispatch({ type: GET_TEMPLATE, data: "" });
   try {
     const opts = await requestOptions();
-    const data = await apiLib.get(
-      "carts-api",
-      `/fiscalYearTemplate/${year}`,
-      opts
-    );
+    const data = await apiLib.get(`/fiscalYearTemplate/${year}`, opts);
 
     dispatch({
       type: GET_TEMPLATE_SUCCESS,
