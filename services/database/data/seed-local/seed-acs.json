@@ -32,6 +32,22 @@
     "percentUninsuredMoe": 0.3
   },
   {
+    "stateId": "AL",
+    "year": 2021,
+    "numberUninsured": 26000,
+    "numberUninsuredMoe": 4000,
+    "percentUninsured": 2.2,
+    "percentUninsuredMoe": 0.4
+  },
+  {
+    "stateId": "AL",
+    "year": 2022,
+    "numberUninsured": 22000,
+    "numberUninsuredMoe": 4000,
+    "percentUninsured": 1.9,
+    "percentUninsuredMoe": 0.3
+  },
+  {
     "stateId": "AK",
     "year": 2015,
     "numberUninsured": 8000,
