@@ -1416,6 +1416,9 @@
   version "3.1.5"
   resolved "https://registry.yarnpkg.com/@smithy/abort-controller/-/abort-controller-3.1.5.tgz#ca7a86a3c6b20fabe59667143f58d9e198616d14"
   integrity sha512-DhNPnqTqPoG8aZ5dWkFOgsuY+i0GQ3CI6hMmvCoduNsnU9gUZWZBwGfDQsTTB7NvFPkom1df7jMIJWU90kuXXg==
+  dependencies:
+    "@smithy/types" "^3.5.0"
+    tslib "^2.6.2"
 
 "@smithy/chunked-blob-reader-native@^3.0.0":
   version "3.0.0"
@@ -3504,10 +3507,10 @@ jsonfile@^4.0.0:
   optionalDependencies:
     graceful-fs "^4.1.6"
 
-jsonpath-plus@^10.0.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/jsonpath-plus/-/jsonpath-plus-10.0.0.tgz#7a747d47e20a27867dbbc80b57fd554788b91474"
-  integrity sha512-v7j76HGp/ibKlXYeZ7UrfCLSNDaBWuJMA0GaMjA4sZJtCtY89qgPyToDDcl2zdeHh4B5q/B3g2pQdW76fOg/dA==
+jsonpath-plus@^10.0.7:
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/jsonpath-plus/-/jsonpath-plus-10.1.0.tgz#e8724c721ac60ff2db667066131b1a2c992ffcf0"
+  integrity sha512-gHfV1IYqH8uJHYVTs8BJX1XKy2/rR93+f8QQi0xhx95aCiXn1ettYAd5T+7FU6wfqyDoX/wy0pm/fL3jOKJ9Lg==
   dependencies:
     "@jsep-plugin/assignment" "^1.2.1"
     "@jsep-plugin/regex" "^1.0.3"

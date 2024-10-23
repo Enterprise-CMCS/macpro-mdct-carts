@@ -35,7 +35,7 @@
     "aws-jwt-verify": "^3.1.0",
     "dompurify": "^3.1.4",
     "jsdom": "^24.1.0",
-    "jsonpath-plus": "^10.0.0",
+    "jsonpath-plus": "^10.0.7",
     "jsonschema": "^1.4.1",
     "jwt-decode": "^3.1.2",
     "uuid": "^7.0.3"

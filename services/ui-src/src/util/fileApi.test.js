@@ -37,7 +37,7 @@ describe("File API", () => {
   });
 
   test("recordFileInDatabaseAndGetUploadUrl should post to CARTS API and return a signed URL", async () => {
-    apiLib.post.mockReturnValue({ psurl: "https://mock.url" });
+    await apiLib.post.mockReturnValue({ psurl: "https://mock.url" });
 
     const result = await recordFileInDatabaseAndGetUploadUrl(
       "2023",
@@ -48,7 +48,7 @@ describe("File API", () => {
 
     expect(result).toEqual({ presignedUploadUrl: "https://mock.url" });
 
-    expect(apiLib.post).toBeCalledWith("carts-api", "/psUrlUpload/2023/AL", {
+    expect(await apiLib.post).toBeCalledWith("/psUrlUpload/2023/AL", {
       body: {
         uploadedFileName: "test.jpg",
         uploadedFileType: "image/jpg",
@@ -71,22 +71,22 @@ describe("File API", () => {
   });
 
   test("getFileDownloadUrl should post to the CARTS api and return a URL", async () => {
-    apiLib.post.mockReturnValue({ psurl: "mock.s3/url" });
+    await apiLib.post.mockReturnValue({ psurl: "mock.s3/url" });
 
     const result = await getFileDownloadUrl("2023", "AL", "mock-file-id");
 
     expect(result).toBe("mock.s3/url");
-    expect(apiLib.post).toBeCalledWith("carts-api", "/psUrlDownload/2023/AL", {
+    expect(await apiLib.post).toBeCalledWith("/psUrlDownload/2023/AL", {
       body: { fileId: "mock-file-id" },
     });
   });
 
   test("getUploadedFiles should post to the CARTS API and return the list of files", async () => {
-    apiLib.post.mockReturnValue(Promise.resolve([mockFile]));
+    await apiLib.post.mockReturnValue(Promise.resolve([mockFile]));
 
     const result = await getUploadedFiles("2023", "AL", "mock-question-id");
 
-    expect(apiLib.post).toBeCalledWith("carts-api", "/uploads/2023/AL", {
+    expect(await apiLib.post).toBeCalledWith("/uploads/2023/AL", {
       body: { stateCode: "AL", questionId: "mock-question-id" },
     });
     expect(result.length).toBe(1);
@@ -94,23 +94,24 @@ describe("File API", () => {
   });
 
   test("getUploadedFiles should post to the CARTS API and return an empty list of files if the result is falsey somehow", async () => {
-    apiLib.post.mockReturnValue(Promise.resolve(undefined));
+    await apiLib.post.mockReturnValue(Promise.resolve(undefined));
 
     const result = await getUploadedFiles("2023", "AL", "mock-question-id");
 
-    expect(apiLib.post).toBeCalledWith("carts-api", "/uploads/2023/AL", {
+    expect(await apiLib.post).toBeCalledWith("/uploads/2023/AL", {
       body: { stateCode: "AL", questionId: "mock-question-id" },
     });
     expect(result.length).toBe(0);
   });
 
   test("deleteUploadedFile should call the CARTS API", async () => {
-    apiLib.del.mockReturnValue(Promise.resolve());
+    await apiLib.del.mockReturnValue(Promise.resolve());
 
     await deleteUploadedFile("2023", "AL", "mock-file-id");
 
-    expect(apiLib.del).toBeCalledWith("carts-api", "/uploads/2023/AL", {
-      body: { fileId: "mock-file-id" },
-    });
+    expect(await apiLib.del).toBeCalledWith(
+      "/uploads/2023/AL/mock-file-id",
+      {}
+    );
   });
 });

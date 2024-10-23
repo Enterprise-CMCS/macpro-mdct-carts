@@ -20,29 +20,29 @@ Amplify.configure({
   Storage: {
     region: config.s3.REGION,
     bucket: config.s3.BUCKET,
-    identityPoolId: config.cognito.IDENTITY_POOL_ID,
   },
   API: {
-    endpoints: [
-      {
-        name: "carts-api",
+    REST: {
+      "carts-api": {
         endpoint: config.apiGateway.URL,
         region: config.apiGateway.REGION,
       },
-    ],
+    },
   },
   Auth: {
-    mandatorySignIn: true,
-    region: config.cognito.REGION,
-    userPoolId: config.cognito.USER_POOL_ID,
-    identityPoolId: config.cognito.IDENTITY_POOL_ID,
-    userPoolWebClientId: config.cognito.APP_CLIENT_ID,
-    oauth: {
-      domain: config.cognito.APP_CLIENT_DOMAIN,
-      redirectSignIn: config.cognito.REDIRECT_SIGNIN,
-      redirectSignOut: config.cognito.REDIRECT_SIGNOUT,
-      scope: ["email", "openid", "profile", "aws.cognito.signin.user.admin"],
-      responseType: "code",
+    Cognito: {
+      userPoolId: config.cognito.USER_POOL_ID,
+      identityPoolId: config.cognito.IDENTITY_POOL_ID,
+      userPoolClientId: config.cognito.APP_CLIENT_ID,
+      loginWith: {
+        oauth: {
+          domain: config.cognito.APP_CLIENT_DOMAIN,
+          redirectSignIn: [config.cognito.REDIRECT_SIGNIN],
+          redirectSignOut: [config.cognito.REDIRECT_SIGNOUT],
+          scopes: ["email", "openid", "profile"],
+          responseType: "code",
+        },
+      },
     },
   },
 });
