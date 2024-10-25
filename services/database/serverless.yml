@@ -49,6 +49,7 @@ custom:
                 ./data/seed-local/seed-acs.json,
                 ./data/seed/seed-acs-2021.json,
                 ./data/seed/seed-acs-2022.json,
+                ./data/seed/seed-acs-2023.json,
               ]
           - table: ${self:custom.fmapTableName}
             sources: [./data/seed-local/seed-fmap.json]
