@@ -27,7 +27,7 @@ const FormActions = () => {
   let sectionId = "";
 
   const role = currentUser.role;
-  if (role == AppRoles.STATE_USER ) {
+  if (role == AppRoles.STATE_USER) {
     searchParams = document.location.pathname
       .toString()
       .replace("/sections/", "")
