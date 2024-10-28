@@ -1,15 +1,11 @@
 import requestOptions from "./requestOptions";
 
-jest.mock("aws-amplify", () => ({
-  Auth: {
-    currentSession: jest.fn().mockReturnValue({
-      getIdToken: () => ({
-        getJwtToken: () => {
-          return "mock token";
-        },
-      }),
-    }),
-  },
+jest.mock("aws-amplify/auth", () => ({
+  fetchAuthSession: jest.fn().mockReturnValue({
+    tokens: {
+      idToken: "mock token",
+    },
+  }),
 }));
 
 describe("requestOptions", () => {
