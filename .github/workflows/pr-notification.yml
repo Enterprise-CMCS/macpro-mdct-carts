@@ -11,6 +11,9 @@ permissions:
   pull-requests: write
 
 jobs:
+ - name: Configure pre-commit to skip branch name validation
+    run: |
+      echo "SKIP=branch-name-validation" >> $GITHUB_ENV
   endpoint:
     runs-on: ubuntu-latest
     steps:

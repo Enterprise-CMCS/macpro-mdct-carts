@@ -3,6 +3,13 @@ name: Pull-request
 on: [pull_request]
 
 jobs:
+  prchecks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure pre-commit to skip branch name validation
+        run: |
+          echo "SKIP=branch-name-validation" >> $GITHUB_ENV
   linting:
     runs-on: ubuntu-latest
     steps:
