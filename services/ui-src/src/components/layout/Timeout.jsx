@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 //components
 import { Dialog } from "@cmsgov/design-system";
 //auth
 import {
-  IDLE_WINDOW,
-  PROMPT_AT,
   refreshCredentials,
   updateTimeout,
   useUser,
 } from "../../hooks/authHooks";
-//utils
-import { add } from "date-fns";
 
 const calculateTimeLeft = (expiresAt) => {
   if (!expiresAt) return 0;
@@ -19,66 +16,44 @@ const calculateTimeLeft = (expiresAt) => {
 };
 
 const Timeout = () => {
+  const { showTimeout, expiresAt } = useSelector((state) => state.stateUser);
   const { logout } = useUser();
-  const [timeLeft, setTimeLeft] = useState((IDLE_WINDOW - PROMPT_AT) / 1000);
-  const [showTimeout, setShowTimeout] = useState(false);
-  const [timeoutPromptId, setTimeoutPromptId] = useState();
-  const [timeoutForceId, setTimeoutForceId] = useState();
-  const [updateTextIntervalId, setUpdateTextIntervalId] = useState();
-  const location = useLocation();
+  const history = useLocation();
+
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(expiresAt));
 
   useEffect(() => {
-    setTimer();
+    const unlisten = history.listen(() => {
+      updateTimeout();
+    });
+
+    if (!showTimeout) return;
+    // eslint-disable-next-line no-unused-vars
+    const timer = setTimeout(() => {
+      setTimeLeft(calculateTimeLeft(expiresAt));
+    }, 500);
     return () => {
-      clearTimers();
+      unlisten();
+      clearInterval(timer);
     };
-  }, [location]);
+  });
 
-  const setTimer = () => {
-    const expiration = add(Date.now(), { seconds: IDLE_WINDOW / 1000 });
-    if (timeoutPromptId) {
-      clearTimers();
-    }
-    updateTimeout();
-    setShowTimeout(false);
-
-    // Set the initial timer for when a prompt appears
-    const promptTimer = window.setTimeout(() => {
-      // Once the prompt appears, set timers for logging out, and for updating text on screen
-      setTimeLeft(calculateTimeLeft(expiration));
-      setShowTimeout(true);
-      const forceLogoutTimer = window.setTimeout(() => {
-        clearTimers();
-        logout();
-      }, IDLE_WINDOW - PROMPT_AT);
-      const updateTextTimer = window.setInterval(() => {
-        setTimeLeft(calculateTimeLeft(expiration));
-      }, 500);
-      setTimeoutForceId(forceLogoutTimer);
-      setUpdateTextIntervalId(updateTextTimer);
-    }, PROMPT_AT);
-    setTimeoutPromptId(promptTimer);
+  const logoutClick = () => {
+    logout();
   };
-
-  const clearTimers = () => {
-    clearTimeout(timeoutPromptId);
-    clearTimeout(timeoutForceId);
-    clearTimeout(updateTextIntervalId);
-
-    //clear interval function call
-    setUpdateTextIntervalId(undefined);
-  };
-
   const refreshAuth = async () => {
     await refreshCredentials();
-    setShowTimeout(false);
-    setTimer();
   };
 
-  const formatTime = (time) => {
-    return `${Math.floor(time)} seconds`;
-  };
+  if (!showTimeout) return <></>;
 
+  const expired = new Date(expiresAt).valueOf() < Date.now();
+  const body = expired
+    ? "You have been logged out due to inactivity. Please log in again."
+    : `Due to inactivity, you will be logged out in ${Math.floor(
+        timeLeft
+      )} seconds.`;
+  const logOutText = expired ? "Log In" : "Log Out";
   return (
     <>
       {showTimeout && (
@@ -90,6 +65,7 @@ const Timeout = () => {
           actions={[
             <button
               className="ds-c-button ds-u-margin-right--1"
+              disabled={expired}
               key="Stay Logged In"
               aria-label="Stay Logged In"
               onClick={refreshAuth}
@@ -100,16 +76,15 @@ const Timeout = () => {
             <button
               className="ds-c-button ds-c-button--primary ds-u-margin-right--1"
               key="Log Out"
-              onClick={logout}
+              aria-label={logOutText}
+              onClick={logoutClick}
               data-testid="timeout-log-out"
             >
-              Logout
+              {logOutText}
             </button>,
           ]}
         >
-          Due to inactivity, you will be logged out in {formatTime(timeLeft)}.
-          Choose to stay logged in or log out. Otherwise, you will be logged out
-          automatically.
+          {body}
         </Dialog>
       )}
     </>
