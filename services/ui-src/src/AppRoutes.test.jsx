@@ -1,6 +1,6 @@
 import React from "react";
 import { mount, shallow } from "enzyme";
-import { MemoryRouter } from "react-router";
+import { MemoryRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import AppRoutes from "./AppRoutes";
@@ -19,6 +19,7 @@ jest.mock("./hooks/authHooks", () => ({
     showTimeout: false,
     expiresAt: null,
   })),
+  updateTimeout: jest.fn(),
   initAuthManager: jest.fn(),
 }));
 jest.mock("./components/layout/Home", () => () => {
