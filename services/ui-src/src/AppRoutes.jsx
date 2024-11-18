@@ -7,19 +7,13 @@ import Print from "./components/sections/Print";
 import Spinner from "./components/utils/Spinner";
 import UserInfo from "./components/sections/UserInfo";
 import UserProfile from "./components/sections/UserProfile";
-import { LocalLogins } from "./components/sections/login/LocalLogins";
 import { useUser } from "./hooks/authHooks";
 import "font-awesome/css/font-awesome.min.css";
 import "./styles/app.scss";
 import GetHelp from "./components/sections/GetHelp";
-import Timeout from "./components/layout/Timeout";
 
 const AppRoutes = () => {
-  const { user, showLocalLogins, loginWithIDM } = useUser();
-
-  if (!user && showLocalLogins) {
-    return <LocalLogins loginWithIDM={loginWithIDM} />;
-  }
+  const { user } = useUser();
 
   const VisibleHeader = () =>
     window.location.pathname.split("/")[1] === "reports" ||
@@ -38,25 +32,19 @@ const AppRoutes = () => {
     );
 
   return (
-    <div
-      className={"App " + window.location.pathname.split("/")[1]}
-      data-test="component-app"
-    >
-      <div className="app-content">
-        <Spinner />
-        <VisibleHeader />
-        <Home role={user?.userRole || ""} />
-        <Timeout />
-        <Routes>
-          {/* These routes are available to everyone, so define them here */}
-          <Route path="/userinfo" element={<UserInfo />} />
-          <Route path="/user/profile" element={<UserProfile />} />
-          <Route path="/print" element={<Print />} />
-          <Route path="/get-help" element={<GetHelp />} />
-        </Routes>
-      </div>
+    <>
+      <Spinner />
+      <VisibleHeader />
+      <Home role={user?.userRole || ""} />
+      <Routes>
+        {/* These routes are available to everyone, so define them here */}
+        <Route path="/userinfo" element={<UserInfo />} />
+        <Route path="/user/profile" element={<UserProfile />} />
+        <Route path="/print" element={<Print />} />
+        <Route path="/get-help" element={<GetHelp />} />
+      </Routes>
       {<VisibleFooter />}
-    </div>
+    </>
   );
 };
 
