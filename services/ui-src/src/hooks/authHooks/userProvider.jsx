@@ -32,7 +32,7 @@ export const UserProvider = ({ children }) => {
     try {
       setUser(null);
       localStorage.removeItem("mdctcarts_session_exp");
-      await signOut({ global: true });
+      await signOut();
     } catch (error) {
       console.log("error signing out: ", error); // eslint-disable-line no-console
     }
