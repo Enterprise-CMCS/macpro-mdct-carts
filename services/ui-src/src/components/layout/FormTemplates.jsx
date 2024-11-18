@@ -16,7 +16,7 @@ const FormTemplates = () => {
 
     try {
       const opts = await requestOptions({ year: selectedYear });
-      await apiLib.post("carts-api", "/formTemplates", opts);
+      await apiLib.post("/formTemplates", opts);
       window.alert("Request Completed");
       navigate("/");
     } catch (e) {

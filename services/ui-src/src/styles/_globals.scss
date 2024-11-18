@@ -1,3 +1,5 @@
+@use "variables";
+
 /**********************
   GLOBALS
 **********************/
@@ -6,11 +8,11 @@
 }
 
 h1 {
-  font-weight: $font-weight-normal;
+  font-weight: variables.$font-weight-normal;
 }
 
 h4 {
-  color: $brand-primary;
+  color: variables.$brand-primary;
 }
 
 img {

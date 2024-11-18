@@ -56,14 +56,14 @@ jobs:
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE_TO_ASSUME }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
-      - name: Delete topics from bigmac
-        uses: benc-uk/workflow-dispatch@v1
-        with:
-          workflow: Delete Topics
-          repo: Enterprise-CMCS/bigmac
-          token: ${{ secrets.AUTOMATION_ACCESS_TOKEN }}
-          inputs: '{ "topics": "mgmt.connect.cms-carts-seds.carts-bigmac-streams-${{env.BRANCH_NAME}}.config,mgmt.connect.cms-carts-seds.carts-bigmac-streams-${{env.BRANCH_NAME}}.offsets,mgmt.connect.cms-carts-seds.carts-bigmac-streams-${{env.BRANCH_NAME}}.status"}'
-          ref: refs/heads/master # Otherwise workflow-dispatch tries to operate off of our default name
+      # - name: Delete topics from bigmac
+      #   uses: benc-uk/workflow-dispatch@v1
+      #   with:
+      #     workflow: Delete Topics
+      #     repo: Enterprise-CMCS/bigmac
+      #     token: ${{ secrets.AUTOMATION_ACCESS_TOKEN }}
+      #     inputs: '{ "topics": "mgmt.connect.cms-carts-seds.carts-bigmac-streams-${{env.BRANCH_NAME}}.config,mgmt.connect.cms-carts-seds.carts-bigmac-streams-${{env.BRANCH_NAME}}.offsets,mgmt.connect.cms-carts-seds.carts-bigmac-streams-${{env.BRANCH_NAME}}.status"}'
+      #     ref: refs/heads/master # Otherwise workflow-dispatch tries to operate off of our default name
       - name: Destroy
         run: ./run destroy --stage $STAGE_PREFIX$branch_name --verify false
 

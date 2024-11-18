@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Auth } from "aws-amplify";
+import { signIn } from "aws-amplify/auth";
 import { useFormFields } from "../../../hooks/useFormFields";
 
 const LocalLogin = () => {
@@ -12,7 +12,7 @@ const LocalLogin = () => {
   async function handleLogin(event) {
     event.preventDefault();
     try {
-      await Auth.signIn(fields.email, fields.password);
+      await signIn({ username: fields.email, password: fields.password });
       navigate(`/`);
     } catch (error) {
       console.log("Error while logging in.", error); // eslint-disable-line no-console
