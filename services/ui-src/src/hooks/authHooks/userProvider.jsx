@@ -31,8 +31,13 @@ export const UserProvider = ({ children }) => {
   const logout = useCallback(async () => {
     try {
       setUser(null);
-      localStorage.removeItem("mdctcarts_session_exp");
+      localStorage.clear();
+      sessionStorage.clear();
+      const url = `https://${config.cognito.APP_CLIENT_DOMAIN}/logout?client_id=${config.cognito.APP_CLIENT_ID}&logout_uri=${config.POST_SIGNOUT_REDIRECT}`;
       await signOut();
+      // eslint-disable-next-line no-console
+      console.log(url);
+      window.location.href = url;
     } catch (error) {
       console.log("error signing out: ", error); // eslint-disable-line no-console
     }
