@@ -28,7 +28,7 @@ class AuthManager {
     const isExpired = expiration && new Date(expiration).valueOf() < Date.now();
     if (isExpired) {
       localStorage.removeItem("mdctcarts_session_exp");
-      signOut({ global: true }).then(() => {
+      signOut().then(() => {
         window.location.href = "/";
       });
     }
@@ -76,7 +76,7 @@ class AuthManager {
         this.promptTimeout(exp);
         this.timeoutForceId = setTimeout(() => {
           localStorage.removeItem("mdctcarts_session_exp");
-          signOut({ global: true });
+          signOut();
         }, IDLE_WINDOW - PROMPT_AT);
       },
       PROMPT_AT,
