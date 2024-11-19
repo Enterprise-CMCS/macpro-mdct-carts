@@ -42,6 +42,7 @@ export const UserProvider = ({ children }) => {
     try {
       setUser(null);
       localStorage.clear();
+      sessionStorage.clear();
       await signOut();
     } catch (error) {
       console.log("error signing out: ", error); // eslint-disable-line no-console
