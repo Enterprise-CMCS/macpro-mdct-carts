@@ -1,10 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
-import {
-  signInWithRedirect,
-  signOut,
-  fetchAuthSession,
-} from "aws-amplify/auth";
+import { Amplify } from "aws-amplify";
+import { signOut, fetchAuthSession } from "aws-amplify/auth";
 import { UserContext } from "./userContext";
 import { AppRoles, IdmRoles } from "../../types";
 import { loadUser } from "../../actions/initial";
@@ -15,7 +12,20 @@ const cartsProdDomain = "https://mdctcarts.cms.gov";
 const tempEndpoint = "https://dt4brcxdimpa0.cloudfront.net";
 
 const authenticateWithIDM = async () => {
-  await signInWithRedirect({ provider: { custom: "Okta" } });
+  const authConfig = Amplify.configure();
+  if (authConfig?.oauth) {
+    const oAuthOpts = authConfig.oauth;
+    const domain = oAuthOpts.domain;
+    const responseType = oAuthOpts.responseType;
+    const redirectSignIn = oAuthOpts.redirectSignIn;
+    const clientId = authConfig.userPoolWebClientId;
+    const url = `https://${domain}/oauth2/authorize?identity_provider=Okta&redirect_uri=${redirectSignIn}&response_type=${responseType}&client_id=${clientId}`;
+    window.location.assign(url);
+  }
+  const cognitoHostedUrl = new URL(
+    `https://${config.cognito.APP_CLIENT_DOMAIN}/oauth2/authorize?identity_provider=${config.cognito.COGNITO_IDP_NAME}&redirect_uri=${config.APPLICATION_ENDPOINT}&response_type=CODE&client_id=${config.cognito.APP_CLIENT_ID}&scope=email openid profile`
+  );
+  window.location.replace(cognitoHostedUrl);
 };
 
 export const UserProvider = ({ children }) => {
@@ -31,7 +41,7 @@ export const UserProvider = ({ children }) => {
   const logout = useCallback(async () => {
     try {
       setUser(null);
-      localStorage.removeItem("mdctcarts_session_exp");
+      localStorage.clear();
       await signOut();
     } catch (error) {
       console.log("error signing out: ", error); // eslint-disable-line no-console
