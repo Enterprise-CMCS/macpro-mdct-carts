@@ -4,7 +4,8 @@ import { updateTimeout } from "../hooks/authHooks";
 
 export async function getRequestHeaders() {
   try {
-    const idToken = await getTokens();
+    const token = await getTokens();
+    const idToken = await token.getJwtToken();
     const headers = {
       "x-api-key": idToken,
     };
@@ -16,7 +17,7 @@ export async function getRequestHeaders() {
 
 export async function getTokens() {
   const session = await Auth.currentSession();
-  return session.getIdToken().getJwtToken();
+  return await session.getIdToken();
 }
 
 export async function authenticateWithIDM() {
@@ -47,9 +48,8 @@ const apiRequest = async (request, path, opts) => {
       headers: { ...requestHeaders },
       ...opts,
     };
-    // swallow request error codes for aws lib, they'll kill the lib
     await updateTimeout();
-    return await request({ apiName: "carts-api", path, options });
+    return API[request]("carts-api", path, options);
   } catch (e) {
     // Return our own error for handling in the app
     const info = `Request Failed - ${path} - ${e.response?.body}`;
@@ -60,8 +60,8 @@ const apiRequest = async (request, path, opts) => {
 };
 
 export const apiLib = {
-  post: async (path, options) => apiRequest(API.post, path, options),
-  put: async (path, options) => apiRequest(API.put, path, options),
-  get: async (path, options) => apiRequest(API.get, path, options),
-  del: async (path, options) => apiRequest(API.del, path, options),
+  post: async (path, options) => apiRequest("post", path, options),
+  put: async (path, options) => apiRequest("put", path, options),
+  get: async (path, options) => apiRequest("get", path, options),
+  del: async (path, options) => apiRequest("del", path, options),
 };
