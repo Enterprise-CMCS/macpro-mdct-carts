@@ -7,7 +7,6 @@ import store from "./store/storeIndex";
 import BrowserIssue from "./components/layout/BrowserIssue";
 import App from "./App";
 import { Amplify } from "aws-amplify";
-import "aws-amplify/auth/enable-oauth-listener";
 import config from "./config";
 import { asyncWithLDProvider } from "launchdarkly-react-client-sdk";
 
@@ -18,33 +17,28 @@ const isIE = /*@cc_on!@*/ false || !!document.documentMode;
 const isEdge = !isIE && !!window.StyleMedia;
 
 Amplify.configure({
-  Storage: {
-    S3: {
-      region: config.s3.REGION,
-      bucket: config.s3.BUCKET,
-    },
-  },
   API: {
-    REST: {
-      "carts-api": {
+    endpoints: [
+      {
+        name: "carts-api",
         endpoint: config.apiGateway.URL,
         region: config.apiGateway.REGION,
       },
-    },
+    ],
   },
   Auth: {
-    Cognito: {
-      userPoolId: config.cognito.USER_POOL_ID,
-      identityPoolId: config.cognito.IDENTITY_POOL_ID,
-      userPoolClientId: config.cognito.APP_CLIENT_ID,
-      loginWith: {
-        oauth: {
-          domain: config.cognito.APP_CLIENT_DOMAIN,
-          redirectSignIn: [config.cognito.REDIRECT_SIGNIN],
-          redirectSignOut: [config.cognito.REDIRECT_SIGNOUT],
-          scopes: ["email", "openid", "profile"],
-          responseType: "code",
-        },
+    mandatorySignIn: true,
+    region: config.cognito.REGION,
+    userPoolId: config.cognito.USER_POOL_ID,
+    identityPoolId: config.cognito.IDENTITY_POOL_ID,
+    userPoolClientId: config.cognito.APP_CLIENT_ID,
+    loginWith: {
+      oauth: {
+        domain: config.cognito.APP_CLIENT_DOMAIN,
+        redirectSignIn: [config.cognito.REDIRECT_SIGNIN],
+        redirectSignOut: [config.cognito.REDIRECT_SIGNOUT],
+        scopes: ["email", "openid", "profile"],
+        responseType: "code",
       },
     },
   },
