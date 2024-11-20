@@ -47,7 +47,7 @@ const saveMiddleware = (store) => {
       try {
         store.dispatch({ type: SAVE_STARTED });
         const opts = {
-          body: { ...store.getState().formData },
+          body: store.getState().formData,
         };
         // get the state and year from basic state info section
         const { stateId, year } = opts.body[0];
