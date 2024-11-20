@@ -46,11 +46,6 @@ const mockOptions = {
     foo: "bar",
   },
 };
-const requestObj = {
-  apiName: "carts-api",
-  path,
-  options: mockOptions,
-};
 
 describe("API lib", () => {
   beforeEach(() => {
@@ -60,28 +55,28 @@ describe("API lib", () => {
   test("Calling post should update the session timeout", async () => {
     await apiLib.post(path, mockOptions);
 
-    expect(API.post).toBeCalledWith(requestObj);
+    expect(API.post).toBeCalledWith("carts-api", path, mockOptions);
     expect(updateTimeout).toBeCalled();
   });
 
   test("Calling put should update the session timeout", async () => {
     await apiLib.put(path, mockOptions);
 
-    expect(API.put).toBeCalledWith(requestObj);
+    expect(API.put).toBeCalledWith("carts-api", path, mockOptions);
     expect(updateTimeout).toBeCalled();
   });
 
   test("Calling get should update the session timeout", async () => {
     await apiLib.get(path, mockOptions);
 
-    expect(API.get).toBeCalledWith(requestObj);
+    expect(API.get).toBeCalledWith("carts-api", path, mockOptions);
     expect(updateTimeout).toBeCalled();
   });
 
   test("Calling del should update the session timeout", async () => {
     await apiLib.del(path, mockOptions);
 
-    expect(API.del).toBeCalledWith(requestObj);
+    expect(API.del).toBeCalledWith("carts-api", path, mockOptions);
     expect(updateTimeout).toBeCalled();
   });
 
