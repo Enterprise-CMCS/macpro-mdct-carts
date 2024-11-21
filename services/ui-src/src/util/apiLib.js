@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import { API, Auth } from "aws-amplify";
+import config from "../config";
 import { updateTimeout } from "../hooks/authHooks";
 
 export async function getRequestHeaders() {
@@ -21,7 +22,20 @@ export async function getTokens() {
 }
 
 export async function authenticateWithIDM() {
-  Auth.federatedSignIn({ customProvider: "Okta" });
+  const authConfig = Auth.configure();
+  if (authConfig?.oauth) {
+    const oAuthOpts = authConfig.oauth;
+    const domain = oAuthOpts.domain;
+    const responseType = oAuthOpts.responseType;
+    const redirectSignIn = oAuthOpts.redirectSignIn;
+    const clientId = authConfig.userPoolWebClientId;
+    const url = `https://${domain}/oauth2/authorize?identity_provider=Okta&redirect_uri=${redirectSignIn}&response_type=${responseType}&client_id=${clientId}`;
+    window.location.assign(url);
+  }
+  const cognitoHostedUrl = new URL(
+    `https://${config.cognito.APP_CLIENT_DOMAIN}/oauth2/authorize?identity_provider=${config.cognito.COGNITO_IDP_NAME}&redirect_uri=${config.APPLICATION_ENDPOINT}&response_type=CODE&client_id=${config.cognito.APP_CLIENT_ID}&scope=email openid profile`
+  );
+  window.location.replace(cognitoHostedUrl);
 }
 
 export async function loginUser(username, password) {
