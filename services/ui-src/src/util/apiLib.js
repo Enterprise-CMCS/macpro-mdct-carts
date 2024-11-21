@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { API, Auth } from "aws-amplify";
-import config from "config";
+import config from "../config";
 import { updateTimeout } from "../hooks/authHooks";
 
 export async function getRequestHeaders() {
