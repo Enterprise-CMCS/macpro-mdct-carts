@@ -23,6 +23,7 @@ jest.mock("aws-amplify", () => ({
     del: jest.fn(),
   },
   Auth: {
+    configure: jest.fn(),
     currentAuthenticatedUser: () => mockAuthenticatedUser(),
     currentSession: () => mockSession(),
     signIn: () => mockSignIn(),
