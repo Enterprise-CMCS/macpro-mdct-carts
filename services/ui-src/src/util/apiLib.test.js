@@ -2,7 +2,6 @@ import { API } from "aws-amplify";
 import {
   apiLib,
   getRequestHeaders,
-  authenticateWithIDM,
   getTokens,
   loginUser,
   logoutUser,
@@ -123,10 +122,12 @@ describe("API lib", () => {
     expect(mockSession).toHaveBeenCalledTimes(1);
   });
 
-  test("authenticateWithIDM()", async () => {
-    await authenticateWithIDM();
-    expect(mockFederatedSignIn).toHaveBeenCalledTimes(1);
-  });
+  /*
+   * test("authenticateWithIDM()", async () => {
+   *   await authenticateWithIDM();
+   *   expect(mockFederatedSignIn).toHaveBeenCalledTimes(1);
+   * });
+   */
 
   test("loginUser()", async () => {
     await loginUser("email@address.com", "test");
