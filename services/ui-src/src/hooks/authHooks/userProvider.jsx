@@ -1,23 +1,14 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
-import {
-  signInWithRedirect,
-  signOut,
-  fetchAuthSession,
-} from "aws-amplify/auth";
 import { UserContext } from "./userContext";
 import { AppRoles, IdmRoles } from "../../types";
 import { loadUser } from "../../actions/initial";
 import { useDispatch } from "react-redux";
 import config from "../../config";
-import Cookies from "js-cookie";
+import { authenticateWithIDM, getTokens, logoutUser } from "../../util/apiLib";
 
 const cartsProdDomain = "https://mdctcarts.cms.gov";
 const tempEndpoint = "https://dt4brcxdimpa0.cloudfront.net";
-
-const authenticateWithIDM = async () => {
-  await signInWithRedirect({ provider: { custom: "Okta" } });
-};
 
 export const UserProvider = ({ children }) => {
   const location = useLocation();
@@ -33,13 +24,7 @@ export const UserProvider = ({ children }) => {
     try {
       setUser(null);
       localStorage.clear();
-      sessionStorage.clear();
-      Cookies.remove("cognito");
-      const url = `https://${config.cognito.APP_CLIENT_DOMAIN}/logout?client_id=${config.cognito.APP_CLIENT_ID}&logout_uri=${config.POST_SIGNOUT_REDIRECT}`;
-      await signOut();
-      // eslint-disable-next-line no-console
-      console.log(url);
-      window.location.href = url;
+      await logoutUser();
     } catch (error) {
       console.log("error signing out: ", error); // eslint-disable-line no-console
     }
@@ -55,11 +40,8 @@ export const UserProvider = ({ children }) => {
 
     // Authenticate
     try {
-      const tokens = (await fetchAuthSession()).tokens;
-      if (!tokens?.idToken) {
-        throw new Error("Missing tokens auth session.");
-      }
-      const payload = tokens.idToken.payload;
+      const tokens = await getTokens();
+      const payload = tokens.payload;
       const { email, given_name, family_name } = payload;
       // "custom:cms_roles" is an string of concat roles so we need to check for the one applicable to CARTS
       const cms_role = payload["custom:cms_roles"] ?? "";
