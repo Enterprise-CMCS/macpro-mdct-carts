@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle, no-console */
+import requestOptions from "../hooks/authHooks/requestOptions";
 import { getProgramData, getStateData, getUserData } from "../store/stateUser";
 import { apiLib } from "../util/apiLib";
 
@@ -13,7 +14,8 @@ export const LOAD_LASTYEAR_SECTIONS = "LOAD_LASTYEAR_SECTIONS";
 export const getAllStatesData = () => {
   return async (dispatch) => {
     try {
-      const data = await apiLib.get(`/state`);
+      const opts = await requestOptions();
+      const data = await apiLib.get("carts-api", `/state`, opts);
 
       dispatch({ type: GET_ALL_STATES_DATA, data });
     } catch (err) {
@@ -24,7 +26,8 @@ export const getAllStatesData = () => {
 };
 
 export const getAllStateStatuses = () => async (dispatch) => {
-  const results = await apiLib.get(`/state_status`);
+  const opts = await requestOptions();
+  const results = await apiLib.get("carts-api", `/state_status`, opts);
   const data = results.Items;
 
   const payload = data
@@ -68,7 +71,8 @@ export const getAllStateStatuses = () => async (dispatch) => {
 export const getStateAllStatuses =
   (selectedYears = [], selectedStates = [], selectedStatus = []) =>
   async (dispatch) => {
-    const results = await apiLib.get(`/state_status`);
+    const opts = await requestOptions();
+    const results = await apiLib.get("carts-api", `/state_status`, opts);
     const data = results.Items;
     let yearFilter = () => {};
     let stateFilter = () => {};
@@ -118,12 +122,17 @@ export const getStateAllStatuses =
 
 export const loadSections = ({ stateCode, selectedYear }) => {
   return async (dispatch) => {
-    const data = await apiLib.get(`/section/${selectedYear}/${stateCode}`);
+    const opts = await requestOptions();
+    const data = await apiLib.get(
+      "carts-api",
+      `/section/${selectedYear}/${stateCode}`,
+      opts
+    );
 
     const lastYear = parseInt(selectedYear) - 1;
     let lastYearData = undefined;
     const priorData = await apiLib
-      .get(`/section/${lastYear}/${stateCode}`)
+      .get("carts-api", `/section/${lastYear}/${stateCode}`, opts)
       .catch((err) => {
         console.log("--- ERROR PRIOR YEAR SECTIONS ---");
         console.log(err);
@@ -144,8 +153,11 @@ export const loadSections = ({ stateCode, selectedYear }) => {
 
 export const loadEnrollmentCounts = ({ stateCode, selectedYear }) => {
   return async (dispatch) => {
+    const opts = await requestOptions();
     const data = await apiLib.get(
-      `/enrollment_counts/${selectedYear}/${stateCode}`
+      "carts-api",
+      `/enrollment_counts/${selectedYear}/${stateCode}`,
+      opts
     );
 
     dispatch({ type: SET_ENROLLMENT_COUNTS, data });

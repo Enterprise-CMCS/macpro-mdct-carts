@@ -38,10 +38,3 @@ jest.mock("./util/metaEnv", () => ({
   MODE: "production",
   BASE_URL: "mdctcartsdev.cms.gov",
 }));
-
-/* Mock Amplify */
-jest.mock("aws-amplify", () => ({
-  Hub: {
-    listen: jest.fn(),
-  },
-}));

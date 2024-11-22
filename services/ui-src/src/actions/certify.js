@@ -1,3 +1,4 @@
+import requestOptions from "../hooks/authHooks/requestOptions";
 import { REPORT_STATUS } from "../types";
 import { apiLib } from "../util/apiLib";
 
@@ -18,14 +19,13 @@ export const certifyAndSubmit = () => async (dispatch, getState) => {
   dispatch({ type: CERTIFY_AND_SUBMIT });
 
   try {
-    const opts = {
-      body: {
-        status: REPORT_STATUS.certified,
-        username: username,
-      },
+    const opts = await requestOptions();
+    opts.body = {
+      status: REPORT_STATUS.certified,
+      username: username,
     };
 
-    await apiLib.post(`/state_status/${year}/${state}`, opts);
+    apiLib.post("carts-api", `/state_status/${year}/${state}`, opts);
     dispatch({
       type: CERTIFY_AND_SUBMIT_SUCCESS,
       user: username,

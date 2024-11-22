@@ -3,10 +3,12 @@ import { shallow } from "enzyme";
 import { act, render, fireEvent } from "@testing-library/react";
 import { LocalLogins } from "./LocalLogins";
 
+const mockPost = jest.fn();
 const localLogins = <LocalLogins />;
-const mockLoginUser = jest.fn();
-jest.mock("../../../util/apiLib", () => ({
-  loginUser: (username, password) => mockLoginUser(username, password),
+jest.mock("aws-amplify", () => ({
+  Auth: {
+    signIn: (email, password) => mockPost(email, password),
+  },
 }));
 const mockHistoryPush = jest.fn();
 jest.mock("react-router-dom", () => ({
@@ -36,10 +38,7 @@ describe("LocalLogin component", () => {
     await act(async () => {
       fireEvent.click(generateButton);
     });
-    expect(mockLoginUser).toHaveBeenCalledWith(
-      "myEmail@email.com",
-      "superS3cure" // pragma: allowlist secret
-    );
+    expect(mockPost).toHaveBeenCalledWith("myEmail@email.com", "superS3cure");
     expect(mockHistoryPush).toHaveBeenCalledWith("/");
   });
 });

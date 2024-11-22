@@ -1,3 +1,5 @@
+import requestOptions from "../hooks/authHooks/requestOptions";
+
 import { QUESTION_ANSWERED } from "../actions/initial";
 import { SET_FRAGMENT } from "../actions/repeatables";
 import { apiLib } from "../util/apiLib";
@@ -46,12 +48,13 @@ const saveMiddleware = (store) => {
 
       try {
         store.dispatch({ type: SAVE_STARTED });
-        const opts = {
-          body: store.getState().formData,
-        };
+        const opts = await requestOptions();
+        opts.body = store.getState().formData;
         // get the state and year from basic state info section
         const { stateId, year } = opts.body[0];
-        await apiLib.put(`/save_report/${year}/${stateId}`, opts);
+
+        await apiLib.put("carts-api", `/save_report/${year}/${stateId}`, opts);
+
         /*
          * If the save is successful, we can clear out the list of pending
          * saves, because they have been persisted on the server.
