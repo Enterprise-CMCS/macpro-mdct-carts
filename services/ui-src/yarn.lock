@@ -124,6 +124,11 @@
   resolved "https://registry.yarnpkg.com/@aws-amplify/plugin-types/-/plugin-types-0.9.0.tgz#45a3361bac7fcb74d0ceecabe84f0627d0812a89"
   integrity sha512-dOwuyjRWKHvKSxcCwycdBTb6clRr2/soW1hL+HaXyTN69+dQanQegpS6ylmVwbPPiy9q2LCbqaw+5Np7bacLgw==
 
+"@aws-amplify/rtn-web-browser@^1.0.28":
+  version "1.0.28"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/rtn-web-browser/-/rtn-web-browser-1.0.28.tgz#f627990aa9463809253f4b6ea88a0e950353dda4"
+  integrity sha512-AD0RgXtyA4bJxXBrLdQ6AzJv2udDJMxhMMwk4qU8M1ceeGk1SmvO99fX6Z1X0z5m8MScHPlKZ2Mc1IkUX2uYig==
+
 "@aws-amplify/storage@6.6.10":
   version "6.6.10"
   resolved "https://registry.yarnpkg.com/@aws-amplify/storage/-/storage-6.6.10.tgz#ef0236b03456efbd0d4e96db3cdb9c562390e1e9"
