@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { signIn } from "aws-amplify/auth";
+import { Auth } from "aws-amplify";
 import { useFormFields } from "../../../hooks/useFormFields";
 
 const LocalLogin = () => {
@@ -12,7 +12,7 @@ const LocalLogin = () => {
   async function handleLogin(event) {
     event.preventDefault();
     try {
-      await signIn({ username: fields.email, password: fields.password });
+      await Auth.signIn(fields.email, fields.password);
       history.push(`/`);
     } catch (error) {
       console.log("Error while logging in.", error); // eslint-disable-line no-console

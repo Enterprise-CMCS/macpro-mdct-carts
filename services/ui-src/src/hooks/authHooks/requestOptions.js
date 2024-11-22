@@ -1,10 +1,12 @@
-import { fetchAuthSession } from "aws-amplify/auth";
+import { Auth } from "aws-amplify";
 
 async function requestOptions(body = null) {
   try {
-    const { idToken } = (await fetchAuthSession()).tokens ?? {};
+    const session = await Auth.currentSession();
+    const token = await session.getIdToken().getJwtToken();
+
     const options = {
-      headers: { "x-api-key": idToken?.toString() },
+      headers: { "x-api-key": token },
     };
     if (body) {
       options["body"] = body;
