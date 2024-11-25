@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@aws-amplify/rtn-web-browser": "^1.0.28",
     "@cmsgov/design-system": "^3.8.0",
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
@@ -16,7 +15,7 @@
     "@testing-library/user-event": "^14.5.1",
     "@vitejs/plugin-react": "^4.2.1",
     "aws-amplify": "^6.6.4",
-    "date-fns": "^3.6.0",
+    "date-fns": "^4.1.0",
     "font-awesome": "^4.7.0",
     "jsonpath": "^1.1.1",
     "launchdarkly-react-client-sdk": "^3.6.0",
