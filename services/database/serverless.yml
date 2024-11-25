@@ -62,11 +62,8 @@ custom:
           - table: ${self:custom.sectionBaseTableName}
             sources:
               [
-                ./data/seed/seed-section-base-2020.json,
-                ./data/seed/seed-section-base-2021.json,
                 ./data/seed/seed-section-base-2022.json,
                 ./data/seed/seed-section-base-2023.json,
-                ./data/seed/seed-section-base-2024.json
               ]
           - table: ${self:custom.stageEnrollmentCountsTableName}
             sources: [./data/seed-local/seed-stg-enrollment-counts.json]
