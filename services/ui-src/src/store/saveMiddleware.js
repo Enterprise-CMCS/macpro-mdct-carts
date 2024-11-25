@@ -53,7 +53,7 @@ const saveMiddleware = (store) => {
         // get the state and year from basic state info section
         const { stateId, year } = opts.body[0];
 
-        await apiLib.put(`/save_report/${year}/${stateId}`, opts);
+        await apiLib.put("carts-api", `/save_report/${year}/${stateId}`, opts);
 
         /*
          * If the save is successful, we can clear out the list of pending

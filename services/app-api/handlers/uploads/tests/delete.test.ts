@@ -42,7 +42,7 @@ describe("Test Delete Upload Handler", () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,
       body: `{"fileId": "uniqueIdString"}`,
-      pathParameters: { year: "2022", state: "AL", fileId: "uniqueIdString" },
+      pathParameters: { year: "2022", state: "AL" },
     };
 
     const res = await deleteUpload(event, null);
