@@ -1,4 +1,3 @@
-import requestOptions from "../../hooks/authHooks/requestOptions";
 import React, { useState } from "react";
 import "react-data-table-component-extensions/dist/index.css";
 import { Button } from "@cmsgov/design-system";
@@ -15,8 +14,10 @@ const FormTemplates = () => {
     setInprogress(true);
 
     try {
-      const opts = await requestOptions({ year: selectedYear });
-      await apiLib.post("carts-api", "/formTemplates", opts);
+      const opts = {
+        body: { year: selectedYear },
+      };
+      await apiLib.post("/formTemplates", opts);
       window.alert("Request Completed");
       history.push("/");
     } catch (e) {

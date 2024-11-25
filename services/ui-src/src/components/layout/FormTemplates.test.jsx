@@ -2,6 +2,10 @@ import React from "react";
 import { shallow } from "enzyme";
 import FormTemplates from "./FormTemplates";
 import { act, render, fireEvent } from "@testing-library/react";
+import { apiLib } from "../../util/apiLib";
+
+jest.mock("../../hooks/authHooks");
+window.alert = jest.fn();
 
 const mockPost = jest.fn();
 jest.mock("aws-amplify", () => ({
@@ -9,8 +13,6 @@ jest.mock("aws-amplify", () => ({
     post: () => mockPost(),
   },
 }));
-jest.mock("../../hooks/authHooks");
-window.alert = jest.fn();
 
 const mockHistoryPush = jest.fn();
 jest.mock("react-router-dom", () => ({
@@ -31,12 +33,13 @@ describe("FormTemplates Component", () => {
   });
 
   it("fires the generate forms event on button click, then navigates", async () => {
+    const apiSpy = jest.spyOn(apiLib, "post");
     const { getByTestId } = render(formTemplate);
     const generateButton = getByTestId("generate-forms-button");
     await act(async () => {
       fireEvent.click(generateButton);
     });
-    expect(mockPost).toHaveBeenCalled();
+    expect(apiSpy).toHaveBeenCalled();
     expect(mockHistoryPush).toHaveBeenCalledWith("/");
   });
 });

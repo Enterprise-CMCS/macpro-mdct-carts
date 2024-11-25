@@ -1,5 +1,4 @@
 import { apiLib } from "./apiLib";
-import requestOptions from "../hooks/authHooks/requestOptions";
 
 export const recordFileInDatabaseAndGetUploadUrl = async (
   year,
@@ -12,9 +11,10 @@ export const recordFileInDatabaseAndGetUploadUrl = async (
     uploadedFileType: uploadedFile.type,
     questionId,
   };
-  const opts = await requestOptions(body);
+  const opts = {
+    body,
+  };
   const { psurl } = await apiLib.post(
-    "carts-api",
     `/psUrlUpload/${year}/${stateCode}`,
     opts
   );
@@ -30,9 +30,10 @@ export const uploadFileToS3 = async ({ presignedUploadUrl }, file) => {
 };
 
 export const getFileDownloadUrl = async (year, stateCode, fileId) => {
-  const opts = await requestOptions({ fileId });
+  const opts = {
+    body: { fileId },
+  };
   const response = await apiLib.post(
-    "carts-api",
     `/psUrlDownload/${year}/${stateCode}`,
     opts
   );
@@ -44,9 +45,11 @@ export const getUploadedFiles = async (year, stateCode, questionId) => {
     stateCode,
     questionId,
   };
-  const opts = await requestOptions(body);
+  const opts = {
+    body,
+  };
   const response = await apiLib
-    .post("carts-api", `/uploads/${year}/${stateCode}`, opts)
+    .post(`/uploads/${year}/${stateCode}`, opts)
     .catch((error) => {
       console.log("!!!Error downloading files: ", error); // eslint-disable-line no-console
     });
@@ -54,9 +57,9 @@ export const getUploadedFiles = async (year, stateCode, questionId) => {
 };
 
 export const deleteUploadedFile = async (year, stateCode, fileId) => {
-  const opts = await requestOptions({ fileId });
+  const encodedFileId = encodeURIComponent(fileId);
   await apiLib
-    .del("carts-api", `/uploads/${year}/${stateCode}`, opts)
+    .del(`/uploads/${year}/${stateCode}/${encodedFileId}`)
     .catch((error) => {
       console.log("!!!Error retrieving files: ", error); // eslint-disable-line no-console
     });

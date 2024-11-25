@@ -1,4 +1,3 @@
-import requestOptions from "../hooks/authHooks/requestOptions";
 import { apiLib } from "../util/apiLib";
 
 export const GET_TEMPLATE = "GET_TEMPLATE";
@@ -8,12 +7,7 @@ export const GET_TEMPLATE_FAILURE = "GET_TEMPLATE_FAILURE";
 export const getFiscalYearTemplate = (year) => async (dispatch) => {
   dispatch({ type: GET_TEMPLATE, data: "" });
   try {
-    const opts = await requestOptions();
-    const data = await apiLib.get(
-      "carts-api",
-      `/fiscalYearTemplate/${year}`,
-      opts
-    );
+    const data = await apiLib.get(`/fiscalYearTemplate/${year}`);
 
     dispatch({
       type: GET_TEMPLATE_SUCCESS,

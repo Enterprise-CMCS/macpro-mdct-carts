@@ -17,11 +17,6 @@ const isIE = /*@cc_on!@*/ false || !!document.documentMode;
 const isEdge = !isIE && !!window.StyleMedia;
 
 Amplify.configure({
-  Storage: {
-    region: config.s3.REGION,
-    bucket: config.s3.BUCKET,
-    identityPoolId: config.cognito.IDENTITY_POOL_ID,
-  },
   API: {
     endpoints: [
       {
@@ -41,7 +36,7 @@ Amplify.configure({
       domain: config.cognito.APP_CLIENT_DOMAIN,
       redirectSignIn: config.cognito.REDIRECT_SIGNIN,
       redirectSignOut: config.cognito.REDIRECT_SIGNOUT,
-      scope: ["email", "openid", "profile", "aws.cognito.signin.user.admin"],
+      scopes: ["email", "openid", "profile"],
       responseType: "code",
     },
   },

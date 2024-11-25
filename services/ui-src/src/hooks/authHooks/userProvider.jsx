@@ -1,18 +1,14 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Auth } from "aws-amplify";
 import { UserContext } from "./userContext";
 import { AppRoles, IdmRoles } from "../../types";
 import { loadUser } from "../../actions/initial";
 import { useDispatch } from "react-redux";
 import config from "../../config";
+import { authenticateWithIDM, getTokens, logoutUser } from "../../util/apiLib";
 
 const cartsProdDomain = "https://mdctcarts.cms.gov";
 const tempEndpoint = "https://dt4brcxdimpa0.cloudfront.net";
-
-const authenticateWithIDM = () => {
-  Auth.federatedSignIn({ customProvider: "Okta" });
-};
 
 export const UserProvider = ({ children }) => {
   const location = useLocation();
@@ -27,8 +23,8 @@ export const UserProvider = ({ children }) => {
   const logout = useCallback(async () => {
     try {
       setUser(null);
-      localStorage.removeItem("mdctcarts_session_exp");
-      await Auth.signOut();
+      localStorage.clear();
+      await logoutUser();
     } catch (error) {
       console.log("error signing out: ", error); // eslint-disable-line no-console
     }
@@ -44,8 +40,8 @@ export const UserProvider = ({ children }) => {
 
     // Authenticate
     try {
-      const session = await Auth.currentSession();
-      const payload = session.getIdToken().payload;
+      const tokens = await getTokens();
+      const payload = tokens.payload;
       const { email, given_name, family_name } = payload;
       // "custom:cms_roles" is an string of concat roles so we need to check for the one applicable to CARTS
       const cms_role = payload["custom:cms_roles"] ?? "";
@@ -63,30 +59,12 @@ export const UserProvider = ({ children }) => {
       dispatch(loadUser(currentUser));
     } catch (e) {
       if (isProduction) {
-        authenticateWithIDM();
+        await authenticateWithIDM();
       } else {
         setShowLocalLogins(true);
       }
     }
   }, [isProduction, location]);
-
-  // single run configuration
-  useEffect(() => {
-    Auth.configure({
-      mandatorySignIn: true,
-      region: config.cognito.REGION,
-      userPoolId: config.cognito.USER_POOL_ID,
-      identityPoolId: config.cognito.IDENTITY_POOL_ID,
-      userPoolWebClientId: config.cognito.APP_CLIENT_ID,
-      oauth: {
-        domain: config.cognito.APP_CLIENT_DOMAIN,
-        redirectSignIn: config.cognito.REDIRECT_SIGNIN,
-        redirectSignOut: config.cognito.REDIRECT_SIGNOUT,
-        scope: ["email", "openid", "profile"],
-        responseType: "code",
-      },
-    });
-  });
 
   // rerender on auth state change, checking router location
   useEffect(() => {
