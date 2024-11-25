@@ -1,9 +1,9 @@
 [
   {
     "pk": "AL-2024",
-    "stateId": "AL",
     "year": 2024,
     "sectionId": 0,
+    "stateId": "AL",
     "contents": {
       "section": {
         "id": "2024-00",
@@ -129,8 +129,10 @@
     }
   },
   {
+    "pk": "AL-2024",
     "year": 2024,
     "sectionId": 1,
+    "stateId": "AL",
     "contents": {
       "section": {
         "id": "2024-01",
@@ -1722,9 +1724,9 @@
   },
   {
     "pk": "AL-2024",
-    "stateId": "AL",
     "year": 2024,
     "sectionId": 2,
+    "stateId": "AL",
     "contents": {
       "section": {
         "id": "2024-02",
@@ -2276,9 +2278,9 @@
   },
   {
     "pk": "AL-2024",
-    "stateId": "AL",
     "year": 2024,
     "sectionId": 3,
+    "stateId": "AL",
     "contents": {
       "section": {
         "id": "2024-03",
@@ -8131,9 +8133,9 @@
   },
   {
     "pk": "AL-2024",
-    "stateId": "AL",
     "year": 2024,
     "sectionId": 4,
+    "stateId": "AL",
     "contents": {
       "section": {
         "id": "2024-04",
@@ -9387,9 +9389,9 @@
   },
   {
     "pk": "AL-2024",
-    "stateId": "AL",
     "year": 2024,
     "sectionId": 5,
+    "stateId": "AL",
     "contents": {
       "section": {
         "id": "2024-05",
@@ -10789,9 +10791,9 @@
   },
   {
     "pk": "AL-2024",
-    "stateId": "AL",
     "year": 2024,
     "sectionId": 6,
+    "stateId": "AL",
     "contents": {
       "section": {
         "id": "2024-06",
