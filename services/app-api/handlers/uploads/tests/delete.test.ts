@@ -41,7 +41,6 @@ describe("Test Delete Upload Handler", () => {
   test("Should Call S3 delete when entry exists", async () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,
-      body: `{"fileId": "uniqueIdString"}`,
       pathParameters: { year: "2022", state: "AL", fileId: "uniqueIdString" },
     };
 
