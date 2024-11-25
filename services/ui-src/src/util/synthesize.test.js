@@ -72,6 +72,10 @@ const state = {
           id: "item7",
           answer: { entry: "abc" },
         },
+        {
+          id: "item8",
+          answer: { entry: "1,001" },
+        },
       ],
     },
   ],
@@ -194,7 +198,7 @@ describe("value synthesis utility", () => {
           targets: [
             "$..*[?(@ && @.id==='item1')].answer.entry",
             "$..*[?(@ && @.id==='item3')].answer.entry",
-            "$..*[?(@ && @.id==='item8')].answer.entry",
+            "$..*[?(@ && @.id==='item100')].answer.entry",
           ],
           actions: ["sum"],
         },
@@ -245,6 +249,46 @@ describe("value synthesis utility", () => {
         state.formData
       );
       expect(out).toEqual({ contents: 9 });
+    });
+
+    test("with string values", () => {
+      // Adds 'em up
+      const out = synthesize(
+        {
+          targets: [
+            "$..*[?(@ && @.id==='item8')].answer.entry",
+            "$..*[?(@ && @.id==='item6')].answer.entry",
+            "$..*[?(@ && @.id==='item1')].answer.entry",
+          ],
+          actions: ["sum"],
+        },
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
+      );
+      expect(out).toEqual({ contents: 1002 });
+    });
+
+    test("with string and undefined values", () => {
+      // Adds 'em up
+      const out = synthesize(
+        {
+          targets: [
+            "$..*[?(@ && @.id==='item8')].answer.entry",
+            "$..*[?(@ && @.id==='item6')].answer.entry",
+            "$..*[?(@ && @.id==='item100')].answer.entry",
+          ],
+          actions: ["sum"],
+        },
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
+      );
+      expect(out).toEqual({ contents: NaN });
     });
   });
 

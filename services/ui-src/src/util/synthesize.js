@@ -179,7 +179,9 @@ const sum = (values) => {
   const hasNumbers = values.some((value) => value !== null && value !== "");
 
   if (hasNumbers) {
-    const cleanedValues = values.map((value) => value.replace(/,/g, ""));
+    const cleanedValues = values.map(
+      (value) => value && value?.replace(/,/g, "")
+    );
     returnValue = cleanedValues.reduce((acc, value) => acc + +value, 0);
   }
   return returnValue;
