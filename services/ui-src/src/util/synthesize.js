@@ -177,8 +177,10 @@ const formula = (targets, providedFormula, precision) => {
 const sum = (values) => {
   let returnValue = "";
   const hasNumbers = values.some((value) => value !== null && value !== "");
+
   if (hasNumbers) {
-    returnValue = values.reduce((acc, value) => acc + +value, 0);
+    const cleanedValues = values.map((value) => value.replace(/,/g, ""));
+    returnValue = cleanedValues.reduce((acc, value) => acc + +value, 0);
   }
   return returnValue;
 };
