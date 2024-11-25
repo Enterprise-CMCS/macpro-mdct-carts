@@ -124,7 +124,6 @@ export const loadSections = ({ stateCode, selectedYear }) => {
   return async (dispatch) => {
     const opts = await requestOptions();
     const data = await apiLib.get(
-      "carts-api",
       `/section/${selectedYear}/${stateCode}`,
       opts
     );
