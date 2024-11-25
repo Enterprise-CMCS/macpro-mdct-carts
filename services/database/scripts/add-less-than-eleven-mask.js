@@ -878,7 +878,7 @@ async function handler() {
 function filter(items, sectionId) {
   return items.filter(
     (item) =>
-      item.sectionId === sectionId && (item.year === 2023 || item.year === 2022)
+      item.sectionId === sectionId && (item.year === 2021 || item.year === 2020)
   );
 }
 
