@@ -1,3 +1,4 @@
+import requestOptions from "../hooks/authHooks/requestOptions";
 import { REPORT_STATUS } from "../types";
 import { apiLib } from "../util/apiLib";
 
@@ -15,13 +16,12 @@ export const uncertifyReport =
 
     dispatch({ type: UNCERTIFY });
     try {
-      const opts = {
-        body: {
-          status: REPORT_STATUS.in_progress,
-          username: username,
-          year: reportYear,
-          state: state,
-        },
+      const opts = await requestOptions();
+      opts.body = {
+        status: REPORT_STATUS.in_progress,
+        username: username,
+        year: reportYear,
+        state: state,
       };
 
       await apiLib.post(`/state_status/${year}/${state}`, opts);
