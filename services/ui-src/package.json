@@ -14,8 +14,8 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^14.5.1",
     "@vitejs/plugin-react": "^4.2.1",
-    "aws-amplify": "^5.3.4",
-    "date-fns": "^3.6.0",
+    "aws-amplify": "^6.6.4",
+    "date-fns": "^4.1.0",
     "font-awesome": "^4.7.0",
     "jsonpath": "^1.1.1",
     "launchdarkly-react-client-sdk": "^3.6.0",
@@ -119,10 +119,7 @@
     "moduleNameMapper": {
       "\\.(css|less|scss)$": "<rootDir>/src/util/testing/styleMock.js",
       "\\.(jpg|jpeg|png|gif|webp|svg|mp4|webm|wav|mp3|m4a)$": "<rootDir>/src/util/testing/mockAsset.ts"
-    },
-    "transformIgnorePatterns": [
-      "node_modules/(?!axios)"
-    ]
+    }
   },
   "resolutions": {
     "react-error-overlay": "6.0.9",
