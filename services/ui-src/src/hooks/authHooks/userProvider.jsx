@@ -10,7 +10,6 @@ import { AppRoles, IdmRoles } from "../../types";
 import { loadUser } from "../../actions/initial";
 import { useDispatch } from "react-redux";
 import config from "../../config";
-import Cookies from "js-cookie";
 
 const cartsProdDomain = "https://mdctcarts.cms.gov";
 const tempEndpoint = "https://dt4brcxdimpa0.cloudfront.net";
@@ -34,7 +33,6 @@ export const UserProvider = ({ children }) => {
       setUser(null);
       localStorage.clear();
       sessionStorage.clear();
-      Cookies.remove("cognito");
       const url = `https://${config.cognito.APP_CLIENT_DOMAIN}/logout?client_id=${config.cognito.APP_CLIENT_ID}&logout_uri=${config.POST_SIGNOUT_REDIRECT}`;
       await signOut();
       // eslint-disable-next-line no-console
