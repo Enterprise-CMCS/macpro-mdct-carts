@@ -1,10 +1,13 @@
+@use "sass:color";
+@use "variables";
+
 /**********************
   FOOTER
 **********************/
 .footer {
-  background: $color-gray-lightest;
+  background: variables.$color-gray-lightest;
   font-size: 0.85rem;
-  color: $color-gray;
+  color: variables.$color-gray;
   margin-top: 2rem;
   text-align: center;
   flex-shrink: 0;
@@ -14,10 +17,10 @@
   }
 
   .adverts {
-    padding: ($padding * 4) $padding * 2;
+    padding: (variables.$padding * 4) variables.$padding * 2;
 
     @media only screen and (min-width: 544px) {
-      padding: ($padding * 4) 0;
+      padding: (variables.$padding * 4) 0;
     }
   }
 
@@ -33,14 +36,14 @@
     font-size: 14px;
     line-height: 21px;
     color: #212121;
-    margin-top: $margin * 2;
+    margin-top: variables.$margin * 2;
     @media only screen and (min-width: 768px) {
       margin-top: 0;
     }
   }
 
   .chip-info {
-    margin-bottom: $margin * 2;
+    margin-bottom: variables.$margin * 2;
 
     @media (min-width: 768px) {
       margin-bottom: 0;
@@ -95,22 +98,22 @@
   }
 
   .info {
-    background-color: $brand-tertiary;
-    color: $white;
-    padding: ($padding * 2) $padding * 2;
+    background-color: variables.$brand-tertiary;
+    color: variables.$white;
+    padding: (variables.$padding * 2) variables.$padding * 2;
 
     @media only screen and (min-width: 544px) {
-      padding: ($padding * 2) 0;
+      padding: (variables.$padding * 2) 0;
     }
 
     a,
     a:visited {
-      color: $white;
+      color: variables.$white;
       text-decoration: none;
 
       &:hover,
       &:active {
-        color: darken($lily-white, 20);
+        color: color.adjust(variables.$lily-white, $lightness: -20%);
       }
     }
 
@@ -127,27 +130,27 @@
       }
 
       &:first-child {
-        padding-right: $padding;
+        padding-right: variables.$padding;
         border-right: 0;
 
         @media only screen and (min-width: 768px) {
-          border-right: 1px solid $white;
+          border-right: 1px solid variables.$white;
         }
       }
 
       &:last-child {
-        margin-top: $margin;
+        margin-top: variables.$margin;
 
         @media only screen and (min-width: 768px) {
-          padding-left: $padding;
+          padding-left: variables.$padding;
           margin-top: 0;
         }
       }
     }
 
     .address {
-      margin-top: $margin * 4;
-      font-weight: $font-weight-bold;
+      margin-top: variables.$margin * 4;
+      font-weight: variables.$font-weight-bold;
       text-align: left;
 
       @media only screen and (min-width: 768px) {

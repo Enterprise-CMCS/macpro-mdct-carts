@@ -7,6 +7,7 @@ import store from "./store/storeIndex";
 import BrowserIssue from "./components/layout/BrowserIssue";
 import App from "./App";
 import { Amplify } from "aws-amplify";
+import "aws-amplify/auth/enable-oauth-listener";
 import config from "./config";
 import { asyncWithLDProvider } from "launchdarkly-react-client-sdk";
 
@@ -18,8 +19,10 @@ const isEdge = !isIE && !!window.StyleMedia;
 
 Amplify.configure({
   Storage: {
-    region: config.s3.REGION,
-    bucket: config.s3.BUCKET,
+    S3: {
+      region: config.s3.REGION,
+      bucket: config.s3.BUCKET,
+    },
   },
   API: {
     REST: {

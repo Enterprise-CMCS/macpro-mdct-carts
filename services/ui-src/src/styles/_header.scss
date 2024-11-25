@@ -1,3 +1,6 @@
+@use "sass:color";
+@use "variables";
+
 /**********************
   HEADER
 **********************/
@@ -6,12 +9,12 @@
   position: sticky;
   top: 0;
   z-index: 1;
-  background-color: $color-gray-lightest;
+  background-color: variables.$color-gray-lightest;
 }
 
 .header {
-  background: $brand-tertiary;
-  color: $white;
+  background: variables.$brand-tertiary;
+  color: variables.$white;
 
   @media only screen and (max-width: 767px) {
     text-align: center;
@@ -20,12 +23,12 @@
 
   a,
   a:visited {
-    color: $white;
+    color: variables.$white;
     text-decoration: none;
 
     &:hover,
     &:active {
-      color: darken($lily-white, 20);
+      color: color.adjust(variables.$lily-white, $lightness: -20%);
     }
   }
 
@@ -36,7 +39,7 @@
   }
 
   .site-title {
-    font-weight: $font-weight-bold;
+    font-weight: variables.$font-weight-bold;
     text-transform: uppercase;
     font-size: 1rem;
 
@@ -51,10 +54,10 @@
   #carts-logo {
     width: 100%;
     max-width: 300px;
+    padding-top: .5rem;
     @media only screen and (min-width: 767px) {
       width: 300px;
     }
-    padding-top: .5rem;
   }
 
   .user-details {
@@ -83,7 +86,7 @@
     flex-direction: row;
     align-items: center;
     width: 50%;
-    font-weight: $font-weight-bold;
+    font-weight: variables.$font-weight-bold;
 
     @media only screen and (min-width: 768px) {
       width: auto;
@@ -91,7 +94,7 @@
 
     a {
       svg {
-        padding-right: $padding;
+        padding-right: variables.$padding;
       }
     }
   }
@@ -111,7 +114,7 @@
       margin: 0;
 
       &.user-email-button {
-        font-weight: $font-weight-bold;
+        font-weight: variables.$font-weight-bold;
         margin: 0;
         position: relative;
         height: 100%;
@@ -137,7 +140,7 @@
           align-items: center;
 
           svg {
-            padding-right: $padding;
+            padding-right: variables.$padding;
           }
 
           &:focus {
@@ -145,7 +148,7 @@
           }
 
           i {
-            padding-left: $padding;
+            padding-left: variables.$padding;
           }
         }
       }
@@ -157,14 +160,14 @@
       transition: all 2s;
 
       &.open {
-        background: $brand-tertiary;
+        background: variables.$brand-tertiary;
         display: flex;
         flex-direction: column;
         align-items: baseline;
-        padding: $padding;
+        padding: variables.$padding;
         position: absolute;
         right: 0;
-        top: ($padding * 6.25);
+        top: (variables.$padding * 6.25);
         transition: all 2s;
       }
       a,
@@ -174,32 +177,32 @@
         }
       }
       .contact-us {
-        padding: ($padding * 2) 0 ($padding * 1.5);
+        padding: (variables.$padding * 2) 0 (variables.$padding * 1.5);
         position: relative;
         width: 100%;
         a {
-          padding: ($padding * 2) ($padding * 9.75) ($padding * 1.5) $padding;
+          padding: (variables.$padding * 2) (variables.$padding * 9.75) (variables.$padding * 1.5) variables.$padding;
           &:before {
             content: "\f05a";
             font-family: "FontAwesome";
             display: inline-block;
             width: 16px;
-            padding-right: ($padding * 2);
+            padding-right: (variables.$padding * 2);
           }
         }
       }
       .manage-account {
-        padding: ($padding * 2) 0 ($padding * 1.5);
+        padding: (variables.$padding * 2) 0 (variables.$padding * 1.5);
         position: relative;
         width: 100%;
         a {
-          padding: ($padding * 2) ($padding * 4) ($padding * 1.5) $padding;
+          padding: (variables.$padding * 2) (variables.$padding * 4) (variables.$padding * 1.5) variables.$padding;
           &:before {
             content: "\f044";
             font-family: "FontAwesome";
             display: inline-block;
             width: 16px;
-            padding-right: ($padding * 2);
+            padding-right: (variables.$padding * 2);
           }
         }
       }
@@ -219,7 +222,7 @@
           text-decoration: none;
           font-weight: normal;
           color: #fff;
-          padding: ($padding * 2) ($padding * 12.25) ($padding * 1.5) $padding;
+          padding: (variables.$padding * 2) (variables.$padding * 12.25) (variables.$padding * 1.5) variables.$padding;
           &:hover {
             color: #8ed2e5;
           }
@@ -228,7 +231,7 @@
             font-family: "FontAwesome";
             display: inline-block;
             width: 16px;
-            padding-right: ($padding * 2);
+            padding-right: (variables.$padding * 2);
           }
         }
       }
@@ -246,7 +249,7 @@
 .usabanner-section-layout {
   margin-left: auto;
   margin-right: auto;
-  background-color: $color-gray-lightest;
+  background-color: variables.$color-gray-lightest;
   max-width: 1040px;
   padding-left: 16px;
 }
@@ -256,7 +259,7 @@
 **********************/
 .save {
   &-container {
-    background: $lily-white;
+    background: variables.$lily-white;
     box-shadow: rgba(0, 0, 0, 0.45) 0px 0px 10px;
 
     @media print {
@@ -266,7 +269,7 @@
   &-status {
     font-size: 0.95rem;
     font-style: italic;
-    font-weight: $font-weight-bold;
+    font-weight: variables.$font-weight-bold;
     padding-top: 0.1rem;
     text-align: right;
     width: auto;

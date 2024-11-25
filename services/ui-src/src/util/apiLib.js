@@ -26,8 +26,8 @@ const apiRequest = async (request, path, options) => {
 };
 
 export const apiLib = {
-  post: async (path, options) => apiRequest(post, path, options),
-  put: async (path, options) => apiRequest(put, path, options),
-  get: async (path, options) => apiRequest(get, path, options),
-  del: async (path, options) => apiRequest(del, path, options),
+  post: async (path, options) => await apiRequest(post, path, options),
+  put: async (path, options) => await apiRequest(put, path, options),
+  get: async (path, options) => await apiRequest(get, path, options),
+  del: async (path, options) => await apiRequest(del, path, options),
 };
