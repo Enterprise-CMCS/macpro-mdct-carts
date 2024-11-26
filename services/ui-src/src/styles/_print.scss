@@ -1,3 +1,5 @@
+@use "variables";
+
 /**
   * Contains Print media query AND print page
  */
@@ -28,7 +30,7 @@
 
   .print-directions {
     border: 1px solid #aaa;
-    border-radius: $border-radius;
+    border-radius: variables.$border-radius;
     box-shadow: 2px 3px 4px #aaa;
     margin: 2.2rem auto;
     max-width: 90%;
@@ -82,7 +84,7 @@
   }
 
   .ds-c-choice:checked + label:before {
-    background-color: $brand-primary;
+    background-color: variables.$brand-primary;
     -webkit-print-color-adjust: exact;
   }
 
@@ -94,7 +96,7 @@
   .section-content {
     .ds-c-tabs__panel[aria-hidden="true"] {
       display: block !important;
-      border-top: 8px solid $alto;
+      border-top: 8px solid variables.$alto;
     }
     .ds-c-tabs__item[aria-selected="false"] {
       display: none;
@@ -118,7 +120,7 @@
   }
 
   .ly_header {
-    margin-bottom: ($margin * 8);
+    margin-bottom: (variables.$margin * 8);
   }
   .question {
     break-inside: avoid;

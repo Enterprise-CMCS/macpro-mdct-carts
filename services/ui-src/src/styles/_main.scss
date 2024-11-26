@@ -1,3 +1,5 @@
+@use "variables";
+
 /**********************
   GLOBALS
 **********************/
@@ -40,7 +42,7 @@ img {
 **********************/
 
 .main {
-  padding: ($padding * 2) 0;
+  padding: (variables.$padding * 2) 0;
 }
 
 .preloader {
@@ -61,14 +63,14 @@ img {
 }
 
 .page-info {
-  margin-top: ($margin * 8);
+  margin-top: (variables.$margin * 8);
 
   @media only screen and (min-width: 768px) {
-    margin-top: ($margin * 2);
+    margin-top: (variables.$margin * 2);
   }
 
   .edit-info {
-    color: $color-gray-light;
+    color: variables.$color-gray-light;
     padding-left: 20px;
     position: relative;
     text-transform: uppercase;
@@ -87,7 +89,7 @@ img {
   }
 
   .h1-title-report {
-    margin-top: $padding * 2;
+    margin-top: variables.$padding * 2;
     margin-left: 0px;
 
     h1 {
@@ -102,45 +104,45 @@ img {
 }
 
 .h1-title-report {
-  margin-top: $padding * 2;
-  margin-left: $padding * 2;
+  margin-top: variables.$padding * 2;
+  margin-left: variables.$padding * 2;
 
   h1 {
-    font-weight: $font-weight-bold;
+    font-weight: variables.$font-weight-bold;
     margin-top: 0;
   }
 }
 
 .omb-info {
-  color: $color-hint-dark;
+  color: variables.$color-hint-dark;
   font-size: 0.85rem;
   line-height: 1.6rem;
   margin: 1rem 0;
 }
 
 .reports {
-  color: $color-hint-light;
+  color: variables.$color-hint-light;
   width: 100%;
 
   h3 {
-    color: $black;
+    color: variables.$black;
   }
 
   .report-header {
-    color: $black;
+    color: variables.$black;
     font-size: 0.8rem;
-    margin-bottom: ($margin * 2);
+    margin-bottom: (variables.$margin * 2);
     text-transform: uppercase;
     width: 100%;
   }
 
   .report-item {
-    padding: ($padding * 2) 0;
+    padding: (variables.$padding * 2) 0;
     width: 100%;
 
     .name {
-      color: $black;
-      font-weight: $font-weight-bold;
+      color: variables.$black;
+      font-weight: variables.$font-weight-bold;
     }
 
     .link {
@@ -192,13 +194,13 @@ img {
 }
 
 .reports-footer {
-  color: $color-hint;
-  margin-top: ($margin * 3);
+  color: variables.$color-hint;
+  margin-top: (variables.$margin * 3);
   width: 100%;
 
   .displaying {
     text-align: center;
-    margin-bottom: $margin;
+    margin-bottom: variables.$margin;
 
     @media only screen and (min-width: 768px) {
       margin-bottom: 0;
@@ -213,12 +215,12 @@ img {
     }
   }
   .count {
-    color: $color-gray;
-    font-weight: $font-weight-semi-bold;
+    color: variables.$color-gray;
+    font-weight: variables.$font-weight-semi-bold;
   }
 
   [class^="number-"] {
-    border-radius: $border-radius;
+    border-radius: variables.$border-radius;
     display: inline-block;
     padding: 0.1rem 0.4rem;
     text-align: center;
@@ -233,12 +235,12 @@ img {
 }
 
 .number-primary {
-  background: $brand-primary;
-  color: $white;
+  background: variables.$brand-primary;
+  color: variables.$white;
 }
 
 .number-outline {
-  border: 1px solid $color-hint;
+  border: 1px solid variables.$color-hint;
 }
 
 .homepage {
@@ -251,12 +253,12 @@ img {
   }
 
   .page-title {
-    margin-top: ($margin * 4);
-    margin-bottom: $margin;
+    margin-top: (variables.$margin * 4);
+    margin-bottom: variables.$margin;
   }
 
   .report-section-title {
-    margin-left: ($margin * 2);
+    margin-left: (variables.$margin * 2);
   }
 
   .preamble {
@@ -267,21 +269,21 @@ img {
   .update-title {
     font-size: 1.25rem;
     font-weight: 700;
-    color: $brand-primary;
+    color: variables.$brand-primary;
     margin-top: 1.5rem;
     margin-bottom: 2rem;
   }
 
   .update-date {
-    color: $color-hint-dark;
+    color: variables.$color-hint-dark;
     font-size:1.1rem;
     font-weight: bold;
   }
 
   .updates {
     h3 {
-      color: $black;
-      font-weight: $font-weight-normal;
+      color: variables.$black;
+      font-weight: variables.$font-weight-normal;
       font-size: 1.4rem;
       margin-top: 0;
     }
@@ -292,7 +294,7 @@ img {
     }
 
     .update {
-      border: 2px solid $color-gray-lightest;
+      border: 2px solid variables.$color-gray-lightest;
       border-left: none;
       border-right: none;
       padding: 2rem 0;
@@ -313,13 +315,13 @@ img {
 
       .icon {
         .icon-inner {
-          background: $lily-white;
-          border-radius: $border-radius;
-          color: $brand-primary;
+          background: variables.$lily-white;
+          border-radius: variables.$border-radius;
+          color: variables.$brand-primary;
           display: inline-block;
           font-size: 100px;
           height: auto;
-          padding: ($padding * 2) ($padding * 5);
+          padding: (variables.$padding * 2) (variables.$padding * 5);
           text-align: center;
           width: auto;
           @media only screen and (min-width: 768px) {
@@ -329,11 +331,11 @@ img {
       }
 
       .button-display {
-        padding-right: ($padding) - 2; // offset for icons shifted right 2
+        padding-right: (variables.$padding) - 2; // offset for icons shifted right 2
       }
 
       .title {
-        margin-top: ($margin * 2);
+        margin-top: (variables.$margin * 2);
         text-align: center;
 
         @media only screen and (min-width: 768px) {
@@ -343,12 +345,12 @@ img {
       }
 
       .update-contents {
-        @media only screen and (min-width: 768px) {
-          padding-left: ($padding * 6);
-        }
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        @media only screen and (min-width: 768px) {
+          padding-left: (variables.$padding * 6);
+        }
       }
     }
   }
@@ -363,14 +365,14 @@ img {
     margin-bottom: 0;
 
     button {
-      background: $lily-white;
+      background: variables.$lily-white;
       border: none;
-      border-top: 6px solid $brand-primary;
-      border-bottom: 1px solid $color-gray-light;
+      border-top: 6px solid variables.$brand-primary;
+      border-bottom: 1px solid variables.$color-gray-light;
       cursor: pointer;
       font-size: 1.6rem;
       font-weight: bold;
-      padding: ($padding * 4) ($padding * 2);
+      padding: (variables.$padding * 4) (variables.$padding * 2);
       position: relative;
       text-align: left;
       width: 100%;
@@ -385,7 +387,7 @@ img {
           font-family: "FontAwesome";
           position: absolute;
           right: 0;
-          top: ($margin * 2);
+          top: (variables.$margin * 2);
           transform: rotate(180deg);
         }
       }
@@ -399,18 +401,18 @@ div[data-state="open"] .accordion-header .arrow:before {
 
 .objective-body,
 .objective-footer {
-  background: $color-gray-lightest;
-  padding: ($padding * 2);
+  background: variables.$color-gray-lightest;
+  padding: (variables.$padding * 2);
   // margin-left: ($margin * 10);
 
   .add-goal {
-    margin-top: ($margin * 4);
-    margin-bottom: ($margin * 4);
+    margin-top: (variables.$margin * 4);
+    margin-bottom: (variables.$margin * 4);
   }
 }
 
 .objective-footer {
-  padding-left: ($padding * 2);
+  padding-left: (variables.$padding * 2);
 }
 
 .objective-body {
@@ -418,28 +420,28 @@ div[data-state="open"] .accordion-header .arrow:before {
     background: none;
     border: none;
     font-size: 1.5rem;
-    font-weight: $font-weight-bold;
+    font-weight: variables.$font-weight-bold;
   }
 
   .goals {
-    padding-left: ($padding * 2);
+    padding-left: (variables.$padding * 2);
     border-bottom: 6px solid black;
   }
 }
 
 .objective-body .percentages-info {
-  padding: 0 ($padding * 2);
+  padding: 0 (variables.$padding * 2);
 }
 
 .percentages-info {
-  padding: 0 ($padding * 2);
+  padding: 0 (variables.$padding * 2);
   h4 {
     margin-bottom: 0;
   }
 }
 
 .percentages {
-  padding: ($padding * 2);
+  padding: (variables.$padding * 2);
 }
 .percentages {
   & > div {
@@ -458,7 +460,7 @@ div[data-state="open"] .accordion-header .arrow:before {
   }
 
   .divide {
-    margin: ($margin * 2);
+    margin: (variables.$margin * 2);
   }
 }
 
@@ -470,14 +472,14 @@ div[data-state="open"] .accordion-header .arrow:before {
   }
   & > div {
     display: block;
-    margin: ($margin * 2) $margin;
+    margin: (variables.$margin * 2) variables.$margin;
   }
 
   .share-container {
-    background: $white;
-    box-shadow: 0px 0px 8px $color-gray;
+    background: variables.$white;
+    box-shadow: 0px 0px 8px variables.$color-gray;
     display: none;
-    padding: $padding * 2;
+    padding: variables.$padding * 2;
     position: absolute;
     right: 0;
     text-align: left;
@@ -497,9 +499,9 @@ div[data-state="open"] .accordion-header .arrow:before {
       top: 2px;
       right: 0;
       svg {
-        color: $color-gray-light;
+        color: variables.$color-gray-light;
         &:hover {
-          color: $color-gray;
+          color: variables.$color-gray;
         }
       }
     }
@@ -511,14 +513,14 @@ div[data-state="open"] .accordion-header .arrow:before {
 
     .copy {
       svg {
-        color: $color-gray-light;
+        color: variables.$color-gray-light;
       }
     }
   }
 }
 
 .add-objective {
-  margin-top: ($margin * 4);
+  margin-top: (variables.$margin * 4);
 }
 
 .comingsoon {
@@ -526,8 +528,8 @@ div[data-state="open"] .accordion-header .arrow:before {
 
   h1,
   h4 {
-    color: $brand-primary;
-    font-weight: $font-weight-bold;
+    color: variables.$brand-primary;
+    font-weight: variables.$font-weight-bold;
     text-align: center;
     width: 100%;
   }
@@ -592,19 +594,19 @@ div[data-state="open"] .accordion-header .arrow:before {
   width: 100%;
 
   .ds-c-label {
-    margin-left: $margin * 2;
+    margin-left: variables.$margin * 2;
   }
 }
 
 .help-page {
-  margin-top: $margin * 2;
-  margin-bottom: $margin * 8;
+  margin-top: variables.$margin * 2;
+  margin-bottom: variables.$margin * 8;
 
   &-container {
     max-width: 700px;
   }
 
   &-title {
-    margin-top: $margin * 8;
+    margin-top: variables.$margin * 8;
   }
 }

@@ -1,11 +1,13 @@
+@use "variables";
+
 /**********************
   Icons
 **********************/
 
 .fa-plus {
-  border: 2px solid $white;
+  border: 2px solid variables.$white;
   border-radius: 50%;
   box-sizing: initial;
-  margin-left: ($margin * 2);
-  padding: ($padding * 0.5);
+  margin-left: (variables.$margin * 2);
+  padding: (variables.$padding * 0.5);
 }

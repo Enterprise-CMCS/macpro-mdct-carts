@@ -1,3 +1,5 @@
+@use "variables";
+
 /**********************
   FORM
 **********************/
@@ -80,10 +82,10 @@
 }
 
 .form-options {
-  margin: ($padding * 3) 0;
+  margin: (variables.$padding * 3) 0;
 
   button {
-    margin-right: ($padding * 3);
+    margin-right: (variables.$padding * 3);
   }
 }
 
@@ -116,21 +118,21 @@
 }
 
 .ds-c-accordion__heading:not(:first-child) {
-  margin-top: $margin * 3;
+  margin-top: variables.$margin * 3;
 }
 
 .radio-container .radio-children {
-  margin-left: ($margin * 8);
+  margin-left: (variables.$margin * 8);
 }
 
 .question-container {
-  margin-bottom: ($padding * 4);
-  padding-right: ($padding * 3);
+  margin-bottom: (variables.$padding * 4);
+  padding-right: (variables.$padding * 3);
   position: relative;
 
   .fill-form {
-    border: 2px solid $color-gray-lightest;
-    border-radius: $border-radius;
+    border: 2px solid variables.$color-gray-lightest;
+    border-radius: variables.$border-radius;
     float: right;
     height: 30px;
     overflow: hidden;
@@ -151,7 +153,7 @@
         background-position: center;
         background-repeat: no-repeat;
         background-size: 85%;
-        color: $black;
+        color: variables.$black;
         content: "";
         font-family: "FontAwesome";
         height: 24px;
@@ -173,7 +175,7 @@
     a.active {
       &:after {
         background: none;
-        color: $color-icon;
+        color: variables.$color-icon;
         content: "\f0e2";
         font-family: "FontAwesome";
         height: 24px;
@@ -227,25 +229,25 @@
   }
 
   .question {
-    font-weight: $font-weight-bold;
-    margin-top: ($margin * 2);
+    font-weight: variables.$font-weight-bold;
+    margin-top: (variables.$margin * 2);
   }
 
   .date-range {
-    border-left: 4px solid $brand-primary;
-    padding-left: ($padding * 2);
+    border-left: 4px solid variables.$brand-primary;
+    padding-left: (variables.$padding * 2);
   }
 
   .question-outer-header {
     margin-bottom: 0;
-    margin-top: ($margin * 4);
+    margin-top: (variables.$margin * 4);
   }
 }
 
 .question-inner-header {
   margin-bottom: 0;
   padding-bottom: 0;
-  margin-top: ($margin * 2);
+  margin-top: (variables.$margin * 2);
 }
 .sub-questions {
   margin-left: 16px;
@@ -255,14 +257,14 @@
   display: none;
 }
 .conditional {
-  border-left: $border-width solid $brand-primary;
-  margin-left: ($margin * 2);
-  padding-left: ($padding * 2);
+  border-left: variables.$border-width solid variables.$brand-primary;
+  margin-left: (variables.$margin * 2);
+  padding-left: (variables.$padding * 2);
 }
 
 .fpl {
   h3 {
-    margin: ($margin * 4) 0 0 0;
+    margin: (variables.$margin * 4) 0 0 0;
   }
 }
 
@@ -333,7 +335,7 @@
 
 .nav-buttons {
   float: right;
-  margin: ($margin * 8) 0 ($margin * 2);
+  margin: (variables.$margin * 8) 0 (variables.$margin * 2);
   text-align: center;
   width: 48%;
 
@@ -342,11 +344,11 @@
       text-align: right;
     }
     .form-button {
-      margin: $margin 0;
+      margin: variables.$margin 0;
 
       @media only screen and (min-width: 767px) {
         display: inline-block;
-        margin: $margin;
+        margin: variables.$margin;
       }
     }
   }
@@ -357,7 +359,7 @@
 
   .print-dialogue {
     border: 1px solid #aaa;
-    border-radius: $border-radius;
+    border-radius: variables.$border-radius;
     box-shadow: 2px 3px 4px #aaa;
     clear: both;
     display: block;
@@ -377,9 +379,9 @@
       top: 2px;
       right: 0;
       svg {
-        color: $color-gray-light;
+        color: variables.$color-gray-light;
         &:hover {
-          color: $color-gray;
+          color: variables.$color-gray;
         }
       }
     }
@@ -439,7 +441,7 @@
     }
 
     .ds-c-datefield__separator {
-      margin: 0 ($margin * 2);
+      margin: 0 (variables.$margin * 2);
     }
 
     .ds-c-label {
@@ -452,25 +454,25 @@
 
 .review-view {
   h4 {
-    color: $black;
+    color: variables.$black;
   }
   .ds-c-choice:disabled + label:before {
-    background: $white;
+    background: variables.$white;
   }
   .ds-c-choice:checked + label:before {
-    background-color: $white;
+    background-color: variables.$white;
     background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22gray%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M20.285%202l-11.285%2011.567-5.286-5.011-3.714%203.716%209%208.728%2015-15.285z%22%2F%3E%3C%2Fsvg%3E');
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: 24px;
-    border-color: $color-gray-light;
+    border-color: variables.$color-gray-light;
   }
   .ds-c-field:disabled {
-    background: $white;
+    background: variables.$white;
   }
   .ds-c-alert {
-    background: $color-gray-lightest;
-    border-left: 8px solid $color-gray-light;
+    background: variables.$color-gray-lightest;
+    border-left: 8px solid variables.$color-gray-light;
   }
 
   .nav-buttons,
@@ -484,25 +486,25 @@
 
   .review-view {
     h4 {
-      color: $black;
+      color: variables.$black;
     }
     .ds-c-choice:disabled + label:before {
-      background: $white;
+      background: variables.$white;
     }
     .ds-c-choice:checked + label:before {
-      background-color: $white;
+      background-color: variables.$white;
       background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22gray%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M20.285%202l-11.285%2011.567-5.286-5.011-3.714%203.716%209%208.728%2015-15.285z%22%2F%3E%3C%2Fsvg%3E');
       background-position: 50%;
       background-repeat: no-repeat;
       background-size: 24px;
-      border-color: $color-gray-light;
+      border-color: variables.$color-gray-light;
     }
     .ds-c-field:disabled {
-      background: $white;
+      background: variables.$white;
     }
     .ds-c-alert {
-      background: $color-gray-lightest;
-      border-left: 8px solid $color-gray-light;
+      background: variables.$color-gray-lightest;
+      border-left: 8px solid variables.$color-gray-light;
     }
 
     .nav-buttons,
@@ -514,13 +516,13 @@
     }
   }
   .accordion-header h3 button {
-    background: $white;
-    border-top: 6px solid $color-gray;
+    background: variables.$white;
+    border-top: 6px solid variables.$color-gray;
   }
 
   .objective-body,
   .objective-footer {
-    background: $white;
+    background: variables.$white;
   }
 
   .objective-accordion div[hidden] {

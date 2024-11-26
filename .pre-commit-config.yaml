@@ -1,4 +1,4 @@
-exclude: 'seed-section-base-*'
+exclude: "seed-section-base-*"
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
@@ -39,3 +39,10 @@ repos:
     rev: v8.12.0
     hooks:
       - id: gitleaks
+  - repo: local
+    hooks:
+      - id: branch-name-validation
+        name: branch-name-validation
+        entry: .github/branchNameValidation.sh
+        language: script
+        pass_filenames: false

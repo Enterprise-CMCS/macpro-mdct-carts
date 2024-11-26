@@ -1,3 +1,5 @@
+@use "variables";
+
 /**********************
   Layout
 **********************/
@@ -19,7 +21,7 @@ div[hidden] {
 @media only screen and (max-width: 767px) {
   div[class*="ds-l-col--"] {
     max-width: 100%;
-    padding: 0 ($margin * 2);
+    padding: 0 (variables.$margin * 2);
     min-width: 100%;
     width: 100%;
   }
