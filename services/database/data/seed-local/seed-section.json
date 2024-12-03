@@ -31561,7 +31561,7 @@
       "section": {
         "id": "2021-01",
         "type": "section",
-        "year": 2020,
+        "year": 2021,
         "state": "AL",
         "title": "Program Fees and Policy Changes",
         "valid": null,
@@ -32758,7 +32758,7 @@
       "section": {
         "id": "2021-02",
         "type": "section",
-        "year": 2020,
+        "year": 2021,
         "state": "AL",
         "title": "Enrollment and Uninsured Data",
         "valid": null,
@@ -33146,7 +33146,7 @@
       "section": {
         "id": "2021-03",
         "type": "section",
-        "year": 2020,
+        "year": 2021,
         "state": "AL",
         "title": "Eligibility, Enrollment, and Operations",
         "valid": null,
@@ -39016,7 +39016,7 @@
       "section": {
         "id": "2021-04",
         "type": "section",
-        "year": 2020,
+        "year": 2021,
         "state": "AL",
         "title": "State Plan Goals and Objectives",
         "valid": null,
@@ -41692,7 +41692,7 @@
       "section": {
         "id": "2021-05",
         "type": "section",
-        "year": 2020,
+        "year": 2021,
         "state": "AL",
         "title": "Program Financing",
         "valid": null,
@@ -42925,9 +42925,9 @@
                       ],
                       "headers": [
                         { "contents": "" },
-                        { "contents": "FFY 2020" },
                         { "contents": "FFY 2021" },
-                        { "contents": "FFY 2022" }
+                        { "contents": "FFY 2022" },
+                        { "contents": "FFY 2023" }
                       ]
                     },
                     "fieldset_type": "synthesized_table"
@@ -43057,9 +43057,9 @@
                       ],
                       "headers": [
                         { "contents": "" },
-                        { "contents": "FFY 2020" },
                         { "contents": "FFY 2021" },
-                        { "contents": "FFY 2022" }
+                        { "contents": "FFY 2022" },
+                        { "contents": "FFY 2023" }
                       ]
                     },
                     "fieldset_type": "synthesized_table"
@@ -43101,7 +43101,7 @@
       "section": {
         "id": "2021-06",
         "type": "section",
-        "year": 2020,
+        "year": 2021,
         "state": "AL",
         "title": "Challenges and Accomplishments",
         "valid": null,
