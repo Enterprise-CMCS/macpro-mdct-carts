@@ -57,7 +57,7 @@ class AuthManager {
    * Manual refresh of credentials paired with an instant timer clear
    */
   async refreshCredentials() {
-    await fetchAuthSession({ forceRefresh: true }); // Force a token refresh
+    await fetchAuthSession(); // Look for an active session (indirectly refreshes?)
     this.setTimer();
   }
 
