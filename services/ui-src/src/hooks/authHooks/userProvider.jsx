@@ -29,13 +29,17 @@ export const UserProvider = ({ children }) => {
   const [showLocalLogins, setShowLocalLogins] = useState(false);
 
   const logout = useCallback(async () => {
-    try {
-      setUser(null);
-      localStorage.removeItem("mdctcarts_session_exp");
-      await signOut();
-    } catch (error) {
-      console.log("error signing out: ", error); // eslint-disable-line no-console
-    }
+    setTimeout(async () => {
+      try {
+        console.log("Inside of callback for userProvider!"); //eslint-disable-line no-console
+        setUser(null);
+        localStorage.removeItem("mdctcarts_session_exp");
+        await signOut();
+        window.location.href = "/admin";
+      } catch (error) {
+        console.log("error signing out: ", error); // eslint-disable-line no-console
+      }
+    });
     window.location.href = config.POST_SIGNOUT_REDIRECT;
   }, []);
 
