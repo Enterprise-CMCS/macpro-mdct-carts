@@ -35,12 +35,11 @@ export const UserProvider = ({ children }) => {
         setUser(null);
         localStorage.removeItem("mdctcarts_session_exp");
         await signOut();
-        window.location.href = "/admin";
+        window.location.href = config.POST_SIGNOUT_REDIRECT;
       } catch (error) {
         console.log("error signing out: ", error); // eslint-disable-line no-console
       }
     });
-    window.location.href = config.POST_SIGNOUT_REDIRECT;
   }, []);
 
   const checkAuthState = useCallback(async () => {
