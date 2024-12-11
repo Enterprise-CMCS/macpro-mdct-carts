@@ -34,7 +34,7 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "sass": "^1.80.6",
-    "vite": "^5.4.11",
+    "vite": "^6.0.0",
     "vite-tsconfig-paths": "^5.1.2"
   },
   "scripts": {
