@@ -21,16 +21,13 @@ export const UserProvider = ({ children }) => {
   const [showLocalLogins, setShowLocalLogins] = useState(false);
 
   const logout = useCallback(async () => {
-    setTimeout(async () => {
-      try {
-        console.log("Inside of callback for userProvider!"); //eslint-disable-line no-console
-        setUser(null);
-        localStorage.removeItem("mdctcarts_session_exp");
-        await logoutUser();
-      } catch (error) {
-        console.log("error signing out: ", error); // eslint-disable-line no-console
-      }
-    });
+    try {
+      setUser(null);
+      localStorage.removeItem("mdctcarts_session_exp");
+      await logoutUser();
+    } catch (error) {
+      console.log("error signing out: ", error); // eslint-disable-line no-console
+    }
   }, []);
 
   const checkAuthState = useCallback(async () => {
