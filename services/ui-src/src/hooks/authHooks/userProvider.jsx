@@ -30,7 +30,6 @@ export const UserProvider = ({ children }) => {
 
   const logout = useCallback(async () => {
     try {
-      console.log("Inside of callback for userProvider!"); //eslint-disable-line no-console
       setUser(null);
       localStorage.removeItem("mdctcarts_session_exp");
       await signOut();
