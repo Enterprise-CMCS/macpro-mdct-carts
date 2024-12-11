@@ -7,13 +7,6 @@ import { apiLib } from "../../util/apiLib";
 jest.mock("../../hooks/authHooks");
 window.alert = jest.fn();
 
-const mockPost = jest.fn();
-jest.mock("aws-amplify", () => ({
-  API: {
-    post: () => mockPost(),
-  },
-}));
-
 const mockHistoryPush = jest.fn();
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
