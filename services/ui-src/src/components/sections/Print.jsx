@@ -11,7 +11,6 @@ import Section from "../layout/Section";
 // utils
 import statesArray from "../utils/statesArray";
 import { loadEnrollmentCounts, loadSections } from "../../actions/initial";
-import requestOptions from "../../hooks/authHooks/requestOptions";
 import { apiLib } from "../../util/apiLib";
 
 /**
@@ -83,9 +82,10 @@ const Print = () => {
       .replaceAll("\u2014", "-");
 
     const base64String = btoa(unescape(encodeURIComponent(htmlString)));
-    const opts = await requestOptions();
-    opts.body = {
-      encodedHtml: base64String,
+    const opts = {
+      body: {
+        encodedHtml: base64String,
+      },
     };
 
     const res = await apiLib.post("/print_pdf", opts);

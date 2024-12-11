@@ -63,11 +63,7 @@ jest.mock("aws-amplify/api", () => ({
     }),
   })),
   del: jest.fn().mockImplementation(() => ({
-    response: Promise.resolve({
-      body: {
-        text: () => Promise.resolve(`{"json":"blob"}`),
-      },
-    }),
+    response: Promise.resolve({}),
   })),
 }));
 
@@ -79,7 +75,7 @@ jest.mock("aws-amplify/auth", () => ({
   }),
   configure: () => {},
   signOut: jest.fn().mockImplementation(() => Promise.resolve()),
-  federatedSignIn: () => {},
+  signInWithRedirect: jest.fn(),
 }));
 
 jest.mock("aws-amplify/utils", () => ({
