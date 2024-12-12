@@ -16,10 +16,6 @@ jest.mock("./apiLib", () => ({
   },
 }));
 
-jest.mock("../hooks/authHooks/requestOptions", () => async (body) => ({
-  body,
-}));
-
 const mockFile = new File(["0xMockDataLOL"], "test.jpg", { type: "image/jpg" });
 
 describe("File API", () => {
@@ -109,9 +105,6 @@ describe("File API", () => {
 
     await deleteUploadedFile("2023", "AL", "mock-file-id");
 
-    expect(await apiLib.del).toBeCalledWith(
-      "/uploads/2023/AL/mock-file-id",
-      {}
-    );
+    expect(await apiLib.del).toBeCalledWith("/uploads/2023/AL/mock-file-id");
   });
 });
