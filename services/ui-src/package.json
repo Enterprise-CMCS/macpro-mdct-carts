@@ -22,8 +22,6 @@
     "mathjs": "^13.2.1",
     "prop-types": "^15.8.1",
     "react": "^16.13.1",
-    "react-data-table-component": "^7.0.0",
-    "react-data-table-component-extensions": "^1.5.0",
     "react-dom": "^16.13.1",
     "react-helmet": "^6.1.0",
     "react-multi-select-component": "4.3.4",
