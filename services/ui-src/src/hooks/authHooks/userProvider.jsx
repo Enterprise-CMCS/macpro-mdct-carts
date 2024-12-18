@@ -1,22 +1,14 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
-import {
-  signInWithRedirect,
-  signOut,
-  fetchAuthSession,
-} from "aws-amplify/auth";
 import { UserContext } from "./userContext";
 import { AppRoles, IdmRoles } from "../../types";
 import { loadUser } from "../../actions/initial";
 import { useDispatch } from "react-redux";
 import config from "../../config";
+import { authenticateWithIDM, getTokens, logoutUser } from "../../util/apiLib";
 
 const cartsProdDomain = "https://mdctcarts.cms.gov";
 const tempEndpoint = "https://dt4brcxdimpa0.cloudfront.net";
-
-const authenticateWithIDM = async () => {
-  await signInWithRedirect({ provider: { custom: "Okta" } });
-};
 
 export const UserProvider = ({ children }) => {
   const location = useLocation();
@@ -32,11 +24,10 @@ export const UserProvider = ({ children }) => {
     try {
       setUser(null);
       localStorage.removeItem("mdctcarts_session_exp");
-      await signOut();
+      await logoutUser();
     } catch (error) {
       console.log("error signing out: ", error); // eslint-disable-line no-console
     }
-    window.location.href = config.POST_SIGNOUT_REDIRECT;
   }, []);
 
   const checkAuthState = useCallback(async () => {
@@ -48,7 +39,7 @@ export const UserProvider = ({ children }) => {
 
     // Authenticate
     try {
-      const tokens = (await fetchAuthSession()).tokens;
+      const tokens = await getTokens();
       if (!tokens?.idToken) {
         throw new Error("Missing tokens auth session.");
       }
