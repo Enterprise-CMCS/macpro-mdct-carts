@@ -10,15 +10,20 @@ const { buildDynamoClient, scan } = require("./utils/dynamodb.js");
 const fs = require("fs");
 const path = require("path");
 
+const OUTPUT_DIR = "output";
 const isLocal = !!process.env.DYNAMODB_URL;
 
 const sectionTableName = isLocal
   ? "local-section"
   : process.env.dynamoPrefix + "-section";
-const outputCsvFile = path.resolve(
-  __dirname,
-  "../../..",
-  "output",
+
+if (!fs.existsSync(OUTPUT_DIR)) {
+  fs.mkdirSync(OUTPUT_DIR);
+}
+
+const outputCsvFile = path.join(
+  process.cwd(),
+  OUTPUT_DIR,
   `${process.env.year}-contact-list.csv`
 );
 
@@ -64,8 +69,17 @@ function transform(items) {
     const parts = subsections.parts?.[0];
     const { questions } = parts;
 
-    const stateName = questions[0].answer.entry;
-    const contactDetails = questions[3].questions;
+    const stateSection = questions.find(
+      (q) => q.label === "State or territory name:"
+    );
+    const contactSection = questions.find(
+      (q) =>
+        q.label ===
+        "Who should we contact if we have any questions about your report?"
+    );
+
+    const stateName = stateSection.answer.entry;
+    const contactDetails = contactSection.questions;
     const contactName = contactDetails[0].answer.entry;
     const jobTitle = contactDetails[1].answer.entry;
     const email = contactDetails[2].answer.entry;
