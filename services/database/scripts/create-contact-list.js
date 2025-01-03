@@ -15,7 +15,12 @@ const isLocal = !!process.env.DYNAMODB_URL;
 const sectionTableName = isLocal
   ? "local-section"
   : process.env.dynamoPrefix + "-section";
-const outputCsvFile = path.resolve(__dirname, "2024-contact-list.csv");
+const outputCsvFile = path.resolve(
+  __dirname,
+  "../../..",
+  "output",
+  `${process.env.year}-contact-list.csv`
+);
 
 async function handler() {
   try {
