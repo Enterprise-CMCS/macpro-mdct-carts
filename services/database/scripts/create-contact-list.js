@@ -62,7 +62,7 @@ function transform(items) {
   return items.map((item) => {
     const subsections = item.contents.section.subsections?.[0];
     const parts = subsections.parts?.[0];
-    const questions = parts.questions;
+    const { questions } = parts;
 
     const stateName = questions[0].answer.entry;
     const contactDetails = questions[3].questions;
