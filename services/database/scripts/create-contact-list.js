@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
 /*
  * Local:
- *    `DYNAMODB_URL="http://localhost:8000" dynamoPrefix="local" node services/database/scripts/create-contact-list.js`
+ *    `DYNAMODB_URL="http://localhost:8000" dynamoPrefix="local" year="2024" node services/database/scripts/create-contact-list.js`
  *  Branch:
- *    dynamoPrefix="YOUR BRANCH NAME" node services/database/scripts/create-contact-list.js
+ *    dynamoPrefix="YOUR BRANCH NAME" year="2024" node services/database/scripts/create-contact-list.js
  */
 
 const { buildDynamoClient, scan } = require("./utils/dynamodb.js");
@@ -24,7 +24,7 @@ const outputCsvFile = path.resolve(
 
 async function handler() {
   try {
-    console.log("Searching for 2024 modifications");
+    console.log(`Searching for ${process.env.year} modifications`);
 
     buildDynamoClient();
 
@@ -53,7 +53,9 @@ async function handler() {
 }
 
 function filter(items) {
-  return items.filter((item) => item.sectionId === 0 && item.year === 2024);
+  return items.filter(
+    (item) => item.sectionId === 0 && item.year === parseInt(process.env.year)
+  );
 }
 
 function transform(items) {
