@@ -34,7 +34,7 @@ const Submit = ({ openCertifyConfirmation }) => (
     <Button
       data-testid="certifySubmit"
       onClick={openCertifyConfirmation}
-      variation="primary"
+      variation="solid"
     >
       Certify and Submit
     </Button>
@@ -65,7 +65,7 @@ const Thanks = ({ done: doneDispatch, submitterUsername }) => {
       </p>
       <h3>What to expect next</h3>
       <p>You‘ll hear from CMS if they have any questions about your report.</p>
-      <Button onClick={doneDispatch} variation="primary">
+      <Button onClick={doneDispatch} variation="solid">
         Return Home
       </Button>
     </>
@@ -133,7 +133,7 @@ const CertifyAndSubmit = () => {
                 Review Report
               </button>,
               <button
-                className="ds-c-button ds-c-button--primary ds-u-margin-right--1"
+                className="ds-c-button ds-c-button--solid ds-u-margin-right--1"
                 key="Confirm Certify"
                 aria-label="Confirm Certify and Submit"
                 onClick={confirmCertifyAction}

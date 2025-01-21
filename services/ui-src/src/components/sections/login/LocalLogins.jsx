@@ -49,7 +49,7 @@ const LocalLogin = () => {
         </label>
         <br />
         <button
-          className="ds-c-button ds-c-button--primary"
+          className="ds-c-button ds-c-button--solid"
           colorScheme="teal"
           isFullWidth
           type="submit"
@@ -72,7 +72,7 @@ export const LocalLogins = ({ loginWithIDM }) => {
       <div className="login-option">
         <h2>Log In with IDM</h2>
         <button
-          className="ds-c-button ds-c-button--primary"
+          className="ds-c-button ds-c-button--solid"
           onClick={loginWithIDM}
         >
           Login with IDM
