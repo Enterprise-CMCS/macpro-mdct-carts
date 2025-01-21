@@ -4,6 +4,7 @@ import statesArray from "../components/utils/statesArray";
 const STATE_INFO = "STATE_INFO";
 const USER_INFO = "USER_INFO";
 const PROGRAM_INFO = "PROGRAM_INFO";
+const SET_AUTH_TIMEOUT = "SET_AUTH_TIMEOUT";
 
 // ACTION CREATORS
 export const getUserData = (userObject) => {
@@ -37,6 +38,14 @@ export const getStateData = (user) => {
   };
 };
 
+export const setAuthTimeout = (showTimeout, expiresAt) => {
+  return {
+    type: SET_AUTH_TIMEOUT,
+    showTimeout,
+    expiresAt,
+  };
+};
+
 const initialState = {
   name: "New York",
   abbr: "NY",
@@ -50,6 +59,8 @@ const initialState = {
     username: "",
   },
   localLogin: false,
+  showTimeout: false,
+  expiresAt: null,
 };
 
 // STATE USER REDUCER
@@ -74,6 +85,12 @@ export default (state = initialState, action) => {
         ...state,
         programName: action.programName,
         formName: action.formName,
+      };
+    case SET_AUTH_TIMEOUT:
+      return {
+        ...state,
+        showTimeout: action.showTimeout,
+        expiresAt: action.expiresAt,
       };
     default:
       return state;

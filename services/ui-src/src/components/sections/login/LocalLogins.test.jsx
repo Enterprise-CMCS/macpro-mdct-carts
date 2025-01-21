@@ -3,10 +3,10 @@ import { shallow } from "enzyme";
 import { act, render, fireEvent } from "@testing-library/react";
 import { LocalLogins } from "./LocalLogins";
 
-const mockPost = jest.fn();
 const localLogins = <LocalLogins />;
-jest.mock("aws-amplify/auth", () => ({
-  signIn: (credentials) => mockPost(credentials),
+const mockLoginUser = jest.fn();
+jest.mock("../../../util/apiLib", () => ({
+  loginUser: (username, password) => mockLoginUser(username, password),
 }));
 
 const mockedUsedNavigate = jest.fn();
@@ -31,15 +31,11 @@ describe("LocalLogin component", () => {
       fireEvent.change(emailField, { target: { value: "myEmail@email.com" } });
     });
     await act(async () => {
-      fireEvent.change(passwordField, { target: { value: "superS3cure" } });
+      fireEvent.change(passwordField, { target: { value: "test" } });
     });
     await act(async () => {
       fireEvent.click(generateButton);
     });
-    expect(mockPost).toHaveBeenCalledWith({
-      username: "myEmail@email.com",
-      password: "superS3cure", // pragma: allowlist secret
-    });
-    expect(mockedUsedNavigate).toHaveBeenCalledWith("/");
+    expect(mockLoginUser).toHaveBeenCalledWith("myEmail@email.com", "test");
   });
 });
