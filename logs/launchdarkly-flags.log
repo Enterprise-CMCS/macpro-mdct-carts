@@ -7,3 +7,4 @@
 ./services/ui-src/src/components/sections/homepage/TemplateDownload.jsx:44:useFlags().release2024 ? "Oct 2024" : "Sept 2023"}
 
 # LaunchDarkly flags in tests
+# N/A
