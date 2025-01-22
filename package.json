@@ -10,7 +10,8 @@
   },
   "scripts": {
     "test": "cd tests/cypress && npm test && cd -",
-    "test:ci": "cd tests/cypress && yarn run test:ci"
+    "test:ci": "cd tests/cypress && yarn run test:ci",
+    "track-flags": "./scripts/track-flags.sh"
   },
   "repository": {
     "type": "git",
