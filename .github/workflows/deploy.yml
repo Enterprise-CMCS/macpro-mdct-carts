@@ -16,6 +16,9 @@ permissions:
   contents: read
   actions: read
 
+env:
+  SERVERLESS_LICENSE_KEY: ${{ secrets.SERVERLESS_LICENSE_KEY }}
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -116,7 +119,7 @@ jobs:
           AWS_DEFAULT_REGION: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_DEFAULT_REGION] || secrets.AWS_DEFAULT_REGION }}
           AWS_OIDC_ROLE_TO_ASSUME: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_OIDC_ROLE_TO_ASSUME] || secrets.AWS_OIDC_ROLE_TO_ASSUME }}
           STAGE_PREFIX: ${{ secrets.STAGE_PREFIX }}
-        
+
       - name: Configure AWS credentials for GitHub Actions
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -180,7 +183,7 @@ jobs:
 
   e2e-test:
     name: E2E Integration Tests (Cypress)
-    needs: 
+    needs:
       - deploy
       - register-runner
     if: ${{ always() && !cancelled() && needs.deploy.result == 'success' && github.ref_name != 'production' }}
@@ -213,7 +216,7 @@ jobs:
 
   a11y-tests:
     name: A11y Tests
-    needs: 
+    needs:
       - deploy
       - register-runner
     if: ${{ always() && !cancelled() && needs.deploy.result == 'success' && github.ref_name != 'production' }}
@@ -242,7 +245,7 @@ jobs:
           path: |
             ${{github.workspace}}/tests/cypress/screenshots/
             ${{github.workspace}}/tests/cypress/videos/
-          retention-days: 14            
+          retention-days: 14
 
   cleanup:
     name: Delist GHA Runner CIDR Blocks

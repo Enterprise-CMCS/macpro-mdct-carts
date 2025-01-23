@@ -28,3 +28,5 @@ CYPRESS_ADMIN_USER_EMAIL=op://mdct_devs/carts_secrets/msssqm4kzbmrwhihjtgwozcv5u
 CYPRESS_ADMIN_USER_PASSWORD=op://mdct_devs/carts_secrets/CYPRESS_ADMIN_USER_PASSWORD # pragma: allowlist secret
 CYPRESS_STATE_USER_EMAIL=op://mdct_devs/carts_secrets/sn6trfrct3cl5sac3pkh2zcjp4
 CYPRESS_STATE_USER_PASSWORD=op://mdct_devs/carts_secrets/CYPRESS_STATE_USER_PASSWORD # pragma: allowlist secret
+
+SERVERLESS_LICENSE_KEY=op://mdct_devs/carts_secrets/SERVERLESS_LICENSE_KEY

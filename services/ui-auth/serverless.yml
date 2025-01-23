@@ -1,7 +1,7 @@
 # Refer to the README.md file in within this service directory to configure all ssm parameters required for this service.
 service: ui-auth
 
-frameworkVersion: "3"
+frameworkVersion: "4"
 
 package:
   individually: true
@@ -10,13 +10,13 @@ provider:
   name: aws
   runtime: nodejs20.x
   region: us-east-1
-  stackTags:  
+  stackTags:
     PROJECT: ${self:custom.project}
-    SERVICE: ${self:service}  
+    SERVICE: ${self:service}
   iam:
     role:
-      path: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
-      permissionsBoundary: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
+      path: /delegatedadmin/developer/
+      permissionsBoundary: !Sub arn:aws:iam::${AWS::AccountId}:policy/cms-cloud-admin/developer-boundary-policy
       statements:
         - Effect: "Allow"
           Action:
@@ -26,15 +26,8 @@ provider:
 plugins:
   - serverless-stack-termination-protection
   - serverless-plugin-scripts
-  - serverless-bundle
   - serverless-iam-helper
-  - serverless-s3-bucket-helper
   - "@enterprise-cmcs/serverless-waf-plugin"
-
-s3BucketHelper:
-  loggingConfiguration:
-    destinationBucketName: ${ssm:/configuration/${self:custom.stage}/s3/accessLogsBucket, ssm:/configuration/default/s3/accessLogsBucket}
-    logFilePrefix: ${ssm:/configuration/${self:custom.stage}/s3/accessLogsPrefix, ssm:/configuration/default/s3/accessLogsPrefix}
 
 custom:
   project: "carts"
@@ -128,11 +121,11 @@ resources:
 
     # Associate the WAF Web ACL with the Cognito User Pool
     CognitoUserPoolWAFAssociation:
-      Type: 'AWS::WAFv2::WebACLAssociation'
+      Type: "AWS::WAFv2::WebACLAssociation"
       Properties:
         ResourceArn: !GetAtt CognitoUserPool.Arn
         WebACLArn: !GetAtt WafPluginAcl.Arn
-        
+
     CognitoUserPoolClient:
       Type: AWS::Cognito::UserPoolClient
       Properties:
