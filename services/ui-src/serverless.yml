@@ -73,10 +73,10 @@ custom:
         export BRANCH_NAME=${self:custom.stage}
         ./env.sh
         cp public/env-config.js build/env-config.js
-        resources:
-Resources:
-  Honk: # this is just because it won't deploy unless we have some resource being created
-    Type: AWS::SSM::Parameter
-    Properties:
-      Type: String
-      Value: 'honk'
+resources:
+  Resources:
+    Honk: # this is just because it won't deploy unless we have some resource being created
+      Type: AWS::SSM::Parameter
+      Properties:
+        Type: String
+        Value: "honk"
