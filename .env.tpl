@@ -30,3 +30,11 @@ CYPRESS_STATE_USER_EMAIL=op://mdct_devs/carts_secrets/sn6trfrct3cl5sac3pkh2zcjp4
 CYPRESS_STATE_USER_PASSWORD=op://mdct_devs/carts_secrets/CYPRESS_STATE_USER_PASSWORD # pragma: allowlist secret
 
 SERVERLESS_LICENSE_KEY=op://mdct_devs/carts_secrets/SERVERLESS_LICENSE_KEY
+
+# AWS
+AWS_ACCESS_KEY_ID=dummy_access_key
+AWS_SECRET_ACCESS_KEY=dummy_secret_key # pragma: allowlist secret
+AWS_SESSION_TOKEN=dummy_session_token
+AWS_REGION=us-east-1
+
+LOGGING_BUCKET=dummy
