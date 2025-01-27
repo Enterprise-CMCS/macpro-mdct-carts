@@ -1,9 +1,9 @@
-const {
+import {
   CognitoIdentityProviderClient,
   AdminCreateUserCommand,
   AdminSetUserPasswordCommand,
   AdminUpdateUserAttributesCommand,
-} = require("@aws-sdk/client-cognito-identity-provider");
+} from "@aws-sdk/client-cognito-identity-provider";
 
 const COGNITO_CLIENT = new CognitoIdentityProviderClient({
   apiVersion: "2016-04-19",
