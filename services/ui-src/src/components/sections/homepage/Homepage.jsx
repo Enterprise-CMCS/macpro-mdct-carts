@@ -30,7 +30,7 @@ function formatStateStatus(item) {
 const Homepage = ({ reportStatus, getFiscalYearTemplateLink }) => {
   return (
     <main className="homepage">
-      <div className="ds-l-container">
+      <div className="ds-l-container ds-content">
         <div className="ds-l-row ds-u-padding-left--2">
           <h1 className="page-title ds-u-margin-bottom--0">
             CHIP Annual Reporting Template System (CARTS)

@@ -65,9 +65,9 @@ const LocalLogin = () => {
 
 export const LocalLogins = ({ loginWithIDM }) => {
   return (
-    <div className="local-login__wrapper .ds-l-col--12">
+    <div className="local-login__wrapper .ds-l-col--12 ds-content">
       <div>
-        <h1 className=".ds-text-heading--xl">CARTS Developer Login </h1>
+        <h1>CARTS Developer Login </h1>
       </div>
       <div className="login-option">
         <h2>Log In with IDM</h2>

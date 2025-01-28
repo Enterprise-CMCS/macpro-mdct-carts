@@ -247,11 +247,12 @@
   USA BANNER
 **********************/
 .usabanner-section-layout {
-  margin-left: auto;
-  margin-right: auto;
-  background-color: variables.$color-gray-lightest;
-  max-width: 1040px;
-  padding-left: 16px;
+  margin-inline: auto;
+  max-width: var(--site-max-width);
+  padding-inline: calc(var(--grid-gutter-width)* 0.5);
+  @media (min-width: 544px) {
+        padding-inline: 0;
+}
 }
 
 /**********************
