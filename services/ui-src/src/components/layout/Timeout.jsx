@@ -74,7 +74,7 @@ const Timeout = () => {
               Stay Logged In
             </button>,
             <button
-              className="ds-c-button ds-c-button--primary ds-u-margin-right--1"
+              className="ds-c-button ds-c-button--solid ds-u-margin-right--1"
               key="Log Out"
               aria-label={logOutText}
               onClick={logoutClick}

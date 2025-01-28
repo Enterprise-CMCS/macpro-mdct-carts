@@ -5,7 +5,7 @@
 **********************/
 .errors,
 .error {
-  color: #e31c3d;
+  color: variables.$danger-red;
 }
 
 .label-radio {
@@ -22,7 +22,7 @@
 }
 
 .ds-c-field--error {
-  border: 2px solid #e31c3d;
+  border: 2px solid variables.$danger-red;
 }
 
 .ds-c-label {
@@ -397,6 +397,18 @@
         }
       }
     }
+  }
+}
+
+.ds-c-button--danger {
+  background-color: variables.$danger-red;
+  border-color: transparent;
+  color: #fff;
+
+  &:hover {
+    background-color: variables.$danger-red-darker;
+    border-color: transparent;
+    color: #fff;
   }
 }
 
