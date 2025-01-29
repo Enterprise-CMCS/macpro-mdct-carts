@@ -83,8 +83,11 @@ export const Header = () => {
       <header className="header">
         <div className="ds-l-container">
           <div className="ds-l-row header-row">
-            <div className="site-title ds-l-col--8 ds-u-padding-right--2 ds-u-padding-top--1">
-              <Link to="/" className="ds-u-display--inline-block">
+            <div className="site-title ds-l-col--8 ds-u-padding-right--2">
+              <Link
+                to="/"
+                className="ds-u-display--inline-block  ds-u-padding-top--1"
+              >
                 <img
                   id="carts-logo"
                   src={appLogo}

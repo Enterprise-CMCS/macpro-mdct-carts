@@ -196,7 +196,7 @@ const CMSHomepage = () => {
                 </div>
               </div>
               <div className="ds-l-row">
-                <legend className="ds-u-padding--2 ds-h3">All Reports</legend>
+                <h3 className="ds-u-padding--2">All Reports</h3>
               </div>
               <div className="report-header ds-l-row">
                 <div className="name ds-l-col--1">Year</div>

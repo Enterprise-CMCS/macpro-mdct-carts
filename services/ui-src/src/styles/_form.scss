@@ -8,15 +8,8 @@
   color: variables.$danger-red;
 }
 
-// .label-radio {
-//   margin: 2rem;
-// }
-
-// .radio-container {
-//   margin: 2rem 0;
-// }
-
 .radio-container {
+  padding-top: variables.$padding * 4;
   input {
     display: inline-block;
   }
@@ -28,6 +21,10 @@
   .radio-children {
     margin-left: (variables.$margin * 8);
   }
+}
+
+input[type=checkbox] + label, input[type=radio] + label {
+  display: inline;
 }
 
 
@@ -423,11 +420,25 @@
   }
 }
 
-.form-footer .autosave {
-  float: left;
-  margin: 64px 0 16px;
-  text-align: center;
-  width: 48%;
+.ds-c-vertical-nav__label--parent {
+  text-align: left;
+}
+
+.form-footer {
+  .autosave {
+    float: left;
+    margin: 64px 0 16px;
+    text-align: center;
+    width: 48%;
+  }
+    
+  button {
+    display: block;
+  }
+
+  .action-buttons button {
+    display: inline-block
+  }
 }
 
 .dropdown-container {
@@ -564,4 +575,12 @@
 
 .print-text-area {
   display: none;
+}
+
+.certify-button {
+  margin-top: variables.$margin * 2;
+}
+
+.return-home-button {
+  margin-top: variables.$margin * 2;
 }
