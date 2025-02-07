@@ -3,6 +3,7 @@ import * as dotenv from "dotenv";
 import LabeledProcessRunner from "./runner.js";
 import { ServerlessStageDestroyer } from "@stratiformdigital/serverless-stage-destroyer";
 import { execSync } from "child_process";
+import { addSlsBucketPolicies } from "./slsV4BucketPolicies.js";
 
 // load .env
 dotenv.config();
@@ -160,6 +161,7 @@ async function deploy(options: { stage: string }) {
   await prepare_services(runner);
   const deployCmd = ["sls", "deploy", "--stage", stage];
   await runner.run_command_and_output("SLS Deploy", deployCmd, ".");
+  await addSlsBucketPolicies();
   // Only deploy resources for kafka ingestion in real envs
   if (stage === "main" || stage === "val" || stage === "production") {
     await deploy_kafka_service(runner, stage);
