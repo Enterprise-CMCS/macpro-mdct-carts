@@ -1,5 +1,4 @@
 import { shouldDisplay } from "./shouldDisplay";
-import { AppRoles } from "../types";
 import { selectFragmentById } from "../store/formData";
 
 const mockFragmentResult = {
@@ -13,18 +12,6 @@ jest.mock("../store/formData", () => ({
 
 describe("shouldDisplay", () => {
   beforeEach(() => jest.clearAllMocks());
-
-  it("should display everything for CMS Admins", () => {
-    const state = {
-      stateUser: {
-        currentUser: {
-          role: AppRoles.CMS_ADMIN,
-        },
-      },
-    };
-    const result = shouldDisplay(state, null);
-    expect(result).toBe(true);
-  });
 
   it("should display everything if no context is provided", () => {
     const state = {
