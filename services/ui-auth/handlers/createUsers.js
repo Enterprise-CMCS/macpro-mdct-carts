@@ -1,12 +1,12 @@
 // TODO logging solution for backend services
 /* eslint-disable no-console */
 
-import * as cognitolib from "../libs/cognito-lib";
+import * as cognitolib from "../libs/cognito-lib.js";
 const userPoolId = process.env.userPoolId;
-const users = require("../libs/users.json");
+import users from "../libs/users.json" assert { type: "json" };
 
 // eslint-disable-next-line no-unused-vars
-async function myHandler(event, context, callback) {
+export async function handler(_event, _context, _callback) {
   console.log("USER POOL ID: ");
   console.log(userPoolId);
 
@@ -52,5 +52,3 @@ async function myHandler(event, context, callback) {
     }
   }
 }
-
-exports.handler = myHandler;

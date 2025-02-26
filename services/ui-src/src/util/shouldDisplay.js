@@ -1,5 +1,4 @@
 import { selectFragmentById } from "../store/formData";
-import { AppRoles } from "../types";
 import jsonpath from "./jsonpath";
 import {
   compareACS,
@@ -218,8 +217,6 @@ const shouldDisplay = (
   chipEnrollments,
   context
 ) => {
-  if (currentUserRole === AppRoles.CMS_ADMIN) return true;
-
   if (
     !context ||
     (!context.conditional_display && !context.show_if_state_program_type_in)
@@ -238,7 +235,7 @@ const shouldDisplay = (
 
   /*
    * hide_if: there is just one target (question) with a single answer
-   * displaying relies on that answer being incldued in the hide_if.values.interactive array
+   * displaying relies on that answer being included in the hide_if.values.interactive array
    */
   if (context.conditional_display.hide_if) {
     return !hideIf(formData, context.conditional_display.hide_if);
