@@ -3,7 +3,9 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { useUser } from "./hooks/authHooks";
 import { PostLogoutRedirect } from "./components/layout/PostLogoutRedirect";
 import AppRoutes from "./AppRoutes";
+import Header from "./components/layout/Header";
 import Timeout from "./components/layout/Timeout";
+import Footer from "./components/layout/Footer";
 import { fireTealiumPageView } from "./util/tealium";
 import "font-awesome/css/font-awesome.min.css";
 import "./styles/app.scss";
@@ -12,6 +14,24 @@ import { LocalLogins } from "components/sections/login/LocalLogins";
 function App() {
   const { pathname, key } = useLocation();
   const { user, showLocalLogins, loginWithIDM } = useUser();
+
+  const VisibleHeader = () =>
+    window.location.pathname.split("/")[1] === "reports" ||
+    window.location.pathname.split("/")[1] === "coming-soon" ? (
+      <></>
+    ) : (
+      <>
+        <Header currentUser={user} />
+      </>
+    );
+
+  const VisibleFooter = () =>
+    window.location.pathname.split("/")[1] === "reports" ||
+    window.location.pathname.split("/")[1] === "coming-soon" ? (
+      <></>
+    ) : (
+      <Footer />
+    );
 
   // fire tealium page view on route change
   useEffect(() => {
@@ -27,8 +47,10 @@ function App() {
         >
           <div className="app-content">
             <Timeout />
+            <VisibleHeader />
             <AppRoutes />
           </div>
+          <VisibleFooter />
         </div>
       )}
       {!user && showLocalLogins && (

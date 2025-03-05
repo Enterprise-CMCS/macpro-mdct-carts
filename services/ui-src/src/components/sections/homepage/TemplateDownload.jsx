@@ -73,7 +73,6 @@ const TemplateDownload = ({ getTemplate }) => {
                   <FontAwesomeIcon
                     icon={faArrowDown}
                     transform="up-2 right-2"
-                    position
                   />
                   <FontAwesomeIcon
                     icon={faMinus}

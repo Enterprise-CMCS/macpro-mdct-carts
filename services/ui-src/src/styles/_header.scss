@@ -81,24 +81,6 @@
     }
   }
 
-  .get-help-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 50%;
-    font-weight: variables.$font-weight-bold;
-
-    @media only screen and (min-width: 768px) {
-      width: auto;
-    }
-
-    a {
-      svg {
-        padding-right: variables.$padding;
-      }
-    }
-  }
-
   .nav-user {
     width: 50%;
     @media only screen and (min-width: 768px) {
@@ -133,11 +115,16 @@
           height: 100%;
         }
 
-        a {
-          display: flex;
+        button {
+          padding-left:0;
+          padding-right: 0;
           height: 100%;
-          justify-content: flex-end;
-          align-items: center;
+          cursor: pointer;
+          text-decoration: none;
+          color: #fff;
+          &:hover {
+            color: #8ed2e5;
+          }
 
           svg {
             padding-right: variables.$padding;
@@ -240,6 +227,13 @@
   .header-row {
     position: relative;
     margin: 0;
+    justify-content: center;
+  }
+
+  .new-header-row {
+    position: relative;
+    margin: 0;
+    
   }
 }
 

@@ -1,6 +1,5 @@
 import { Hub } from "aws-amplify/utils";
 import { add } from "date-fns";
-import { setAuthTimeout } from "../../store/stateUser";
 import { logoutUser, refreshSession } from "../../util/apiLib";
 
 /*
@@ -62,31 +61,16 @@ class AuthManager {
   /**
    * Timer function for idle timeout, keeps track of an idle timer that triggers a forced logout timer if not reset.
    */
-  setTimer() {
-    const expiration = add(Date.now(), { seconds: IDLE_WINDOW / 1000 });
+  setTimer = () => {
+    const expiration = add(Date.now(), {
+      seconds: IDLE_WINDOW / 1000,
+    }).toString();
     localStorage.setItem("mdctcarts_session_exp", expiration);
-    this.timeoutPromptId = setTimeout(
-      (exp) => {
-        this.promptTimeout(exp);
-        this.timeoutForceId = setTimeout(() => {
-          localStorage.removeItem("mdctcarts_session_exp");
-          logoutUser();
-        }, IDLE_WINDOW - PROMPT_AT);
-      },
-      PROMPT_AT,
-      expiration
-    );
-
-    this.store.dispatch(setAuthTimeout(false, expiration));
-  }
-
-  promptTimeout(expirationTime) {
-    this.store.dispatch(setAuthTimeout(true, expirationTime));
-  }
+  };
 }
 
 // We're using a debounce because this can fire a lot...
-function debounce(func, timeout = 2000) {
+const debounce = (func, timeout = 2000) => {
   let timer;
   return (...args) => {
     clearTimeout(timer);
@@ -94,7 +78,7 @@ function debounce(func, timeout = 2000) {
       func.apply(this, args);
     }, timeout);
   };
-}
+};
 
 export const initAuthManager = () => {
   authManager = new AuthManager();

@@ -253,7 +253,8 @@ img {
     }
   }
 
-  .page-title {
+  .page-title { 
+    font-size: 2em;
     margin-top: (variables.$margin * 4);
     margin-bottom: variables.$margin;
   }

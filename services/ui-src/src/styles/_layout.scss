@@ -49,10 +49,7 @@ div[hidden] {
 }
 
 .app-content {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-  justify-content: space-between;
+  flex: 1 0 auto;
 }
 
 .user-profiles {
@@ -77,4 +74,26 @@ div[hidden] {
 
 .data-table-extensions {
   min-height: 67px;
+}
+
+.notfound {
+  margin: 5.5rem auto 0px;
+
+  h1 {
+    padding: 0;
+    margin: 0;
+  }
+
+  h2 {
+    margin-top: 0;
+  }
+  p {
+    margin-bottom: 0;
+    margin-top: .5rem;
+  }
+
+
+  &-icon {
+    padding-right: .5rem;
+  }
 }
