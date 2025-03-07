@@ -2,23 +2,22 @@ import React from "react";
 import { Navigate, Routes, Route } from "react-router-dom";
 import Print from "./components/sections/Print";
 import Spinner from "./components/utils/Spinner";
-import UserInfo from "./components/sections/UserInfo";
 import UserProfile from "./components/sections/UserProfile";
 import { useUser } from "./hooks/authHooks";
 import "font-awesome/css/font-awesome.min.css";
 import "./styles/app.scss";
 import GetHelp from "./components/sections/GetHelp";
-import { AppRoles } from "types";
-import AdminHome from "components/layout/HomeAdmin";
-import StateHome from "components/layout/HomeState";
-import Sidebar from "components/layout/Sidebar";
-import InvokeSection from "components/utils/InvokeSection";
-import CertifyAndSubmit from "components/layout/CertifyAndSubmit";
-import CMSHomepage from "components/sections/homepage/CMSHomepage";
-import FormTemplates from "components/layout/FormTemplates";
-import SaveError from "components/layout/SaveError";
-import ScrollToTop from "components/utils/ScrollToTop";
-import { NotFoundPage } from "components/layout/NotFoundPage";
+import AdminHome from "./components/layout/HomeAdmin";
+import StateHome from "./components/layout/HomeState";
+import Sidebar from "./components/layout/Sidebar";
+import InvokeSection from "./components/utils/InvokeSection";
+import CertifyAndSubmit from "./components/layout/CertifyAndSubmit";
+import CMSHomepage from "./components/sections/homepage/CMSHomepage";
+import FormTemplates from "./components/layout/FormTemplates";
+import SaveError from "./components/layout/SaveError";
+import ScrollToTop from "./components/utils/ScrollToTop";
+import { NotFoundPage } from "./components/layout/NotFoundPage";
+import { AppRoles } from "./types.js";
 
 const CertifyPage = () => (
   <>
@@ -80,7 +79,6 @@ const AppRoutes = () => {
             )
           }
         />
-        <Route path="/userinfo" element={<UserInfo />} />
         <Route path="/user/profile" element={<UserProfile />} />
         <Route path="/print" element={<Print />} />
         <Route path="/get-help" element={<GetHelp />} />

@@ -9,7 +9,7 @@ import Footer from "./components/layout/Footer";
 import { fireTealiumPageView } from "./util/tealium";
 import "font-awesome/css/font-awesome.min.css";
 import "./styles/app.scss";
-import { LocalLogins } from "components/sections/login/LocalLogins";
+import { LocalLogins } from "./components/sections/login/LocalLogins";
 
 function App() {
   const { pathname, key } = useLocation();
