@@ -28,7 +28,6 @@ function formatStateStatus(item) {
 }
 
 const Homepage = ({ reportStatus, getFiscalYearTemplateLink }) => {
-  // console.log("Template Link", getFiscalYearTemplateLink());
   return (
     <main className="homepage">
       <div className="ds-l-container">
