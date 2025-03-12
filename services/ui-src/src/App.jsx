@@ -15,24 +15,6 @@ function App() {
   const { pathname, key } = useLocation();
   const { user, showLocalLogins, loginWithIDM } = useUser();
 
-  const VisibleHeader = () =>
-    window.location.pathname.split("/")[1] === "reports" ||
-    window.location.pathname.split("/")[1] === "coming-soon" ? (
-      <></>
-    ) : (
-      <>
-        <Header currentUser={user} />
-      </>
-    );
-
-  const VisibleFooter = () =>
-    window.location.pathname.split("/")[1] === "reports" ||
-    window.location.pathname.split("/")[1] === "coming-soon" ? (
-      <></>
-    ) : (
-      <Footer />
-    );
-
   // fire tealium page view on route change
   useEffect(() => {
     fireTealiumPageView(user, window.location.href, pathname);
@@ -47,10 +29,10 @@ function App() {
         >
           <div className="app-content">
             <Timeout />
-            <VisibleHeader />
+            <Header />
             <AppRoutes />
           </div>
-          <VisibleFooter />
+          <Footer />
         </div>
       )}
       {!user && showLocalLogins && (
