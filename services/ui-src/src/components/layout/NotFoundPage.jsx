@@ -23,7 +23,7 @@ export const NotFoundPage = () => {
           </h2>
           <p>
             Please email{" "}
-            <a href="mailto:mdct_help@cms.hhs.gov">mdct_help@cms.hhs.gov</a>for
+            <a href="mailto:mdct_help@cms.hhs.gov">mdct_help@cms.hhs.gov</a> for
             help or feedback.
           </p>
           <p>
