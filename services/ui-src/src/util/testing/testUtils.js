@@ -32,13 +32,12 @@ export const mockInitialState = {
     abbr: "NY",
     programType: "comboCHIP", //values can be comboCHIP, mCHIP or sCHIP
     programName: "NY Combo Program",
-    // eslint-disable-next-line no-undef
     imageURI: "/img/states/ny.svg",
     formName: "CARTS FY",
     currentUser: {
       role: "admin",
       state: { id: "NY", name: "New York" },
-      username: "karen.dalton@state.gov",
+      username: "test@state.gov",
     },
   },
   global: {
@@ -49,5 +48,15 @@ export const mockInitialState = {
   save: {
     error: false,
     saving: false,
+  },
+  reportStatus: {
+    TEST2024: {
+      status: "in_progress",
+      year: 2024,
+      stateCode: "AL",
+      lastChanged: "2024-01-04 18:28:18.524133+00",
+      username: "test@test.com",
+      programType: "user",
+    },
   },
 };

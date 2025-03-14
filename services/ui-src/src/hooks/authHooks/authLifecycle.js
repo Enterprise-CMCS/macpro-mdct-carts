@@ -1,14 +1,13 @@
 import { Hub } from "aws-amplify/utils";
 import { add } from "date-fns";
-import { setAuthTimeout } from "../../store/stateUser";
 import { logoutUser, refreshSession } from "../../util/apiLib";
 
 /*
  * After the token expires, refresh tokens will be used in the allotted idle window.
  * If not retrieved, they will be prompted at the specified time to refresh or logout.
  */
-const IDLE_WINDOW = 30 * 60 * 1000; // ms
-const PROMPT_AT = 29 * 60 * 1000; //ms
+export const IDLE_WINDOW = 30 * 60 * 1000; // ms
+export const PROMPT_AT = 29 * 60 * 1000; //ms
 
 let authManager;
 
@@ -17,22 +16,20 @@ let authManager;
  * Tracks login/timeouts
  */
 class AuthManager {
-  store = null;
-  timeoutPromptId = null;
-  timoutForceId = null;
   updateTimeout = debounce(() => this.setTimer());
 
-  constructor(store) {
+  constructor() {
     // Force users with stale tokens greater than the timeout to log in for a fresh session
     const expiration = localStorage.getItem("mdctcarts_session_exp");
-    const isExpired = expiration && new Date(expiration).valueOf() < Date.now();
+    const isExpired =
+      expiration && new Date(expiration).valueOf() < Date.now().valueOf();
     if (isExpired) {
       localStorage.removeItem("mdctcarts_session_exp");
       logoutUser().then(() => {
         window.location.href = "/";
       });
     }
-    this.store = store;
+
     Hub.listen("auth", (data) => {
       const { payload } = data;
       this.onHubEvent(payload);
@@ -64,35 +61,16 @@ class AuthManager {
   /**
    * Timer function for idle timeout, keeps track of an idle timer that triggers a forced logout timer if not reset.
    */
-  setTimer() {
-    const expiration = add(Date.now(), { seconds: IDLE_WINDOW / 1000 });
-    if (this.timeoutPromptId) {
-      clearTimeout(this.timeoutPromptId);
-      clearTimeout(this.timeoutForceId);
-    }
+  setTimer = () => {
+    const expiration = add(Date.now(), {
+      seconds: IDLE_WINDOW / 1000,
+    }).toString();
     localStorage.setItem("mdctcarts_session_exp", expiration);
-    this.timeoutPromptId = setTimeout(
-      (exp) => {
-        this.promptTimeout(exp);
-        this.timeoutForceId = setTimeout(() => {
-          localStorage.removeItem("mdctcarts_session_exp");
-          logoutUser();
-        }, IDLE_WINDOW - PROMPT_AT);
-      },
-      PROMPT_AT,
-      expiration
-    );
-
-    this.store.dispatch(setAuthTimeout(false, expiration));
-  }
-
-  promptTimeout(expirationTime) {
-    this.store.dispatch(setAuthTimeout(true, expirationTime));
-  }
+  };
 }
 
 // We're using a debounce because this can fire a lot...
-function debounce(func, timeout = 2000) {
+const debounce = (func, timeout = 2000) => {
   let timer;
   return (...args) => {
     clearTimeout(timer);
@@ -100,16 +78,21 @@ function debounce(func, timeout = 2000) {
       func.apply(this, args);
     }, timeout);
   };
-}
+};
 
-export const initAuthManager = (store) => {
-  authManager = new AuthManager(store);
+export const initAuthManager = () => {
+  authManager = new AuthManager();
 };
 
 export const refreshCredentials = async () => {
   await authManager.refreshCredentials();
+  return localStorage.getItem("mdctcarts_session_exp");
 };
 
 export const updateTimeout = async () => {
   await authManager.updateTimeout();
+};
+
+export const getExpiration = () => {
+  return localStorage.getItem("mdctcarts_session_exp") || "";
 };

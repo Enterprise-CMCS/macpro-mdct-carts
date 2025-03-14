@@ -4,10 +4,6 @@
   Layout
 **********************/
 
-.ds-base {
-  margin-left: 2em;
-}
-
 div[disabled] {
   pointer-events: none;
   opacity: 0.7;
@@ -74,4 +70,26 @@ div[hidden] {
 
 .data-table-extensions {
   min-height: 67px;
+}
+
+.notfound {
+  margin: 5.5rem auto 0px;
+
+  h1 {
+    padding: 0;
+    margin: 0;
+  }
+
+  h2 {
+    margin-top: 0;
+  }
+  p {
+    margin-bottom: 0;
+    margin-top: .5rem;
+  }
+
+
+  &-icon {
+    padding-right: .5rem;
+  }
 }

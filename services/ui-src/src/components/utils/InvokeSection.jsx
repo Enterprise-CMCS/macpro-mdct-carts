@@ -38,7 +38,7 @@ const InvokeSection = () => {
     Number(sectionOrdinal),
     filteredMarker
   );
-  return <Section sectionId={sectionId} subsectionId={subsectionId} />;
+  return <Section sectionId={Number(sectionId)} subsectionId={subsectionId} />;
 };
 
 export default InvokeSection;
