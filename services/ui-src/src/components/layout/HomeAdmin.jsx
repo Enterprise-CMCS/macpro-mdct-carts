@@ -10,7 +10,7 @@ const AdminHome = () => (
     <ScrollToTop />
     <main className="homepage ds-l-col--12">
       <div className="ds-l-container">
-        <div className="ds-l-row">
+        <div className="ds-l-row ds-u-padding-left--2">
           <h1 className="page-title ds-u-margin-bottom--0">
             CHIP Annual Reporting Template System (CARTS)
           </h1>

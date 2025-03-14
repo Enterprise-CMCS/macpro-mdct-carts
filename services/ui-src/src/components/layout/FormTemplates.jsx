@@ -29,36 +29,38 @@ const FormTemplates = () => {
   const defaultYear = release2024 ? "2024" : "2023";
 
   return (
-    <>
-      <div>
-        <h1>Generate Form Base Templates</h1>
-        <h3>Select Year</h3>
-        <select
-          className="ds-c-field"
-          name="selectedYear"
-          id="selectedYear"
-          data-testid="generate-forms-options"
-          defaultValue={defaultYear}
-        >
-          {release2024 && <option value="2024">2024</option>}
-          <option value="2023">2023</option>
-          <option value="2022">2022</option>
-          <option value="2021">2021</option>
-        </select>
-        <Button
-          type="button"
-          className="ds-c-button ds-c-button--solid"
-          onClick={handleUpdateTemplates}
-          disabled={inProgress}
-          data-testid="generate-forms-button"
-        >
-          Generate New Section Forms
-        </Button>
-        {inProgress && (
-          <div style={{ color: "red" }}>Running Please wait ....</div>
-        )}
+    <div className="ds-l-container">
+      <div className="ds-l-row ds-u-padding-left--2">
+        <div>
+          <h1>Generate Form Base Templates</h1>
+          <h3>Select Year</h3>
+          <select
+            className="ds-c-field"
+            name="selectedYear"
+            id="selectedYear"
+            data-testid="generate-forms-options"
+            defaultValue={defaultYear}
+          >
+            {release2024 && <option value="2024">2024</option>}
+            <option value="2023">2023</option>
+            <option value="2022">2022</option>
+            <option value="2021">2021</option>
+          </select>
+          <Button
+            type="button"
+            className="ds-c-button ds-c-button--solid"
+            onClick={handleUpdateTemplates}
+            disabled={inProgress}
+            data-testid="generate-forms-button"
+          >
+            Generate New Section Forms
+          </Button>
+          {inProgress && (
+            <div style={{ color: "red" }}>Running Please wait ....</div>
+          )}
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 
