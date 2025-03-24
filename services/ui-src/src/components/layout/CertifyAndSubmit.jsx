@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { Button, Dialog } from "@cmsgov/design-system";
-import { useHistory } from "react-router-dom";
-import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
 // components
 import PageInfo from "./PageInfo";
 import FormActions from "./FormActions";
 // utils
+import { format } from "date-fns";
 import { loadForm } from "../../actions/initial";
 import { certifyAndSubmit } from "../../actions/certify";
 import {
@@ -84,7 +84,7 @@ Thanks.propTypes = {
 
 const CertifyAndSubmit = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { dialogOpen, showModal, hideModal } = useModal();
   const [isCertified, submitterUsername, currentUserRole, state] = useSelector(
     (state) => [
@@ -116,7 +116,7 @@ const CertifyAndSubmit = () => {
   };
 
   const doneClick = () => {
-    history.push("/");
+    navigate("/");
     window.location.reload();
   };
 

@@ -1,10 +1,10 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useFormFields } from "../../../hooks/useFormFields";
 import { loginUser } from "../../../util/apiLib";
 
 const LocalLogin = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [fields, handleFieldChange] = useFormFields({
     email: "",
     password: "",
@@ -13,9 +13,14 @@ const LocalLogin = () => {
     event.preventDefault();
     try {
       await loginUser(fields.email, fields.password);
-      history.push("/");
+      navigate("/");
     } catch (error) {
-      console.log("Error while logging in.", error); // eslint-disable-line no-console
+      let errorMessage = {
+        title: "Unable to login",
+        description: error.message,
+      };
+      // eslint-disable-next-line no-console
+      console.log(errorMessage);
     }
   }
 
@@ -23,7 +28,7 @@ const LocalLogin = () => {
     <div className="login-option">
       <h2>Log In with Cognito</h2>
       <form onSubmit={(event) => handleLogin(event)}>
-        <label for="email">
+        <label htmlFor="email">
           <p className="ds-c-field__hint">Email:</p>
           <input
             className="ds-c-field"
@@ -35,7 +40,7 @@ const LocalLogin = () => {
             onChange={handleFieldChange}
           />
         </label>
-        <label for="password">
+        <label htmlFor="password">
           <p className="ds-c-field__hint">Password:</p>
           <input
             className="ds-c-field"
@@ -50,8 +55,6 @@ const LocalLogin = () => {
         <br />
         <button
           className="ds-c-button ds-c-button--solid"
-          colorScheme="teal"
-          isFullWidth
           type="submit"
           data-testid="login-button"
           data-cy="login-with-cognito-button"
@@ -67,7 +70,7 @@ export const LocalLogins = ({ loginWithIDM }) => {
   return (
     <div className="local-login__wrapper .ds-l-col--12 ds-content">
       <div>
-        <h1>CARTS Developer Login </h1>
+        <h1 className=".ds-text-heading--xl">CARTS Developer Login</h1>
       </div>
       <div className="login-option">
         <h2>Log In with IDM</h2>

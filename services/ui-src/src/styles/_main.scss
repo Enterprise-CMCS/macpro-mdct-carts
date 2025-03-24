@@ -64,6 +64,7 @@ img {
 
 .page-info {
   margin-top: (variables.$margin * 8);
+  flex-grow: 1;
 
   @media only screen and (min-width: 768px) {
     margin-top: (variables.$margin * 2);
@@ -251,7 +252,8 @@ img {
     }
   }
 
-  .page-title {
+  .page-title { 
+    font-size: 2em;
     margin-top: (variables.$margin * 4);
     margin-bottom: variables.$margin;
   }
@@ -606,4 +608,8 @@ div[data-state="open"] .accordion-header .arrow:before {
   &-title {
     margin-top: variables.$margin * 8;
   }
+}
+
+.ds-c-dialog {
+  margin-left: auto;
 }
