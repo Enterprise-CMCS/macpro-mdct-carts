@@ -18,7 +18,7 @@ const TemplateDownload = ({ getTemplate }) => {
       <div className="updates ds-l-col--12">
         <p className="update-title">Updates from Central Office</p>
         {useFlags().release2024 && (
-          <div className="preamble">
+          <div className="preamble ds-content">
             <p>
               Completing the Children’s Health Insurance Program (CHIP) Annual
               Report is required under sections 2108(a) and 2108(e) of the

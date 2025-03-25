@@ -87,7 +87,7 @@ const Timeout = () => {
     <>
       {showTimeout && (
         <Dialog
-          isShowing={showTimeout}
+          isOpen={showTimeout}
           onExit={refreshAuth}
           data-testid="timeout-dialog"
           heading="You are about to be logged out."
