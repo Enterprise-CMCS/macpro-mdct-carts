@@ -27,7 +27,7 @@ signalTraps.map((type) => {
   process.once(type, producer.disconnect);
 });
 
-class KafkaSourceLib {
+export class KafkaSourceLib {
   /*
    *Event types:
    *cmd – command; restful publish
@@ -130,5 +130,3 @@ class KafkaSourceLib {
     console.log(`Successfully processed ${event.Records.length} records.`);
   }
 }
-
-export default KafkaSourceLib;

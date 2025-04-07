@@ -1,4 +1,4 @@
-import KafkaSourceLib from "../../../libs/kafka-source-lib";
+const KafkaSourceLib = require("../../../libs/kafka-source-lib");
 /**
  * Binds the topics for Kafka output to a handler, triggered by data streams
  */
