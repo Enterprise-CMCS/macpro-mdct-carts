@@ -1,4 +1,4 @@
-const KafkaSourceLib = require("../../../libs/kafka-source-lib");
+import { KafkaSourceLib } from "../../../libs/kafka-source-lib";
 /**
  * Binds the topics for Kafka output to a handler, triggered by data streams
  */
@@ -10,4 +10,4 @@ class PostKafkaData extends KafkaSourceLib {
 
 const postKafkaData = new PostKafkaData();
 
-exports.handler = postKafkaData.handler.bind(postKafkaData);
+export const handler = postKafkaData.handler.bind(postKafkaData);

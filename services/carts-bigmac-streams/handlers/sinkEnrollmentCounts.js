@@ -1,8 +1,5 @@
-const { UpdateCommand } = require("@aws-sdk/lib-dynamodb");
-const {
-  buildClient,
-  convertToDynamoExpression,
-} = require("../libs/dynamo-lib");
+import { UpdateCommand } from "@aws-sdk/lib-dynamodb";
+import { buildClient, convertToDynamoExpression } from "../libs/dynamo-lib";
 
 /**
  * Handler for enrollment count events that come across kafka from SEDS
@@ -13,7 +10,7 @@ const {
  * @param {*} _context
  * @param {*} _callback
  */
-async function myHandler(event, _context, _callback) {
+export async function handler(event, _context, _callback) {
   const sedsTopicKey = `${process.env.sedsTopic}-0`;
   if (!event?.records?.[sedsTopicKey]) {
     return;
@@ -93,5 +90,3 @@ const getReportingYear = () => {
   if (month < 10) fiscalyear -= 1;
   return fiscalyear;
 };
-
-exports.handler = myHandler;
