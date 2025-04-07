@@ -1,4 +1,4 @@
-import { KafkaSourceLib } from "../../../libs/kafka-source-lib";
+import { KafkaSourceLib } from "../../../libs/kafka-source-lib.js";
 /**
  * Binds the topics for Kafka output to a handler, triggered by data streams
  */

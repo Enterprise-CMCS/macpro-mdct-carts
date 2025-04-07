@@ -1,5 +1,5 @@
 import { UpdateCommand } from "@aws-sdk/lib-dynamodb";
-import { buildClient, convertToDynamoExpression } from "../libs/dynamo-lib";
+import { buildClient, convertToDynamoExpression } from "../libs/dynamo-lib.js";
 
 /**
  * Handler for enrollment count events that come across kafka from SEDS
