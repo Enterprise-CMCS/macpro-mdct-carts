@@ -65,7 +65,7 @@ const TemplateDownload = ({ getTemplate }) => {
             </p>
             <div className="download">
               <button
-                className="ds-c-button ds-c-button--primary"
+                className="ds-c-button ds-c-button--solid"
                 onClick={() => getTemplate(currentYear)}
               >
                 <span className="button-display">Download template</span>
@@ -73,7 +73,6 @@ const TemplateDownload = ({ getTemplate }) => {
                   <FontAwesomeIcon
                     icon={faArrowDown}
                     transform="up-2 right-2"
-                    position
                   />
                   <FontAwesomeIcon
                     icon={faMinus}

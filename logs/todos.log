@@ -6,7 +6,6 @@
 ./services/ui-src/serverless.yml:57: TODO: [MDCT-300] handle react hooks warnings then remove CI=false
 ./services/ui-src/src/components/fields/NoninteractiveTable.jsx:49: TODO Remove this custom logic when rewriting backend
 ./services/ui-src/src/components/layout/UploadComponent.jsx:132: TODO: when one file errors, the others are loaded but the error stays
-./services/ui-src/src/components/layout/UploadComponent.test.jsx:11: TODO remove direct dependency on @testing-library/dom ?
 ./services/ui-src/src/store/formData.js:242: TODO: account for objectives/repeatables here.
 ./services/ui-src/src/store/lastYearFormData.js:146: TODO: account for objectives/repeatables here.
 ./services/ui-src/src/util/synthesize.test.js:1: TODO: Fix this testing suite, it is outdated

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector, shallowEqual } from "react-redux";
 // components
@@ -16,6 +16,7 @@ import appLogo from "../../assets/images/MDCT_CARTS_2x.png";
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef(null);
 
   const [stateUser, formData, formYear, reportStatus] = useSelector(
     (state) => [
@@ -59,19 +60,18 @@ export const Header = () => {
     currentReportStatus
   );
 
-  const closeDropDownMenu = () => {
-    setIsMenuOpen(false);
-  };
-
   useEffect(() => {
-    setTimeout(() => {
-      if (isMenuOpen) {
-        setIsMenuOpen(true);
-        window.addEventListener("click", closeDropDownMenu);
-      } else {
-        window.removeEventListener("click", closeDropDownMenu);
+    const handler = (event) => {
+      if (open && menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
       }
-    }, 0);
+    };
+    document.addEventListener("mousedown", handler);
+    document.addEventListener("touchstart", handler);
+    return () => {
+      document.removeEventListener("mousedown", handler);
+      document.removeEventListener("touchstart", handler);
+    };
   }, [isMenuOpen]);
 
   return (
@@ -102,12 +102,13 @@ export const Header = () => {
                     className="nav-user"
                     id="nav-user"
                     data-testid="headerDropDownMenu"
+                    ref={menuRef}
                   >
                     <ul className="user-email-button">
                       <li>
-                        <a
+                        <button
                           data-testid={"headerDropDownMenuButton"}
-                          href="#menu"
+                          className="ds-c-button ds-c-button--ghost"
                           onClick={() => setIsMenuOpen(!isMenuOpen)}
                         >
                           <FontAwesomeIcon icon={faUser} size="lg" />
@@ -125,7 +126,7 @@ export const Header = () => {
                               aria-hidden="true"
                             ></i>
                           )}
-                        </a>
+                        </button>
                       </li>
                     </ul>
                     {isMenuOpen && (

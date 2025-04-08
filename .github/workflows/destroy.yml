@@ -16,6 +16,9 @@ permissions:
   contents: read
   actions: read
 
+env:
+  SERVERLESS_LICENSE_KEY: ${{ secrets.SERVERLESS_LICENSE_KEY }}
+
 jobs:
   destroy:
     # Protected branches should be designated as such in the GitHub UI.
@@ -64,7 +67,9 @@ jobs:
       #     inputs: '{ "topics": "mgmt.connect.cms-carts-seds.carts-bigmac-streams-${{env.BRANCH_NAME}}.config,mgmt.connect.cms-carts-seds.carts-bigmac-streams-${{env.BRANCH_NAME}}.offsets,mgmt.connect.cms-carts-seds.carts-bigmac-streams-${{env.BRANCH_NAME}}.status"}'
       #     ref: refs/heads/master # Otherwise workflow-dispatch tries to operate off of our default name
       - name: Destroy
-        run: ./run destroy --stage $branch_name --verify false
+        run: |
+          ./run destroy --stage $branch_name --verify false
+          serverless reconcile
 
   # Notify the integrations channel when a destroy action fails
   notify_on_destroy_failure:
