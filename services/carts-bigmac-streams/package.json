@@ -1,6 +1,8 @@
 {
   "name": "carts-bigmac-streams",
   "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
   "description": "",
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.758.0",
