@@ -1,14 +1,11 @@
 import React from "react";
-import { screen, render } from "@testing-library/react";
+import { screen, render, within } from "@testing-library/react";
 import userEventLib from "@testing-library/user-event";
-import { within } from "@testing-library/dom";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import UploadComponent from "./UploadComponent";
 import { AppRoles, REPORT_STATUS } from "../../types";
 import fileApi from "../../util/fileApi";
-
-// TODO remove direct dependency on @testing-library/dom ?
 
 /**
  * When applyAccept is true, `user-event` will refuse to upload files whose

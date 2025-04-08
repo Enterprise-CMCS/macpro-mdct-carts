@@ -1,58 +1,112 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import Header from "./components/layout/Header";
-import Home from "./components/layout/Home";
-import Footer from "./components/layout/Footer";
+import { Navigate, Routes, Route } from "react-router-dom";
 import Print from "./components/sections/Print";
 import Spinner from "./components/utils/Spinner";
-import UserInfo from "./components/sections/UserInfo";
 import UserProfile from "./components/sections/UserProfile";
-import { LocalLogins } from "./components/sections/login/LocalLogins";
 import { useUser } from "./hooks/authHooks";
 import "font-awesome/css/font-awesome.min.css";
 import "./styles/app.scss";
 import GetHelp from "./components/sections/GetHelp";
-import Timeout from "./components/layout/Timeout";
+import AdminHome from "./components/layout/HomeAdmin";
+import StateHome from "./components/layout/HomeState";
+import Sidebar from "./components/layout/Sidebar";
+import InvokeSection from "./components/utils/InvokeSection";
+import CertifyAndSubmit from "./components/layout/CertifyAndSubmit";
+import CMSHomepage from "./components/sections/homepage/CMSHomepage";
+import FormTemplates from "./components/layout/FormTemplates";
+import SaveError from "./components/layout/SaveError";
+import ScrollToTop from "./components/utils/ScrollToTop";
+import { NotFoundPage } from "./components/layout/NotFoundPage";
+import { AppRoles } from "./types.js";
+
+const CertifyPage = () => (
+  <>
+    <SaveError />
+    <ScrollToTop />
+    <div className="ds-l-container">
+      <div className="ds-l-row">
+        <Sidebar />
+        <CertifyAndSubmit />
+      </div>
+    </div>
+  </>
+);
+
+const Section = () => {
+  return (
+    <>
+      <SaveError />
+      <ScrollToTop />
+      <div className="ds-l-container">
+        <div className="ds-l-row">
+          <Sidebar />
+          <InvokeSection />
+        </div>
+      </div>
+    </>
+  );
+};
 
 const AppRoutes = () => {
-  const { user, showLocalLogins, loginWithIDM } = useUser();
+  const { user } = useUser();
 
-  if (!user && showLocalLogins) {
-    return <LocalLogins loginWithIDM={loginWithIDM} />;
-  }
+  const isCMSUser =
+    user?.userRole === AppRoles.CMS_USER ||
+    user?.userRole === AppRoles.INTERNAL_USER ||
+    user?.userRole === AppRoles.HELP_DESK ||
+    user?.userRole === AppRoles.CMS_APPROVER;
 
-  const VisibleHeader =
-    window.location.pathname.split("/")[1] === "reports" ||
-    window.location.pathname.split("/")[1] === "coming-soon" ? null : (
-      <Header currentUser={user} />
-    );
+  const isStateUser = user?.userRole === AppRoles.STATE_USER;
 
-  const VisibleFooter =
-    window.location.pathname.split("/")[1] === "reports" ||
-    window.location.pathname.split("/")[1] === "coming-soon" ? null : (
-      <Footer />
-    );
+  const isAdminUser = user?.userRole === AppRoles.CMS_ADMIN;
 
   return (
-    <div
-      className={"App " + window.location.pathname.split("/")[1]}
-      data-test="component-app"
-    >
-      <div className="app-content">
-        <Spinner />
-        <Router>
-          {VisibleHeader}
-          <Home role={user?.userRole || ""} />
-          <Timeout />
-          {/* These routes are available to everyone, so define them here */}
-          <Route exact path="/userinfo" component={UserInfo} />
-          <Route path="/user/profile" component={UserProfile} />
-          <Route path="/print" component={Print} />
-          <Route path="/get-help" component={GetHelp} />
-        </Router>
-      </div>
-      {VisibleFooter}
-    </div>
+    <>
+      <Spinner />
+      <Routes>
+        {/* General Routes */}
+        <Route
+          path="/"
+          element={
+            isStateUser ? (
+              <StateHome />
+            ) : isAdminUser ? (
+              <AdminHome />
+            ) : isCMSUser ? (
+              <CMSHomepage />
+            ) : (
+              <Navigate to="/user/profile" />
+            )
+          }
+        />
+        <Route path="/user/profile" element={<UserProfile />} />
+        <Route path="/print" element={<Print />} />
+        <Route path="/get-help" element={<GetHelp />} />
+        // State User Form URLS
+        <Route
+          path="/sections/:year/:sectionOrdinal/:subsectionMarker"
+          element={<Section />}
+        />
+        <Route path="sections/:year/:sectionOrdinal" element={<Section />} />
+        <Route
+          path="/sections/:year/certify-and-submit"
+          element={<CertifyPage />}
+        />
+        //Admin & CMS User Form URLS
+        <Route
+          path="/views/sections/:state/:year/:sectionOrdinal/:subsectionMarker"
+          element={<Section />}
+        />
+        <Route
+          path="/views/sections/:state/:year/:sectionOrdinal"
+          element={<Section />}
+        />
+        <Route path="/state-reports" element={<CMSHomepage />} />
+        <Route path="/templates" element={<FormTemplates />} />
+        //If path not found
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </>
   );
 };
 

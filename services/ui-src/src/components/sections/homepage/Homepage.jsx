@@ -17,7 +17,7 @@ function formatStateStatus(item) {
         key={item.stateCode + "-" + item.year}
         name={item.year}
         lastChanged={item.lastChanged}
-        link1URL={`/sections/${item.year}/00`}
+        link1URL={`sections/${item.year}/00`}
         link1Text={editable ? "Edit" : "View"}
         statusText={STATUS_MAPPING[item.status]}
         userRole={AppRoles.STATE_USER}
@@ -50,9 +50,7 @@ const Homepage = ({ reportStatus, getFiscalYearTemplateLink }) => {
                 <div className="actions ds-l-col--4">Actions</div>
               </div>
 
-              {Object.keys(reportStatus).map((k) =>
-                formatStateStatus(reportStatus[k])
-              )}
+              {Object.values(reportStatus).map(formatStateStatus)}
             </div>
           </div>
         </div>
