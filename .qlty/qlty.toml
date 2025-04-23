@@ -85,9 +85,6 @@ enabled = true
 [smells.file_complexity]
 enabled = false
 
-[smells.nested_control_flow]
-enabled = false
-
 [smells.function_complexity]
 enabled = true
 threshold = 20
@@ -95,5 +92,16 @@ threshold = 20
 [smells.function_parameters]
 enabled = false
 
+[smells.nested_control_flow]
+enabled = false
+
 [smells.return_statements]
 enabled = false
+
+[[source]]
+name = "default"
+default = true
+
+[[plugin]]
+name = "ripgrep"
+mode = "comment"

@@ -11,8 +11,7 @@
   "scripts": {
     "test": "cd tests/cypress && npm test && cd -",
     "test:ci": "cd tests/cypress && yarn run test:ci",
-    "track-flags": "./scripts/track-flags.sh",
-    "track-todos": "./scripts/track-todos.sh"
+    "track-flags": "./scripts/track-flags.sh"
   },
   "repository": {
     "type": "git",
