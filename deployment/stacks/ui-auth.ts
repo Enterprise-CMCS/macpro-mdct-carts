@@ -11,7 +11,6 @@ import {
   RemovalPolicy,
 } from "aws-cdk-lib";
 import { WafConstruct } from "../constructs/waf";
-import { IManagedPolicy } from "aws-cdk-lib/aws-iam";
 import { isLocalStack } from "../local/util";
 
 interface CreateUiAuthComponentsProps {
@@ -21,12 +20,11 @@ interface CreateUiAuthComponentsProps {
   isDev: boolean;
   applicationEndpointUrl: string;
   customResourceRole: iam.Role;
-  iamPath: string;
-  iamPermissionsBoundary: IManagedPolicy;
   oktaMetadataUrl: string;
   bootstrapUsersPassword?: string;
   secureCloudfrontDomainName?: string;
   userPoolDomainPrefix?: string;
+  attachmentsBucketArn: string;
 }
 
 export function createUiAuthComponents(props: CreateUiAuthComponentsProps) {
@@ -37,8 +35,6 @@ export function createUiAuthComponents(props: CreateUiAuthComponentsProps) {
     isDev,
     applicationEndpointUrl,
     customResourceRole,
-    iamPath,
-    iamPermissionsBoundary,
     oktaMetadataUrl,
     bootstrapUsersPassword,
     secureCloudfrontDomainName,
@@ -56,20 +52,21 @@ export function createUiAuthComponents(props: CreateUiAuthComponentsProps) {
     selfSignUpEnabled: false,
     standardAttributes: {
       givenName: {
-        required: false,
+        required: true,
         mutable: true,
       },
       familyName: {
-        required: false,
-        mutable: true,
-      },
-      phoneNumber: {
-        required: false,
+        required: true,
         mutable: true,
       },
     },
     customAttributes: {
-      ismemberof: new cognito.StringAttribute({ mutable: true }),
+      cms_roles: new cognito.StringAttribute({ mutable: true }),
+      cms_state: new cognito.StringAttribute({
+        mutable: true,
+        minLen: 0,
+        maxLen: 256,
+      }),
     },
     // advancedSecurityMode: cognito.AdvancedSecurityMode.ENFORCED, DEPRECATED WE NEED FEATURE_PLAN.plus if we want to use StandardThreatProtectionMode.FULL_FUNCTION which I think is the new way to do this
     removalPolicy: isDev ? RemovalPolicy.DESTROY : RemovalPolicy.RETAIN,
@@ -94,7 +91,8 @@ export function createUiAuthComponents(props: CreateUiAuthComponentsProps) {
           "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname",
         given_name:
           "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname",
-        "custom:ismemberof": "ismemberof",
+        "custom:cms_roles": "cmsRoles",
+        "custom:cms_state": "state",
       },
       idpIdentifiers: ["IdpIdentifier"],
     }
@@ -102,20 +100,23 @@ export function createUiAuthComponents(props: CreateUiAuthComponentsProps) {
 
   const supportedIdentityProviders = [
     cognito.UserPoolClientIdentityProvider.custom(providerName),
+    cognito.UserPoolClientIdentityProvider.COGNITO,
   ];
 
   const appUrl =
     secureCloudfrontDomainName ??
     applicationEndpointUrl ??
-    "https://localhost:3000/";
+    "http://localhost:3000/";
+
   const userPoolClient = new cognito.UserPoolClient(scope, "UserPoolClient", {
     userPoolClientName: `${stage}-user-pool-client`,
     userPool,
     authFlows: {
-      userPassword: true,
+      adminUserPassword: true,
     },
     oAuth: {
       flows: {
+        authorizationCodeGrant: true,
         implicitCodeGrant: true,
       },
       scopes: [
@@ -123,27 +124,32 @@ export function createUiAuthComponents(props: CreateUiAuthComponentsProps) {
         cognito.OAuthScope.OPENID,
         cognito.OAuthScope.PROFILE,
       ],
-      callbackUrls: [appUrl],
-      defaultRedirectUri: appUrl,
-      logoutUrls: [appUrl],
+      callbackUrls: [appUrl, "http://localhost:3000/"],
+      logoutUrls: [
+        appUrl,
+        `${appUrl}postLogout`,
+        "http://localhost:3000/",
+        "http://localhost:3000/postLogout",
+      ],
     },
     supportedIdentityProviders,
     generateSecret: false,
+    accessTokenValidity: Duration.minutes(30),
+    idTokenValidity: Duration.minutes(30),
+    refreshTokenValidity: Duration.hours(24),
   });
 
   userPoolClient.node.addDependency(oktaIdp);
 
   (
     userPoolClient.node.defaultChild as cognito.CfnUserPoolClient
-  ).addPropertyOverride("ExplicitAuthFlows", [
-    "ADMIN_NO_SRP_AUTH",
-    "USER_PASSWORD_AUTH",
-  ]);
+  ).addPropertyOverride("ExplicitAuthFlows", ["ADMIN_NO_SRP_AUTH"]);
 
   const userPoolDomain = new cognito.UserPoolDomain(scope, "UserPoolDomain", {
     userPool,
     cognitoDomain: {
-      domainPrefix: userPoolDomainPrefix ?? `${stage}-login-user-pool-client`,
+      domainPrefix:
+        userPoolDomainPrefix ?? `${project}-${stage}-login-user-pool-client`,
     },
   });
 
@@ -166,8 +172,6 @@ export function createUiAuthComponents(props: CreateUiAuthComponentsProps) {
 
   if (bootstrapUsersPassword) {
     const lambdaApiRole = new iam.Role(scope, "BootstrapUsersLambdaApiRole", {
-      permissionsBoundary: iamPermissionsBoundary,
-      path: iamPath,
       assumedBy: new iam.ServicePrincipal("lambda.amazonaws.com"),
       managedPolicies: [
         iam.ManagedPolicy.fromAwsManagedPolicyName(
@@ -200,9 +204,11 @@ export function createUiAuthComponents(props: CreateUiAuthComponentsProps) {
       scope,
       "bootstrapUsers",
       {
+        functionName: `ui-auth-${stage}-bootstrapUsers`,
         entry: "services/ui-auth/handlers/createUsers.js",
         handler: "handler",
         runtime: lambda.Runtime.NODEJS_20_X,
+        memorySize: 1024,
         timeout: Duration.seconds(60),
         role: lambdaApiRole,
         environment: {
@@ -262,8 +268,6 @@ export function createUiAuthComponents(props: CreateUiAuthComponentsProps) {
 
   function createAuthRole(restApiId: string) {
     const cognitoAuthRole = new iam.Role(scope, "CognitoAuthRole", {
-      permissionsBoundary: iamPermissionsBoundary,
-      path: iamPath,
       assumedBy: new iam.FederatedPrincipal(
         "cognito-identity.amazonaws.com",
         {

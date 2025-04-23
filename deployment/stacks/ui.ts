@@ -11,8 +11,6 @@ import {
   RemovalPolicy,
 } from "aws-cdk-lib";
 import { WafConstruct } from "../constructs/waf";
-import { addIamPropertiesToBucketRole } from "../utils/s3";
-import { IManagedPolicy } from "aws-cdk-lib/aws-iam";
 import { isLocalStack } from "../local/util";
 
 interface CreateUiComponentsProps {
@@ -20,8 +18,6 @@ interface CreateUiComponentsProps {
   stage: string;
   project: string;
   isDev: boolean;
-  iamPermissionsBoundary: IManagedPolicy;
-  iamPath: string;
   cloudfrontCertificateArn?: string;
   cloudfrontDomainName?: string;
   vpnIpSetArn?: string;
@@ -35,8 +31,6 @@ export function createUiComponents(props: CreateUiComponentsProps) {
     stage,
     project,
     isDev,
-    iamPermissionsBoundary,
-    iamPath,
     cloudfrontCertificateArn,
     cloudfrontDomainName,
     // vpnIpSetArn,
@@ -50,9 +44,7 @@ export function createUiComponents(props: CreateUiComponentsProps) {
     autoDeleteObjects: true,
     enforceSSL: true,
     blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
-    versioned: true,
-    serverAccessLogsBucket: loggingBucket,
-    serverAccessLogsPrefix: `AWSLogs/${Aws.ACCOUNT_ID}/s3/`,
+    versioned: false,
   });
 
   const logBucket = new s3.Bucket(scope, "CloudfrontLogBucket", {
@@ -78,7 +70,7 @@ export function createUiComponents(props: CreateUiComponentsProps) {
 
   const securityHeadersPolicy = new cloudfront.ResponseHeadersPolicy(
     scope,
-    "CloudFormationHeadersPolicy",
+    "CloudFrontHeadersPolicy",
     {
       responseHeadersPolicyName: `Headers-Policy-${stage}`,
       comment: "Add Security Headers",
@@ -99,10 +91,6 @@ export function createUiComponents(props: CreateUiComponentsProps) {
         contentSecurityPolicy: {
           contentSecurityPolicy:
             "default-src 'self'; img-src 'self' data: https://www.google-analytics.com; script-src 'self' https://www.google-analytics.com https://ssl.google-analytics.com https://www.googletagmanager.com tags.tiqcdn.com tags.tiqcdn.cn tags-eu.tiqcdn.com https://*.adoberesources.net 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src https://*.amazonaws.com/ https://*.amazoncognito.com https://www.google-analytics.com https://*.launchdarkly.us https://adobe-ep.cms.gov https://adobedc.demdex.net; frame-ancestors 'none'; object-src 'none'",
-          override: true,
-        },
-        xssProtection: {
-          protection: false,
           override: true,
         },
       },
@@ -161,13 +149,6 @@ export function createUiComponents(props: CreateUiComponentsProps) {
 
   const applicationEndpointUrl = `https://${distribution.distributionDomainName}/`;
 
-  addIamPropertiesToBucketRole(
-    scope,
-    "Custom::S3AutoDeleteObjectsCustomResourceProvider/Role",
-    iamPermissionsBoundary.managedPolicyArn,
-    iamPath
-  );
-
   return {
     distribution,
     applicationEndpointUrl,
@@ -187,7 +168,7 @@ function setupWaf(
     "CloudfrontWafConstruct",
     {
       name: `${project}-${stage}-ui`,
-      blockByDefault: false,
+      blockByDefault: true,
     },
     "CLOUDFRONT"
   );

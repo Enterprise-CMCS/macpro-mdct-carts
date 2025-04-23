@@ -19,8 +19,6 @@ API_URL=http://localhost:3030/local
 S3_LOCAL_ENDPOINT=http://localhost:4569
 S3_ATTACHMENTS_BUCKET_NAME=op://mdct_devs/carts_secrets/S3_ATTACHMENTS_BUCKET_NAME
 docraptorApiKey=op://mdct_devs/carts_secrets/docraptorApiKey # pragma: allowlist secret
-iamPath=/
-iamPermissionsBoundary="bound"
 SLS_INTERACTIVE_SETUP_ENABLE=1
 
 # needed for e2e tests

@@ -1,7 +1,6 @@
 import { Construct } from "constructs";
 import {
   aws_apigateway as apigateway,
-  // aws_ec2 as ec2,
   aws_iam as iam,
   aws_logs as logs,
   aws_wafv2 as wafv2,
@@ -9,83 +8,42 @@ import {
   Duration,
   RemovalPolicy,
 } from "aws-cdk-lib";
-// import { Lambda } from "../constructs/lambda";
+import { Lambda } from "../constructs/lambda";
 import { WafConstruct } from "../constructs/waf";
-import { addIamPropertiesToBucketAutoDeleteRole } from "../utils/s3";
-/*
- * import { getSubnets } from "../utils/vpc";
- * import { LambdaDynamoEventSource } from "../constructs/lambda-dynamo-event";
- */
-import { DynamoDBTableIdentifiers } from "../constructs/dynamodb-table";
-// import { isDefined } from "../utils/misc";
 import { isLocalStack } from "../local/util";
+import { DynamoDBTableIdentifiers } from "../constructs/dynamodb-table";
 
 interface CreateApiComponentsProps {
+  docraptorApiKey: string;
+  fiscalYearTemplateS3BucketName: string;
+  isDev: boolean;
+  project: string;
   scope: Construct;
   stage: string;
-  project: string;
-  isDev: boolean;
-  userPoolId?: string;
-  userPoolClientId?: string;
-  vpcName: string;
-  kafkaAuthorizedSubnetIds: string;
   tables: DynamoDBTableIdentifiers[];
-  brokerString: string;
-  iamPermissionsBoundary: iam.IManagedPolicy;
-  iamPath: string;
+  uploadS3BucketName: string;
 }
 
 export function createApiComponents(props: CreateApiComponentsProps) {
   const {
+    docraptorApiKey,
+    fiscalYearTemplateS3BucketName,
+    isDev,
+    project,
     scope,
     stage,
-    project,
-    isDev,
-    /*
-     * userPoolId,
-     * userPoolClientId,
-     */
-    /*
-     * vpcName,
-     * kafkaAuthorizedSubnetIds,
-     */
-    /*
-     * tables,
-     * brokerString,
-     */
-    iamPermissionsBoundary,
-    iamPath,
+    tables,
+    uploadS3BucketName,
   } = props;
 
   const service = "app-api";
-
-  /*
-   * const vpc = ec2.Vpc.fromLookup(scope, "Vpc", { vpcName });
-   * const kafkaAuthorizedSubnets = getSubnets(
-   *   scope,
-   *   kafkaAuthorizedSubnetIds ?? ""
-   * );
-   */
-
-  /*
-   * const kafkaSecurityGroup = new ec2.SecurityGroup(
-   *   scope,
-   *   "KafkaSecurityGroup",
-   *   {
-   *     vpc,
-   *     description:
-   *       "Security Group for streaming functions. Egress all is set by default.",
-   *     allowAllOutbound: true,
-   *   }
-   * );
-   */
 
   const logGroup = new logs.LogGroup(scope, "ApiAccessLogs", {
     removalPolicy: isDev ? RemovalPolicy.DESTROY : RemovalPolicy.RETAIN,
   });
 
   const api = new apigateway.RestApi(scope, "ApiGatewayRestApi", {
-    restApiName: `${stage}-app-api`,
+    restApiName: `${stage}-${service}`,
     deploy: true,
     cloudWatchRole: false,
     deployOptions: {
@@ -93,20 +51,7 @@ export function createApiComponents(props: CreateApiComponentsProps) {
       tracingEnabled: true,
       loggingLevel: apigateway.MethodLoggingLevel.INFO,
       dataTraceEnabled: true,
-      metricsEnabled: false,
-      throttlingBurstLimit: 5000,
-      throttlingRateLimit: 10000.0,
-      cachingEnabled: false,
-      cacheTtl: Duration.seconds(300),
-      cacheDataEncrypted: false,
       accessLogDestination: new apigateway.LogGroupLogDestination(logGroup),
-      accessLogFormat: apigateway.AccessLogFormat.custom(
-        "requestId: $context.requestId, ip: $context.identity.sourceIp, " +
-          "caller: $context.identity.caller, user: $context.identity.user, " +
-          "requestTime: $context.requestTime, httpMethod: $context.httpMethod, " +
-          "resourcePath: $context.resourcePath, status: $context.status, " +
-          "protocol: $context.protocol, responseLength: $context.responseLength"
-      ),
     },
     defaultCorsPreflightOptions: {
       allowOrigins: apigateway.Cors.ALL_ORIGINS,
@@ -130,84 +75,144 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     },
   });
 
-  /*
-   * const environment = {
-   *   BOOTSTRAP_BROKER_STRING_TLS: brokerString,
-   *   COGNITO_USER_POOL_ID: userPoolId ?? process.env.COGNITO_USER_POOL_ID!,
-   *   COGNITO_USER_POOL_CLIENT_ID:
-   *     userPoolClientId ?? process.env.COGNITO_USER_POOL_CLIENT_ID!,
-   *   stage,
-   *   ...Object.fromEntries(
-   *     tables.map((table) => [`${table.id}Table`, table.name])
-   *   ),
-   * };
-   */
+  const environment = {
+    stage,
+    docraptorApiKey,
+    fiscalYearTemplateS3BucketName,
+    uploadS3BucketName,
+    NODE_OPTIONS: "--enable-source-maps",
+    ...Object.fromEntries(
+      tables.map((table) => [`${table.id}TableName`, table.name])
+    ),
+  };
 
-  /*
-   * const additionalPolicies = [
-   *   new iam.PolicyStatement({
-   *     effect: iam.Effect.ALLOW,
-   *     actions: [
-   *       "dynamodb:BatchWriteItem",
-   *       "dynamodb:DeleteItem",
-   *       "dynamodb:GetItem",
-   *       "dynamodb:PutItem",
-   *       "dynamodb:Query",
-   *       "dynamodb:Scan",
-   *       "dynamodb:UpdateItem",
-   *     ],
-   *     resources: tables.map((table) => table.arn),
-   *   }),
-   */
+  const commonProps = {
+    stackName: `${service}-${stage}`,
+    api,
+    environment,
+  };
 
-  /*
-   *   new iam.PolicyStatement({
-   *     effect: iam.Effect.ALLOW,
-   *     actions: [
-   *       "dynamodb:DescribeStream",
-   *       "dynamodb:GetRecords",
-   *       "dynamodb:GetShardIterator",
-   *       "dynamodb:ListShards",
-   *       "dynamodb:ListStreams",
-   *     ],
-   *     resources: tables.map((table) => table.streamArn).filter(isDefined),
-   *   }),
-   *   new iam.PolicyStatement({
-   *     effect: iam.Effect.ALLOW,
-   *     actions: ["dynamodb:Query", "dynamodb:Scan"],
-   *     resources: tables.map((table) => `${table.arn}/index/*`),
-   *   }),
-   *   new iam.PolicyStatement({
-   *     effect: iam.Effect.ALLOW,
-   *     actions: [
-   *       "cognito-idp:AdminGetUser",
-   *       "ses:SendEmail",
-   *       "ses:SendRawEmail",
-   *       "lambda:InvokeFunction",
-   *     ],
-   *     resources: ["*"],
-   *   }),
-   * ];
-   */
+  new Lambda(scope, "getStates", {
+    entry: "services/app-api/handlers/state/get.ts",
+    handler: "getStates",
+    path: "/state",
+    method: "GET",
+    ...commonProps,
+  });
 
-  /*
-   * const commonProps = {
-   *   brokerString,
-   *   stackName: `${service}-${stage}`,
-   *   api,
-   *   environment,
-   *   additionalPolicies,
-   *   iamPermissionsBoundary,
-   *   iamPath,
-   * };
-   */
+  new Lambda(scope, "getEnrollmentCounts", {
+    entry: "services/app-api/handlers/enrollmentCounts/get.ts",
+    handler: "getEnrollmentCounts",
+    path: "/enrollment_counts/{year}/{state}",
+    method: "GET",
+    requestParameters: ["year", "state"],
+    ...commonProps,
+  });
+
+  new Lambda(scope, "getFiscalYearTemplateLink", {
+    entry: "services/app-api/handlers/fiscalYearTemplate/get.ts",
+    handler: "getFiscalYearTemplateLink",
+    path: "/fiscalYearTemplate/{year}",
+    method: "GET",
+    requestParameters: ["year"],
+    ...commonProps,
+  });
+
+  new Lambda(scope, "getStateStatus", {
+    entry: "services/app-api/handlers/stateStatus/get.ts",
+    handler: "getStateStatus",
+    path: "/state_status",
+    method: "GET",
+    ...commonProps,
+  });
+
+  new Lambda(scope, "updateStateStatus", {
+    entry: "services/app-api/handlers/stateStatus/update.ts",
+    handler: "updateStateStatus",
+    path: "/state_status/{year}/{state}",
+    method: "POST",
+    requestParameters: ["year", "state"],
+    ...commonProps,
+  });
+
+  new Lambda(scope, "getSections", {
+    entry: "services/app-api/handlers/section/get.ts",
+    handler: "getSections",
+    path: "/section/{year}/{state}",
+    method: "GET",
+    requestParameters: ["year", "state"],
+    ...commonProps,
+  });
+
+  new Lambda(scope, "updateSections", {
+    entry: "services/app-api/handlers/section/update.ts",
+    handler: "updateSections",
+    path: "/save_report/{year}/{state}",
+    method: "PUT",
+    requestParameters: ["year", "state"],
+    ...commonProps,
+  });
+
+  new Lambda(scope, "generateFormTemplates", {
+    entry: "services/app-api/handlers/formTemplates/post.ts",
+    handler: "post",
+    path: "/formTemplates",
+    method: "POST",
+    timeout: Duration.seconds(30),
+    ...commonProps,
+  });
+
+  new Lambda(scope, "postUpload", {
+    entry: "services/app-api/handlers/uploads/createUploadPsUrl.ts",
+    handler: "psUpload",
+    path: "/psUrlUpload/{year}/{state}",
+    method: "POST",
+    requestParameters: ["year", "state"],
+    ...commonProps,
+  });
+
+  new Lambda(scope, "postDownload", {
+    entry: "services/app-api/handlers/uploads/createDownloadPsUrl.ts",
+    handler: "getSignedFileUrl",
+    path: "/psUrlDownload/{year}/{state}",
+    method: "POST",
+    requestParameters: ["year", "state"],
+    ...commonProps,
+  });
+
+  new Lambda(scope, "deleteUpload", {
+    entry: "services/app-api/handlers/uploads/delete.ts",
+    handler: "deleteUpload",
+    path: "/uploads/{year}/{state}/{fileId}",
+    method: "DELETE",
+    requestParameters: ["year", "state", "fileId"],
+    ...commonProps,
+  });
+
+  new Lambda(scope, "viewUploads", {
+    entry: "services/app-api/handlers/uploads/viewUploaded.ts",
+    handler: "viewUploaded",
+    path: "/uploads/{year}/{state}",
+    method: "POST",
+    requestParameters: ["year", "state"],
+    ...commonProps,
+  });
+
+  new Lambda(scope, "printPdf", {
+    entry: "services/app-api/handlers/printing/printPdf.ts",
+    handler: "print",
+    path: "/print_pdf",
+    method: "POST",
+    timeout: Duration.seconds(30),
+    ...commonProps,
+  });
 
   if (!isLocalStack) {
     const waf = new WafConstruct(
       scope,
       "ApiWafConstruct",
       {
-        name: `${project}-${stage}-${service}`,
+        name: `${project}-${service}-${stage}-webacl-waf`,
         blockRequestBodyOver8KB: false,
       },
       "REGIONAL"
@@ -218,12 +223,6 @@ export function createApiComponents(props: CreateApiComponentsProps) {
       webAclArn: waf.webAcl.attrArn,
     });
   }
-
-  addIamPropertiesToBucketAutoDeleteRole(
-    scope,
-    iamPermissionsBoundary.managedPolicyArn,
-    iamPath
-  );
 
   const apiGatewayRestApiUrl = api.url.slice(0, -1);
 

@@ -1,5 +1,12 @@
 import { Construct } from "constructs";
-import { Aws, aws_iam as iam, CfnOutput, Stack, StackProps } from "aws-cdk-lib";
+import {
+  Aws,
+  aws_iam as iam,
+  aws_s3 as s3,
+  CfnOutput,
+  Stack,
+  StackProps,
+} from "aws-cdk-lib";
 import { DeploymentConfigProperties } from "../deployment-config";
 import { createDataComponents } from "./data";
 import { createUiAuthComponents } from "./ui-auth";
@@ -8,6 +15,8 @@ import { createApiComponents } from "./api";
 import { deployFrontend } from "./deployFrontend";
 import { createCustomResourceRole } from "./customResourceRole";
 import { isLocalStack } from "../local/util";
+import { createUploadsComponents } from "./uploads";
+import { createBigmacStreamsComponents } from "./bigmac-streams";
 
 export class ParentStack extends Stack {
   constructor(
@@ -15,28 +24,25 @@ export class ParentStack extends Stack {
     id: string,
     props: StackProps & DeploymentConfigProperties
   ) {
-    const { isDev, secureCloudfrontDomainName } = props;
+    const { isDev, secureCloudfrontDomainName, brokerString } = props;
 
     super(scope, id, {
       ...props,
       terminationProtection: !isDev,
     });
 
-    const iamPermissionsBoundaryArn = `arn:aws:iam::${Aws.ACCOUNT_ID}:policy/cms-cloud-admin/developer-boundary-policy`;
-    const iamPath = "/delegatedadmin/developer/";
-
     const commonProps = {
       scope: this,
       ...props,
-      iamPermissionsBoundary: iam.ManagedPolicy.fromManagedPolicyArn(
-        this,
-        "iamPermissionsBoundary",
-        iamPermissionsBoundaryArn
-      ),
-      iamPath,
     };
 
     const customResourceRole = createCustomResourceRole({ ...commonProps });
+
+    const loggingBucket = s3.Bucket.fromBucketName(
+      this,
+      "LoggingBucket",
+      `cms-cloud-${Aws.ACCOUNT_ID}-${Aws.REGION}`
+    );
 
     const { tables } = createDataComponents({
       ...commonProps,
@@ -47,6 +53,8 @@ export class ParentStack extends Stack {
       createApiComponents({
         ...commonProps,
         tables,
+        uploadS3BucketName: "",
+        fiscalYearTemplateS3BucketName: "",
       });
       /*
        * For local dev, the LocalStack container will host the database and API.
@@ -57,9 +65,15 @@ export class ParentStack extends Stack {
       return;
     }
 
+    const { attachmentsBucket, fiscalYearTemplateBucket } =
+      createUploadsComponents({
+        ...commonProps,
+      });
+
     const { applicationEndpointUrl, distribution, uiBucket } =
       createUiComponents({
         ...commonProps,
+        loggingBucket,
       });
 
     const {
@@ -72,13 +86,14 @@ export class ParentStack extends Stack {
       ...commonProps,
       applicationEndpointUrl,
       customResourceRole,
+      attachmentsBucketArn: attachmentsBucket!.bucketArn,
     });
 
     const { apiGatewayRestApiUrl, restApiId } = createApiComponents({
       ...commonProps,
-      userPoolId,
-      userPoolClientId,
       tables,
+      uploadS3BucketName: attachmentsBucket.bucketName,
+      fiscalYearTemplateS3BucketName: fiscalYearTemplateBucket.bucketName,
     });
 
     createAuthRole(restApiId);
@@ -95,6 +110,16 @@ export class ParentStack extends Stack {
       userPoolClientId,
       userPoolClientDomain: `${userPoolDomainName}.auth.${Aws.REGION}.amazoncognito.com`,
       customResourceRole,
+      s3AttachmentsBucketName: attachmentsBucket!.bucketName,
+    });
+
+    createBigmacStreamsComponents({
+      ...commonProps,
+      kafkaBootstrapServers: brokerString.split(","),
+      stageEnrollmentCountsTableName: "main-stg-enrollment-counts",
+      tables: tables.filter((table) =>
+        ["StateStatus", "Section"].includes(table.id)
+      ),
     });
 
     new CfnOutput(this, "CloudFrontUrl", {

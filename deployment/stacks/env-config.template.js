@@ -1,4 +1,4 @@
-window._env_ = {
+window.env = {
   SKIP_PREFLIGHT_CHECK: "true",
   API_REGION: "us-east-1",
   API_URL: "{{apiGatewayRestApiUrl}}",

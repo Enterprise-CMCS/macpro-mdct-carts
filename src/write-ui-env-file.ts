@@ -27,7 +27,7 @@ export async function writeLocalUiEnvFile(apiUrl: string) {
   await fs.rm(configFilePath, { force: true });
 
   const envConfigContent = [
-    "window._env_ = {",
+    "window.env = {",
     ...Object.entries(envVariables).map(
       ([key, value]) => `  ${key}: "${value}",`
     ),

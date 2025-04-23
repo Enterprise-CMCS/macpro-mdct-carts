@@ -2,26 +2,29 @@ import { isLocalStack } from "./local/util";
 import { getSecret } from "./utils/secrets-manager";
 
 export interface DeploymentConfigProperties {
-  project: string;
-  stage: string;
-  isDev: boolean;
-  vpcName: string;
-  oktaMetadataUrl: string;
-  bootstrapUsersPassword?: string;
+  brokerString: string;
   cloudfrontCertificateArn?: string;
   cloudfrontDomainName?: string;
+  docraptorApiKey: string;
+  isDev: boolean;
+  kafkaAuthorizedSubnetIds: string;
+  launchDarklyClient: string;
+  oktaMetadataUrl: string;
+  project: string;
+  redirectSignout: string;
   secureCloudfrontDomainName?: string;
+  stage: string;
   userPoolDomainPrefix?: string;
+  vpcName: string;
   vpnIpSetArn?: string;
   vpnIpv6SetArn?: string;
-  brokerString: string;
-  kafkaAuthorizedSubnetIds: string;
+  sedsTopic: string;
 }
 
 export const determineDeploymentConfig = async (stage: string) => {
   const project = process.env.PROJECT!;
   const isDev =
-    isLocalStack || !["master", "main", "val", "production"].includes(stage);
+    isLocalStack || !["main", "val", "production", "jon-cdk"].includes(stage); // TODO: remove jon-cdk after main is deployed
   const secretConfigOptions = {
     ...(await loadDefaultSecret(project, stage)),
     ...(await loadStageSecret(project, stage)),
@@ -37,7 +40,7 @@ export const determineDeploymentConfig = async (stage: string) => {
     config.secureCloudfrontDomainName = `https://${config.cloudfrontDomainName}/`;
   }
 
-  if (!isLocalStack) {
+  if (!isLocalStack && stage !== "bootstrap") {
     validateConfig(config);
   }
 
@@ -69,12 +72,16 @@ function validateConfig(config: {
   [key: string]: any;
 }): asserts config is DeploymentConfigProperties {
   const expectedKeys = [
+    "brokerString",
+    "docraptorApiKey",
+    "kafkaAuthorizedSubnetIds",
+    "launchDarklyClient",
+    "oktaMetadataUrl",
     "project",
+    "redirectSignout",
     "stage",
     "vpcName",
-    "oktaMetadataUrl",
-    "brokerString",
-    "kafkaAuthorizedSubnetIds",
+    "sedsTopic",
   ];
 
   const invalidKeys = expectedKeys.filter(
