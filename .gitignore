@@ -21,3 +21,5 @@ tests/cypress/package-lock.json
 package-lock.json
 /output
 /.serverless
+.qlty/*
+!.qlty/qlty.toml
