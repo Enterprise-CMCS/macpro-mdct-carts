@@ -23,3 +23,5 @@ package-lock.json
 /.cdk
 cdk.context.json
 /.serverless
+.qlty/*
+!.qlty/qlty.toml
