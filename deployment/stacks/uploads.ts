@@ -19,10 +19,11 @@ interface CreateUploadsComponentsProps {
   scope: Construct;
   stage: string;
   loggingBucket: s3.IBucket;
+  isDev: boolean;
 }
 
 export function createUploadsComponents(props: CreateUploadsComponentsProps) {
-  const { scope, stage, loggingBucket } = props;
+  const { scope, stage, loggingBucket, isDev } = props;
   const service = "uploads";
 
   Tags.of(scope).add("SERVICE", service);
@@ -54,30 +55,32 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
   });
 
   // TODO: one or some of the lambdas need s3:GetObject permissions to this bucket
-  // TODO: figure out the condition on when to create this bucket.
-  const fiscalYearTemplateBucket = new s3.Bucket(
-    scope,
-    "FiscalYearTemplateBucket",
-    {
-      bucketName: `${service}-${stage}-carts-download-${Aws.ACCOUNT_ID}`,
-      encryption: s3.BucketEncryption.S3_MANAGED,
-      versioned: true,
-      removalPolicy: RemovalPolicy.RETAIN,
-      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
-      cors: [
-        {
-          allowedOrigins: ["*"],
-          allowedMethods: [s3.HttpMethods.GET],
-          allowedHeaders: ["*"],
-          exposedHeaders: ["ETag"],
-          maxAge: 3000,
-        },
-      ],
-      enforceSSL: true,
-      serverAccessLogsBucket: loggingBucket,
-      serverAccessLogsPrefix: `AWSLogs/${Aws.ACCOUNT_ID}/s3/`,
-    }
-  );
+  let fiscalYearTemplateBucket: s3.IBucket | undefined;
+  if (!isDev) {
+    fiscalYearTemplateBucket = new s3.Bucket(
+      scope,
+      "FiscalYearTemplateBucket",
+      {
+        bucketName: `${service}-${stage}-carts-download-${Aws.ACCOUNT_ID}`,
+        encryption: s3.BucketEncryption.S3_MANAGED,
+        versioned: true,
+        removalPolicy: RemovalPolicy.RETAIN,
+        blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+        cors: [
+          {
+            allowedOrigins: ["*"],
+            allowedMethods: [s3.HttpMethods.GET],
+            allowedHeaders: ["*"],
+            exposedHeaders: ["ETag"],
+            maxAge: 3000,
+          },
+        ],
+        enforceSSL: true,
+        serverAccessLogsBucket: loggingBucket,
+        serverAccessLogsPrefix: `AWSLogs/${Aws.ACCOUNT_ID}/s3/`,
+      }
+    );
+  }
 
   const clamDefsBucket = new s3.Bucket(scope, "ClamDefsBucket", {
     bucketName: `${service}-${stage}-avscan-${Aws.ACCOUNT_ID}`,
