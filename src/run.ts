@@ -215,9 +215,9 @@ async function run_local() {
       "yarn",
       "cdklocal",
       "deploy",
-      "--app",
       "--context",
       "stage=prerequisites",
+      "--app",
       '"npx tsx deployment/local/prerequisites.ts"',
     ],
     "."
@@ -229,9 +229,9 @@ async function run_local() {
       "yarn",
       "cdklocal",
       "deploy",
-      "--app",
       "--context",
       "stage=prerequisites",
+      "--app",
       '"npx tsx deployment/prerequisites.ts"',
     ],
     "."
@@ -300,9 +300,9 @@ async function deploy_prerequisites() {
     "yarn",
     "cdk",
     "deploy",
-    "--app",
     "--context",
     "stage=prerequisites",
+    "--app",
     '"npx tsx deployment/prerequisites.ts"',
   ];
   await runner.run_command_and_output(
