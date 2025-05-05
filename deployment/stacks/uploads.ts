@@ -18,26 +18,14 @@ import { Lambda } from "../constructs/lambda";
 interface CreateUploadsComponentsProps {
   scope: Construct;
   stage: string;
+  loggingBucket: s3.IBucket;
 }
 
 export function createUploadsComponents(props: CreateUploadsComponentsProps) {
-  const { scope, stage } = props;
+  const { scope, stage, loggingBucket } = props;
   const service = "uploads";
 
   Tags.of(scope).add("SERVICE", service);
-
-  // TODO: attachments bucket needs
-  // LoggingConfiguration:
-  // DestinationBucketName: cms-cloud-519095364708-us-east-1
-  // LogFilePrefix: AWSLogs/519095364708/s3/
-
-  // NotificationConfiguration:
-  //   LambdaConfigurations:
-  //     - Event: s3:ObjectCreated:*
-  //       Function:
-  //         Fn::GetAtt:
-  //           - AvScanLambdaFunction
-  //           - Arn
 
   const attachmentsBucket = new s3.Bucket(scope, "AttachmentsBucket", {
     bucketName: `${service}-${stage}-attachments-${Aws.ACCOUNT_ID}`,
@@ -61,15 +49,12 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
       },
     ],
     enforceSSL: true,
+    serverAccessLogsBucket: loggingBucket,
+    serverAccessLogsPrefix: `AWSLogs/${Aws.ACCOUNT_ID}/s3/`,
   });
 
   // TODO: one or some of the lambdas need s3:GetObject permissions to this bucket
   // TODO: figure out the condition on when to create this bucket.
-  // TODO: fiscal year template bucket needs:
-  // LoggingConfiguration:
-  // DestinationBucketName: cms-cloud-519095364708-us-east-1
-  // LogFilePrefix: AWSLogs/519095364708/s3/
-
   const fiscalYearTemplateBucket = new s3.Bucket(
     scope,
     "FiscalYearTemplateBucket",
@@ -89,13 +74,11 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
         },
       ],
       enforceSSL: true,
+      serverAccessLogsBucket: loggingBucket,
+      serverAccessLogsPrefix: `AWSLogs/${Aws.ACCOUNT_ID}/s3/`,
     }
   );
 
-  // TODO: clam defs bucket needs
-  // LoggingConfiguration:
-  // DestinationBucketName: cms-cloud-519095364708-us-east-1
-  // LogFilePrefix: AWSLogs/519095364708/s3/
   const clamDefsBucket = new s3.Bucket(scope, "ClamDefsBucket", {
     bucketName: `${service}-${stage}-avscan-${Aws.ACCOUNT_ID}`,
     encryption: s3.BucketEncryption.S3_MANAGED,
@@ -104,6 +87,8 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
     blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
     enforceSSL: true,
     accessControl: s3.BucketAccessControl.PRIVATE,
+    serverAccessLogsBucket: loggingBucket,
+    serverAccessLogsPrefix: `AWSLogs/${Aws.ACCOUNT_ID}/s3/`,
   });
 
   const commonLambdaProps = {

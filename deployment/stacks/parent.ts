@@ -68,6 +68,7 @@ export class ParentStack extends Stack {
     const { attachmentsBucket, fiscalYearTemplateBucket } =
       createUploadsComponents({
         ...commonProps,
+        loggingBucket,
       });
 
     const { applicationEndpointUrl, distribution, uiBucket } =
