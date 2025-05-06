@@ -94,7 +94,9 @@ export class ParentStack extends Stack {
       ...commonProps,
       tables,
       uploadS3BucketName: attachmentsBucket.bucketName,
-      fiscalYearTemplateS3BucketName: fiscalYearTemplateBucket.bucketName,
+      fiscalYearTemplateS3BucketName: fiscalYearTemplateBucket
+        ? fiscalYearTemplateBucket.bucketName
+        : "",
     });
 
     createAuthRole(restApiId);
