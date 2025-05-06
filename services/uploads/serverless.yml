@@ -39,9 +39,7 @@ custom:
   region: ${opt:region, self:provider.region}
   serverlessTerminationProtection:
     stages:
-      - main
-      - val
-      - production
+      - nonsense
   scripts:
     hooks:
       # This script is run locally when running 'serverless deploy'
@@ -106,6 +104,7 @@ resources:
   Resources:
     AttachmentsBucket:
       Type: AWS::S3::Bucket
+      DeletionPolicy: Retain
       Properties:
         BucketName: !Sub ${self:service}-${self:custom.stage}-attachments-${AWS::AccountId}
         BucketEncryption:
@@ -145,6 +144,7 @@ resources:
 
     FiscalYearTemplateBucket:
       Type: AWS::S3::Bucket
+      DeletionPolicy: Retain
       Condition: FiscalYearCreateBucketCondition
       Properties:
         BucketName: !Sub ${self:service}-${self:custom.stage}-carts-download-${AWS::AccountId}
@@ -211,6 +211,7 @@ resources:
                   aws:SecureTransport: false
     AttachmentsBucketPolicy:
       Type: AWS::S3::BucketPolicy
+      DeletionPolicy: Retain
       Properties:
         Bucket: !Ref AttachmentsBucket
         PolicyDocument:
@@ -263,6 +264,7 @@ resources:
 
     FiscalYearTemplateBucketPolicy:
       Type: AWS::S3::BucketPolicy
+      DeletionPolicy: Retain
       Condition: FiscalYearCreateBucketCondition
       Properties:
         Bucket: !Ref FiscalYearTemplateBucket
