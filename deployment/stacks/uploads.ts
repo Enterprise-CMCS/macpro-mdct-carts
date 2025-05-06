@@ -30,9 +30,10 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
 
   const attachmentsBucket = new s3.Bucket(scope, "AttachmentsBucket", {
     bucketName: `${service}-${stage}-attachments-${Aws.ACCOUNT_ID}`,
+    autoDeleteObjects: isDev,
     encryption: s3.BucketEncryption.S3_MANAGED,
     versioned: true,
-    removalPolicy: RemovalPolicy.RETAIN,
+    removalPolicy: isDev ? RemovalPolicy.DESTROY : RemovalPolicy.RETAIN,
     blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
     cors: [
       {
@@ -84,9 +85,10 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
 
   const clamDefsBucket = new s3.Bucket(scope, "ClamDefsBucket", {
     bucketName: `${service}-${stage}-avscan-${Aws.ACCOUNT_ID}`,
+    autoDeleteObjects: isDev,
     encryption: s3.BucketEncryption.S3_MANAGED,
     versioned: true,
-    removalPolicy: RemovalPolicy.RETAIN,
+    removalPolicy: isDev ? RemovalPolicy.DESTROY : RemovalPolicy.RETAIN,
     blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
     enforceSSL: true,
     accessControl: s3.BucketAccessControl.PRIVATE,
@@ -214,9 +216,11 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
     value: attachmentsBucket.bucketName,
   });
 
-  new CfnOutput(scope, "FiscalYearTemplateBucketName", {
-    value: fiscalYearTemplateBucket.bucketName,
-  });
+  if (fiscalYearTemplateBucket) {
+    new CfnOutput(scope, "FiscalYearTemplateBucketName", {
+      value: fiscalYearTemplateBucket.bucketName,
+    });
+  }
 
   return {
     attachmentsBucket,
