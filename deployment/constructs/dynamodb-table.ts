@@ -6,6 +6,7 @@ interface DynamoDBTableProps {
   readonly stage: string;
   readonly isDev: boolean;
   readonly name: string;
+  readonly streamable?: boolean;
   readonly partitionKey: { name: string; type: dynamodb.AttributeType };
   readonly sortKey?: { name: string; type: dynamodb.AttributeType };
   readonly lsi?: {
@@ -35,18 +36,28 @@ export class DynamoDBTable extends Construct {
 
   constructor(scope: Construct, id: string, props: DynamoDBTableProps) {
     super(scope, id);
+    const {
+      stage,
+      isDev,
+      name,
+      partitionKey,
+      sortKey,
+      lsi,
+      gsi,
+      streamable = true,
+    } = props;
 
-    const tableName = `${props.stage}-${props.name}`;
+    const tableName = `${stage}-${name}`;
     this.table = new dynamodb.Table(this, "Table", {
       tableName,
-      partitionKey: props.partitionKey,
-      sortKey: props.sortKey,
+      partitionKey: partitionKey,
+      sortKey: sortKey,
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
-      stream: dynamodb.StreamViewType.NEW_AND_OLD_IMAGES,
+      ...(streamable && { stream: dynamodb.StreamViewType.NEW_AND_OLD_IMAGES }),
       pointInTimeRecoverySpecification: {
         pointInTimeRecoveryEnabled: true,
       },
-      removalPolicy: props.isDev ? RemovalPolicy.DESTROY : RemovalPolicy.RETAIN,
+      removalPolicy: isDev ? RemovalPolicy.DESTROY : RemovalPolicy.RETAIN,
     });
 
     this.identifiers = {
@@ -56,8 +67,8 @@ export class DynamoDBTable extends Construct {
       streamArn: this.table.tableStreamArn,
     };
 
-    if (props.lsi) {
-      props.lsi.forEach((index) => {
+    if (lsi) {
+      lsi.forEach((index) => {
         this.table.addLocalSecondaryIndex({
           indexName: index.indexName,
           sortKey: index.sortKey,
@@ -66,10 +77,10 @@ export class DynamoDBTable extends Construct {
       });
     }
 
-    if (props.gsi) {
+    if (gsi) {
       this.table.addGlobalSecondaryIndex({
-        indexName: props.gsi.indexName,
-        partitionKey: props.gsi.partitionKey,
+        indexName: gsi.indexName,
+        partitionKey: gsi.partitionKey,
         projectionType: dynamodb.ProjectionType.ALL,
       });
     }

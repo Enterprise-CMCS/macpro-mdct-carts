@@ -9,7 +9,6 @@ import {
   aws_events_targets as eventstargets,
   Duration,
   RemovalPolicy,
-  Tags,
   Aws,
   CfnOutput,
 } from "aws-cdk-lib";
@@ -25,8 +24,6 @@ interface CreateUploadsComponentsProps {
 export function createUploadsComponents(props: CreateUploadsComponentsProps) {
   const { scope, stage, loggingBucket, isDev } = props;
   const service = "uploads";
-
-  Tags.of(scope).add("SERVICE", service);
 
   const attachmentsBucket = new s3.Bucket(scope, "AttachmentsBucket", {
     bucketName: `${service}-${stage}-attachments-${Aws.ACCOUNT_ID}`,
@@ -47,7 +44,7 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
         ],
         allowedHeaders: ["*"],
         exposedHeaders: ["ETag"],
-        maxAge: 3000,
+        maxAge: 3000, // 50 minutes
       },
     ],
     enforceSSL: true,

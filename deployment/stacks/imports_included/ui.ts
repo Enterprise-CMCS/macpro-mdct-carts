@@ -10,20 +10,18 @@ import {
 interface CreateUiComponentsProps {
   scope: Construct;
   stage: string;
-  isDev: boolean;
 }
 
 export function createUiComponents(props: CreateUiComponentsProps) {
-  const { scope, stage, isDev } = props;
+  const { scope, stage } = props;
 
   const logBucket = new s3.Bucket(scope, "CloudfrontLogBucket", {
     bucketName: `ui-${stage}-cloudfront-logs-${Aws.ACCOUNT_ID}`,
-    autoDeleteObjects: isDev,
     encryption: s3.BucketEncryption.S3_MANAGED,
     publicReadAccess: false,
     blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
     objectOwnership: s3.ObjectOwnership.BUCKET_OWNER_PREFERRED,
-    removalPolicy: isDev ? RemovalPolicy.DESTROY : RemovalPolicy.RETAIN,
+    removalPolicy: RemovalPolicy.RETAIN,
     versioned: true,
   });
 

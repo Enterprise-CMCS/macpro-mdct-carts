@@ -16,9 +16,6 @@ permissions:
   contents: read
   actions: read
 
-env:
-  SERVERLESS_LICENSE_KEY: ${{ secrets.SERVERLESS_LICENSE_KEY }}
-
 jobs:
   destroy:
     # Protected branches should be designated as such in the GitHub UI.
@@ -69,7 +66,6 @@ jobs:
       - name: Destroy
         run: |
           ./run destroy --stage $branch_name --verify false
-          serverless reconcile
 
   # Notify the integrations channel when a destroy action fails
   notify_on_destroy_failure:

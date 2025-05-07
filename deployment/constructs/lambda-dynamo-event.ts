@@ -11,7 +11,6 @@ import { isDefined } from "../utils/misc";
 interface LambdaDynamoEventProps
   extends Partial<lambda_nodejs.NodejsFunctionProps> {
   additionalPolicies?: iam.PolicyStatement[];
-  brokerString?: string;
   stackName: string;
   tables: DynamoDBTableIdentifiers[];
 }
@@ -24,7 +23,6 @@ export class LambdaDynamoEventSource extends Construct {
 
     const {
       additionalPolicies = [],
-      // brokerString = "",
       environment = {},
       handler,
       memorySize = 1024,
