@@ -14,6 +14,7 @@ import readline from "node:readline";
 import {
   CloudFormationClient,
   DeleteStackCommand,
+  DescribeStackResourceCommand,
   DescribeStacksCommand,
   waitUntilStackDeleteComplete,
 } from "@aws-sdk/client-cloudformation";
