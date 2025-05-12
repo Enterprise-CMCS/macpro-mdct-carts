@@ -12,11 +12,6 @@ import {
 } from "@aws-sdk/client-cloudformation";
 import { LambdaClient, InvokeCommand } from "@aws-sdk/client-lambda";
 import { writeLocalUiEnvFile } from "./write-ui-env-file.js";
-import fs from "fs";
-import { pipeline } from "stream";
-import { promisify } from "util";
-
-const streamPipeline = promisify(pipeline);
 import downloadClamAvLayer from "./clam.js";
 
 // load .env

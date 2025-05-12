@@ -31,7 +31,9 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
     encryption: s3.BucketEncryption.S3_MANAGED,
     versioned: true,
     removalPolicy: isDev ? RemovalPolicy.DESTROY : RemovalPolicy.RETAIN,
+    publicReadAccess: false,
     blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+    objectOwnership: s3.ObjectOwnership.BUCKET_OWNER_PREFERRED,
     cors: [
       {
         allowedOrigins: ["*"],
@@ -63,7 +65,9 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
         encryption: s3.BucketEncryption.S3_MANAGED,
         versioned: true,
         removalPolicy: RemovalPolicy.RETAIN,
+        publicReadAccess: false,
         blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+        objectOwnership: s3.ObjectOwnership.BUCKET_OWNER_PREFERRED,
         cors: [
           {
             allowedOrigins: ["*"],
