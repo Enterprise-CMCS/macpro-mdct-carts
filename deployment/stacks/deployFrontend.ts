@@ -124,6 +124,7 @@ export function deployFrontend(props: DeployFrontendProps) {
       destinationKey: "env-config.js",
       source: path.join("./deployment/stacks/", "env-config.template.js"),
       substitutions: {
+        localLogin: "false",
         apiGatewayRestApiUrl,
         applicationEndpointUrl,
         s3AttachmentsBucketName,
@@ -134,6 +135,7 @@ export function deployFrontend(props: DeployFrontendProps) {
         userPoolClientDomain,
         userPoolClientId,
         userPoolId,
+        stage,
       },
     }
   );

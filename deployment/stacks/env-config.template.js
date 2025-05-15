@@ -1,5 +1,5 @@
 window.env = {
-  SKIP_PREFLIGHT_CHECK: "true",
+  LOCAL_LOGIN: "{{localLogin}}",
   API_REGION: "us-east-1",
   API_URL: "{{apiGatewayRestApiUrl}}",
   COGNITO_REGION: "us-east-1",
@@ -8,7 +8,12 @@ window.env = {
   COGNITO_USER_POOL_CLIENT_ID: "{{userPoolClientId}}",
   COGNITO_USER_POOL_CLIENT_DOMAIN: "{{userPoolClientDomain}}",
   COGNITO_REDIRECT_SIGNIN: "{{applicationEndpointUrl}}",
-  COGNITO_REDIRECT_SIGNOUT: "{{applicationEndpointUrl}}",
+  COGNITO_REDIRECT_SIGNOUT: "{{applicationEndpointUrl}}postLogout",
+  POST_SIGNOUT_REDIRECT: "{{redirectSignout}}",
+  S3_ATTACHMENTS_BUCKET_REGION: "us-east-1",
+  S3_ATTACHMENTS_BUCKET_NAME: "{{s3AttachmentsBucketName}}",
+  BRANCH_NAME: "jtest7",
+  REACT_APP_LD_SDK_CLIENT: "{{launchDarklyClient}}",
   STAGE: "{{stage}}",
   TIMESTAMP: "{{timestamp}}",
 };

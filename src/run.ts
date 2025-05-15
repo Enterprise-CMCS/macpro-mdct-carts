@@ -96,8 +96,12 @@ async function run_fe_locally(runner: LabeledProcessRunner) {
     "carts-localstack",
     "ApiUrl"
   );
+  const s3AttachmentsBucketName = await getCloudFormationStackOutputValue(
+    "carts-localstack",
+    "AttachmentsBucketName"
+  );
 
-  await writeLocalUiEnvFile(apiUrl!);
+  await writeLocalUiEnvFile(apiUrl!,s3AttachmentsBucketName!);
   runner.run_command_and_output("ui", ["npm", "start"], "services/ui-src");
 }
 
