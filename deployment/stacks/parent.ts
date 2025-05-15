@@ -85,6 +85,8 @@ export class ParentStack extends Stack {
 
     const { apiGatewayRestApiUrl, restApiId } = createApiComponents({
       ...commonProps,
+      userPoolId,
+      userPoolClientId,
       tables,
       uploadS3BucketName: attachmentsBucket.bucketName,
       fiscalYearTemplateS3BucketName: fiscalYearTemplateBucket

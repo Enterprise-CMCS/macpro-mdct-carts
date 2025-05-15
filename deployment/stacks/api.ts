@@ -16,6 +16,8 @@ import { DynamoDBTableIdentifiers } from "../constructs/dynamodb-table";
 interface CreateApiComponentsProps {
   docraptorApiKey: string;
   fiscalYearTemplateS3BucketName: string;
+  userPoolId?: string;
+  userPoolClientId?: string;
   isDev: boolean;
   project: string;
   scope: Construct;
@@ -29,6 +31,8 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     docraptorApiKey,
     fiscalYearTemplateS3BucketName,
     isDev,
+    userPoolId,
+    userPoolClientId,
     project,
     scope,
     stage,
@@ -81,6 +85,9 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     fiscalYearTemplateS3BucketName,
     uploadS3BucketName,
     NODE_OPTIONS: "--enable-source-maps",
+    COGNITO_USER_POOL_ID: userPoolId ?? process.env.COGNITO_USER_POOL_ID!,
+    COGNITO_USER_POOL_CLIENT_ID:
+      userPoolClientId ?? process.env.COGNITO_USER_POOL_CLIENT_ID!,
     ...Object.fromEntries(
       tables.map((table) => [`${table.id}TableName`, table.name])
     ),
@@ -90,6 +97,22 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     stackName: `${service}-${stage}`,
     api,
     environment,
+    additionalPolicies: [
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        actions: [
+          "dynamodb:DescribeTable",
+          "dynamodb:Query",
+          "dynamodb:Scan",
+          "dynamodb:GetItem",
+          "dynamodb:PutItem",
+          "dynamodb:UpdateItem",
+          "dynamodb:DeleteItem",
+          "dynamodb:BatchWriteItem",
+        ],
+        resources: ["*"],
+      }),
+    ],
   };
 
   new Lambda(scope, "getStates", {
@@ -178,6 +201,13 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     method: "POST",
     requestParameters: ["year", "state"],
     ...commonProps,
+    additionalPolicies: [
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        actions: ["s3:GetObject"],
+        resources: [`arn:aws:s3:::${uploadS3BucketName}/*`],
+      }),
+    ],
   });
 
   new Lambda(scope, "deleteUpload", {

@@ -7,8 +7,6 @@ import {
   UserCredentials,
 } from "../authorization";
 import { AppRoles, IdmRoles, APIGatewayProxyEvent } from "../../types";
-import { mockClient } from "aws-sdk-client-mock";
-import { SSMClient, GetParameterCommand } from "@aws-sdk/client-ssm";
 
 const mockedDecode = jest.fn();
 
@@ -31,18 +29,6 @@ jest.mock("aws-jwt-verify", () => ({
     })),
   },
 }));
-
-const ssmClientMock = mockClient(SSMClient);
-const mockSsmResponse = {
-  Parameter: {
-    Name: "NAME",
-    Type: "SecureString",
-    Value: "VALUE",
-    Version: 1,
-    LastModifiedDate: 1546551668.495,
-    ARN: "arn:aws:ssm:ap-southeast-2:123:NAME",
-  },
-};
 
 describe("Authorization Lib", () => {
   describe("isAuthorized State User Tests", () => {
@@ -110,24 +96,6 @@ describe("Authorization Lib", () => {
         throw Error("Bad token, bad!");
       });
       expect(await isAuthorized(event)).toBeFalsy();
-    });
-
-    test("authorization should reach out to SSM when missing cognito info", async () => {
-      delete process.env["COGNITO_USER_POOL_ID"];
-      delete process.env["COGNITO_USER_POOL_CLIENT_ID"];
-      const mockGetSsmParameter = jest.fn().mockResolvedValue(mockSsmResponse);
-      ssmClientMock.on(GetParameterCommand).callsFake(mockGetSsmParameter);
-
-      await isAuthorized(event);
-      expect(mockGetSsmParameter).toHaveBeenCalled();
-    });
-
-    test("authorization should throw error if no values exist in SSM or env", async () => {
-      delete process.env["COGNITO_USER_POOL_ID"];
-      delete process.env["COGNITO_USER_POOL_CLIENT_ID"];
-      ssmClientMock.on(GetParameterCommand).resolves({});
-
-      await expect(isAuthorized(event)).rejects.toThrow(Error);
     });
   });
 
