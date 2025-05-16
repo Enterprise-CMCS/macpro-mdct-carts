@@ -89,7 +89,7 @@ functions:
 resources:
   Conditions:
     IsMainCondition: !Equals
-      - "main"
+      - "<YOUR_BRANCH_NAME>"
       - ${self:custom.stage}
     IsValCondition: !Equals
       - "val"

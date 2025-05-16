@@ -2,6 +2,8 @@
 
 ## From `pete-sls` branch
 
+Command-Shift-H (Replace in Files) <YOUR_BRANCH_NAME>
+
 ```sh
 rm -rf node_modules
 yarn install
@@ -21,10 +23,11 @@ delete the bucket policy from ui-<stage>-cloudfront-logs-<account>
 
 ## From `jon-cdk` branch
 
+Command-Shift-H (Replace in Files) <YOUR_BRANCH_NAME>
+
 ```sh
 rm -rf node_modules
 yarn install
-./run update-env
 ./run deploy-prerequisites
 IMPORT_VARIANT=empty ./run deploy --stage <YOUR_BRANCH_NAME>
 IMPORT_VARIANT=imports_included PROJECT=carts yarn cdk import --context stage=<YOUR_BRANCH_NAME> --force

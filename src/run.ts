@@ -406,7 +406,11 @@ async function destroy_stage(options: {
 
   let notRetained: { templateKey: string; resourceKey: string }[] = [];
   let retained;
-  if (["main", "master", "val", "production"].includes(options.stage)) {
+  if (
+    ["main", "master", "val", "production", "<YOUR_BRANCH_NAME>"].includes(
+      options.stage
+    )
+  ) {
     ({ retained, notRetained } = await checkRetainedResources(
       options.stage,
       filters
