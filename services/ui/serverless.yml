@@ -180,7 +180,7 @@ resources:
             - ObjectOwnership: BucketOwnerPreferred
     LoggingBucketPolicy:
       Type: "AWS::S3::BucketPolicy"
-      DeletionPolicy: Retain
+      DeletionPolicy: Delete
       Properties:
         PolicyDocument:
           Version: "2012-10-17"
