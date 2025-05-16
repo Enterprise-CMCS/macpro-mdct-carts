@@ -18,12 +18,7 @@ interface CreateDataComponentsProps {
 }
 
 export function createDataComponents(props: CreateDataComponentsProps) {
-  const {
-    scope,
-    stage,
-    isDev,
-    customResourceRole,
-  } = props;
+  const { scope, stage, isDev, customResourceRole } = props;
 
   const tables = [
     new DynamoDBTable(scope, "Acs", {
@@ -147,40 +142,40 @@ export function createDataComponents(props: CreateDataComponentsProps) {
     },
   });
 
-  const seedDataInvoke = new cr.AwsCustomResource(
-    scope,
-    "InvokeSeedDataFunction",
-    {
-      onCreate: {
-        service: "Lambda",
-        action: "invoke",
-        parameters: {
-          FunctionName: seedDataFunction.functionName,
-          InvocationType: "Event",
-          Payload: JSON.stringify({}),
-        },
-        physicalResourceId: cr.PhysicalResourceId.of(
-          `InvokeSeedDataFunction-${stage}`
-        ),
-      },
-      onUpdate: undefined,
-      onDelete: undefined,
-      policy: cr.AwsCustomResourcePolicy.fromStatements([
-        new iam.PolicyStatement({
-          actions: ["lambda:InvokeFunction"],
-          resources: [seedDataFunction.functionArn],
-        }),
-      ]),
-      role: customResourceRole,
-      resourceType: "Custom::InvokeSeedDataFunction",
-    }
-  );
+  // const seedDataInvoke = new cr.AwsCustomResource(
+  //   scope,
+  //   "InvokeSeedDataFunction",
+  //   {
+  //     onCreate: {
+  //       service: "Lambda",
+  //       action: "invoke",
+  //       parameters: {
+  //         FunctionName: seedDataFunction.functionName,
+  //         InvocationType: "Event",
+  //         Payload: JSON.stringify({}),
+  //       },
+  //       physicalResourceId: cr.PhysicalResourceId.of(
+  //         `InvokeSeedDataFunction-${stage}`
+  //       ),
+  //     },
+  //     onUpdate: undefined,
+  //     onDelete: undefined,
+  //     policy: cr.AwsCustomResourcePolicy.fromStatements([
+  //       new iam.PolicyStatement({
+  //         actions: ["lambda:InvokeFunction"],
+  //         resources: [seedDataFunction.functionArn],
+  //       }),
+  //     ]),
+  //     role: customResourceRole,
+  //     resourceType: "Custom::InvokeSeedDataFunction",
+  //   }
+  // );
 
   new CfnOutput(scope, "SeedDataFunctionName", {
     value: seedDataFunction.functionName,
   });
 
-  seedDataInvoke.node.addDependency(seedDataFunction);
+  // seedDataInvoke.node.addDependency(seedDataFunction);
 
   return { tables };
 }
