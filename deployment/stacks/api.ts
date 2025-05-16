@@ -207,6 +207,13 @@ export function createApiComponents(props: CreateApiComponentsProps) {
         actions: ["s3:GetObject"],
         resources: [`arn:aws:s3:::${uploadS3BucketName}/*`],
       }),
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        actions: ["dynamodb:Query"],
+        resources: tables
+          .filter((table) => ["Uploads"].includes(table.id))
+          .map((table) => table.arn),
+      }),
     ],
   });
 
