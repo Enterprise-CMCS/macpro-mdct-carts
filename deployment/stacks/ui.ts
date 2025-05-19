@@ -160,8 +160,8 @@ export function createUiComponents(props: CreateUiComponentsProps) {
   const applicationEndpointUrl = `https://${distribution.distributionDomainName}/`;
 
   return {
-    distribution,
     applicationEndpointUrl,
+    distribution,
     uiBucket,
   };
 }
