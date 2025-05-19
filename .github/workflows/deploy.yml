@@ -130,7 +130,7 @@ jobs:
         id: get-gha-cidrs
         shell: bash
         run: |
-          #! /bin/bash
+          #!/bin/bash
           GHA_RESP=$(curl --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/meta)
           echo "Response for GHA runner CIDR blocks:  $GHA_RESP"
           IPV4_CIDR_ARR=($(echo $GHA_RESP | jq -r '.actions | .[]' | grep -v ':'))
