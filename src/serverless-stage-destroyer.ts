@@ -31,7 +31,12 @@ export class ServerlessStageDestroyer {
       verify: boolean;
       wait: boolean;
       bucketsToSkip?: string[];
-    }
+    } = {
+    filters: [],
+    verify: true,
+    wait: true,
+    bucketsToSkip: [],
+  }
   ) {
     const filters = options.filters || [];
     const verify = options.verify !== false;
