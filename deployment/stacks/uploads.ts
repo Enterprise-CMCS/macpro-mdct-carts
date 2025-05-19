@@ -2,7 +2,6 @@ import { Construct } from "constructs";
 import {
   aws_s3 as s3,
   aws_lambda as lambda,
-  aws_lambda_event_sources as lambdaEventSources,
   aws_s3_notifications as s3notifications,
   aws_iam as iam,
   aws_events as events,
