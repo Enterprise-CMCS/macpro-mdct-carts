@@ -38,7 +38,7 @@ export class ImportsIncludedParentStack extends Stack {
       scope: this,
       stage,
       loggingBucket,
-      isDev: false,
+      isDev,
     });
   }
 }
