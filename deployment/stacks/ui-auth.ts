@@ -203,7 +203,6 @@ export function createUiAuthComponents(props: CreateUiAuthComponentsProps) {
       scope,
       "bootstrapUsers",
       {
-        functionName: `ui-auth-${stage}-bootstrapUsers`,
         entry: "services/ui-auth/handlers/createUsers.js",
         handler: "handler",
         runtime: lambda.Runtime.NODEJS_20_X,
