@@ -113,7 +113,6 @@ export class ParentStack extends Stack {
 
     createBigmacStreamsComponents({
       ...commonProps,
-      kafkaBootstrapServers: brokerString.split(","),
       stageEnrollmentCountsTableName: "main-stg-enrollment-counts",
       tables: tables.filter((table) =>
         ["StateStatus", "Section"].includes(table.id)

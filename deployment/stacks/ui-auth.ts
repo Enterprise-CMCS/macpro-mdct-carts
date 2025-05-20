@@ -100,7 +100,6 @@ export function createUiAuthComponents(props: CreateUiAuthComponentsProps) {
 
   const supportedIdentityProviders = [
     cognito.UserPoolClientIdentityProvider.custom(providerName),
-    cognito.UserPoolClientIdentityProvider.COGNITO,
   ];
 
   const appUrl =

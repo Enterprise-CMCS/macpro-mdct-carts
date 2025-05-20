@@ -13,7 +13,6 @@ interface CreateBigmacStreamsComponentsProps {
   vpcName: string;
   kafkaAuthorizedSubnetIds: string;
   brokerString: string;
-  kafkaBootstrapServers: string[];
   stageEnrollmentCountsTableName: string;
   tables: DynamoDBTableIdentifiers[];
   sedsTopic: string;
@@ -29,10 +28,11 @@ export function createBigmacStreamsComponents(
     vpcName,
     kafkaAuthorizedSubnetIds,
     brokerString,
-    kafkaBootstrapServers,
     tables,
     sedsTopic,
   } = props;
+
+  const kafkaBootstrapServers = brokerString.split(",");
 
   const service = "carts-bigmac-streams";
 
