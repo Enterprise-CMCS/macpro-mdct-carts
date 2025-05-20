@@ -9,7 +9,7 @@ export const getStateStatus = handler(async (event, _context) => {
   if (user.role === AppRoles.STATE_USER && !!user.state) {
     // Return only the user's state
     const params = {
-      TableName: process.env.stateStatusTableName!,
+      TableName: process.env.StateStatusTableName!,
       ...convertToDynamoExpression({ stateId: user.state }, "list"),
     };
     const queryValue = await dynamoDb.scanSome<StateStatus>(params);
@@ -23,7 +23,7 @@ export const getStateStatus = handler(async (event, _context) => {
   ) {
     // Return all
     const params = {
-      TableName: process.env.stateStatusTableName!,
+      TableName: process.env.StateStatusTableName!,
     };
     const queryValue = await dynamoDb.scanSome<StateStatus>(params);
     return queryValue;

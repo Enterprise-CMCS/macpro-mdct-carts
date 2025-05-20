@@ -66,8 +66,8 @@ export const post = handler(async (event, _context) => {
     });
   }
 
-  await saveBatch(process.env.sectionTableName!, forms);
-  await saveBatch(process.env.stateStatusTableName!, stateStatuses);
+  await saveBatch(process.env.SectionTableName!, forms);
+  await saveBatch(process.env.StateStatusTableName!, stateStatuses);
 
   return {
     message: `State templates generated for year ${year}`,
@@ -79,7 +79,7 @@ export const post = handler(async (event, _context) => {
 const getAllStates = async () => {
   // Get all known states
   const params = {
-    TableName: process.env.stateTableName!,
+    TableName: process.env.StateTableName!,
   };
   return await dynamoDb.scanAll<State>(params);
 };
@@ -87,7 +87,7 @@ const getAllStates = async () => {
 const getExistingStates = async (year: number) => {
   // Get already created entries for the given year
   const params = {
-    TableName: process.env.stateStatusTableName!,
+    TableName: process.env.StateStatusTableName!,
     ExpressionAttributeNames: {
       "#year": "year",
     },
@@ -103,7 +103,7 @@ const getExistingStates = async (year: number) => {
 
 const getBaseSections = async (year: number) => {
   const params = {
-    TableName: process.env.sectionBaseTableName!,
+    TableName: process.env.SectionBaseTableName!,
     ExpressionAttributeNames: {
       "#year": "year",
     },

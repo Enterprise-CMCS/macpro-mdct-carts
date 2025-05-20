@@ -4,13 +4,13 @@ import { AcsData, FmapData, State } from "../../types";
 
 export const getStates = handler(async (_event, _context) => {
   const stateParams = {
-    TableName: process.env.stateTableName!,
+    TableName: process.env.StateTableName!,
   };
   const acsParams = {
-    TableName: process.env.acsTableName!,
+    TableName: process.env.AcsTableName!,
   };
   const fmapParams = {
-    TableName: process.env.fmapTableName!,
+    TableName: process.env.FmapTableName!,
   };
 
   const stateQueryValue = await dynamoDb.scanAll<State>(stateParams);

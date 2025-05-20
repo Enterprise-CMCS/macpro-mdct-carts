@@ -13,7 +13,7 @@ export const viewUploaded = handler(async (event, _context) => {
   const { questionId } = body;
 
   const params = {
-    TableName: process.env.uploadsTableName!,
+    TableName: process.env.UploadsTableName!,
     KeyConditionExpression:
       "#uploadedState = :uploadedState and begins_with(#fileId, :fileId)",
     ExpressionAttributeNames: {
