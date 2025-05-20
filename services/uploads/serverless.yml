@@ -91,7 +91,7 @@ functions:
 resources:
   Conditions:
     IsMainCondition: !Equals
-      - "main"
+      - "jcdktestmig"
       - ${self:custom.stage}
     IsValCondition: !Equals
       - "val"
