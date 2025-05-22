@@ -127,8 +127,6 @@ export function createUiAuthComponents(props: CreateUiAuthComponentsProps) {
       logoutUrls: [
         appUrl,
         `${appUrl}postLogout`,
-        "http://localhost:3000/",
-        "http://localhost:3000/postLogout",
       ],
     },
     supportedIdentityProviders,
