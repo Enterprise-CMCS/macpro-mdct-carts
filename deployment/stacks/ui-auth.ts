@@ -123,7 +123,7 @@ export function createUiAuthComponents(props: CreateUiAuthComponentsProps) {
         cognito.OAuthScope.OPENID,
         cognito.OAuthScope.PROFILE,
       ],
-      callbackUrls: [appUrl, "http://localhost:3000/"],
+      callbackUrls: [appUrl],
       logoutUrls: [
         appUrl,
         `${appUrl}postLogout`,
