@@ -18,14 +18,23 @@ interface CreateUploadsComponentsProps {
   stage: string;
   loggingBucket: s3.IBucket;
   isDev: boolean;
+  attachmentsBucketName: string;
+  fiscalYearTemplateBucketName: string;
 }
 
 export function createUploadsComponents(props: CreateUploadsComponentsProps) {
-  const { scope, stage, loggingBucket, isDev } = props;
+  const {
+    scope,
+    stage,
+    loggingBucket,
+    isDev,
+    attachmentsBucketName,
+    fiscalYearTemplateBucketName,
+  } = props;
   const service = "uploads";
 
   const attachmentsBucket = new s3.Bucket(scope, "AttachmentsBucket", {
-    bucketName: `${service}-${stage}-attachments-${Aws.ACCOUNT_ID}`,
+    bucketName: attachmentsBucketName,
     autoDeleteObjects: isDev,
     encryption: s3.BucketEncryption.S3_MANAGED,
     versioned: true,
@@ -60,7 +69,7 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
       scope,
       "FiscalYearTemplateBucket",
       {
-        bucketName: `${service}-${stage}-carts-download-${Aws.ACCOUNT_ID}`,
+        bucketName: fiscalYearTemplateBucketName,
         encryption: s3.BucketEncryption.S3_MANAGED,
         versioned: true,
         removalPolicy: RemovalPolicy.RETAIN,

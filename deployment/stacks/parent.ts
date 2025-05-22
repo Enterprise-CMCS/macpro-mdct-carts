@@ -17,7 +17,7 @@ export class ParentStack extends Stack {
     id: string,
     props: StackProps & DeploymentConfigProperties
   ) {
-    const { isDev, secureCloudfrontDomainName, brokerString } = props;
+    const { isDev, secureCloudfrontDomainName, stage } = props;
 
     super(scope, id, {
       ...props,
@@ -28,6 +28,9 @@ export class ParentStack extends Stack {
       scope: this,
       ...props,
     };
+
+    const attachmentsBucketName = `uploads-${stage}-attachments-${Aws.ACCOUNT_ID}`;
+    const fiscalYearTemplateBucketName = `uploads-${stage}-carts-download-${Aws.ACCOUNT_ID}`;
 
     const customResourceRole = createCustomResourceRole({ ...commonProps });
 
@@ -43,12 +46,6 @@ export class ParentStack extends Stack {
     });
 
     if (isLocalStack) {
-      createApiComponents({
-        ...commonProps,
-        tables,
-        uploadS3BucketName: "",
-        fiscalYearTemplateS3BucketName: "",
-      });
       /*
        * For local dev, the LocalStack container will host the database and API.
        * The UI will self-host, so we don't need to tell CDK anything about it.
@@ -62,7 +59,16 @@ export class ParentStack extends Stack {
       createUploadsComponents({
         ...commonProps,
         loggingBucket,
+        attachmentsBucketName,
+        fiscalYearTemplateBucketName,
       });
+
+    const { apiGatewayRestApiUrl, restApiId } = createApiComponents({
+      ...commonProps,
+      tables,
+      uploadS3BucketName: attachmentsBucketName,
+      fiscalYearTemplateS3BucketName: fiscalYearTemplateBucket,
+    });
 
     const { applicationEndpointUrl, distribution, uiBucket } =
       createUiComponents({
@@ -70,31 +76,14 @@ export class ParentStack extends Stack {
         loggingBucket,
       });
 
-    const {
-      userPoolDomainName,
-      identityPoolId,
-      userPoolId,
-      userPoolClientId,
-      createAuthRole,
-    } = createUiAuthComponents({
-      ...commonProps,
-      applicationEndpointUrl,
-      customResourceRole,
-      attachmentsBucketArn: attachmentsBucket!.bucketArn,
-    });
-
-    const { apiGatewayRestApiUrl, restApiId } = createApiComponents({
-      ...commonProps,
-      userPoolId,
-      userPoolClientId,
-      tables,
-      uploadS3BucketName: attachmentsBucket.bucketName,
-      fiscalYearTemplateS3BucketName: fiscalYearTemplateBucket
-        ? fiscalYearTemplateBucket.bucketName
-        : "",
-    });
-
-    createAuthRole(restApiId);
+    const { userPoolDomainName, identityPoolId, userPoolId, userPoolClientId } =
+      createUiAuthComponents({
+        ...commonProps,
+        applicationEndpointUrl,
+        customResourceRole,
+        attachmentsBucketArn: attachmentsBucket!.bucketArn,
+        restApiId,
+      });
 
     deployFrontend({
       ...commonProps,

@@ -13,7 +13,7 @@ export const getFiscalYearTemplateLink = handler(async (event, _context) => {
   const url = await s3.getSignedDownloadUrl(
     {
       Bucket:
-        process.env.FiscalYearTemplateS3BucketName ??
+        process.env.fiscalYearTemplateS3BucketName ??
         "local-fiscal-year-template",
       Key: filename,
       ResponseContentDisposition: `attachment; filename = ${filename}`,

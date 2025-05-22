@@ -178,7 +178,6 @@ function setupWaf(
     "CloudfrontWafConstruct",
     {
       name: `${project}-${stage}-ui`,
-      blockByDefault: true,
     },
     "CLOUDFRONT"
   );
