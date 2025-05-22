@@ -1,6 +1,5 @@
 import { jwtDecode } from "jwt-decode";
 import { IdmRoles, AppRoles, APIGatewayProxyEvent } from "../types";
-import { CognitoJwtVerifier } from "aws-jwt-verify";
 
 // prettier-ignore
 interface DecodedToken {
@@ -31,28 +30,11 @@ export class UserCredentials {
 }
 
 export const isAuthorized = async (event: APIGatewayProxyEvent) => {
-  if (!event.headers?.["x-api-key"]) return false;
-
-  // Verifier that expects valid access tokens:
-  const userPoolId = process.env.COGNITO_USER_POOL_ID!;
-  const clientId = process.env.COGNITO_USER_POOL_CLIENT_ID!;
-  const verifier = CognitoJwtVerifier.create({
-    userPoolId,
-    tokenUse: "id",
-    clientId,
-  });
-  try {
-    await verifier.verify(event.headers["x-api-key"]);
-  } catch {
-    console.log("Token not valid!"); // eslint-disable-line
-    return false;
-  }
-
   // get state and method from the event
   const requestState = event.pathParameters?.state;
 
   // If a state user, always reject if their state does not match a state query param
-  const decoded = jwtDecode(event.headers["x-api-key"]) as DecodedToken;
+  const decoded = jwtDecode(event.headers["x-api-key"]!) as DecodedToken;
   const idmRole = decoded["custom:cms_roles"]
     .split(",")
     .find((r) => r.includes("mdctcarts")) as IdmRoles;
