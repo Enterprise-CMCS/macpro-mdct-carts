@@ -1,5 +1,5 @@
 window.env = {
-  LOCAL_LOGIN: "{{localLogin}}",
+  LOCAL_LOGIN: "false",
   API_REGION: "us-east-1",
   API_URL: "{{apiGatewayRestApiUrl}}",
   COGNITO_REGION: "us-east-1",

@@ -95,7 +95,6 @@ export class LambdaDynamoEventSource extends Construct {
           functionName: this.lambda.functionArn,
           startingPosition: "TRIM_HORIZON",
           maximumRetryAttempts: 2,
-          batchSize: 10,
           enabled: true,
         }
       );

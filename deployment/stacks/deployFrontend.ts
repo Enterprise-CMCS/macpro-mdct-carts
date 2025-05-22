@@ -48,7 +48,7 @@ export function deployFrontend(props: DeployFrontendProps) {
   const buildOutputPath = path.join(reactAppPath, "build");
   const fullPath = path.resolve(reactAppPath);
 
-  execSync("CI=false SKIP_PREFLIGHT_CHECK=true yarn run build", {
+  execSync("SKIP_PREFLIGHT_CHECK=true yarn run build", {
     cwd: fullPath,
     stdio: "inherit",
     env: {
@@ -124,7 +124,6 @@ export function deployFrontend(props: DeployFrontendProps) {
       destinationKey: "env-config.js",
       source: path.join("./deployment/stacks/", "env-config.template.js"),
       substitutions: {
-        localLogin: "false",
         apiGatewayRestApiUrl,
         applicationEndpointUrl,
         s3AttachmentsBucketName,
