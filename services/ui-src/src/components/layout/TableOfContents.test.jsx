@@ -1,7 +1,6 @@
 import React from "react";
 import { Provider } from "react-redux";
 import TableOfContents from "./TableOfContents";
-import { shallow } from "enzyme";
 import configureMockStore from "redux-mock-store";
 import {
   adminUserWithReportInProgress,
@@ -95,10 +94,9 @@ const store = mockStore({
   ...stateUserWithReportInProgress,
   ...formState,
 });
-const memoryRouterRef = React.createRef();
 const tableOfContents = (
   <Provider store={store}>
-    <MemoryRouter ref={memoryRouterRef}>
+    <MemoryRouter initialEntries={["/sections/2020/01"]}>
       <TableOfContents />
     </MemoryRouter>
   </Provider>
@@ -141,10 +139,6 @@ describe("State Header Component", () => {
   beforeEach(() => {
     setLocation();
   });
-  it("should render correctly", () => {
-    expect(shallow(tableOfContents).exists()).toBe(true);
-  });
-
   it("should render cmsgov vertical nav and pass sections and certify and submit", async () => {
     render(tableOfContents);
     const toc = screen.getByTestId("toc");

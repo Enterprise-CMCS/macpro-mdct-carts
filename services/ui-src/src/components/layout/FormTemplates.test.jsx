@@ -1,5 +1,4 @@
 import React from "react";
-import { shallow } from "enzyme";
 import FormTemplates from "./FormTemplates";
 import { act, render, fireEvent } from "@testing-library/react";
 import { apiLib } from "../../util/apiLib";
@@ -18,10 +17,6 @@ const formTemplate = <FormTemplates />;
 describe("FormTemplates Component", () => {
   beforeEach(() => {
     window.alert.mockClear();
-  });
-
-  it("should render correctly", () => {
-    expect(shallow(formTemplate).exists()).toBe(true);
   });
 
   it("fires the generate forms event on button click, then navigates", async () => {

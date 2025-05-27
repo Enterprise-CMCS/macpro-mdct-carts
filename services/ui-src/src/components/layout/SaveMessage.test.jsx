@@ -1,6 +1,6 @@
-import { mount, shallow } from "enzyme";
 import React from "react";
 import SaveMessage from "./SaveMessage";
+import { render, screen } from "@testing-library/react";
 
 describe("SaveMessage Component", () => {
   const stringProp = { lastSaved: "01/01/2002" };
@@ -13,15 +13,17 @@ describe("SaveMessage Component", () => {
   const saveMessageNullProp = <SaveMessage {...nullProp} />;
 
   test("render component", () => {
-    expect(shallow(saveMessageStringProp).exists()).toBe(true);
+    render(saveMessageStringProp);
+    expect(screen.getByText(/Last saved/)).toBeVisible();
   });
 
   it("should accept date as prop", () => {
-    expect(shallow(saveMessageDateProp).exists()).toBe(true);
+    render(saveMessageDateProp);
+    expect(screen.getByText(/Saved/)).toBeVisible();
   });
 
   it("should accept null as prop and return not saved", () => {
-    const wrapper = mount(saveMessageNullProp);
-    expect(wrapper.text().includes("Not yet saved")).toBe(true);
+    render(saveMessageNullProp);
+    expect(screen.getByText("Not yet saved")).toBeVisible();
   });
 });

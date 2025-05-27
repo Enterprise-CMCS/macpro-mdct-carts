@@ -1,7 +1,6 @@
 import React from "react";
 import { Provider } from "react-redux";
 //testing
-import { shallow, mount } from "enzyme";
 import configureMockStore from "redux-mock-store";
 import { screen, render, fireEvent } from "@testing-library/react";
 //components
@@ -54,13 +53,27 @@ const buildInteger = (intProps) => {
 
 describe("<Integer />", () => {
   it("should render correctly", () => {
-    const props = { question: { id: "2023-00-a-01-01", answer: 1 } };
-    expect(shallow(buildInteger(props)).exists()).toBe(true);
+    const props = {
+      question: { id: "2023-00-a-01-01", label: "2023 question 1", answer: 1 },
+    };
+    render(buildInteger(props));
+    expect(
+      screen.getByRole("textbox", { name: "1. 2023 question 1" })
+    ).toBeVisible();
   });
 
   it("should render Previous Year data correctly", () => {
-    const props = { question: { id: "2023-00-a-01-01", answer: { entry: 0 } } };
-    expect(mount(buildInteger(props)).exists()).toBe(true);
+    const props = {
+      question: {
+        id: "2022-00-a-01-01",
+        label: "2022 question 1",
+        answer: { entry: 0 },
+      },
+    };
+    render(buildInteger(props));
+    expect(
+      screen.getByRole("textbox", { name: "1. 2022 question 1" })
+    ).toBeVisible();
   });
 
   it("should render an Integer", () => {

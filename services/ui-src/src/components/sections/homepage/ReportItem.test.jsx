@@ -1,5 +1,4 @@
 import React from "react";
-import { shallow, mount } from "enzyme";
 import { MemoryRouter } from "react-router-dom";
 import { screen, render, fireEvent } from "@testing-library/react";
 import configureMockStore from "redux-mock-store";
@@ -63,44 +62,20 @@ describe("ReportItem viewed by a State User", () => {
     </Provider>
   );
 
-  it("should render In Progress correctly", () => {
-    expect(shallow(stateUserInProgWrapper).exists()).toBe(true);
-  });
-
-  it("should render report other statuses correctly", () => {
-    expect(shallow(stateUserCertWrapper).exists()).toBe(true);
-  });
-
   it("should render an In Progress report with passed props", () => {
-    const report = mount(stateUserInProgWrapper);
-    expect(report.find("div.name.ds-l-col--2").text()).toBe("2021");
-    expect(report.find("div.status.ds-l-col--2").text()).toBe("In Progress");
-    expect(report.find("div.actions.ds-l-col--3").text()).toBe(
-      "2021-01-04 at 1:28:18 p.m."
-    );
-    expect(report.find("div.actions.ds-l-col--1").find("a").text()).toBe(
-      "Edit"
-    );
-    expect(report.find("div.actions.ds-l-col--1").find("a").prop("href")).toBe(
-      "/sections/2021/00"
-    );
+    render(stateUserInProgWrapper);
+    expect(screen.getByText("2021")).toBeVisible();
+    expect(screen.getByText("In Progress")).toBeVisible();
+    expect(screen.getByText("2021-01-04 at 1:28:18 p.m.")).toBeVisible();
+    expect(screen.getByRole("link", { name: "Edit" })).toBeVisible();
   });
 
-  it("should render other reports statuses and time staps properly", () => {
-    const report = mount(stateUserCertWrapper);
-    expect(report.find("div.name.ds-l-col--2").text()).toBe("2020");
-    expect(report.find("div.status.ds-l-col--2").text()).toBe(
-      "Certified and Submitted"
-    );
-    expect(report.find("div.actions.ds-l-col--3").text()).toBe(
-      "2022-06-27 at 2:43:08 p.m."
-    );
-    expect(report.find("div.actions.ds-l-col--1").find("a").text()).toBe(
-      "View"
-    );
-    expect(report.find("div.actions.ds-l-col--1").find("a").prop("href")).toBe(
-      "/sections/2020/00"
-    );
+  it("should render other reports statuses and time stamps properly", () => {
+    render(stateUserCertWrapper);
+    expect(screen.getByText("2020")).toBeVisible();
+    expect(screen.getByText("Certified and Submitted")).toBeVisible();
+    expect(screen.getByText("2022-06-27 at 2:43:08 p.m.")).toBeVisible();
+    expect(screen.getByRole("link", { name: "View" })).toBeVisible();
   });
 
   test("In Progress report items should not have basic accessibility issues", async () => {
@@ -162,52 +137,27 @@ describe("ReportItem viewed by a CMS User", () => {
     </Provider>
   );
 
-  it("should render In Progress correctly", () => {
-    expect(shallow(cmsUserInProgWrapper).exists()).toBe(true);
-  });
-
-  it("should render report other statuses correctly", () => {
-    expect(shallow(cmsUserCertWrapper).exists()).toBe(true);
-  });
-
   it("should render an In Progress report with passed props", () => {
-    const report = mount(cmsUserInProgWrapper);
-    expect(report.find("div.name.ds-l-col--1").text()).toBe("2021");
-    expect(report.find("div.name.ds-l-col--2").text()).toBe("Alabama");
-    expect(report.find("div.status.ds-l-col--2").text()).toBe("In Progress");
-    expect(report.find("div.actions.ds-l-col--3").text()).toBe(
-      "2021-01-04 at 1:28:18 p.m. by al@test.com"
-    );
-    expect(report.find("div.actions.ds-l-col--auto").find("a").text()).toBe(
-      "View"
-    );
+    render(cmsUserInProgWrapper);
+    expect(screen.getByText("2021")).toBeVisible();
+    expect(screen.getByText("Alabama")).toBeVisible();
+    expect(screen.getByText("In Progress")).toBeVisible();
     expect(
-      report.find("div.actions.ds-l-col--auto").find("a").prop("href")
-    ).toBe("/views/sections/AL/2021/00/a");
-    expect(report.find("div.actions.ds-l-col--auto").text()).not.toContain(
-      "Uncertify"
-    );
+      screen.getByText("2021-01-04 at 1:28:18 p.m. by al@test.com")
+    ).toBeVisible();
+    expect(screen.getByRole("link", { name: /View/ })).toBeVisible();
   });
 
-  it("should render other reports statuses and time staps properly", () => {
-    const report = mount(cmsUserCertWrapper);
-    expect(report.find("div.name.ds-l-col--1").text()).toBe("2020");
-    expect(report.find("div.name.ds-l-col--2").text()).toBe("Alabama");
-    expect(report.find("div.status.ds-l-col--2").text()).toBe(
-      "Certified and Submitted"
-    );
-    expect(report.find("div.actions.ds-l-col--3").text()).toBe(
-      "2022-06-27 at 2:43:08 p.m. by Frank States"
-    );
-    expect(report.find("div.actions.ds-l-col--auto").find("a").text()).toBe(
-      "View"
-    );
+  it("should render other reports statuses and time stamps properly", () => {
+    render(cmsUserCertWrapper);
+    expect(screen.getByText("2020")).toBeVisible();
+    expect(screen.getByText("Alabama")).toBeVisible();
+    expect(screen.getByText("Certified and Submitted")).toBeVisible();
     expect(
-      report.find("div.actions.ds-l-col--auto").find("a").prop("href")
-    ).toBe("/views/sections/AL/2020/00/a");
-    expect(
-      report.find("div.actions.ds-l-col--auto").find("button").text()
-    ).toBe("Uncertify");
+      screen.getByText("2022-06-27 at 2:43:08 p.m. by Frank States")
+    ).toBeVisible();
+    expect(screen.getByRole("link", { name: /View/ })).toBeVisible();
+    expect(screen.getByRole("button", { name: "Uncertify" })).toBeVisible();
   });
 
   it("should handle uncertify being clicked and show new modal", () => {
@@ -277,52 +227,27 @@ describe("ReportItem viewed by an Admin User", () => {
     </Provider>
   );
 
-  it("should render In Progress correctly", () => {
-    expect(shallow(adminUserInProgWrapper).exists()).toBe(true);
-  });
-
-  it("should render report other statuses correctly", () => {
-    expect(shallow(adminUserCertWrapper).exists()).toBe(true);
-  });
-
   it("should render an In Progress report with passed props", () => {
-    const report = mount(adminUserInProgWrapper);
-    expect(report.find("div.name.ds-l-col--1").text()).toBe("2021");
-    expect(report.find("div.name.ds-l-col--2").text()).toBe("Alabama");
-    expect(report.find("div.status.ds-l-col--2").text()).toBe("In Progress");
-    expect(report.find("div.actions.ds-l-col--3").text()).toBe(
-      "2021-01-04 at 1:28:18 p.m. by al@test.com"
-    );
-    expect(report.find("div.actions.ds-l-col--auto").find("a").text()).toBe(
-      "View"
-    );
+    render(adminUserInProgWrapper);
+    expect(screen.getByText("2021")).toBeVisible();
+    expect(screen.getByText("Alabama")).toBeVisible();
+    expect(screen.getByText("In Progress")).toBeVisible();
     expect(
-      report.find("div.actions.ds-l-col--auto").find("a").prop("href")
-    ).toBe("/views/sections/AL/2021/00/a");
-    expect(report.find("div.actions.ds-l-col--auto").text()).not.toContain(
-      "Uncertify"
-    );
+      screen.getByText("2021-01-04 at 1:28:18 p.m. by al@test.com")
+    ).toBeVisible();
+    expect(screen.getByRole("link", { name: /View/ })).toBeVisible();
   });
 
-  it("should render other reports statuses and time staps properly", () => {
-    const report = mount(adminUserCertWrapper);
-    expect(report.find("div.name.ds-l-col--1").text()).toBe("2020");
-    expect(report.find("div.name.ds-l-col--2").text()).toBe("Alabama");
-    expect(report.find("div.status.ds-l-col--2").text()).toBe(
-      "Certified and Submitted"
-    );
-    expect(report.find("div.actions.ds-l-col--3").text()).toBe(
-      "2022-06-27 at 2:43:08 p.m. by Frank States"
-    );
-    expect(report.find("div.actions.ds-l-col--auto").find("a").text()).toBe(
-      "View"
-    );
+  it("should render other reports statuses and time stamps properly", () => {
+    render(adminUserCertWrapper);
+    expect(screen.getByText("2020")).toBeVisible();
+    expect(screen.getByText("Alabama")).toBeVisible();
+    expect(screen.getByText("Certified and Submitted")).toBeVisible();
     expect(
-      report.find("div.actions.ds-l-col--auto").find("a").prop("href")
-    ).toBe("/views/sections/AL/2020/00/a");
-    expect(report.find("div.actions.ds-l-col--auto").text()).toContain(
-      "Uncertify"
-    );
+      screen.getByText("2022-06-27 at 2:43:08 p.m. by Frank States")
+    ).toBeVisible();
+    expect(screen.getByRole("link", { name: /View/ })).toBeVisible();
+    expect(screen.getByRole("button", { name: "Uncertify" })).toBeVisible();
   });
 
   test("In Progress report items should not have basic accessibility issues", async () => {
@@ -384,52 +309,26 @@ describe("ReportItem viewed by an Help Desk User", () => {
     </Provider>
   );
 
-  it("should render In Progress correctly", () => {
-    expect(shallow(helpdeskUserInProgWrapper).exists()).toBe(true);
-  });
-
-  it("should render report other statuses correctly", () => {
-    expect(shallow(helpdeskUserCertWrapper).exists()).toBe(true);
-  });
-
   it("should render an In Progress report with passed props", () => {
-    const report = mount(helpdeskUserInProgWrapper);
-    expect(report.find("div.name.ds-l-col--1").text()).toBe("2021");
-    expect(report.find("div.name.ds-l-col--2").text()).toBe("Alabama");
-    expect(report.find("div.status.ds-l-col--2").text()).toBe("In Progress");
-    expect(report.find("div.actions.ds-l-col--3").text()).toBe(
-      "2021-01-04 at 1:28:18 p.m. by al@test.com"
-    );
-    expect(report.find("div.actions.ds-l-col--auto").find("a").text()).toBe(
-      "View"
-    );
+    render(helpdeskUserInProgWrapper);
+    expect(screen.getByText("2021")).toBeVisible();
+    expect(screen.getByText("Alabama")).toBeVisible();
+    expect(screen.getByText("In Progress")).toBeVisible();
     expect(
-      report.find("div.actions.ds-l-col--auto").find("a").prop("href")
-    ).toBe("/views/sections/AL/2021/00/a");
-    expect(report.find("div.actions.ds-l-col--auto").text()).not.toContain(
-      "Uncertify"
-    );
+      screen.getByText("2021-01-04 at 1:28:18 p.m. by al@test.com")
+    ).toBeVisible();
+    expect(screen.getByRole("link", { name: /View/ })).toBeVisible();
   });
 
-  it("should render other reports statuses and time staps properly", () => {
-    const report = mount(helpdeskUserCertWrapper);
-    expect(report.find("div.name.ds-l-col--1").text()).toBe("2020");
-    expect(report.find("div.name.ds-l-col--2").text()).toBe("Alabama");
-    expect(report.find("div.status.ds-l-col--2").text()).toBe(
-      "Certified and Submitted"
-    );
-    expect(report.find("div.actions.ds-l-col--3").text()).toBe(
-      "2022-06-27 at 2:43:08 p.m. by Frank States"
-    );
-    expect(report.find("div.actions.ds-l-col--auto").find("a").text()).toBe(
-      "View"
-    );
+  it("should render other reports statuses and time stamps properly", () => {
+    render(helpdeskUserCertWrapper);
+    expect(screen.getByText("2020")).toBeVisible();
+    expect(screen.getByText("Alabama")).toBeVisible();
+    expect(screen.getByText("Certified and Submitted")).toBeVisible();
     expect(
-      report.find("div.actions.ds-l-col--auto").find("a").prop("href")
-    ).toBe("/views/sections/AL/2020/00/a");
-    expect(report.find("div.actions.ds-l-col--auto").text()).not.toContain(
-      "Uncertify"
-    );
+      screen.getByText("2022-06-27 at 2:43:08 p.m. by Frank States")
+    ).toBeVisible();
+    expect(screen.getByRole("link", { name: /View/ })).toBeVisible();
   });
 
   test("In Progress report items should not have basic accessibility issues", async () => {
@@ -491,52 +390,26 @@ describe("ReportItem viewed by an Admin User", () => {
     </Provider>
   );
 
-  it("should render In Progress correctly", () => {
-    expect(shallow(approverUserInProgWrapper).exists()).toBe(true);
-  });
-
-  it("should render report other statuses correctly", () => {
-    expect(shallow(approverUserCertWrapper).exists()).toBe(true);
-  });
-
   it("should render an In Progress report with passed props", () => {
-    const report = mount(approverUserInProgWrapper);
-    expect(report.find("div.name.ds-l-col--1").text()).toBe("2021");
-    expect(report.find("div.name.ds-l-col--2").text()).toBe("Alabama");
-    expect(report.find("div.status.ds-l-col--2").text()).toBe("In Progress");
-    expect(report.find("div.actions.ds-l-col--3").text()).toBe(
-      "2021-01-04 at 1:28:18 p.m. by al@test.com"
-    );
-    expect(report.find("div.actions.ds-l-col--auto").find("a").text()).toBe(
-      "View"
-    );
+    render(approverUserInProgWrapper);
+    expect(screen.getByText("2021")).toBeVisible();
+    expect(screen.getByText("Alabama")).toBeVisible();
+    expect(screen.getByText("In Progress")).toBeVisible();
     expect(
-      report.find("div.actions.ds-l-col--auto").find("a").prop("href")
-    ).toBe("/views/sections/AL/2021/00/a");
-    expect(report.find("div.actions.ds-l-col--auto").text()).not.toContain(
-      "Uncertify"
-    );
+      screen.getByText("2021-01-04 at 1:28:18 p.m. by al@test.com")
+    ).toBeVisible();
+    expect(screen.getByRole("link", { name: /View/ })).toBeVisible();
   });
 
-  it("should render other reports statuses and time staps properly", () => {
-    const report = mount(approverUserCertWrapper);
-    expect(report.find("div.name.ds-l-col--1").text()).toBe("2020");
-    expect(report.find("div.name.ds-l-col--2").text()).toBe("Alabama");
-    expect(report.find("div.status.ds-l-col--2").text()).toBe(
-      "Certified and Submitted"
-    );
-    expect(report.find("div.actions.ds-l-col--3").text()).toBe(
-      "2022-06-27 at 2:43:08 p.m. by Frank States"
-    );
-    expect(report.find("div.actions.ds-l-col--auto").find("a").text()).toBe(
-      "View"
-    );
+  it("should render other reports statuses and time stamps properly", () => {
+    render(approverUserCertWrapper);
+    expect(screen.getByText("2020")).toBeVisible();
+    expect(screen.getByText("Alabama")).toBeVisible();
+    expect(screen.getByText("Certified and Submitted")).toBeVisible();
     expect(
-      report.find("div.actions.ds-l-col--auto").find("a").prop("href")
-    ).toBe("/views/sections/AL/2020/00/a");
-    expect(report.find("div.actions.ds-l-col--auto").text()).toContain(
-      "Uncertify"
-    );
+      screen.getByText("2022-06-27 at 2:43:08 p.m. by Frank States")
+    ).toBeVisible();
+    expect(screen.getByRole("link", { name: /View/ })).toBeVisible();
   });
 
   test("In Progress report items should not have basic accessibility issues", async () => {

@@ -133,7 +133,6 @@ describe("Data Grid component", () => {
       </Provider>
     );
 
-    screen.debug();
     expect(screen.queryByText(/42/)).toBeInTheDocument();
   });
 });

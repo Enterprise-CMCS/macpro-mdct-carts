@@ -1,5 +1,4 @@
 import React from "react";
-import { shallow } from "enzyme";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import Print from "./Print";
@@ -79,12 +78,6 @@ const setup = (path) => (
 );
 
 describe("Print", () => {
-  it("should render the Print Component correctly", () => {
-    const path = "/print?year=2020&state=AL";
-    const printComponent = setup(path);
-    expect(shallow(printComponent).exists()).toBe(true);
-  });
-
   it("should render for full form", () => {
     const path = "/print?year=2020&state=AL";
     render(setup(path));
