@@ -27,7 +27,7 @@ custom:
     production: false
     val: false
     main: false
-    default: true
+    default: false
   seedTestData: ${self:custom.seedTestDataMap.${self:custom.stage}, self:custom.seedTestDataMap.default}
   seedOptions:
     prod: false
