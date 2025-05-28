@@ -45,7 +45,7 @@ const RangesComponentWithProps = (testSpecificProps) => {
   );
 };
 
-describe("Range component", () => {
+describe("<Ranges />", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });

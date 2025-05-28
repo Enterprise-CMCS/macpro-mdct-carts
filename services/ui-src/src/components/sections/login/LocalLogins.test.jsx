@@ -15,8 +15,8 @@ jest.mock("react-router-dom", () => ({
   useNavigate: () => mockedUsedNavigate,
 }));
 
-describe("LocalLogin component", () => {
-  it("should attempt to login and nav the user on click", async () => {
+describe("<LocalLogin />", () => {
+  test("should attempt to login and nav the user on click", async () => {
     const { getByTestId } = render(localLogins);
     const generateButton = getByTestId("login-button");
     const emailField = getByTestId("login-email");

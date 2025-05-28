@@ -153,12 +153,12 @@ describe("Authorization Lib", () => {
       mockedDecode.mockReturnValue(decodedUser);
     });
 
-    it("Should return empty user crentials when api key is missing", () => {
+    test("Should return empty user crentials when api key is missing", () => {
       event.headers = {};
       const result = getUserCredentialsFromJwt(event);
       expect(result).toEqual(new UserCredentials());
     });
-    it("should return decoded and transformed credentials when an api key exists", () => {
+    test("should return decoded and transformed credentials when an api key exists", () => {
       const result = getUserCredentialsFromJwt(event);
       expect(result).toEqual(
         expect.objectContaining({
@@ -185,7 +185,7 @@ describe("Authorization Lib", () => {
       mockedDecode.mockReturnValue(decodedUser);
     });
 
-    it("should not return the user's name if header or x-api-key is missing", () => {
+    test("should not return the user's name if header or x-api-key is missing", () => {
       event.headers = {};
       const result = getUserNameFromJwt(event);
       expect(result).not.toEqual("Amos Burton");
@@ -194,11 +194,11 @@ describe("Authorization Lib", () => {
       const resultHeaderless = getUserNameFromJwt({} as APIGatewayProxyEvent);
       expect(resultHeaderless).toEqual("branchUser");
     });
-    it("should compose a given and family name into a username", () => {
+    test("should compose a given and family name into a username", () => {
       const result = getUserNameFromJwt(event);
       expect(result).toEqual("Amos Burton");
     });
-    it("should fallback to identities and userId if other info is missing", () => {
+    test("should fallback to identities and userId if other info is missing", () => {
       mockedDecode.mockReturnValueOnce({
         "custom:cms_roles": IdmRoles.STATE,
         "custom:cms_state": "AL",
@@ -207,7 +207,7 @@ describe("Authorization Lib", () => {
       const result = getUserNameFromJwt(event);
       expect(result).toEqual("amos@rocinante.io");
     });
-    it("should return default text if all else is missing", () => {
+    test("should return default text if all else is missing", () => {
       mockedDecode.mockReturnValueOnce({
         "custom:cms_roles": IdmRoles.STATE,
         "custom:cms_state": "AL",
@@ -218,7 +218,7 @@ describe("Authorization Lib", () => {
   });
 
   describe("mapIdmRoleToAppRole", () => {
-    it("should return AppRole if IdmRole exists", () => {
+    test("should return AppRole if IdmRole exists", () => {
       const result = mapIdmRoleToAppRole(IdmRoles.APPROVER);
       expect(result).toEqual(AppRoles.CMS_APPROVER);
     });

@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import NoninteractiveTable from "./NoninteractiveTable";
 
-describe("Non-interactive Table", () => {
+describe("<NoninteractiveTable />", () => {
   test("should render data in a proper table structure", () => {
     const props = {
       tableTitle: "Mock Table Title",

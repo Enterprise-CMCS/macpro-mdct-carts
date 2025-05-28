@@ -30,7 +30,7 @@ const dataGridWithQuestions = (questions) => (
   </Provider>
 );
 
-describe("Data Grid component", () => {
+describe("<DataGrid />", () => {
   test("should not render child questions without IDs", () => {
     render(dataGridWithQuestions([{}]));
     expect(screen.queryByText(/\{/)).not.toBeInTheDocument();

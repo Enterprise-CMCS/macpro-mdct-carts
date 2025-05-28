@@ -53,7 +53,7 @@ const SynthesizedValueComponentWithProps = (testSpecificProps) => {
   );
 };
 
-describe("<Synthesized Value />", () => {
+describe("<SynthesizedValue />", () => {
   test("should render header and labels", () => {
     render(SynthesizedValueComponentWithProps());
 

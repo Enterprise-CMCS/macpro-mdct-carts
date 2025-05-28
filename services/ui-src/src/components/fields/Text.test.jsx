@@ -96,7 +96,7 @@ const TextComponentWithProps = (testSpecificProps) => {
   );
 };
 
-describe("Text component", () => {
+describe("<Text />", () => {
   test("should render an input with appropriate attributes", () => {
     render(<TextComponentWithProps />);
 

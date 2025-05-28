@@ -1,14 +1,14 @@
 import React from "react";
+import { screen, render, fireEvent } from "@testing-library/react";
 import { Provider } from "react-redux";
-import TableOfContents from "./TableOfContents";
+import { MemoryRouter } from "react-router-dom";
 import configureMockStore from "redux-mock-store";
+import TableOfContents from "./TableOfContents";
 import {
   adminUserWithReportInProgress,
   stateUserSimple,
   stateUserWithReportInProgress,
 } from "../../store/fakeStoreExamples";
-import { screen, render, fireEvent } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
 
 const mockStore = configureMockStore();
 const formState = {
@@ -135,11 +135,11 @@ const setLocation = (path = "/") => {
   window.location = new URL("https://www.example.com" + path);
 };
 
-describe("State Header Component", () => {
+describe("<TableOfContents />", () => {
   beforeEach(() => {
     setLocation();
   });
-  it("should render cmsgov vertical nav and pass sections and certify and submit", async () => {
+  test("should render cmsgov vertical nav and pass sections and certify and submit", async () => {
     render(tableOfContents);
     const toc = screen.getByTestId("toc");
     expect(toc.outerHTML).toMatch(/Section 1/);
@@ -147,14 +147,14 @@ describe("State Header Component", () => {
     expect(toc.outerHTML).toMatch(/Certify and Submit/);
   });
 
-  it("should not include certify and submit when a non state user views the ToC", async () => {
+  test("should not include certify and submit when a non state user views the ToC", async () => {
     render(adminToc);
     const toc = screen.getByTestId("toc");
     expect(toc.outerHTML).toMatch(/Section 1/);
     expect(toc.outerHTML).toMatch(/Section 2/);
     expect(toc.outerHTML).not.toMatch(/Certify and Submit/);
   });
-  it("should handle an active path with /views/sections", async () => {
+  test("should handle an active path with /views/sections", async () => {
     setLocation("/views/sections/");
     render(adminToc);
     const toc = screen.getByTestId("toc");
@@ -162,7 +162,7 @@ describe("State Header Component", () => {
     expect(toc.outerHTML).toMatch(/Section 2/);
     expect(toc.outerHTML).not.toMatch(/Certify and Submit/);
   });
-  it("should not crash without any form data", async () => {
+  test("should not crash without any form data", async () => {
     setLocation("/views/sections/");
     render(noFormsToC);
     const toc = screen.getByTestId("toc");
@@ -170,7 +170,7 @@ describe("State Header Component", () => {
     expect(toc.outerHTML).not.toMatch(/Section 2/);
     expect(toc.outerHTML).not.toMatch(/Certify and Submit/);
   });
-  it("should navigate on click", async () => {
+  test("should navigate on click", async () => {
     render(tableOfContents);
     const aSection = screen.getByText(/Section 1/);
     fireEvent.click(aSection);

@@ -10,10 +10,10 @@ jest.mock("../store/formData", () => ({
   selectFragmentById: jest.fn(),
 }));
 
-describe("shouldDisplay", () => {
+describe("shouldDisplay()", () => {
   beforeEach(() => jest.clearAllMocks());
 
-  it("should display everything if no context is provided", () => {
+  test("should display everything if no context is provided", () => {
     const state = {
       stateUser: {
         currentUser: {
@@ -25,7 +25,7 @@ describe("shouldDisplay", () => {
     expect(result).toBe(true);
   });
 
-  it("should display everything if the context requires it", () => {
+  test("should display everything if the context requires it", () => {
     const state = {
       stateUser: {
         currentUser: {
@@ -52,7 +52,7 @@ describe("shouldDisplay", () => {
     expect(result).toBe(true);
   });
 
-  it("should not display if programs are specified, and this isn't one of them", () => {
+  test("should not display if programs are specified, and this isn't one of them", () => {
     const state = {
       stateUser: {
         currentUser: {
@@ -87,7 +87,7 @@ describe("shouldDisplay", () => {
     expect(result).toBe(false);
   });
 
-  it("should display specified programs", () => {
+  test("should display specified programs", () => {
     const state = {
       stateUser: {
         currentUser: {
@@ -122,7 +122,7 @@ describe("shouldDisplay", () => {
     expect(result).toBe(true);
   });
 
-  it("should find programType for state users", () => {
+  test("should find programType for state users", () => {
     selectFragmentById.mockReturnValueOnce(mockFragmentResult);
     const state = {
       stateUser: {
@@ -159,7 +159,7 @@ describe("shouldDisplay", () => {
     expect(selectFragmentById).toHaveBeenCalledTimes(1);
   });
 
-  it("should find programType for non-state users", () => {
+  test("should find programType for non-state users", () => {
     selectFragmentById.mockReturnValueOnce(mockFragmentResult);
     const state = {
       stateUser: {
@@ -196,7 +196,7 @@ describe("shouldDisplay", () => {
     expect(selectFragmentById).toHaveBeenCalledTimes(1);
   });
 
-  it("should find programType from previous year if not in current year", () => {
+  test("should find programType from previous year if not in current year", () => {
     selectFragmentById.mockReturnValueOnce({});
     selectFragmentById.mockReturnValueOnce(mockFragmentResult);
     const state = {
@@ -234,7 +234,7 @@ describe("shouldDisplay", () => {
     expect(selectFragmentById).toHaveBeenCalledTimes(2);
   });
 
-  it("should not display if hide_if logic is specified, and the state satisfies it", () => {
+  test("should not display if hide_if logic is specified, and the state satisfies it", () => {
     const state = {
       stateUser: {
         currentUser: {
@@ -269,7 +269,7 @@ describe("shouldDisplay", () => {
     expect(result).toBe(false);
   });
 
-  it("should display if hide_if logic is specified, and the state fails it", () => {
+  test("should display if hide_if logic is specified, and the state fails it", () => {
     const state = {
       stateUser: {
         currentUser: {
@@ -304,7 +304,7 @@ describe("shouldDisplay", () => {
     expect(result).toBe(true);
   });
 
-  it("should not display if hide_if_all logic is specified, and the state satisfies it", () => {
+  test("should not display if hide_if_all logic is specified, and the state satisfies it", () => {
     const state = {
       stateUser: {
         currentUser: {
@@ -342,7 +342,7 @@ describe("shouldDisplay", () => {
     expect(result).toBe(false);
   });
 
-  it("should display if hide_if_all logic is specified, and the state fails it", () => {
+  test("should display if hide_if_all logic is specified, and the state fails it", () => {
     const state = {
       stateUser: {
         currentUser: {
@@ -380,7 +380,7 @@ describe("shouldDisplay", () => {
     expect(result).toBe(true);
   });
 
-  it("should not display if hide_if_not logic is specified, and the state satisfies it", () => {
+  test("should not display if hide_if_not logic is specified, and the state satisfies it", () => {
     const state = {
       stateUser: {
         currentUser: {
@@ -416,7 +416,7 @@ describe("shouldDisplay", () => {
     expect(result).toBe(true);
   });
 
-  it("should display if hide_if_not logic is specified, and the state fails it", () => {
+  test("should display if hide_if_not logic is specified, and the state fails it", () => {
     const state = {
       stateUser: {
         currentUser: {
@@ -452,7 +452,7 @@ describe("shouldDisplay", () => {
     expect(result).toBe(false);
   });
 
-  it("should display by default when no display logic can be found", () => {
+  test("should display by default when no display logic can be found", () => {
     const state = {
       stateUser: {
         currentUser: {

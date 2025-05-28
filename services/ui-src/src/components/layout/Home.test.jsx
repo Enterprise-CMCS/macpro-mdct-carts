@@ -1,10 +1,10 @@
 import React from "react";
-import Home from "./Home";
-import { AppRoles } from "../../types";
+import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-import { render, screen } from "@testing-library/react";
+import Home from "./Home";
+import { AppRoles } from "../../types";
 
 const mockStore = configureMockStore();
 const store = mockStore({});
@@ -22,8 +22,8 @@ jest.mock("./Unauthorized", () => () => {
   return <p>unauthorized</p>;
 });
 
-describe("Home Component", () => {
-  it.each([
+describe("<Home />", () => {
+  test.each([
     [AppRoles.CMS_USER, "home-cms"],
     [AppRoles.CMS_ADMIN, "home-admin"],
     [AppRoles.INTERNAL_USER, "home-cms"],

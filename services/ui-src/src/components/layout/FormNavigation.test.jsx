@@ -1,10 +1,10 @@
 import React from "react";
-import FormNavigation from "./FormNavigation";
-import { stateUserWithReportInProgress } from "../../store/fakeStoreExamples";
+import { screen, render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import configureMockStore from "redux-mock-store";
 import { Provider } from "react-redux";
-import { screen, render } from "@testing-library/react";
+import FormNavigation from "./FormNavigation";
+import { stateUserWithReportInProgress } from "../../store/fakeStoreExamples";
 
 const mockStore = configureMockStore();
 const stateStore = mockStore(stateUserWithReportInProgress);
@@ -118,12 +118,12 @@ const setLocation = (path = "/") => {
   window.location = new URL("https://www.example.com" + path);
 };
 
-describe("Form Navigation component", () => {
+describe("<FormNavigation />", () => {
   beforeEach(() => {
     setLocation();
   });
 
-  it("state: should not render previous when it doesn't exist", () => {
+  test("state: should not render previous when it doesn't exist", () => {
     setLocation(firstLocation);
     render(stateNavComponent); // state only has 1 entry
     const nextButton = screen.queryByTestId("next");
@@ -132,7 +132,7 @@ describe("Form Navigation component", () => {
     expect(previousButton).toBeNull();
   });
 
-  it("admin: should not render previous when it doesn't exist", () => {
+  test("admin: should not render previous when it doesn't exist", () => {
     setLocation(firstLocation);
     render(adminNavComponent); // state only has 1 entry
     const nextButton = screen.queryByTestId("next");
@@ -141,7 +141,7 @@ describe("Form Navigation component", () => {
     expect(previousButton).toBeNull();
   });
 
-  it("should render next or previous when they exist", () => {
+  test("should render next or previous when they exist", () => {
     setLocation(middleLocation); // 2020 section 1
     render(completeNavState); // state has 3 entries and is targetting the second
     const nextButton = screen.queryByTestId("next");

@@ -20,13 +20,13 @@ jest.mock("../../../actions/initial", () => ({
 const CmsHomepageComponent = (
   <Provider store={adminUser}>
     <MemoryRouter path={[]}>
-      <CMSHomepage></CMSHomepage>
+      <CMSHomepage />
     </MemoryRouter>
   </Provider>
 );
 
-describe("test CMSHomepage", () => {
-  it("should render", () => {
+describe("<CMSHomepage />", () => {
+  test("should render", () => {
     render(CmsHomepageComponent);
     expect(screen.queryAllByText("Alabama").length).toBeGreaterThan(0);
     expect(screen.queryAllByText("Alaska").length).toBeGreaterThan(0);
@@ -35,7 +35,7 @@ describe("test CMSHomepage", () => {
     ).toBeGreaterThan(0);
   });
 
-  it("can be filtered by state", async () => {
+  test("can be filtered by state", async () => {
     const user = userEvent.setup();
     render(CmsHomepageComponent);
     expect(screen.queryAllByText("Alabama").length).toBeGreaterThan(0);
@@ -56,7 +56,7 @@ describe("test CMSHomepage", () => {
     expect(screen.queryByText("Alaska")).not.toBeInTheDocument();
   });
 
-  it("can be filtered by year", async () => {
+  test("can be filtered by year", async () => {
     const user = userEvent.setup();
     render(CmsHomepageComponent);
     expect(screen.queryAllByText("2021").length).toBeGreaterThan(0);
@@ -76,7 +76,7 @@ describe("test CMSHomepage", () => {
     expect(screen.queryByText("2020")).not.toBeInTheDocument();
   });
 
-  it("can be filtered by status", async () => {
+  test("can be filtered by status", async () => {
     const user = userEvent.setup();
     render(CmsHomepageComponent);
     expect(screen.queryByText("Not Started")).not.toBeInTheDocument();
@@ -92,7 +92,7 @@ describe("test CMSHomepage", () => {
     expect(screen.queryByText("In Progress")).not.toBeInTheDocument();
   });
 
-  it("can clear filters", async () => {
+  test("can clear filters", async () => {
     const user = userEvent.setup();
     render(CmsHomepageComponent);
     expect(screen.queryByText("Not Started")).not.toBeInTheDocument();

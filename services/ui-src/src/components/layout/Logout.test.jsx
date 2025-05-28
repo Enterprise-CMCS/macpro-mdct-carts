@@ -1,6 +1,6 @@
 import React from "react";
-import Logout from "./Logout";
 import { render, fireEvent } from "@testing-library/react";
+import Logout from "./Logout";
 
 const logoutComponent = <Logout />;
 
@@ -11,8 +11,8 @@ jest.mock("../../hooks/authHooks", () => ({
   })),
 }));
 
-describe("Logout Component", () => {
-  it("triggers logout on click event", () => {
+describe("<Logout />", () => {
+  test("triggers logout on click event", () => {
     const { getByTestId } = render(logoutComponent);
     fireEvent.click(getByTestId("logout"));
     expect(mockLogout).toBeCalled();

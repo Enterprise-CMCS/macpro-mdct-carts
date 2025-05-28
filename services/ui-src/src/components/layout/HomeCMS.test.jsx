@@ -1,10 +1,10 @@
 import React from "react";
-import CMSHome from "./HomeCMS";
+import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
+import CMSHome from "./HomeCMS";
 import { mockInitialState } from "../../util/testing/testUtils";
-import { render, screen } from "@testing-library/react";
 
 const mockStore = configureMockStore();
 const store = mockStore(mockInitialState);
@@ -17,8 +17,8 @@ jest.mock("../utils/InvokeSection", () => () => {
 
 window.scrollTo = jest.fn();
 
-describe("Home CMS Component", () => {
-  it.each([
+describe("<CMSHomepage />", () => {
+  test.each([
     ["/views/sections/pa/2022/3/2", "invoke-section"],
     ["/views/sections/pa/2022/3", "invoke-section"],
     ["/", "cms-home"],
