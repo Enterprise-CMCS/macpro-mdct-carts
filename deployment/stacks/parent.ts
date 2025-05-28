@@ -67,7 +67,7 @@ export class ParentStack extends Stack {
       ...commonProps,
       tables,
       uploadS3BucketName: attachmentsBucketName,
-      fiscalYearTemplateS3BucketName: fiscalYearTemplateBucket,
+      fiscalYearTemplateS3BucketName: fiscalYearTemplateBucket?.bucketName,
     });
 
     const { applicationEndpointUrl, distribution, uiBucket } =
