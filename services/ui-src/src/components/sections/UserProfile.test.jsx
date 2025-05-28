@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import UserProfile from "./UserProfile";
-import { testA11y } from "util/testing/testUtils";
+import { testA11y } from "../../util/testing/testUtils";
 
 const mockStore = configureMockStore();
 const store = mockStore({
