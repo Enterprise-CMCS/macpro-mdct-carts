@@ -1,9 +1,8 @@
 import React from "react";
-
+import { render, screen } from "@testing-library/react";
 import ActionCard from "./ActionCard";
 import techIcon from "../../assets/images/noun-technical-support-1873885-D5DEE4.png";
-import { axe } from "jest-axe";
-import { render, screen } from "@testing-library/react";
+import { testA11y } from "../../util/testing/testUtils";
 
 const defaultProps = { icon: techIcon, iconAlt: "example alt text" };
 const wrapper = (
@@ -16,17 +15,17 @@ const wrapper = (
 );
 
 describe("<ActionCard />", () => {
-  it("should render when passed with image prop", () => {
+  test("should render when passed with image prop", () => {
     render(wrapper);
     expect(screen.getByAltText("example alt text")).toBeVisible();
   });
 
-  it("should not render icon when not passed with image prop", () => {
+  test("should not render icon when not passed with image prop", () => {
     render(<ActionCard />);
     expect(screen.queryByAltText("example alt text")).not.toBeInTheDocument();
   });
 
-  it("should render with children prop", () => {
+  test("should render with children prop", () => {
     render(wrapper);
     expect(
       screen.getByText(
@@ -34,12 +33,6 @@ describe("<ActionCard />", () => {
       )
     ).toBeVisible();
   });
-});
 
-describe("Test <ActionCard /> accessibility", () => {
-  it("Should not have basic accessibility issues", async () => {
-    const { container } = render(wrapper);
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
-  });
+  testA11y(wrapper);
 });

@@ -1,8 +1,8 @@
 import React from "react";
-import PageInfo from "./PageInfo";
+import { screen, render } from "@testing-library/react";
 import configureMockStore from "redux-mock-store";
 import { Provider } from "react-redux";
-import { screen, render } from "@testing-library/react";
+import PageInfo from "./PageInfo";
 
 const mockStore = configureMockStore();
 const store = mockStore({
@@ -25,8 +25,8 @@ const pageInfo = (
   </Provider>
 );
 
-describe("Page Info Component", () => {
-  it("if no status exists, Draft should display", () => {
+describe("<PageInfo />", () => {
+  test("if no status exists, Draft should display", () => {
     render(pageInfo);
     const editInfo = screen.getByTestId("edit-info-display");
     expect(editInfo).toHaveTextContent("draft");

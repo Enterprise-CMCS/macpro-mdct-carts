@@ -1,8 +1,8 @@
 import React from "react";
-import SaveMessage from "./SaveMessage";
 import { render, screen } from "@testing-library/react";
+import SaveMessage from "./SaveMessage";
 
-describe("SaveMessage Component", () => {
+describe("<SaveMessage />", () => {
   const stringProp = { lastSaved: "01/01/2002" };
   const saveMessageStringProp = <SaveMessage {...stringProp} />;
 
@@ -17,12 +17,12 @@ describe("SaveMessage Component", () => {
     expect(screen.getByText(/Last saved/)).toBeVisible();
   });
 
-  it("should accept date as prop", () => {
+  test("should accept date as prop", () => {
     render(saveMessageDateProp);
     expect(screen.getByText(/Saved/)).toBeVisible();
   });
 
-  it("should accept null as prop and return not saved", () => {
+  test("should accept null as prop and return not saved", () => {
     render(saveMessageNullProp);
     expect(screen.getByText("Not yet saved")).toBeVisible();
   });

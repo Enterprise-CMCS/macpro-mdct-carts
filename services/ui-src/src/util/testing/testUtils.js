@@ -2,6 +2,8 @@ import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
+import { render } from "@testing-library/react";
+import { axe } from "jest-axe";
 
 //import checkPropTypes from "check-prop-types";
 
@@ -67,4 +69,28 @@ export const mockInitialState = {
       programType: "user",
     },
   },
+};
+
+// common tests
+
+export const testA11y = (component, beforeCallback, afterCallback) => {
+  describe("Accessibility", () => {
+    beforeEach(() => {
+      if (beforeCallback) {
+        beforeCallback();
+      }
+    });
+
+    afterEach(() => {
+      if (afterCallback) {
+        afterCallback();
+      }
+    });
+
+    test("should not have basic accessibility issues", async () => {
+      const { container } = render(component);
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+  });
 };

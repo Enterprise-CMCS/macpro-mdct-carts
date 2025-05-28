@@ -1,8 +1,8 @@
 import React from "react";
-import CMSLegend from "./CMSLegend";
+import { screen, render } from "@testing-library/react";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-import { screen, render } from "@testing-library/react";
+import CMSLegend from "./CMSLegend";
 
 const mockStore = configureMockStore();
 const store = mockStore({});
@@ -14,8 +14,8 @@ const buildLegend = (legendProps) => {
   );
 };
 
-describe("CMS Legend", () => {
-  it.each([
+describe("<CMSLegend />", () => {
+  test.each([
     ["text", false],
     ["mailing_address", false],
     ["phone_number", false],
@@ -46,7 +46,7 @@ describe("CMS Legend", () => {
     }
   );
 
-  it("Hint should hide when not provided", () => {
+  test("Hint should hide when not provided", () => {
     render(
       buildLegend({
         hideNumber: false,

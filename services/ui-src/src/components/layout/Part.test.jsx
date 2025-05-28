@@ -1,7 +1,7 @@
 import React from "react";
+import { screen, render } from "@testing-library/react";
 import configureMockStore from "redux-mock-store";
 import { Provider } from "react-redux";
-import { screen, render } from "@testing-library/react";
 import Part from "./Part";
 import { AppRoles } from "../../types";
 
@@ -101,8 +101,8 @@ const buildPart = (partId, nestedSubsectionTitle = false) => {
   );
 };
 
-describe("Part Component", () => {
-  it("renders text and any questions provided", () => {
+describe("<Part />", () => {
+  test("renders text and any questions provided", () => {
     render(buildPart("2020-00-a-01"));
     const part = screen.getByTestId("part");
     expect(part).toHaveTextContent("information about your state");
@@ -110,19 +110,19 @@ describe("Part Component", () => {
     expect(question).not.toBeNull();
   });
 
-  it("conditionally renders a title", () => {
+  test("conditionally renders a title", () => {
     render(buildPart("2020-00-a"));
     const title = screen.getByTestId("part-header");
     expect(title).toHaveTextContent("my title");
   });
 
-  it("subtitles rendered if appropriate as a nested subsection", () => {
+  test("subtitles rendered if appropriate as a nested subsection", () => {
     render(buildPart("2020-00-a-01", true));
     const title = screen.getByTestId("part-sub-header");
     expect(title).toHaveTextContent("Welcome!");
   });
 
-  it("When no title is provided, no header is renderd", () => {
+  test("When no title is provided, no header is renderd", () => {
     render(buildPart("2020-00-a-02"));
     const title = screen.queryByTestId("part-header");
     screen.conta;

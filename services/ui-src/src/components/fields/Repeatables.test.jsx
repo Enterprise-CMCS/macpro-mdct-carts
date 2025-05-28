@@ -1,8 +1,8 @@
 import React from "react";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-import Repeatables from "./Repeatables";
 import { screen, render } from "@testing-library/react";
+import Repeatables from "./Repeatables";
 
 const mockStore = configureMockStore();
 const store = mockStore({ lastYearTotals: { 2022: [] } });
@@ -19,8 +19,8 @@ const renderQuestion = async (question) =>
     </Provider>
   );
 
-describe("Repeatables", () => {
-  it("should render with default verbiage", async () => {
+describe("<Repeatables />", () => {
+  test("should render with default verbiage", async () => {
     const question = {
       typeLabel: "TypeLabel",
       questions: [],
@@ -31,7 +31,7 @@ describe("Repeatables", () => {
     screen.getByText("Add another TypeLabel");
   });
 
-  it("should hide the Optional hint when specified", async () => {
+  test("should hide the Optional hint when specified", async () => {
     const question = {
       hideOptionalHint: true,
       questions: [],
@@ -40,7 +40,7 @@ describe("Repeatables", () => {
     expect(screen.queryByText("Optional")).toBeNull();
   });
 
-  it("should use override verbiage when specified", async () => {
+  test("should use override verbiage when specified", async () => {
     const question = {
       addAnotherText: "Y'all got more or what?",
       questions: [],

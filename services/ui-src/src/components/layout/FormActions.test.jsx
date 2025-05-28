@@ -1,14 +1,14 @@
 import React from "react";
-import FormActions from "./FormActions";
+import { MemoryRouter } from "react-router";
+import { act } from "react-dom/test-utils";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import { screen, render, fireEvent } from "@testing-library/react";
+import FormActions from "./FormActions";
 import {
   adminUserWithReportInProgress,
   stateUserWithReportInProgress,
 } from "../../store/fakeStoreExamples";
-import { MemoryRouter } from "react-router";
-import { act } from "react-dom/test-utils";
 
 const firstLocation = "/sections/2021/00";
 const adminFirstLocation = "/views/sections/AL/2021/00";
@@ -31,7 +31,7 @@ const adminFormActions = (
   </Provider>
 );
 
-describe("Fill Form Component", () => {
+describe("<FormActions />", () => {
   afterEach(() => {
     jest.clearAllMocks();
   });

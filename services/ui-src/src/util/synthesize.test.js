@@ -132,7 +132,7 @@ const fallbackChipState = {
   },
 };
 
-describe("value synthesis utility", () => {
+describe("synthesize()", () => {
   describe("handles identity", () => {
     test("with no values", () => {
       // Returns undefined, because there's not a value
@@ -293,7 +293,7 @@ describe("value synthesis utility", () => {
   });
 
   describe("handles percentages", () => {
-    it("with only one value", () => {
+    test("with only one value", () => {
       // No denominator, no percenator
       const out = synthesize(
         {
@@ -309,7 +309,7 @@ describe("value synthesis utility", () => {
       expect(out).toEqual({ contents: "" });
     });
 
-    it("with a zero denominator", () => {
+    test("with a zero denominator", () => {
       // Zero denominator, no percenator
       const out = synthesize(
         {
@@ -328,7 +328,7 @@ describe("value synthesis utility", () => {
       expect(out).toEqual({ contents: "" });
     });
 
-    it("with a valid division, no set precision", () => {
+    test("with a valid division, no set precision", () => {
       // Defaults to two decimal point precision
       const out = synthesize(
         {
@@ -347,7 +347,7 @@ describe("value synthesis utility", () => {
       expect(out).toEqual({ contents: "33.33%" });
     });
 
-    it("with a valid division, 4-decimal precision", () => {
+    test("with a valid division, 4-decimal precision", () => {
       // Uses configured precision
       const out = synthesize(
         {
@@ -367,7 +367,7 @@ describe("value synthesis utility", () => {
       expect(out).toEqual({ contents: "33.3333%" });
     });
 
-    it("with a valid division, no decimals", () => {
+    test("with a valid division, no decimals", () => {
       // Uses configured precision
       const out = synthesize(
         {
@@ -387,7 +387,7 @@ describe("value synthesis utility", () => {
       expect(out).toEqual({ contents: "33%" });
     });
 
-    it("with a valid division, negative precision", () => {
+    test("with a valid division, negative precision", () => {
       // Uses the default for invalid precisions
       const out = synthesize(
         {
@@ -409,7 +409,7 @@ describe("value synthesis utility", () => {
   });
 
   describe("handles RPNs", () => {
-    it("with too few operands", () => {
+    test("with too few operands", () => {
       /*
        * "", because there's an operator with nothing to operate on. This
        * assumes that all of our operators are binary, not unary.
@@ -433,7 +433,7 @@ describe("value synthesis utility", () => {
       expect(out).toEqual({ contents: "" });
     });
 
-    it("with extra operands", () => {
+    test("with extra operands", () => {
       // The extra ones get ignored.
       const out = synthesize(
         {
@@ -456,7 +456,7 @@ describe("value synthesis utility", () => {
       expect(out).toEqual({ contents: 4 });
     });
 
-    it("with any value NaN", () => {
+    test("with any value NaN", () => {
       /*
        * There are too many @ tokens, so the last one resolves to NaN. Now the
        * whole result should be NaN as well.
@@ -482,7 +482,7 @@ describe("value synthesis utility", () => {
       expect(out).toEqual({ contents: NaN });
     });
 
-    it("with addition, subtraction, division, and multiplication", () => {
+    test("with addition, subtraction, division, and multiplication", () => {
       // Does it right!
       const out = synthesize(
         {
@@ -506,7 +506,7 @@ describe("value synthesis utility", () => {
       expect(out).toEqual({ contents: 1.6 });
     });
 
-    it("with constants", () => {
+    test("with constants", () => {
       // Does it right!
       const out = synthesize(
         {
@@ -528,7 +528,7 @@ describe("value synthesis utility", () => {
       expect(out).toEqual({ contents: 12 });
     });
 
-    it("with not-actually a postfix notation because...", () => {
+    test("with not-actually a postfix notation because...", () => {
       /*
        * The operands and operators are parsed from the RPN string separately
        * and then applied in their respective orders. As a result, it doesn't
@@ -559,7 +559,7 @@ describe("value synthesis utility", () => {
   });
 
   describe("handles ACS Data", () => {
-    it("handles a lookup for a ffy and property", () => {
+    test("handles a lookup for a ffy and property", () => {
       const out = synthesize(
         {
           lookupAcs: {
@@ -576,7 +576,7 @@ describe("value synthesis utility", () => {
       expect(out).toEqual({ contents: ["27,000"] });
     });
 
-    it("returns results for properties in other cases", () => {
+    test("returns results for properties in other cases", () => {
       const out = synthesize(
         {
           lookupAcs: {
@@ -593,7 +593,7 @@ describe("value synthesis utility", () => {
       expect(out).toEqual({ contents: ["27,000"] });
     });
 
-    it("returns 'Not Available' when no data found", () => {
+    test("returns 'Not Available' when no data found", () => {
       const out = synthesize(
         {
           lookupAcs: {
@@ -625,7 +625,7 @@ describe("value synthesis utility", () => {
       expect(outCompare).toEqual({ contents: ["Not Available"] });
     });
 
-    it("formats percents on lookup", () => {
+    test("formats percents on lookup", () => {
       const out = synthesize(
         {
           lookupAcs: {
@@ -642,7 +642,7 @@ describe("value synthesis utility", () => {
       expect(out).toEqual({ contents: ["2.1%"] });
     });
 
-    it("compares two ffys", () => {
+    test("compares two ffys", () => {
       const out = synthesize(
         {
           compareACS: {
@@ -660,7 +660,7 @@ describe("value synthesis utility", () => {
       expect(out).toEqual({ contents: ["3.70%"] });
     });
 
-    it("compares two ffys as admin user", () => {
+    test("compares two ffys as admin user", () => {
       Object.defineProperty(window, "location", {
         value: {
           pathname: "/views/sections/AL/2023/02",
@@ -685,7 +685,7 @@ describe("value synthesis utility", () => {
   });
 
   describe("handles CHIPS Enrollment Data", () => {
-    it("performs a lookup for a given year", () => {
+    test("performs a lookup for a given year", () => {
       const out = synthesize(
         {
           lookupChipEnrollments: {
@@ -702,7 +702,7 @@ describe("value synthesis utility", () => {
       );
       expect(out).toEqual({ contents: ["333"] });
     });
-    it("performs a lookup for a past years data if current year does not provide it", () => {
+    test("performs a lookup for a past years data if current year does not provide it", () => {
       const out = synthesize(
         {
           lookupChipEnrollments: {
@@ -719,7 +719,7 @@ describe("value synthesis utility", () => {
       );
       expect(out).toEqual({ contents: ["301"] });
     });
-    it("performs a comparison between two years", () => {
+    test("performs a comparison between two years", () => {
       const out = synthesize(
         {
           compareChipEnrollements: {
@@ -736,7 +736,7 @@ describe("value synthesis utility", () => {
       expect(out).toEqual({ contents: ["10.631%"] });
     });
 
-    it("performs a comparison between two years and is able to fall back to past data", () => {
+    test("performs a comparison between two years and is able to fall back to past data", () => {
       const out = synthesize(
         {
           compareChipEnrollements: {
@@ -752,7 +752,7 @@ describe("value synthesis utility", () => {
       );
       expect(out).toEqual({ contents: ["10.631%"] });
     });
-    it("returns Not Available when data is missing", () => {
+    test("returns Not Available when data is missing", () => {
       const out = synthesize(
         {
           compareChipEnrollements: {

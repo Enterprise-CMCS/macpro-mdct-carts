@@ -31,7 +31,7 @@ const dateRangeComponent = (
   </Provider>
 );
 
-describe("DateRange Component", () => {
+describe("<DateRange />", () => {
   test("renders daterange component", () => {
     render(dateRangeComponent);
     expect(screen.getByText("Start Date")).toBeInTheDocument();

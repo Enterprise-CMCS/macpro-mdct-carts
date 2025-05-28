@@ -1,7 +1,7 @@
 import React from "react";
+import { render } from "@testing-library/react";
 import configureMockStore from "redux-mock-store";
 import { Provider } from "react-redux";
-import { render } from "@testing-library/react";
 import StateHeader from "./StateHeader";
 import {
   adminUserWithReportInProgress,
@@ -12,7 +12,7 @@ const mockStore = configureMockStore();
 const stateUserStore = mockStore(stateUserWithReportInProgress);
 const adminUserStore = mockStore(adminUserWithReportInProgress);
 
-describe("State Header Component", () => {
+describe("<StateHeader />", () => {
   test("Displays state header content for state user", () => {
     const header = (
       <Provider store={stateUserStore}>

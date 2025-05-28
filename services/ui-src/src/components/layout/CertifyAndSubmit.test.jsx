@@ -1,9 +1,9 @@
 import React from "react";
+import { screen, render } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import configureMockStore from "redux-mock-store";
 import CertifyAndSubmit from "./CertifyAndSubmit";
-import { screen, render } from "@testing-library/react";
 import { AppRoles } from "../../types";
 
 jest.mock("../../actions/initial", () => ({
@@ -72,13 +72,13 @@ const submitFinished = (
   </Provider>
 );
 
-describe("CertifyAndSubmit Component", () => {
-  it("should display submit button", () => {
+describe("<CertifyAndSubmit />", () => {
+  test("should display submit button", () => {
     render(submit);
     const thankYouElement = screen.getByTestId("certifySubmit");
     expect(thankYouElement).toHaveTextContent("Certify and Submit");
   });
-  it("should display thanks after submit", () => {
+  test("should display thanks after submit", () => {
     render(submitFinished);
     const thankYouElement = screen.getByTestId("certifyThankYou");
     expect(thankYouElement).toHaveTextContent("Thank you");

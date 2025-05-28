@@ -1,13 +1,13 @@
 import React from "react";
-import { axe } from "jest-axe";
 import { render, screen } from "@testing-library/react";
 
 import Footer from "./Footer";
+import { testA11y } from "../../util/testing/testUtils";
 
 const footer = <Footer />;
 
 describe("<Footer />", () => {
-  it("includes federal website disclaimer", () => {
+  test("includes federal website disclaimer", () => {
     render(footer);
     // disclaimer
     expect(
@@ -34,12 +34,6 @@ describe("<Footer />", () => {
       screen.getByText("7500 Security Boulevard Baltimore, MD 21244")
     ).toBeVisible();
   });
-});
 
-describe("Test Footer accessibility", () => {
-  it("Should not have basic accessibility issues", async () => {
-    const { container } = render(footer);
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
-  });
+  testA11y(footer);
 });

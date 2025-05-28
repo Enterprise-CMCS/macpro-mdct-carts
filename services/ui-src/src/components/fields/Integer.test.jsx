@@ -52,7 +52,7 @@ const buildInteger = (intProps) => {
 };
 
 describe("<Integer />", () => {
-  it("should render correctly", () => {
+  test("should render correctly", () => {
     const props = {
       question: { id: "2023-00-a-01-01", label: "2023 question 1", answer: 1 },
     };
@@ -62,7 +62,7 @@ describe("<Integer />", () => {
     ).toBeVisible();
   });
 
-  it("should render Previous Year data correctly", () => {
+  test("should render Previous Year data correctly", () => {
     const props = {
       question: {
         id: "2022-00-a-01-01",
@@ -76,7 +76,7 @@ describe("<Integer />", () => {
     ).toBeVisible();
   });
 
-  it("should render an Integer", () => {
+  test("should render an Integer", () => {
     const props = {
       question: {
         id: "2023-00-a-01-01",
@@ -92,7 +92,7 @@ describe("<Integer />", () => {
     expect(screen.getByDisplayValue("0")).toBeInTheDocument();
   });
 
-  it("should update new numbers", () => {
+  test("should update new numbers", () => {
     const props = {
       question: {
         id: "2023-00-a-01-01",
@@ -108,7 +108,7 @@ describe("<Integer />", () => {
     expect(screen.getByDisplayValue("234")).toBeInTheDocument();
   });
 
-  it("should filter out non-numbers", () => {
+  test("should filter out non-numbers", () => {
     const props = {
       question: {
         id: "2023-00-a-01-01",
@@ -127,7 +127,7 @@ describe("<Integer />", () => {
     ).toBeInTheDocument();
   });
 
-  it("should show <11 if passed >0 and <=10 with printView and lessThanEleven", () => {
+  test("should show <11 if passed >0 and <=10 with printView and lessThanEleven", () => {
     const props = {
       question: {
         id: "2023-00-a-01-01",
@@ -143,7 +143,7 @@ describe("<Integer />", () => {
     expect(screen.queryByDisplayValue("5")).not.toBeInTheDocument();
   });
 
-  it("should show original answer if passed >=11 with printView and lessThanEleven mask", () => {
+  test("should show original answer if passed >=11 with printView and lessThanEleven mask", () => {
     const props = {
       question: {
         id: "2023-00-a-01-01",
@@ -158,7 +158,7 @@ describe("<Integer />", () => {
     expect(screen.getByDisplayValue("12")).toBeInTheDocument();
   });
 
-  it("should show original answer if passed 0 with printView and lessThanEleven mask", () => {
+  test("should show original answer if passed 0 with printView and lessThanEleven mask", () => {
     const props = {
       question: {
         id: "2023-00-a-01-01",
@@ -173,7 +173,7 @@ describe("<Integer />", () => {
     expect(screen.getByDisplayValue("0")).toBeInTheDocument();
   });
 
-  it("should render previous year value for appropriate 3c part 5 or 6 questions", () => {
+  test("should render previous year value for appropriate 3c part 5 or 6 questions", () => {
     const props = {
       question: {
         id: "2023-03-c-05-03-a",
