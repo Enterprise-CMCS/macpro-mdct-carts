@@ -1,6 +1,5 @@
 import React from "react";
 import { Provider } from "react-redux";
-import { shallow } from "enzyme";
 import { MemoryRouter } from "react-router-dom";
 import configureMockStore from "redux-mock-store";
 import CertifyAndSubmit from "./CertifyAndSubmit";
@@ -74,10 +73,6 @@ const submitFinished = (
 );
 
 describe("CertifyAndSubmit Component", () => {
-  it("renders without crashing", () => {
-    expect(shallow(submitFinished).exists()).toBe(true);
-  });
-
   it("should display submit button", () => {
     render(submit);
     const thankYouElement = screen.getByTestId("certifySubmit");

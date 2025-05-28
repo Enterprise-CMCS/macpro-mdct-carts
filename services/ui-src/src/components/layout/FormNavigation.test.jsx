@@ -1,5 +1,4 @@
 import React from "react";
-import { shallow } from "enzyme";
 import FormNavigation from "./FormNavigation";
 import { stateUserWithReportInProgress } from "../../store/fakeStoreExamples";
 import { MemoryRouter } from "react-router-dom";
@@ -124,14 +123,18 @@ describe("Form Navigation component", () => {
     setLocation();
   });
 
-  it("should render the Form Nav Component correctly", () => {
-    expect(shallow(stateNavComponent).exists()).toBe(true);
-    expect(shallow(adminNavComponent).exists()).toBe(true);
-  });
-
-  it("should not render previous when it doesn't exist", () => {
+  it("state: should not render previous when it doesn't exist", () => {
     setLocation(firstLocation);
     render(stateNavComponent); // state only has 1 entry
+    const nextButton = screen.queryByTestId("next");
+    const previousButton = screen.queryByTestId("previous");
+    expect(nextButton).not.toBeNull();
+    expect(previousButton).toBeNull();
+  });
+
+  it("admin: should not render previous when it doesn't exist", () => {
+    setLocation(firstLocation);
+    render(adminNavComponent); // state only has 1 entry
     const nextButton = screen.queryByTestId("next");
     const previousButton = screen.queryByTestId("previous");
     expect(nextButton).not.toBeNull();

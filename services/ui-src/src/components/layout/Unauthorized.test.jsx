@@ -1,11 +1,12 @@
 import React from "react";
-import { shallow } from "enzyme";
 import Unauthorized from "./Unauthorized";
+import { render, screen } from "@testing-library/react";
 
 const unauthorized = <Unauthorized />;
 
 describe("Unauthorized Component", () => {
   it("should render correctly", () => {
-    expect(shallow(unauthorized).exists()).toBe(true);
+    render(unauthorized);
+    expect(screen.getByRole("heading", { name: "Unauthorized" })).toBeVisible();
   });
 });

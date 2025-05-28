@@ -1,5 +1,4 @@
 import React from "react";
-import { shallow } from "enzyme";
 import configureMockStore from "redux-mock-store";
 import { Provider } from "react-redux";
 import { screen, render } from "@testing-library/react";
@@ -103,10 +102,6 @@ const buildPart = (partId, nestedSubsectionTitle = false) => {
 };
 
 describe("Part Component", () => {
-  it("should render correctly", () => {
-    expect(shallow(buildPart("2020-00")).exists()).toBe(true);
-  });
-
   it("renders text and any questions provided", () => {
     render(buildPart("2020-00-a-01"));
     const part = screen.getByTestId("part");

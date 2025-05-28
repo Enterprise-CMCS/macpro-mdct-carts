@@ -1,11 +1,9 @@
 import React from "react";
-import { shallow } from "enzyme";
 import CMSLegend from "./CMSLegend";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import { screen, render } from "@testing-library/react";
 
-const legend = <CMSLegend questionType="radio" />;
 const mockStore = configureMockStore();
 const store = mockStore({});
 const buildLegend = (legendProps) => {
@@ -15,11 +13,8 @@ const buildLegend = (legendProps) => {
     </Provider>
   );
 };
-describe("CMS Legend", () => {
-  it("should render correctly", () => {
-    expect(shallow(legend).exists()).toBe(true);
-  });
 
+describe("CMS Legend", () => {
   it.each([
     ["text", false],
     ["mailing_address", false],

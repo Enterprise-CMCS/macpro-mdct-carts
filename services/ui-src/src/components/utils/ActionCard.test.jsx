@@ -2,8 +2,8 @@ import React from "react";
 
 import ActionCard from "./ActionCard";
 import techIcon from "../../assets/images/noun-technical-support-1873885-D5DEE4.png";
-import { shallow } from "enzyme";
 import { axe } from "jest-axe";
+import { render, screen } from "@testing-library/react";
 
 const defaultProps = { icon: techIcon, iconAlt: "example alt text" };
 const wrapper = (
@@ -16,33 +16,30 @@ const wrapper = (
 );
 
 describe("<ActionCard />", () => {
-  it("should render correctly", () => {
-    expect(shallow(wrapper).exists()).toBe(true);
-  });
-
   it("should render when passed with image prop", () => {
-    const card = shallow(wrapper);
-    expect(card.find("img").prop("src")).toEqual(techIcon);
-    expect(card.find("img").prop("alt")).toEqual("example alt text");
+    render(wrapper);
+    expect(screen.getByAltText("example alt text")).toBeVisible();
   });
 
   it("should not render icon when not passed with image prop", () => {
-    const card = shallow(wrapper);
-    expect(card.contains(<img />)).toEqual(false);
+    render(<ActionCard />);
+    expect(screen.queryByAltText("example alt text")).not.toBeInTheDocument();
   });
 
   it("should render with children prop", () => {
-    const card = shallow(wrapper);
-    expect(card.find("p").text()).toBe(
-      "Please Favorite, like, subscribe, ring the bell, drop a follow, thumbs up, rate, star, bookmark, and save this youtube video please."
-    );
+    render(wrapper);
+    expect(
+      screen.getByText(
+        "Please Favorite, like, subscribe, ring the bell, drop a follow, thumbs up, rate, star, bookmark, and save this youtube video please."
+      )
+    ).toBeVisible();
   });
 });
 
 describe("Test <ActionCard /> accessibility", () => {
   it("Should not have basic accessibility issues", async () => {
-    const card = shallow(wrapper);
-    const results = await axe(card.html());
+    const { container } = render(wrapper);
+    const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
 });

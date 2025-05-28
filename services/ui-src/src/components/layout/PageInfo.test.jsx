@@ -1,5 +1,4 @@
 import React from "react";
-import { shallow } from "enzyme";
 import PageInfo from "./PageInfo";
 import configureMockStore from "redux-mock-store";
 import { Provider } from "react-redux";
@@ -27,10 +26,6 @@ const pageInfo = (
 );
 
 describe("Page Info Component", () => {
-  it("should render correctly", () => {
-    expect(shallow(pageInfo).exists()).toBe(true);
-  });
-
   it("if no status exists, Draft should display", () => {
     render(pageInfo);
     const editInfo = screen.getByTestId("edit-info-display");

@@ -1,7 +1,7 @@
 import React from "react";
-import { shallow } from "enzyme";
 import FillForm from "./FillForm";
-import { render, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 const mockEvent = jest.fn();
 const form = (
@@ -9,13 +9,10 @@ const form = (
 );
 
 describe("Fill Form Component", () => {
-  it("should render correctly", () => {
-    expect(shallow(form).exists()).toBe(true);
-  });
-
-  it("triggers the provided click behavior onClick", () => {
-    const { getByTestId } = render(form);
-    fireEvent.click(getByTestId("form-action"));
+  it("triggers the provided click behavior onClick", async () => {
+    render(form);
+    const button = screen.getByTestId("form-action");
+    await userEvent.click(button);
     expect(mockEvent).toBeCalled();
   });
 });

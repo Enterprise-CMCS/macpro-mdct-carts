@@ -1,21 +1,25 @@
 import React from "react";
 
-import { shallow } from "enzyme";
 import { axe } from "jest-axe";
 import GetHelp from "./GetHelp";
+import { render, screen } from "@testing-library/react";
 
 const wrapper = <GetHelp />;
 
 describe("<GetHelp />", () => {
-  it("should render correctly", () => {
-    expect(shallow(wrapper).exists()).toBe(true);
+  it("should render correctly and show cms email", () => {
+    render(wrapper);
+    expect(
+      screen.getByRole("heading", { name: "How can we help you?" })
+    ).toBeVisible();
+    expect(screen.getByText("mdct_help@cms.hhs.gov")).toBeVisible();
   });
 });
 
 describe("Test <GetHelp /> accessibility", () => {
   it("Should not have basic accessibility issues", async () => {
-    const card = shallow(wrapper);
-    const results = await axe(card.html());
+    const { container } = render(wrapper);
+    const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
 });

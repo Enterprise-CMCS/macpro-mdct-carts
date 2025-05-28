@@ -1,5 +1,4 @@
 import React from "react";
-import { shallow } from "enzyme";
 import { act, render, fireEvent } from "@testing-library/react";
 import { LocalLogins } from "./LocalLogins";
 
@@ -17,10 +16,6 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe("LocalLogin component", () => {
-  it("should render successfully", () => {
-    expect(shallow(localLogins).exists()).toBe(true);
-  });
-
   it("should attempt to login and nav the user on click", async () => {
     const { getByTestId } = render(localLogins);
     const generateButton = getByTestId("login-button");

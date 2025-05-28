@@ -3,8 +3,7 @@ import Autosave from "./Autosave";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import configureMockStore from "redux-mock-store";
-import { mount, shallow } from "enzyme";
-import SaveMessage from "./SaveMessage";
+import { render, screen } from "@testing-library/react";
 
 const mockStore = configureMockStore();
 const lastSaved = "01/01/2002";
@@ -37,21 +36,12 @@ const autoSaveSaving = (
 );
 
 describe("AutoSave Component", () => {
-  it("should render correctly", () => {
-    expect(shallow(autoSave).exists()).toBe(true);
-  });
   it("should display saving when waiting", () => {
-    const wrapper = mount(autoSaveSaving);
-    expect(wrapper.text().includes("Saving")).toBe(true);
-    expect(
-      wrapper.containsMatchingElement(<SaveMessage lastSaved={lastSaved} />)
-    ).toBe(false);
+    render(autoSaveSaving);
+    expect(screen.getByText("Saving...")).toBeVisible();
   });
   it("should display save message when saved", () => {
-    const wrapper = mount(autoSave);
-    expect(
-      wrapper.containsMatchingElement(<SaveMessage lastSaved={lastSaved} />)
-    ).toBe(true);
-    expect(wrapper.text().includes("Saving")).toBe(false);
+    render(autoSave);
+    expect(screen.getByText(/Last saved/)).toBeVisible();
   });
 });

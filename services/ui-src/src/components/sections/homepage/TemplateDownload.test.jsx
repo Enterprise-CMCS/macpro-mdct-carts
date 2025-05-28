@@ -1,7 +1,6 @@
 import React from "react";
 import TemplateDownload from "./TemplateDownload";
 
-import { shallow } from "enzyme";
 import { axe } from "jest-axe";
 import { render, screen } from "@testing-library/react";
 import userEventLib from "@testing-library/user-event";
@@ -12,10 +11,6 @@ const defaultProps = { getTemplate: myMock };
 const wrapper = <TemplateDownload {...defaultProps} />;
 
 describe("<TemplateDownload />", () => {
-  it("should render correctly", () => {
-    expect(shallow(wrapper).exists()).toBe(true);
-  });
-
   it("should have download template link", async () => {
     render(wrapper);
 

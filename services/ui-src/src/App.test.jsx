@@ -1,18 +1,22 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { render } from "@testing-library/react";
 import App from "./App";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-import { mockInitialState } from "./util/testing/testUtils";
+import {
+  mockInitialState,
+  RouterWrappedComponent,
+} from "./util/testing/testUtils";
 
 const mockStore = configureMockStore();
 const store = mockStore(mockInitialState);
 it("renders without crashing", () => {
-  expect(
-    shallow(
+  const { container } = render(
+    <RouterWrappedComponent>
       <Provider store={store}>
         <App />
       </Provider>
-    ).exists()
-  ).toBe(true);
+    </RouterWrappedComponent>
+  );
+  expect(container.querySelector("#app-wrapper")).toBeVisible();
 });
