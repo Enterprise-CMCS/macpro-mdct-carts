@@ -265,7 +265,6 @@ async function checkRetainedResources(
     [`ui-${stage}`]: [
       "CloudFrontDistribution",
       "LoggingBucket",
-      "LoggingBucketPolicy",
       "WaflogsUploadBucket",
       "WaflogsUploadBucketPolicy",
     ],

@@ -19,8 +19,6 @@ export AWS_DEFAULT_REGION=us-east-1
 
 ```
 
-delete the bucket policy from ui-<stage>-cloudfront-logs-<account>
-
 ## From `jon-cdk` branch
 
 Command-Shift-H (Replace in Files) <YOUR_BRANCH_NAME>
@@ -32,6 +30,9 @@ yarn install
 IMPORT_VARIANT=empty ./run deploy --stage <YOUR_BRANCH_NAME>
 IMPORT_VARIANT=imports_included PROJECT=carts yarn cdk import --context stage=<YOUR_BRANCH_NAME> --force
 IMPORT_VARIANT=imports_included ./run deploy --stage <YOUR_BRANCH_NAME>
+
+delete the bucket policy from ui-<stage>-cloudfront-logs-<account>
+
 ./run deploy --stage <YOUR_BRANCH_NAME>
 ```
 
