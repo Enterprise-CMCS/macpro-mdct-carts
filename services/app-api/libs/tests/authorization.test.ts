@@ -17,26 +17,11 @@ jest.mock("jwt-decode", () => ({
   },
 }));
 
-let verifyMock = jest.fn();
-verifyMock.mockImplementation(() => {
-  return true;
-});
-jest.mock("aws-jwt-verify", () => ({
-  __esModule: true,
-  CognitoJwtVerifier: {
-    create: jest.fn().mockImplementation(() => ({
-      verify: verifyMock,
-    })),
-  },
-}));
-
 describe("Authorization Lib", () => {
   describe("isAuthorized State User Tests", () => {
     const event = { ...testEvent };
 
     beforeEach(() => {
-      process.env["COGNITO_USER_POOL_ID"] = "fakeId";
-      process.env["COGNITO_USER_POOL_CLIENT_ID"] = "fakeClientId";
       process.env.STAGE = "test";
       event.httpMethod = "GET";
       event.headers = { "x-api-key": "test" };
@@ -47,23 +32,18 @@ describe("Authorization Lib", () => {
       });
     });
 
-    test("authorization should fail from missing jwt key", async () => {
-      event.headers = {};
-      expect(await isAuthorized(event)).toBeFalsy();
+    test("authorization should pass", () => {
+      expect(isAuthorized(event)).toBeTruthy();
     });
 
-    test("authorization should pass", async () => {
-      expect(await isAuthorized(event)).toBeTruthy();
-    });
-
-    test("authorization should fail from mismatched states", async () => {
+    test("authorization should fail from mismatched states", () => {
       event.pathParameters = { state: "FL" };
-      expect(await isAuthorized(event)).toBeFalsy();
+      expect(isAuthorized(event)).toBeFalsy();
     });
 
-    test("authorization should pass for GET, but skip if check from missing requestState", async () => {
+    test("authorization should pass for GET, but skip if check from missing requestState", () => {
       event.pathParameters = null;
-      expect(await isAuthorized(event)).toBeTruthy();
+      expect(isAuthorized(event)).toBeTruthy();
     });
   });
 
@@ -82,20 +62,13 @@ describe("Authorization Lib", () => {
       });
     });
 
-    test("authorization should pass", async () => {
-      expect(await isAuthorized(event)).toBeTruthy();
+    test("authorization should pass", () => {
+      expect(isAuthorized(event)).toBeTruthy();
     });
 
-    test("authorization should succeed on non-GET methods", async () => {
+    test("authorization should succeed on non-GET methods", () => {
       event.httpMethod = "POST";
-      expect(await isAuthorized(event)).toBeTruthy();
-    });
-
-    test("authorization should catch given an invalid jwt", async () => {
-      verifyMock.mockImplementationOnce(() => {
-        throw Error("Bad token, bad!");
-      });
-      expect(await isAuthorized(event)).toBeFalsy();
+      expect(isAuthorized(event)).toBeTruthy();
     });
   });
 

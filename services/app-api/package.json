@@ -29,7 +29,6 @@
     "@aws-sdk/client-ssm": "^3.758.0",
     "@aws-sdk/lib-dynamodb": "^3.758.0",
     "@aws-sdk/s3-request-presigner": "^3.758.0",
-    "aws-jwt-verify": "^4.0.1",
     "dompurify": "^3.2.4",
     "jsdom": "^25.0.1",
     "jsonpath-plus": "^10.3.0",

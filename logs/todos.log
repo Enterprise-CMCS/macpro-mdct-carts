@@ -2,6 +2,9 @@
 
 ./README.md:142:TODO: writeup the CI/CD flow for the application
 ./README.md:204:TODO: Get an updated diagram
+./deployment/stacks/bigmac-streams.ts:70: TODO: these permissions are needed for one or both of these functions:
+./deployment/stacks/data.ts:111: TODO: previous had dynamodb:BatchWriteItem
+./deployment/stacks/uploads.ts:65: TODO: one or some of the lambdas need s3:GetObject permissions to this bucket
 ./services/ui-auth/handlers/createUsers.js:1: TODO logging solution for backend services
 ./services/ui-src/serverless.yml:57: TODO: [MDCT-300] handle react hooks warnings then remove CI=false
 ./services/ui-src/src/components/fields/NoninteractiveTable.jsx:49: TODO Remove this custom logic when rewriting backend
