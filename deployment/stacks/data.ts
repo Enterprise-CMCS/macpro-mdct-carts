@@ -171,11 +171,11 @@ export function createDataComponents(props: CreateDataComponentsProps) {
     }
   );
 
+  seedDataInvoke.node.addDependency(seedDataFunction);
+
   new CfnOutput(scope, "SeedDataFunctionName", {
     value: seedDataFunction.functionName,
   });
-
-  seedDataInvoke.node.addDependency(seedDataFunction);
 
   return { tables };
 }
