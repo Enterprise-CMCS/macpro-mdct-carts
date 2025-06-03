@@ -119,10 +119,10 @@ describe("<Range />", () => {
 
     const startInput = screen.getByLabelText("start label");
     await userEvent.type(startInput, "5,678");
-
+    await userEvent.tab();
     const endInput = screen.getByLabelText("end label");
     await userEvent.type(endInput, "1,234");
-    endInput.dispatchEvent(new Event("blur"));
+    await userEvent.tab();
 
     expect(
       screen.getByText("Start value must be less than end value")
@@ -137,7 +137,7 @@ describe("<Range />", () => {
 
     const endInput = screen.getByLabelText("end label");
     await userEvent.type(endInput, "1,234");
-    endInput.dispatchEvent(new Event("blur"));
+    await userEvent.tab();
 
     expect(
       screen.queryByText("Start value must be less than end value")
