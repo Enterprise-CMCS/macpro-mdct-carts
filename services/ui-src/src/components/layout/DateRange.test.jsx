@@ -60,11 +60,13 @@ describe("<DateRange />", () => {
 
     const endYearInput = screen.getByLabelText("range end year");
     await userEvent.type(endYearInput, "2023");
-    endYearInput.dispatchEvent(new Event("blur"));
-
-    // eslint-disable-next-line multiline-comment-style
-    // The fact that the error text is not specific to emptiness is probably a bug
-    // expect(screen.queryByText("Month field cannot be empty")).toBeInTheDocument();
+    await userEvent.tab();
+    /*
+     * The fact that the error text is not specific to emptiness is probably a bug
+     * expect(
+     *   screen.queryByText("Month field cannot be empty")
+     * ).toBeInTheDocument();
+     */
     expect(screen.queryByText("Please enter a number")).toBeInTheDocument();
   });
 
@@ -73,11 +75,11 @@ describe("<DateRange />", () => {
 
     const endMonthInput = screen.getByLabelText("range end month");
     await userEvent.type(endMonthInput, "06");
-    endMonthInput.dispatchEvent(new Event("blur"));
-
-    // eslint-disable-next-line multiline-comment-style
-    // The fact that the error text is not specific to emptiness is probably a bug
-    // expect(screen.queryByText("Year field cannot be empty")).toBeInTheDocument();
+    await userEvent.tab();
+    /*
+     * The fact that the error text is not specific to emptiness is probably a bug
+     * expect(screen.queryByText("Year field cannot be empty")).toBeInTheDocument();
+     */
     expect(screen.queryByText("Please enter a number")).toBeInTheDocument();
   });
 
@@ -86,8 +88,7 @@ describe("<DateRange />", () => {
 
     const startYearInput = screen.getByLabelText("range start year");
     await userEvent.type(startYearInput, "2023");
-    startYearInput.dispatchEvent(new Event("blur"));
-
+    await userEvent.tab();
     // eslint-disable-next-line multiline-comment-style
     // The fact that the error text is not specific to emptiness is probably a bug
     // expect(screen.queryByText("Month field cannot be empty")).toBeInTheDocument();
@@ -102,7 +103,7 @@ describe("<DateRange />", () => {
 
     const startYearInput = screen.getByLabelText("range start year");
     await userEvent.type(startYearInput, "2023");
-    startYearInput.dispatchEvent(new Event("blur"));
+    await userEvent.tab();
 
     expect(
       screen.queryByText("Month length must not exceed 2")
@@ -117,7 +118,7 @@ describe("<DateRange />", () => {
 
     const startYearInput = screen.getByLabelText("range start year");
     await userEvent.type(startYearInput, "2023");
-    startYearInput.dispatchEvent(new Event("blur"));
+    await userEvent.tab();
 
     expect(screen.queryByText("Please enter a number")).toBeInTheDocument();
   });
@@ -130,7 +131,7 @@ describe("<DateRange />", () => {
 
     const startYearInput = screen.getByLabelText("range start year");
     await userEvent.type(startYearInput, "2023");
-    startYearInput.dispatchEvent(new Event("blur"));
+    await userEvent.tab();
 
     expect(
       screen.queryByText("Please enter a valid month number")
@@ -142,13 +143,12 @@ describe("<DateRange />", () => {
 
     const startMonthInput = screen.getByLabelText("range start month");
     await userEvent.type(startMonthInput, "11");
+    await userEvent.tab();
 
-    const startYearInput = screen.getByLabelText("range start year");
-    startYearInput.dispatchEvent(new Event("blur"));
-
-    // eslint-disable-next-line multiline-comment-style
-    // The fact that the error text is not specific to emptiness is probably a bug
-    // expect(screen.queryByText("Year field cannot be empty")).toBeInTheDocument();
+    /*
+     * The fact that the error text is not specific to emptiness is probably a bug
+     * expect(screen.queryByText("Year field cannot be empty")).toBeInTheDocument();
+     */
     expect(screen.queryByText("Please enter a number")).toBeInTheDocument();
   });
 
@@ -160,7 +160,7 @@ describe("<DateRange />", () => {
 
     const startYearInput = screen.getByLabelText("range start year");
     await userEvent.type(startYearInput, "02023");
-    startYearInput.dispatchEvent(new Event("blur"));
+    await userEvent.tab();
 
     expect(
       screen.queryByText("Year length must not exceed 4")
@@ -175,7 +175,7 @@ describe("<DateRange />", () => {
 
     const startYearInput = screen.getByLabelText("range start year");
     await userEvent.type(startYearInput, "twenty-twenty-three");
-    startYearInput.dispatchEvent(new Event("blur"));
+    await userEvent.tab();
 
     expect(screen.queryByText("Please enter a number")).toBeInTheDocument();
   });
@@ -188,7 +188,7 @@ describe("<DateRange />", () => {
 
     const startYearInput = screen.getByLabelText("range start year");
     await userEvent.type(startYearInput, "1619");
-    startYearInput.dispatchEvent(new Event("blur"));
+    await userEvent.tab();
 
     expect(screen.queryByText("Please enter a valid Year")).toBeInTheDocument();
   });
@@ -208,7 +208,7 @@ describe("<DateRange />", () => {
     const endYearInput = screen.getByLabelText("range end year");
     await userEvent.type(endYearInput, "2021");
 
-    endYearInput.dispatchEvent(new Event("blur"));
+    await userEvent.tab();
 
     /*
      * Have to wait because jest trips over itself. Would use waitFor, but thats in the next
@@ -236,7 +236,7 @@ describe("<DateRange />", () => {
     const endYearInput = screen.getByLabelText("range end year");
     await userEvent.type(endYearInput, "2023");
 
-    endYearInput.dispatchEvent(new Event("blur"));
+    await userEvent.tab();
 
     /*
      * Have to wait because jest trips over itself. Would use waitFor, but thats in the next
