@@ -89,9 +89,10 @@ describe("<DateRange />", () => {
     const startYearInput = screen.getByLabelText("range start year");
     await userEvent.type(startYearInput, "2023");
     await userEvent.tab();
-    // eslint-disable-next-line multiline-comment-style
-    // The fact that the error text is not specific to emptiness is probably a bug
-    // expect(screen.queryByText("Month field cannot be empty")).toBeInTheDocument();
+    /*
+     * The fact that the error text is not specific to emptiness is probably a bug
+     * expect(screen.queryByText("Month field cannot be empty")).toBeInTheDocument();
+     */
     expect(screen.queryByText("Please enter a number")).toBeInTheDocument();
   });
 
