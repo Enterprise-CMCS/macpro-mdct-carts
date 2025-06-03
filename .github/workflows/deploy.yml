@@ -76,6 +76,7 @@ jobs:
           ./run deploy --stage $branch_name
       - id: endpoint
         run: |
+          ls -l
           APPLICATION_ENDPOINT=$(./scripts/output.sh carts-$branch_name CloudFrontUrl)
           echo "application_endpoint=$APPLICATION_ENDPOINT" >> $GITHUB_OUTPUT
           echo "## Application Endpoint" >> $GITHUB_STEP_SUMMARY
