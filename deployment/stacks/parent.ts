@@ -100,13 +100,15 @@ export class ParentStack extends Stack {
       s3AttachmentsBucketName: attachmentsBucket!.bucketName,
     });
 
-    createBigmacStreamsComponents({
-      ...commonProps,
-      stageEnrollmentCountsTableName: "main-stg-enrollment-counts",
-      tables: tables.filter((table) =>
-        ["StateStatus", "Section"].includes(table.id)
-      ),
-    });
+    if (!isDev) {
+      createBigmacStreamsComponents({
+        ...commonProps,
+        stageEnrollmentCountsTableName: "main-stg-enrollment-counts",
+        tables: tables.filter((table) =>
+          ["StateStatus", "Section"].includes(table.id)
+        ),
+      });
+    }
 
     new CfnOutput(this, "CloudFrontUrl", {
       value: applicationEndpointUrl,
