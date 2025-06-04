@@ -5,8 +5,6 @@ import thunk from "redux-thunk";
 import { render } from "@testing-library/react";
 import { axe } from "jest-axe";
 
-//import checkPropTypes from "check-prop-types";
-
 import { reducer } from "../../store/storeIndex";
 
 export const findByTestAttribute = (wrapper, val) => {
