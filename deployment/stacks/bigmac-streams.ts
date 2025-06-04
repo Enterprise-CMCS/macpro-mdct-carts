@@ -67,35 +67,37 @@ export function createBigmacStreamsComponents(
     stackName: `${service}-${stage}`,
   };
 
-  // TODO: these permissions are needed for one or both of these functions:
-  //   - Effect: Allow
-  //   Action:
-  //     - dynamodb:DescribeTable
-  //     - dynamodb:UpdateItem
-  //   Resource: "*"
-  // - Effect: Allow
-  //   Action:
-  //     - dynamodb:DescribeStream
-  //     - dynamodb:GetRecords
-  //     - dynamodb:GetShardIterator
-  //     - dynamodb:ListShards
-  //     - dynamodb:ListStreams
-  //   Resource:
-  //     - >-
-  //       arn:aws:dynamodb:us-east-1:519095364708:table/main-state-status/stream/2022-05-20T16:01:34.237
-  //     - >-
-  //       arn:aws:dynamodb:us-east-1:519095364708:table/main-section/stream/2022-05-20T16:01:33.665
-  // - Effect: Allow
-  //   Action:
-  //     - dynamodb:GetRecords
-  //     - dynamodb:GetShardIterator
-  //     - dynamodb:DescribeStream
-  //     - dynamodb:ListStreams
-  //   Resource:
-  //     - >-
-  //       arn:aws:dynamodb:us-east-1:519095364708:table/main-state-status/stream/2022-05-20T16:01:34.237
-  //     - >-
-  //       arn:aws:dynamodb:us-east-1:519095364708:table/main-section/stream/2022-05-20T16:01:33.665
+  /*
+   * TODO: these permissions are needed for one or both of these functions:
+   *   - Effect: Allow
+   *   Action:
+   *     - dynamodb:DescribeTable
+   *     - dynamodb:UpdateItem
+   *   Resource: "*"
+   * - Effect: Allow
+   *   Action:
+   *     - dynamodb:DescribeStream
+   *     - dynamodb:GetRecords
+   *     - dynamodb:GetShardIterator
+   *     - dynamodb:ListShards
+   *     - dynamodb:ListStreams
+   *   Resource:
+   *     - >-
+   *       arn:aws:dynamodb:us-east-1:519095364708:table/main-state-status/stream/2022-05-20T16:01:34.237
+   *     - >-
+   *       arn:aws:dynamodb:us-east-1:519095364708:table/main-section/stream/2022-05-20T16:01:33.665
+   * - Effect: Allow
+   *   Action:
+   *     - dynamodb:GetRecords
+   *     - dynamodb:GetShardIterator
+   *     - dynamodb:DescribeStream
+   *     - dynamodb:ListStreams
+   *   Resource:
+   *     - >-
+   *       arn:aws:dynamodb:us-east-1:519095364708:table/main-state-status/stream/2022-05-20T16:01:34.237
+   *     - >-
+   *       arn:aws:dynamodb:us-east-1:519095364708:table/main-section/stream/2022-05-20T16:01:33.665
+   */
 
   new LambdaKafkaEventSource(scope, "sinkEnrollmentCounts", {
     entry: "services/carts-bigmac-streams/handlers/sinkEnrollmentCounts.js",
