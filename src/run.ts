@@ -101,22 +101,8 @@ async function run_fe_locally(runner: LabeledProcessRunner) {
     "AttachmentsBucketName"
   );
 
-  await writeLocalUiEnvFile(apiUrl!,s3AttachmentsBucketName!);
+  await writeLocalUiEnvFile(apiUrl!, s3AttachmentsBucketName!);
   runner.run_command_and_output("ui", ["npm", "start"], "services/ui-src");
-}
-
-async function deploy_kafka_service(
-  runner: LabeledProcessRunner,
-  stage: string
-) {
-  const kafkaservice = "carts-bigmac-streams";
-  await install_deps(runner, kafkaservice);
-  const kafkaDeployCmd = ["sls", "deploy", "--stage", stage];
-  await runner.run_command_and_output(
-    "Kafka service deploy",
-    kafkaDeployCmd,
-    `services/${kafkaservice}`
-  );
 }
 
 async function run_cdk_watch(
@@ -325,7 +311,6 @@ const stackExists = async (stackName: string): Promise<boolean> => {
 };
 
 async function deploy(options: { stage: string }) {
-  const stage = options.stage;
   const runner = new LabeledProcessRunner();
   await prepare_services(runner);
   if (await stackExists("carts-prerequisites")) {
@@ -344,10 +329,6 @@ async function deploy(options: { stage: string }) {
       ],
       "."
     );
-    // Only deploy resources for kafka ingestion in real envs
-    if (stage === "main" || stage === "val" || stage === "production") {
-      await deploy_kafka_service(runner, stage);
-    }
   } else {
     console.error(
       "MISSING PREREQUISITE STACK! Must deploy it before attempting to deploy the application."
