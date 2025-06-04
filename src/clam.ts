@@ -14,6 +14,7 @@ export default async function downloadClamAvLayer() {
   if (!res.body)
     throw new Error("Response body is null, cannot download file.");
   await streamPipeline(
+    // eslint-disable-next-line no-undef
     res.body as unknown as NodeJS.ReadableStream,
     fs.createWriteStream(outputPath)
   );
