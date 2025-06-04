@@ -1,8 +1,7 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { screen, render } from "@testing-library/react";
 import configureMockStore from "redux-mock-store";
 import { Provider } from "react-redux";
-import { screen, render } from "@testing-library/react";
 import Title from "./Title";
 
 const mockStore = configureMockStore();
@@ -21,12 +20,8 @@ const title = (
   </Provider>
 );
 
-describe("Title Component", () => {
-  it("should render correctly", () => {
-    expect(shallow(title).exists()).toBe(true);
-  });
-
-  it("Title should contain Year & State abbr when loaded in state", () => {
+describe("<Title />", () => {
+  test("Title should contain Year & State abbr when loaded in state", () => {
     render(title);
 
     expect(

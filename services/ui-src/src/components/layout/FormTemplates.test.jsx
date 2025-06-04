@@ -1,7 +1,6 @@
 import React from "react";
-import { shallow } from "enzyme";
-import FormTemplates from "./FormTemplates";
 import { act, render, fireEvent } from "@testing-library/react";
+import FormTemplates from "./FormTemplates";
 import { apiLib } from "../../util/apiLib";
 
 jest.mock("../../hooks/authHooks");
@@ -15,16 +14,12 @@ jest.mock("react-router-dom", () => ({
 }));
 
 const formTemplate = <FormTemplates />;
-describe("FormTemplates Component", () => {
+describe("<FormTemplates />", () => {
   beforeEach(() => {
     window.alert.mockClear();
   });
 
-  it("should render correctly", () => {
-    expect(shallow(formTemplate).exists()).toBe(true);
-  });
-
-  it("fires the generate forms event on button click, then navigates", async () => {
+  test("fires the generate forms event on button click, then navigates", async () => {
     const apiSpy = jest.spyOn(apiLib, "post");
     const { getByTestId } = render(formTemplate);
     const generateButton = getByTestId("generate-forms-button");

@@ -1,11 +1,14 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { render, screen } from "@testing-library/react";
 import BrowserIssue from "./BrowserIssue";
 
 const issue = <BrowserIssue />;
 
-describe("Browser Issue Component", () => {
-  it("should render correctly", () => {
-    expect(shallow(issue).exists()).toBe(true);
+describe("<BrowserIssue />", () => {
+  test("should render correctly", () => {
+    render(issue);
+    expect(
+      screen.getByRole("heading", { name: "Browser Problem" })
+    ).toBeVisible();
   });
 });

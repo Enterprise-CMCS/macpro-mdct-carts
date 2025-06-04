@@ -1,10 +1,9 @@
 import React from "react";
-import Autosave from "./Autosave";
+import { render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import configureMockStore from "redux-mock-store";
-import { mount, shallow } from "enzyme";
-import SaveMessage from "./SaveMessage";
+import Autosave from "./Autosave";
 
 const mockStore = configureMockStore();
 const lastSaved = "01/01/2002";
@@ -36,22 +35,13 @@ const autoSaveSaving = (
   </Provider>
 );
 
-describe("AutoSave Component", () => {
-  it("should render correctly", () => {
-    expect(shallow(autoSave).exists()).toBe(true);
+describe("<AutoSave />", () => {
+  test("should display saving when waiting", () => {
+    render(autoSaveSaving);
+    expect(screen.getByText("Saving...")).toBeVisible();
   });
-  it("should display saving when waiting", () => {
-    const wrapper = mount(autoSaveSaving);
-    expect(wrapper.text().includes("Saving")).toBe(true);
-    expect(
-      wrapper.containsMatchingElement(<SaveMessage lastSaved={lastSaved} />)
-    ).toBe(false);
-  });
-  it("should display save message when saved", () => {
-    const wrapper = mount(autoSave);
-    expect(
-      wrapper.containsMatchingElement(<SaveMessage lastSaved={lastSaved} />)
-    ).toBe(true);
-    expect(wrapper.text().includes("Saving")).toBe(false);
+  test("should display save message when saved", () => {
+    render(autoSave);
+    expect(screen.getByText(/Last saved/)).toBeVisible();
   });
 });

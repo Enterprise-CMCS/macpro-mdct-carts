@@ -1,8 +1,7 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { render } from "@testing-library/react";
 import configureMockStore from "redux-mock-store";
 import { Provider } from "react-redux";
-import { render } from "@testing-library/react";
 import StateHeader from "./StateHeader";
 import {
   adminUserWithReportInProgress,
@@ -13,16 +12,7 @@ const mockStore = configureMockStore();
 const stateUserStore = mockStore(stateUserWithReportInProgress);
 const adminUserStore = mockStore(adminUserWithReportInProgress);
 
-describe("State Header Component", () => {
-  test("should render correctly", () => {
-    const header = (
-      <Provider store={stateUserStore}>
-        <StateHeader />
-      </Provider>
-    );
-    expect(shallow(header).exists()).toBe(true);
-  });
-
+describe("<StateHeader />", () => {
   test("Displays state header content for state user", () => {
     const header = (
       <Provider store={stateUserStore}>

@@ -30,6 +30,7 @@ export class UserCredentials {
 }
 
 export const isAuthorized = (event: APIGatewayProxyEvent) => {
+
   // get state and method from the event
   const requestState = event.pathParameters?.state;
 
