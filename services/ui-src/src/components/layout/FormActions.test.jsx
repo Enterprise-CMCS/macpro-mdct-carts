@@ -1,14 +1,14 @@
 import React from "react";
-import { shallow } from "enzyme";
-import FormActions from "./FormActions";
+import { MemoryRouter } from "react-router";
+import { act } from "react-dom/test-utils";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import { screen, render, fireEvent } from "@testing-library/react";
+import FormActions from "./FormActions";
 import {
   adminUserWithReportInProgress,
   stateUserWithReportInProgress,
 } from "../../store/fakeStoreExamples";
-import { MemoryRouter } from "react-router";
 
 const firstLocation = "/sections/2021/00";
 const adminFirstLocation = "/views/sections/AL/2021/00";
@@ -31,13 +31,9 @@ const adminFormActions = (
   </Provider>
 );
 
-describe("Fill Form Component", () => {
+describe("<FormActions />", () => {
   afterEach(() => {
     jest.clearAllMocks();
-  });
-
-  test("should render correctly", () => {
-    expect(shallow(formActions).exists()).toBe(true);
   });
   test("should add hrefs given a section and subsection", () => {
     render(formActions);
@@ -127,8 +123,10 @@ describe("Fill Form Component", () => {
     fireEvent.click(printShowButton);
 
     // Check clear
-    map.mousedown({
-      target: document.body,
+    act(() => {
+      map.mousedown({
+        target: document.body,
+      });
     });
     const printFormButton = screen.queryByTestId("print-form");
     const printPageButton = screen.queryByTestId("print-page");

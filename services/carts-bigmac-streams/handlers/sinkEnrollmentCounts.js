@@ -66,7 +66,7 @@ export async function handler(event, _context, _callback) {
 
 const updateEnrollment = async (pk, entryKey, enrollmentData, dynamoClient) => {
   const params = {
-    TableName: process.env.stageEnrollmentCountsTableName,
+    TableName: process.env.StageEnrollmentCountsTableName,
     Key: {
       pk: pk,
       entryKey: entryKey,

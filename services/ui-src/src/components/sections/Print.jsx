@@ -12,6 +12,7 @@ import Section from "../layout/Section";
 import statesArray from "../utils/statesArray";
 import { loadEnrollmentCounts, loadSections } from "../../actions/initial";
 import { apiLib } from "../../util/apiLib";
+import { v4 as uuidv4 } from "uuid";
 
 /**
  * Generate data and load entire form based on user information
@@ -175,7 +176,7 @@ const Print = () => {
 
   // Return sections with wrapper div and print dialogue box
   return (
-    <div className="print-all">
+    <div key={uuidv4()} className="print-all">
       <div className="print-directions">
         <p>Click below to print full CARTS report shown here</p>
         <Button

@@ -15,7 +15,7 @@ export const getSignedFileUrl = handler(async (event, _context) => {
 
   // Get file, check aws filename before deleting
   const documentParams = {
-    TableName: process.env.uploadsTableName!,
+    TableName: process.env.UploadsTableName!,
     KeyConditionExpression:
       "uploadedState = :uploadedState AND fileId = :fileId",
     ExpressionAttributeValues: {
@@ -30,7 +30,7 @@ export const getSignedFileUrl = handler(async (event, _context) => {
   const document = results.Items[0];
   // Pre-sign url
   const url = await s3.getSignedDownloadUrl({
-    Bucket: process.env.uploadS3BucketName ?? "local-uploads",
+    Bucket: process.env.uploadS3BucketName,
     Key: document.awsFilename,
     ResponseContentDisposition: `attachment; filename = ${document.filename}`,
   });

@@ -105,6 +105,10 @@ export class KafkaSourceLib {
   }
 
   async handler(event) {
+    if (process.env.BOOTSTRAP_BROKER_STRING_TLS === "localstack") {
+      return;
+    }
+
     if (!connected) {
       // eslint-disable-next-line no-console
       console.log("Attempting connection...");

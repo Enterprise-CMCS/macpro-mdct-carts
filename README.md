@@ -1,8 +1,8 @@
 # MDCT CARTS (CHIP Annual Reporting Template System)
 
 [![CodeQL](https://github.com/Enterprise-CMCS/macpro-mdct-carts/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/Enterprise-CMCS/macpro-mdct-carts/actions/workflows/codeql-analysis.yml)
-[![Maintainability](https://api.codeclimate.com/v1/badges/f1775f53aedf747e85b2/maintainability)](https://codeclimate.com/repos/6449718c21275100df510ea9/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/f1775f53aedf747e85b2/test_coverage)](https://codeclimate.com/repos/6449718c21275100df510ea9/test_coverage)
+[![Maintainability](https://qlty.sh/badges/56366865-e4c7-43ff-9ee9-5a44fd29b0f2/maintainability.svg)](https://qlty.sh/gh/Enterprise-CMCS/projects/macpro-mdct-carts)
+[![Code Coverage](https://qlty.sh/badges/56366865-e4c7-43ff-9ee9-5a44fd29b0f2/test_coverage.svg)](https://qlty.sh/gh/Enterprise-CMCS/projects/macpro-mdct-carts)
 
 ## Integration Environment Deploy Status:
 | Branch  | Build Status |

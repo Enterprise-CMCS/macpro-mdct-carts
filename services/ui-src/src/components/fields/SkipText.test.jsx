@@ -1,21 +1,15 @@
 import React from "react";
-
-import { shallow } from "enzyme";
-import { axe } from "jest-axe";
+import { render, screen } from "@testing-library/react";
 import SkipText from "./SkipText";
+import { testA11y } from "../../util/testing/testUtils";
 
 const wrapper = <SkipText question={{ skip_text: "Render text" }} />;
 
 describe("<SkipText />", () => {
-  it("should render correctly", () => {
-    expect(shallow(wrapper).exists()).toBe(true);
+  test("should render correctly", () => {
+    render(wrapper);
+    expect(screen.getByText("Render text")).toBeVisible();
   });
-});
 
-describe("Test <SkipText /> accessibility", () => {
-  it("Should not have basic accessibility issues", async () => {
-    const card = shallow(wrapper);
-    const results = await axe(card.html());
-    expect(results).toHaveNoViolations();
-  });
+  testA11y(wrapper);
 });

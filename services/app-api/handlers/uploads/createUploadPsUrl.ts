@@ -43,7 +43,7 @@ export const psUpload = handler(async (event, _context) => {
   };
 
   const params = {
-    TableName: process.env.uploadsTableName!,
+    TableName: process.env.UploadsTableName!,
     Key: {
       uploadedState: state,
       fileId: `${year}-${questionId}_${awsFilename}`, // questionId is not unique outside of a year
@@ -54,7 +54,7 @@ export const psUpload = handler(async (event, _context) => {
 
   // Pre-sign url
   const psurl = await s3.createPresignedPost({
-    Bucket: process.env.uploadS3BucketName ?? "local-uploads",
+    Bucket: process.env.uploadS3BucketName,
     Key: awsFilename,
   });
   return { psurl };
