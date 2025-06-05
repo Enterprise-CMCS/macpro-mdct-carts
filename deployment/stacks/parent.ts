@@ -45,7 +45,17 @@ export class ParentStack extends Stack {
       customResourceRole,
     });
 
+    let apiGatewayRestApiUrl = "";
+    let restApiId = "";
+
     if (isLocalStack) {
+      ({ apiGatewayRestApiUrl, restApiId } = createApiComponents({
+        ...commonProps,
+        tables,
+        uploadS3BucketName: "dummy",
+        fiscalYearTemplateS3BucketName: "dummy",
+      }));
+
       /*
        * For local dev, the LocalStack container will host the database and API.
        * The UI will self-host, so we don't need to tell CDK anything about it.
@@ -63,12 +73,12 @@ export class ParentStack extends Stack {
         fiscalYearTemplateBucketName,
       });
 
-    const { apiGatewayRestApiUrl, restApiId } = createApiComponents({
+    ({ apiGatewayRestApiUrl, restApiId } = createApiComponents({
       ...commonProps,
       tables,
       uploadS3BucketName: attachmentsBucketName,
       fiscalYearTemplateS3BucketName: fiscalYearTemplateBucket?.bucketName,
-    });
+    }));
 
     const { applicationEndpointUrl, distribution, uiBucket } =
       createUiComponents({

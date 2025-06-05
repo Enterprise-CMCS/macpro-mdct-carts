@@ -27,7 +27,7 @@ export async function writeLocalUiEnvFile(
     COGNITO_REDIRECT_SIGNOUT: "http://localhost:3000/postLogout",
     POST_SIGNOUT_REDIRECT: "http://localhost:3000/",
     S3_ATTACHMENTS_BUCKET_REGION: "us-east-1",
-    S3_ATTACHMENTS_BUCKET_NAME: `"${s3AttachmentsBucketName}"`,
+    S3_ATTACHMENTS_BUCKET_NAME: s3AttachmentsBucketName,
     BRANCH_NAME: "local",
     REACT_APP_LD_SDK_CLIENT: undefined,
     STAGE: "local",
