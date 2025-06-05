@@ -7,7 +7,6 @@ import { Duration } from "aws-cdk-lib";
 import { Runtime } from "aws-cdk-lib/aws-lambda";
 import {
   Effect,
-  IManagedPolicy,
   ManagedPolicy,
   PolicyDocument,
   PolicyStatement,
@@ -21,14 +20,11 @@ interface LambdaProps extends Partial<NodejsFunctionProps> {
   handler: string;
   timeout?: Duration;
   memorySize?: number;
-  brokerString?: string;
   path?: string;
   method?: string;
   stackName: string;
   api?: apigateway.RestApi;
   additionalPolicies?: PolicyStatement[];
-  iamPermissionsBoundary: IManagedPolicy;
-  iamPath: string;
   requestParameters?: string[];
   requestValidator?: apigateway.IRequestValidator;
 }
@@ -48,8 +44,6 @@ export class Lambda extends Construct {
       path,
       method,
       additionalPolicies = [],
-      iamPath,
-      iamPermissionsBoundary,
       stackName,
       requestParameters,
       requestValidator,
@@ -63,8 +57,6 @@ export class Lambda extends Construct {
           "service-role/AWSLambdaVPCAccessExecutionRole"
         ),
       ],
-      permissionsBoundary: iamPermissionsBoundary,
-      path: iamPath,
       inlinePolicies: {
         LambdaPolicy: new PolicyDocument({
           statements: [
@@ -93,7 +85,7 @@ export class Lambda extends Construct {
       bundling: {
         minify: true,
         sourceMap: true,
-        nodeModules: ["jsdom"],
+        // nodeModules: ["jsdom"],
       },
       environment,
       ...restProps,

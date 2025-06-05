@@ -1,6 +1,6 @@
 import { Construct } from "constructs";
 import {
-  // aws_dynamodb as dynamodb,
+  aws_dynamodb as dynamodb,
   aws_iam as iam,
   aws_lambda as lambda,
   aws_lambda_nodejs as lambda_nodejs,
@@ -8,31 +8,86 @@ import {
   CfnOutput,
   Duration,
 } from "aws-cdk-lib";
-// import { DynamoDBTable } from "../constructs/dynamodb-table";
-import { IManagedPolicy } from "aws-cdk-lib/aws-iam";
+import { DynamoDBTable } from "../constructs/dynamodb-table";
 
 interface CreateDataComponentsProps {
   scope: Construct;
   stage: string;
   isDev: boolean;
-  iamPermissionsBoundary: IManagedPolicy;
-  iamPath: string;
   customResourceRole: iam.Role;
 }
 
 export function createDataComponents(props: CreateDataComponentsProps) {
-  const {
-    scope,
-    stage,
-    isDev,
-    iamPermissionsBoundary,
-    iamPath,
-    customResourceRole,
-  } = props;
+  const { scope, stage, isDev, customResourceRole } = props;
 
-  const tables = [];
+  const tables = [
+    new DynamoDBTable(scope, "Acs", {
+      stage,
+      isDev,
+      name: "acs",
+      partitionKey: { name: "stateId", type: dynamodb.AttributeType.STRING },
+      sortKey: { name: "year", type: dynamodb.AttributeType.NUMBER },
+    }).identifiers,
 
-  // seed data
+    new DynamoDBTable(scope, "Fmap", {
+      stage,
+      isDev,
+      name: "fmap",
+      partitionKey: { name: "fiscalYear", type: dynamodb.AttributeType.NUMBER },
+      sortKey: { name: "stateId", type: dynamodb.AttributeType.STRING },
+    }).identifiers,
+
+    new DynamoDBTable(scope, "State", {
+      stage,
+      isDev,
+      name: "state",
+      partitionKey: { name: "code", type: dynamodb.AttributeType.STRING },
+    }).identifiers,
+
+    new DynamoDBTable(scope, "StateStatus", {
+      stage,
+      isDev,
+      name: "state-status",
+      partitionKey: { name: "stateId", type: dynamodb.AttributeType.STRING },
+      sortKey: { name: "year", type: dynamodb.AttributeType.NUMBER },
+    }).identifiers,
+
+    new DynamoDBTable(scope, "Section", {
+      stage,
+      isDev,
+      name: "section",
+      partitionKey: { name: "pk", type: dynamodb.AttributeType.STRING },
+      sortKey: { name: "sectionId", type: dynamodb.AttributeType.NUMBER },
+    }).identifiers,
+
+    new DynamoDBTable(scope, "SectionBase", {
+      stage,
+      isDev,
+      name: "section-base",
+      partitionKey: { name: "year", type: dynamodb.AttributeType.NUMBER },
+      sortKey: { name: "sectionId", type: dynamodb.AttributeType.NUMBER },
+    }).identifiers,
+
+    new DynamoDBTable(scope, "StageEnrollmentCounts", {
+      stage,
+      isDev,
+      name: "stg-enrollment-counts",
+      partitionKey: { name: "pk", type: dynamodb.AttributeType.STRING },
+      sortKey: { name: "entryKey", type: dynamodb.AttributeType.STRING },
+    }).identifiers,
+
+    new DynamoDBTable(scope, "Uploads", {
+      stage,
+      isDev,
+      name: "uploads",
+      partitionKey: {
+        name: "uploadedState",
+        type: dynamodb.AttributeType.STRING,
+      },
+      sortKey: { name: "fileId", type: dynamodb.AttributeType.STRING },
+    }).identifiers,
+  ];
+
   const lambdaApiRole = new iam.Role(scope, "SeedDataLambdaApiRole", {
     assumedBy: new iam.ServicePrincipal("lambda.amazonaws.com"),
     managedPolicies: [
@@ -53,14 +108,13 @@ export function createDataComponents(props: CreateDataComponentsProps) {
               "dynamodb:PutItem",
               "dynamodb:UpdateItem",
               "dynamodb:DeleteItem",
+              // TODO: previous had dynamodb:BatchWriteItem
             ],
             resources: ["*"],
           }),
         ],
       }),
     },
-    permissionsBoundary: iamPermissionsBoundary,
-    path: iamPath,
   });
 
   const seedDataFunction = new lambda_nodejs.NodejsFunction(scope, "seedData", {
@@ -68,25 +122,22 @@ export function createDataComponents(props: CreateDataComponentsProps) {
     handler: "handler",
     runtime: lambda.Runtime.NODEJS_20_X,
     timeout: Duration.seconds(900),
+    memorySize: 1024,
     role: lambdaApiRole,
     environment: {
       dynamoPrefix: stage,
-      seedData: isDev.toString(),
+      seedTestData: isDev.toString(),
     },
     bundling: {
       commandHooks: {
         beforeBundling(inputDir: string, outputDir: string): string[] {
           return [
-            `mkdir -p ${outputDir}/data/initial_data_load/`,
-            `cp -r ${inputDir}/services/database/data/initial_data_load/* ${outputDir}/data/initial_data_load/`,
+            `mkdir -p ${outputDir}/data/seed/`,
+            `cp -r ${inputDir}/services/database/data/seed/* ${outputDir}/data/seed/`,
           ];
         },
-        afterBundling() {
-          return [];
-        },
-        beforeInstall() {
-          return [];
-        },
+        afterBundling: () => [],
+        beforeInstall: () => [],
       },
     },
   });
@@ -120,11 +171,11 @@ export function createDataComponents(props: CreateDataComponentsProps) {
     }
   );
 
+  seedDataInvoke.node.addDependency(seedDataFunction);
+
   new CfnOutput(scope, "SeedDataFunctionName", {
     value: seedDataFunction.functionName,
   });
-
-  seedDataInvoke.node.addDependency(seedDataFunction);
 
   return { tables };
 }

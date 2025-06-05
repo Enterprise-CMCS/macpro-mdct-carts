@@ -1,10 +1,5 @@
-import { SSMClient, GetParameterCommand } from "@aws-sdk/client-ssm";
 import { jwtDecode } from "jwt-decode";
 import { IdmRoles, AppRoles, APIGatewayProxyEvent } from "../types";
-import { CognitoJwtVerifier } from "aws-jwt-verify";
-import { SimpleJwksCache } from "aws-jwt-verify/jwk";
-import { SimpleFetcher } from "aws-jwt-verify/https";
-import { logger } from "../libs/debug-lib";
 
 // prettier-ignore
 interface DecodedToken {
@@ -34,77 +29,12 @@ export class UserCredentials {
   }
 }
 
-/*
- * Resolving a circular dependency in deployment order
- *   ui-auth requires API-Gateway to be defined from here
- *   app-api requires the Cognito resources to be created
- * Get the cognito info if it hasn't been defined
- */
-const loadCognitoValues = async () => {
-  if (
-    process.env.COGNITO_USER_POOL_ID &&
-    process.env.COGNITO_USER_POOL_CLIENT_ID
-  ) {
-    return {
-      userPoolId: process.env.COGNITO_USER_POOL_ID,
-      userPoolClientId: process.env.COGNITO_USER_POOL_CLIENT_ID,
-    };
-  } else {
-    const ssmClient = new SSMClient({ logger });
-    const stage = process.env.stage;
-    const getParam = async (identifier: string) => {
-      const command = new GetParameterCommand({
-        Name: `/${stage}/ui-auth/${identifier}`,
-      });
-      const result = await ssmClient.send(command);
-      return result.Parameter?.Value;
-    };
-
-    const userPoolId = await getParam("cognito_user_pool_id");
-    const userPoolClientId = await getParam("cognito_user_pool_client_id");
-    if (userPoolId && userPoolClientId) {
-      process.env["COGNITO_USER_POOL_ID"] = userPoolId;
-      process.env["COGNITO_USER_POOL_CLIENT_ID"] = userPoolClientId;
-      return { userPoolId, userPoolClientId };
-    } else {
-      throw new Error("cannot load cognito values");
-    }
-  }
-};
-
-export const isAuthorized = async (event: APIGatewayProxyEvent) => {
-  if (!event.headers?.["x-api-key"]) return false;
-
-  // Verifier that expects valid access tokens:
-  const cognitoValues = await loadCognitoValues();
-  const verifier = CognitoJwtVerifier.create(
-    {
-      userPoolId: cognitoValues.userPoolId,
-      tokenUse: "id",
-      clientId: cognitoValues.userPoolClientId,
-    },
-    {
-      jwksCache: new SimpleJwksCache({
-        fetcher: new SimpleFetcher({
-          defaultRequestOptions: {
-            responseTimeout: 6000,
-          },
-        }),
-      }),
-    }
-  );
-  try {
-    await verifier.verify(event.headers["x-api-key"]);
-  } catch {
-    console.log("Token not valid!"); // eslint-disable-line
-    return false;
-  }
-
+export const isAuthorized = (event: APIGatewayProxyEvent) => {
   // get state and method from the event
   const requestState = event.pathParameters?.state;
 
   // If a state user, always reject if their state does not match a state query param
-  const decoded = jwtDecode(event.headers["x-api-key"]) as DecodedToken;
+  const decoded = jwtDecode(event.headers["x-api-key"]!) as DecodedToken;
   const idmRole = decoded["custom:cms_roles"]
     .split(",")
     .find((r) => r.includes("mdctcarts")) as IdmRoles;

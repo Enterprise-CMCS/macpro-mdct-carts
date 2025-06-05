@@ -31,13 +31,6 @@ if ! which yarn >/dev/null; then
     exit 1
 fi
 
-# check serverless is installed globally.
-if ! which serverless >/dev/null || ! serverless --version 2>&1 | grep -q "Framework 4."; then
-    echo "installing serverless v4 globally"
-    yarn global add serverless@4.4.18
-    export PATH="$PATH:$(yarn global bin)"
-fi
-
 # have to ensure that yarn install is up to date.
 # we use .yarn_install as a marker for the last time `yarn install` was run. Rerun the command when yarn.lock is updated
 if [ "yarn.lock" -nt ".yarn_install" ]; then
@@ -47,12 +40,16 @@ fi
 
 # Parse arguments
 UPDATE_ENV=false
+LOCAL=false
 ARGS=()
 
 for arg in "$@"; do
     case $arg in
     update-env)
         UPDATE_ENV=true
+        ;;
+    local)
+        LOCAL=true
         ;;
     esac
     ARGS+=("$arg")
@@ -63,12 +60,33 @@ if [ "$UPDATE_ENV" = true ]; then
         echo "The MDCT team uses 1Password to store and retrieve development credentials. On macOS, you can install it with 'brew install --cask 1password-cli'"
         exit 1
     fi
+fi
 
-    # call 1password vault to retrieve secrets
-    op inject -i .env.tpl -o .env -f
-    op inject -i services/ui-src/.env.tpl -o services/ui-src/.env -f
-    sed -i "" -e "s/# pragma: allowlist secret//g" .env
-    sed -i "" -e "s/# pragma: allowlist secret//g" services/ui-src/.env
+if [ "$LOCAL" = true ]; then
+    if ! which docker >/dev/null; then
+        echo "docker not found on the system. On macOS, you can install it with 'brew install docker'"
+        exit 1
+    fi
+
+    if ! which colima >/dev/null; then
+        echo "colima not found on the system. On macOS, you can install it with 'brew install colima'"
+        exit 1
+    fi
+
+    if ! which localstack >/dev/null; then
+        echo "localstack not found on the system. On macOS, you can install it with 'brew install localstack/tap/localstack-cli'"
+        exit 1
+    fi
+
+    if ! colima status 2>&1 | grep -q "colima is running"; then
+        echo "colima installed but not running. We'll start it up for you now."
+        colima start --cpu 4 --memory 10
+    fi
+
+    if ! localstack status | grep -q "running"; then
+        echo "localstack is installed but not running. We'll start it up for you now."
+        localstack start >/dev/null 2>&1 &
+    fi
 fi
 
 yarn

@@ -11,8 +11,6 @@ import {
   RemovalPolicy,
 } from "aws-cdk-lib";
 import { WafConstruct } from "../constructs/waf";
-import { addIamPropertiesToBucketRole } from "../utils/s3";
-import { IManagedPolicy } from "aws-cdk-lib/aws-iam";
 import { isLocalStack } from "../local/util";
 
 interface CreateUiComponentsProps {
@@ -20,8 +18,6 @@ interface CreateUiComponentsProps {
   stage: string;
   project: string;
   isDev: boolean;
-  iamPermissionsBoundary: IManagedPolicy;
-  iamPath: string;
   cloudfrontCertificateArn?: string;
   cloudfrontDomainName?: string;
   vpnIpSetArn?: string;
@@ -35,13 +31,10 @@ export function createUiComponents(props: CreateUiComponentsProps) {
     stage,
     project,
     isDev,
-    iamPermissionsBoundary,
-    iamPath,
     cloudfrontCertificateArn,
     cloudfrontDomainName,
     // vpnIpSetArn,
     // vpnIpv6SetArn,
-    loggingBucket,
   } = props;
 
   const uiBucket = new s3.Bucket(scope, "uiBucket", {
@@ -50,35 +43,45 @@ export function createUiComponents(props: CreateUiComponentsProps) {
     autoDeleteObjects: true,
     enforceSSL: true,
     blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
-    versioned: true,
-    serverAccessLogsBucket: loggingBucket,
-    serverAccessLogsPrefix: `AWSLogs/${Aws.ACCOUNT_ID}/s3/`,
+    versioned: false,
   });
 
-  const logBucket = new s3.Bucket(scope, "CloudfrontLogBucket", {
-    bucketName: `ui-${stage}-cloudfront-logs-${Aws.ACCOUNT_ID}`,
-    encryption: s3.BucketEncryption.S3_MANAGED,
-    publicReadAccess: false,
-    blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
-    objectOwnership: s3.ObjectOwnership.BUCKET_OWNER_PREFERRED,
-    removalPolicy: isDev ? RemovalPolicy.DESTROY : RemovalPolicy.RETAIN,
-    autoDeleteObjects: isDev,
-    enforceSSL: true,
-    versioned: true,
-  });
+  let loggingConfig:
+    | { enableLogging: boolean; logBucket: s3.Bucket; logFilePrefix: string }
+    | undefined;
+  if (!isDev) {
+    // this bucket is not created for ephemeral environments because the delete of the bucket often fails because it doesn't decouple from the distribution gracefully
+    // should you need to test these parts of the infrastructure out the easiest method is to add your branch's name to the isDev definition in deployment-config.ts
+    const logBucket = new s3.Bucket(scope, "CloudfrontLogBucket", {
+      bucketName: `ui-${stage}-cloudfront-logs-${Aws.ACCOUNT_ID}`,
+      encryption: s3.BucketEncryption.S3_MANAGED,
+      publicReadAccess: false,
+      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+      objectOwnership: s3.ObjectOwnership.BUCKET_OWNER_PREFERRED,
+      removalPolicy: RemovalPolicy.RETAIN,
+      enforceSSL: true,
+      versioned: true,
+    });
 
-  logBucket.addToResourcePolicy(
-    new iam.PolicyStatement({
-      effect: iam.Effect.ALLOW,
-      principals: [new iam.ServicePrincipal("cloudfront.amazonaws.com")],
-      actions: ["s3:PutObject"],
-      resources: [`${logBucket.bucketArn}/*`],
-    })
-  );
+    logBucket.addToResourcePolicy(
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        principals: [new iam.ServicePrincipal("cloudfront.amazonaws.com")],
+        actions: ["s3:PutObject"],
+        resources: [`${logBucket.bucketArn}/*`],
+      })
+    );
+
+    loggingConfig = {
+      enableLogging: true,
+      logBucket,
+      logFilePrefix: `AWSLogs/CLOUDFRONT/${stage}/`,
+    };
+  }
 
   const securityHeadersPolicy = new cloudfront.ResponseHeadersPolicy(
     scope,
-    "CloudFormationHeadersPolicy",
+    "CloudFrontHeadersPolicy",
     {
       responseHeadersPolicyName: `Headers-Policy-${stage}`,
       comment: "Add Security Headers",
@@ -99,10 +102,6 @@ export function createUiComponents(props: CreateUiComponentsProps) {
         contentSecurityPolicy: {
           contentSecurityPolicy:
             "default-src 'self'; img-src 'self' data: https://www.google-analytics.com; script-src 'self' https://www.google-analytics.com https://ssl.google-analytics.com https://www.googletagmanager.com tags.tiqcdn.com tags.tiqcdn.cn tags-eu.tiqcdn.com https://*.adoberesources.net 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src https://*.amazonaws.com/ https://*.amazoncognito.com https://www.google-analytics.com https://*.launchdarkly.us https://adobe-ep.cms.gov https://adobedc.demdex.net; frame-ancestors 'none'; object-src 'none'",
-          override: true,
-        },
-        xssProtection: {
-          protection: false,
           override: true,
         },
       },
@@ -136,9 +135,7 @@ export function createUiComponents(props: CreateUiComponentsProps) {
         responseHeadersPolicy: securityHeadersPolicy,
       },
       defaultRootObject: "index.html",
-      enableLogging: true,
-      logBucket,
-      logFilePrefix: `AWSLogs/CLOUDFRONT/${stage}/`,
+      ...loggingConfig,
       httpVersion: cloudfront.HttpVersion.HTTP2,
       errorResponses: [
         {
@@ -161,16 +158,9 @@ export function createUiComponents(props: CreateUiComponentsProps) {
 
   const applicationEndpointUrl = `https://${distribution.distributionDomainName}/`;
 
-  addIamPropertiesToBucketRole(
-    scope,
-    "Custom::S3AutoDeleteObjectsCustomResourceProvider/Role",
-    iamPermissionsBoundary.managedPolicyArn,
-    iamPath
-  );
-
   return {
-    distribution,
     applicationEndpointUrl,
+    distribution,
     uiBucket,
   };
 }
@@ -187,7 +177,6 @@ function setupWaf(
     "CloudfrontWafConstruct",
     {
       name: `${project}-${stage}-ui`,
-      blockByDefault: false,
     },
     "CLOUDFRONT"
   );

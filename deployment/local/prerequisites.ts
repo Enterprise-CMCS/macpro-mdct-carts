@@ -29,11 +29,18 @@ export class LocalPrerequisiteStack extends Stack {
     });
 
     new secretsmanager.Secret(this, "DefaultSecret", {
-      secretName: "carts-default", // pragma: allowlist secret
+      secretName: "carts-default", // pragma: allowlist-secret
       secretObjectValue: {
         vpcName: SecretValue.unsafePlainText("localstack"),
         brokerString: SecretValue.unsafePlainText("localstack"),
         kafkaAuthorizedSubnetIds: SecretValue.unsafePlainText(subnet1.subnetId),
+        oktaMetadataUrl: SecretValue.unsafePlainText("localstack"),
+        launchDarklyClient: SecretValue.unsafePlainText("localstack"),
+        redirectSignout: SecretValue.unsafePlainText("localstack"),
+        docraptorApiKey: SecretValue.unsafePlainText(
+          process.env.docraptorApiKey!
+        ),
+        sedsTopic: SecretValue.unsafePlainText("localstack"),
       },
     });
   }
@@ -41,7 +48,6 @@ export class LocalPrerequisiteStack extends Stack {
 
 async function main() {
   const app = new App();
-
   new LocalPrerequisiteStack(app, "carts-local-prerequisites");
 }
 

@@ -43,6 +43,7 @@ describe("Test Delete Upload Handler", () => {
       ...testEvent,
       pathParameters: { year: "2022", state: "AL", fileId: "uniqueIdString" },
     };
+    process.env.uploadS3BucketName = "fakeBucket";
 
     const res = await deleteUpload(event, null);
 
@@ -56,7 +57,7 @@ describe("Test Delete Upload Handler", () => {
       },
     });
     expect(s3Lib.deleteObject).toHaveBeenCalledWith({
-      Bucket: "local-uploads",
+      Bucket: "fakeBucket",
       Key: "myFilename.png",
     });
     expect(dbLib.delete).toHaveBeenCalledWith({

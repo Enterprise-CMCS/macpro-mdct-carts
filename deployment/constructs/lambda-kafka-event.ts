@@ -5,20 +5,23 @@ import {
   aws_lambda_nodejs as lambda_nodejs,
   Duration,
 } from "aws-cdk-lib";
-import { DynamoDBTableIdentifiers } from "../constructs/dynamodb-table";
-import { isDefined } from "../utils/misc";
 
-interface LambdaDynamoEventProps
+interface LambdaKafkaEventProps
   extends Partial<lambda_nodejs.NodejsFunctionProps> {
   additionalPolicies?: iam.PolicyStatement[];
+  brokerString?: string;
+  kafkaBootstrapServers: string[];
+  securityGroupId: string;
+  subnets: string[];
+  topics: string[];
+  consumerGroupId: string;
   stackName: string;
-  tables: DynamoDBTableIdentifiers[];
 }
 
-export class LambdaDynamoEventSource extends Construct {
+export class LambdaKafkaEventSource extends Construct {
   public readonly lambda: lambda_nodejs.NodejsFunction;
 
-  constructor(scope: Construct, id: string, props: LambdaDynamoEventProps) {
+  constructor(scope: Construct, id: string, props: LambdaKafkaEventProps) {
     super(scope, id);
 
     const {
@@ -26,9 +29,13 @@ export class LambdaDynamoEventSource extends Construct {
       environment = {},
       handler,
       memorySize = 1024,
-      tables,
-      stackName,
       timeout = Duration.seconds(6),
+      kafkaBootstrapServers,
+      securityGroupId,
+      subnets,
+      topics,
+      consumerGroupId,
+      stackName,
       ...restProps
     } = props;
 
@@ -53,16 +60,8 @@ export class LambdaDynamoEventSource extends Construct {
             }),
             new iam.PolicyStatement({
               effect: iam.Effect.ALLOW,
-              actions: [
-                "dynamodb:DescribeStream",
-                "dynamodb:GetRecords",
-                "dynamodb:GetShardIterator",
-                // "dynamodb:ListShards",
-                "dynamodb:ListStreams",
-              ],
-              resources: tables
-                .map((table) => table.streamArn)
-                .filter(isDefined),
+              actions: ["ec2:DescribeSecurityGroups", "ec2:DescribeVpcs"],
+              resources: ["*"],
             }),
             ...additionalPolicies,
           ],
@@ -86,18 +85,24 @@ export class LambdaDynamoEventSource extends Construct {
       ...restProps,
     });
 
-    for (let table of tables) {
-      new lambda.CfnEventSourceMapping(
-        scope,
-        `${id}${table.id}DynamoDBStreamEventSourceMapping`,
+    new lambda.CfnEventSourceMapping(scope, `${id}KafkaEventSourceMapping`, {
+      functionName: this.lambda.functionArn,
+      selfManagedEventSource: {
+        endpoints: { kafkaBootstrapServers },
+      },
+      selfManagedKafkaEventSourceConfig: { consumerGroupId },
+      topics,
+      sourceAccessConfigurations: [
+        ...subnets.map((subnetId) => ({
+          type: "VPC_SUBNET",
+          uri: `subnet:${subnetId}`,
+        })),
         {
-          eventSourceArn: table.streamArn,
-          functionName: this.lambda.functionArn,
-          startingPosition: "TRIM_HORIZON",
-          maximumRetryAttempts: 2,
-          enabled: true,
-        }
-      );
-    }
+          type: "VPC_SECURITY_GROUP",
+          uri: `security_group:${securityGroupId}`,
+        },
+      ],
+      maximumBatchingWindowInSeconds: 30,
+    });
   }
 }
