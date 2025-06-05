@@ -45,16 +45,13 @@ export class ParentStack extends Stack {
       customResourceRole,
     });
 
-    let apiGatewayRestApiUrl = "";
-    let restApiId = "";
-
     if (isLocalStack) {
-      ({ apiGatewayRestApiUrl, restApiId } = createApiComponents({
+      createApiComponents({
         ...commonProps,
         tables,
-        uploadS3BucketName: "dummy",
-        fiscalYearTemplateS3BucketName: "dummy",
-      }));
+        uploadS3BucketName: "placeholder",
+        fiscalYearTemplateS3BucketName: "placeholder",
+      });
 
       /*
        * For local dev, the LocalStack container will host the database and API.
@@ -73,12 +70,12 @@ export class ParentStack extends Stack {
         fiscalYearTemplateBucketName,
       });
 
-    ({ apiGatewayRestApiUrl, restApiId } = createApiComponents({
+    const { apiGatewayRestApiUrl, restApiId } = createApiComponents({
       ...commonProps,
       tables,
       uploadS3BucketName: attachmentsBucketName,
       fiscalYearTemplateS3BucketName: fiscalYearTemplateBucket?.bucketName,
-    }));
+    });
 
     const { applicationEndpointUrl, distribution, uiBucket } =
       createUiComponents({

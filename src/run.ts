@@ -97,7 +97,7 @@ async function run_fe_locally(runner: LabeledProcessRunner) {
     "ApiUrl"
   );
 
-  await writeLocalUiEnvFile(apiUrl!, "dummy");
+  await writeLocalUiEnvFile(apiUrl!, "placeholder");
   runner.run_command_and_output("ui", ["npm", "start"], "services/ui-src");
 }
 
