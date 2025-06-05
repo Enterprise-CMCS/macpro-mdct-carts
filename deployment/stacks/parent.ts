@@ -46,6 +46,13 @@ export class ParentStack extends Stack {
     });
 
     if (isLocalStack) {
+      createApiComponents({
+        ...commonProps,
+        tables,
+        uploadS3BucketName: "placeholder",
+        fiscalYearTemplateS3BucketName: "placeholder",
+      });
+
       /*
        * For local dev, the LocalStack container will host the database and API.
        * The UI will self-host, so we don't need to tell CDK anything about it.
