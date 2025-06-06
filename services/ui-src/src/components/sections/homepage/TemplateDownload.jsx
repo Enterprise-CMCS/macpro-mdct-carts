@@ -1,5 +1,4 @@
 import React from "react";
-import { useFlags } from "launchdarkly-react-client-sdk";
 //icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,38 +10,34 @@ import {
 import PropTypes from "prop-types";
 
 const TemplateDownload = ({ getTemplate }) => {
-  const currentYear = useFlags().release2024 ? "2024" : "2023";
+  const currentYear = "2024";
 
   return (
     <div className="ds-l-row">
       <div className="updates ds-l-col--12">
         <p className="update-title">Updates from Central Office</p>
-        {useFlags().release2024 && (
-          <div className="preamble">
-            <p>
-              Completing the Children’s Health Insurance Program (CHIP) Annual
-              Report is required under sections 2108(a) and 2108(e) of the
-              Social Security Act, and regulations at 42 CFR 457.750.
-            </p>
-            <p>
-              Each state must assess their CHIP operations and overall progress
-              in reducing the number of uninsured low-income children after each
-              federal fiscal year.
-            </p>
-            <p>
-              States must complete all relevant sections of the CHIP Annual
-              Report Template System (CARTS) and certify their report by January
-              1st. After review and acceptance by CMS, CHIP annual reports are
-              published at{" "}
-              <a href="https://www.medicaid.gov/chip/reports-evaluations/index.html">
-                https://www.medicaid.gov/chip/reports-evaluations/index.html
-              </a>
-            </p>
-          </div>
-        )}
-        <div className="update-date">
-          {useFlags().release2024 ? "Oct 2024" : "Sept 2023"}
+        <div className="preamble">
+          <p>
+            Completing the Children’s Health Insurance Program (CHIP) Annual
+            Report is required under sections 2108(a) and 2108(e) of the Social
+            Security Act, and regulations at 42 CFR 457.750.
+          </p>
+          <p>
+            Each state must assess their CHIP operations and overall progress in
+            reducing the number of uninsured low-income children after each
+            federal fiscal year.
+          </p>
+          <p>
+            States must complete all relevant sections of the CHIP Annual Report
+            Template System (CARTS) and certify their report by January 1st.
+            After review and acceptance by CMS, CHIP annual reports are
+            published at{" "}
+            <a href="https://www.medicaid.gov/chip/reports-evaluations/index.html">
+              https://www.medicaid.gov/chip/reports-evaluations/index.html
+            </a>
+          </p>
         </div>
+        <div className="update-date">Oct 2024</div>
         <div className="update ds-l-row">
           <div className="icon ds-l-col--2">
             <div className="icon-inner">
