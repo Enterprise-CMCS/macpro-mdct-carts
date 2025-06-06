@@ -29,7 +29,7 @@ export async function writeLocalUiEnvFile(
     S3_ATTACHMENTS_BUCKET_REGION: "us-east-1",
     S3_ATTACHMENTS_BUCKET_NAME: s3AttachmentsBucketName,
     BRANCH_NAME: "local",
-    REACT_APP_LD_SDK_CLIENT: undefined,
+    REACT_APP_LD_SDK_CLIENT: process.env.REACT_APP_LD_SDK_CLIENT,
     STAGE: "local",
   };
 
