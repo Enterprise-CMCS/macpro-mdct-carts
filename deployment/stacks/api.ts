@@ -185,6 +185,20 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     method: "POST",
     requestParameters: ["year", "state"],
     ...commonProps,
+    additionalPolicies: [
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        actions: ["s3:PutObject"],
+        resources: [`arn:aws:s3:::${uploadS3BucketName}/*`],
+      }),
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        actions: ["dynamodb:UpdateItem"],
+        resources: tables
+          .filter((table) => ["Uploads"].includes(table.id))
+          .map((table) => table.arn),
+      }),
+    ],
   });
 
   new Lambda(scope, "postDownload", {
