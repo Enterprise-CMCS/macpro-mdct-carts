@@ -197,6 +197,11 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     additionalPolicies: [
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
+        actions: ["s3:ListBucket"],
+        resources: [`arn:aws:s3:::${uploadS3BucketName}`],
+      }),
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
         actions: ["s3:GetObject"],
         resources: [`arn:aws:s3:::${uploadS3BucketName}/*`],
       }),
@@ -217,6 +222,20 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     method: "DELETE",
     requestParameters: ["year", "state", "fileId"],
     ...commonProps,
+    additionalPolicies: [
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        actions: ["s3:DeleteObject"],
+        resources: [`arn:aws:s3:::${uploadS3BucketName}/*`],
+      }),
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        actions: ["dynamodb:Query", "dynamodb:DeleteItem"],
+        resources: tables
+          .filter((table) => ["Uploads"].includes(table.id))
+          .map((table) => table.arn),
+      }),
+    ],
   });
 
   new Lambda(scope, "viewUploads", {
