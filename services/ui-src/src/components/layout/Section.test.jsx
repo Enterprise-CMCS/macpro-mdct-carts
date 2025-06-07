@@ -1,12 +1,11 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { render } from "@testing-library/react";
 import configureMockStore from "redux-mock-store";
 import { Provider } from "react-redux";
-import { render } from "@testing-library/react";
 import Section from "./Section";
 
 const mockStore = configureMockStore();
-const testSectionId = "2020-123";
+const testSectionId = 2020;
 const testSubSectionId = "1";
 const store = mockStore({
   stateUser: {
@@ -44,12 +43,8 @@ const section = (
   </Provider>
 );
 
-describe("Section Component", () => {
-  it("should render correctly", () => {
-    expect(shallow(section).exists()).toBe(true);
-  });
-
-  it("passes subsection info to the subsection component", () => {
+describe("<Section />", () => {
+  test("passes subsection info to the subsection component", () => {
     render(section);
     expect(mockChildComponent).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -57,7 +52,7 @@ describe("Section Component", () => {
       })
     );
   });
-  it("displays the title in screen and print view", () => {
+  test("displays the title in screen and print view", () => {
     const { getByTestId } = render(section);
     const headerComponent = getByTestId("section-title");
     expect(headerComponent).toHaveTextContent("Section Title");

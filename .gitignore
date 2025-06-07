@@ -20,4 +20,8 @@ tests/cypress/downloads
 tests/cypress/package-lock.json
 package-lock.json
 /output
+/.cdk
+cdk.context.json
 /.serverless
+.qlty/*
+!.qlty/qlty.toml

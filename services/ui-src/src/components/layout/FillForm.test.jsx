@@ -1,21 +1,18 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import FillForm from "./FillForm";
-import { render, fireEvent } from "@testing-library/react";
 
 const mockEvent = jest.fn();
 const form = (
   <FillForm onClick={mockEvent} name="formName" title="link title" />
 );
 
-describe("Fill Form Component", () => {
-  it("should render correctly", () => {
-    expect(shallow(form).exists()).toBe(true);
-  });
-
-  it("triggers the provided click behavior onClick", () => {
-    const { getByTestId } = render(form);
-    fireEvent.click(getByTestId("form-action"));
+describe("<FillForm />", () => {
+  test("triggers the provided click behavior onClick", async () => {
+    render(form);
+    const button = screen.getByTestId("form-action");
+    await userEvent.click(button);
     expect(mockEvent).toBeCalled();
   });
 });

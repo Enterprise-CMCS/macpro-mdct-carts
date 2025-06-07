@@ -1,27 +1,19 @@
 import React from "react";
-import { shallow, mount } from "enzyme";
-import StateHeader from "./StateHeader";
+import { render, screen } from "@testing-library/react";
 import Sidebar from "./Sidebar";
-import TableOfContents from "./TableOfContents";
 
 jest.mock("./StateHeader", () => () => {
-  const MockName = "default-header";
-  return <MockName />;
+  return <p>state-header</p>;
 });
 jest.mock("./TableOfContents", () => () => {
-  const MockName = "default-toc";
-  return <MockName />;
+  return <p>table-of-contents</p>;
 });
 const sidebar = <Sidebar />;
 
-describe("Sidebar Component", () => {
-  it("should render correctly", () => {
-    expect(shallow(sidebar).exists()).toBe(true);
-  });
-
-  it("should contain a header and table of contents", () => {
-    const wrapper = mount(sidebar);
-    expect(wrapper.containsMatchingElement(<StateHeader />)).toEqual(true);
-    expect(wrapper.containsMatchingElement(<TableOfContents />)).toEqual(true);
+describe("<Sidebar />", () => {
+  test("should contain a header and table of contents", () => {
+    render(sidebar);
+    expect(screen.getByText("state-header")).toBeVisible();
+    expect(screen.getByText("table-of-contents")).toBeVisible();
   });
 });

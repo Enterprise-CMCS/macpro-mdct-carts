@@ -32,7 +32,7 @@ describe("Test Print PDF handler", () => {
     process.env.docraptorApiKey = "mock api key"; // pragma: allowlist secret
   });
 
-  it("should make a request to prince and return data", async () => {
+  test("should make a request to prince and return data", async () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,
       body: `{"encodedHtml": "${base64EncodedHtml}"}`,
@@ -68,7 +68,7 @@ describe("Test Print PDF handler", () => {
     });
   });
 
-  it("should throw an error if event body is empty", async () => {
+  test("should throw an error if event body is empty", async () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,
       body: `{}`,
@@ -78,7 +78,7 @@ describe("Test Print PDF handler", () => {
     expect(res.statusCode).toBe(500);
   });
 
-  it("should throw an error if API key is missing", async () => {
+  test("should throw an error if API key is missing", async () => {
     delete process.env.docraptorApiKey;
     const event: APIGatewayProxyEvent = {
       ...testEvent,
@@ -89,7 +89,7 @@ describe("Test Print PDF handler", () => {
     expect(res.statusCode).toBe(500);
   });
 
-  it("should handle errors from PDF API", async () => {
+  test("should handle errors from PDF API", async () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,
       body: `{"encodedHtml": "${base64EncodedHtml}"}`,
@@ -110,7 +110,7 @@ describe("Test Print PDF handler", () => {
     );
   });
 
-  it("should preserve html, head, and body tags", async () => {
+  test("should preserve html, head, and body tags", async () => {
     const inputHtml = `<html lang="en"><head><title>My Page</title></head><body>Hello, world</body></html>`;
     const b64html = Buffer.from(inputHtml).toString("base64");
     const event = {

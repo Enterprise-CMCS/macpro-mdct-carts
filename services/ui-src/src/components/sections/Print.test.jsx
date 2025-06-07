@@ -1,12 +1,11 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { screen, render } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
+import thunk from "redux-thunk";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import Print from "./Print";
 import { mockInitialState } from "../../util/testing/testUtils";
-import { screen, render } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
-import thunk from "redux-thunk";
 
 jest.mock("../layout/Section", () => () => {
   const MockName = "default-section";
@@ -78,21 +77,15 @@ const setup = (path) => (
   </Provider>
 );
 
-describe("Print", () => {
-  it("should render the Print Component correctly", () => {
-    const path = "/print?year=2020&state=AL";
-    const printComponent = setup(path);
-    expect(shallow(printComponent).exists()).toBe(true);
-  });
-
-  it("should render for full form", () => {
+describe("<Print />", () => {
+  test("should render for full form", () => {
     const path = "/print?year=2020&state=AL";
     render(setup(path));
     const sections = screen.getAllByTestId("print-section");
     expect(sections.length).toBe(5);
   });
 
-  it("should render for a subsection when provided the subsection query param", () => {
+  test("should render for a subsection when provided the subsection query param", () => {
     const path =
       "print?year=2020&state=AL&sectionId=2020-03&subsectionId=2020-03-b";
     render(setup(path));

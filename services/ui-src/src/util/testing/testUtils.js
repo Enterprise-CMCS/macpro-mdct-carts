@@ -1,7 +1,9 @@
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
-
-//import checkPropTypes from "check-prop-types";
+import { render } from "@testing-library/react";
+import { axe } from "jest-axe";
 
 import { reducer } from "../../store/storeIndex";
 
@@ -12,6 +14,12 @@ export const findByTestAttribute = (wrapper, val) => {
 export const storeFactory = (initialState) => {
   return createStore(reducer, initialState, applyMiddleware(thunk));
 };
+
+export const RouterWrappedComponent = ({ children }) => (
+  <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+    {children}
+  </Router>
+);
 
 /*
  *export const checkProps = (component, conformingProps) => {
@@ -59,4 +67,28 @@ export const mockInitialState = {
       programType: "user",
     },
   },
+};
+
+// common tests
+
+export const testA11y = (component, beforeCallback, afterCallback) => {
+  describe("Accessibility", () => {
+    beforeEach(() => {
+      if (beforeCallback) {
+        beforeCallback();
+      }
+    });
+
+    afterEach(() => {
+      if (afterCallback) {
+        afterCallback();
+      }
+    });
+
+    test("should not have basic accessibility issues", async () => {
+      const { container } = render(component);
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+  });
 };
