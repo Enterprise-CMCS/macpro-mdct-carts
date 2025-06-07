@@ -16,7 +16,7 @@ describe("<TemplateDownload />", () => {
     const downloadTemplateButton = screen.getByRole("button");
     await userEvent.click(downloadTemplateButton);
 
-    expect(defaultProps.getTemplate).toBeCalledWith("2023");
+    expect(defaultProps.getTemplate).toBeCalledWith("2024");
   });
 
   testA11y(wrapper);
