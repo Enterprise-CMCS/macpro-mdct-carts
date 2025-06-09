@@ -12,7 +12,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@badeball/cypress-cucumber-preprocessor": "^22.0.0",
     "@cypress-audit/lighthouse": "^1.4.2",
     "@cypress-audit/pa11y": "^1.4.2",
     "axe-core": "^4.10.3",
@@ -21,9 +20,5 @@
     "cypress-axe": "^1.6.0",
     "cypress-file-upload": "^5.0.8",
     "dotenv": "^16.5.0"
-  },
-  "cypress-cucumber-preprocessor": {
-    "nonGlobalStepDefinitions": true,
-    "stepDefinitions": "tests"
   }
 }
