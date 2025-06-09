@@ -1,12 +1,9 @@
 /* eslint-disable no-console */
 /*
  * Local:
- *    `DYNAMODB_URL="http://localhost:8000" dynamoPrefix="local" node services/database/scripts/sync-kafka-2024.js`
+ *    DYNAMODB_URL="http://localhost:4566" node services/database/scripts/sync-kafka-2024.js
  *  Branch:
  *    dynamoPrefix="YOUR BRANCH NAME" node services/database/scripts/sync-kafka-2024.js
- *
- * THE LOCAL OPTION IS NOW MORE COMPLICATED IT YOU NEED TO RUN THIS SCRIPT IN A LOCAL CONTEXT HERE'S A SPOT TO LOOK FOR SUGGESTIONS:
- * https://stackoverflow.com/questions/73294767/how-do-i-execute-a-shell-script-against-my-localstack-docker-container-after-it
  */
 
 const { buildDynamoClient, scan, update } = require("./utils/dynamodb.js");
@@ -14,10 +11,10 @@ const { buildDynamoClient, scan, update } = require("./utils/dynamodb.js");
 const isLocal = !!process.env.DYNAMODB_URL;
 
 const sectionTableName = isLocal
-  ? "local-section"
+  ? "localstack-section"
   : process.env.dynamoPrefix + "-section";
 const statusTableName = isLocal
-  ? "local-state-status"
+  ? "localstack-state-status"
   : process.env.dynamoPrefix + "-state-status";
 const tables = [sectionTableName, statusTableName];
 const syncTime = new Date().toISOString();
