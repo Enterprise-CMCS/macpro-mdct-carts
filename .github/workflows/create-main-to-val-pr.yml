@@ -47,11 +47,11 @@ jobs:
       if: steps.pr_body.outputs.skip != 'true'
       id: check_pr
       run: |
-        pr_number=$(gh pr list --head "$HEAD_BRANCH" --base "$BASE_BRANCH" --json number --jq '.[0].number')
+        pr_number=$(gh pr list --head "$HEAD_BRANCH" --base "$BASE_BRANCH" --json number --jq '.[0].number' || echo "")
         if [ -n "$pr_number" ]; then
           echo "PR already exists: #$pr_number"
           echo "exists=true" >> $GITHUB_OUTPUT
-          echo "number=$pr_number" >> $GITHUB_OUTPUT
+          echo "number=${pr_number}" >> $GITHUB_OUTPUT
         else
           echo "exists=false" >> $GITHUB_OUTPUT
         fi
@@ -73,17 +73,11 @@ jobs:
         tmpfile=$(mktemp)
         printf '%s\n' "$decoded_body" > "$tmpfile"
 
-        echo "=== PR body from file ==="
-        cat "$tmpfile"
-        echo "=========================="
-
         if [ "$PR_EXISTS" == "true" ]; then
           echo "Updating existing PR #$PR_NUMBER"
           gh pr edit $PR_NUMBER \
             --title "$title" \
             --body-file "$tmpfile"
-          EOF
-         )"
         else
           echo "Creating new PR"
           gh pr create \
