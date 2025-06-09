@@ -21,6 +21,8 @@ jobs:
     - uses: actions/setup-node@v4
       with:
         node-version-file: ".nvmrc"
+    - name: Prepare for yarn-lock-diff
+      run: yarn install --frozen-lockfile
     - name: Set branch variables
       id: set-vars
       run: |
