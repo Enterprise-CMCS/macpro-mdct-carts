@@ -62,8 +62,7 @@ jobs:
       run: |
         current_date=$(date '+%-d %B %Y')
         title="CARTS val release (${current_date})"
-        raw_body="${{ steps.pr_body.outputs.body }}"
-        decoded_body="${raw_body//%25/%}"
+        decoded_body="${RAW_BODY//%25/%}"
         decoded_body="${decoded_body//%0A/$'\n'}"
         decoded_body="${decoded_body//%0D/$'\r'}"
         tmpfile=$(mktemp)
@@ -87,3 +86,4 @@ jobs:
         fi
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        RAW_BODY: ${{ steps.pr_body.outputs.body }}
