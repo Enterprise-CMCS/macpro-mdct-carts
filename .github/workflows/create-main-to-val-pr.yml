@@ -60,13 +60,22 @@ jobs:
     - name: Create or update PR
       if: steps.pr_body.outputs.skip != 'true'
       run: |
+        set -euo pipefail
+ 
         current_date=$(date '+%-d %B %Y')
         title="CARTS val release (${current_date})"
+
         decoded_body="${RAW_BODY//%25/%}"
-        decoded_body="${decoded_body//%0A/$'\n'}"
-        decoded_body="${decoded_body//%0D/$'\r'}"
+        decoded_body="${decoded_body//%0A/__NEWLINE__}"
+        decoded_body="${decoded_body//%0D/__CARRIAGERETURN__}"
+        decoded_body="$(printf '%s' "$decoded_body" | sed 's/__NEWLINE__/\n/g; s/__CARRIAGERETURN__/\r/g')"
+
         tmpfile=$(mktemp)
         printf '%s\n' "$decoded_body" > "$tmpfile"
+
+        echo "=== PR body from file ==="
+        cat "$tmpfile"
+        echo "=========================="
 
         if [ "${{ steps.check_pr.outputs.exists }}" == "true" ]; then
           echo "Updating existing PR #${{ steps.check_pr.outputs.number }}"
