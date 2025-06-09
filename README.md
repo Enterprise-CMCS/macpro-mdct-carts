@@ -55,7 +55,7 @@ In order to run dynamodb locally you will need to have java installed on your sy
 
 If you want to a visual view of your dynamodb after the application is up and running you can install the dynamodb-admin tool from here: https://www.npmjs.com/package/dynamodb-admin
 
-- to run the dynamodb gui, run `DYNAMO_ENDPOINT=http://localhost:8000 dynamodb-admin` in a new terminal window
+- to run the dynamodb gui, run `DYNAMO_ENDPOINT=http://localhost:4566 dynamodb-admin` in a new terminal window
 
 ### Seed Data
 
