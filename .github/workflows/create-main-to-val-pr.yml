@@ -77,9 +77,9 @@ jobs:
         cat "$tmpfile"
         echo "=========================="
 
-        if [ "${{ steps.check_pr.outputs.exists }}" == "true" ]; then
-          echo "Updating existing PR #${{ steps.check_pr.outputs.number }}"
-          gh pr edit ${{ steps.check_pr.outputs.number }} \
+        if [ "$PR_EXISTS" == "true" ]; then
+          echo "Updating existing PR #$PR_NUMBER"
+          gh pr edit $PR_NUMBER \
             --title "$title" \
             --body-file "$tmpfile"
           EOF
@@ -95,4 +95,6 @@ jobs:
         fi
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PR_EXISTS: ${{ steps.check_pr.outputs.exists }}
+        PR_NUMBER: ${{ steps.check_pr.outputs.number }}
         RAW_BODY: ${{ steps.pr_body.outputs.body }}
