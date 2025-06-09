@@ -64,21 +64,26 @@ jobs:
         title="CARTS val release (${current_date})"
         raw_body="${{ steps.pr_body.outputs.body }}"
         body="${raw_body//%25/%}"
-        body="${body//%0A/$'\n'}"
-        body="${body//%0D/$'\r'}"
+        body="${body//%0A/__NEWLINE__}"
+        body="${body//%0D/__CARRIAGERETURN__}"
+        body=$(printf '%s' "$body" | sed 's/__NEWLINE__/\n/g; s/__CARRIAGERETURN__/\r/g')
+        tmpfile=$(mktemp)
+        printf "%s\n" "$body" > "$tmpfile"
 
         if [ "${{ steps.check_pr.outputs.exists }}" == "true" ]; then
           echo "Updating existing PR #${{ steps.check_pr.outputs.number }}"
           gh pr edit ${{ steps.check_pr.outputs.number }} \
             --title "$title" \
-            --body "$body"
+            --body-file "$tmpfile"
+          EOF
+         )"
         else
           echo "Creating new PR"
           gh pr create \
             --head "$HEAD_BRANCH" \
             --base "$BASE_BRANCH" \
             --title "$title" \
-            --body "$body" \
+            --body-file "$tmpfile" \
             --draft
         fi
       env:
