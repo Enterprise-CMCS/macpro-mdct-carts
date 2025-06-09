@@ -90,7 +90,7 @@ for FILE in $YARN_LOCK_FILES; do
 
   # Run diff script
   DIFF_OUTPUT=$(
-    NODE_PATH=$(pwd)/node_modules node ./tests/scripts/yarn-lock-diff.cjs \
+    node ./scripts/yarn-lock-diff.cjs \
       "$TEMP_DIR/yarn.lock.new" \
       "$TEMP_DIR/yarn.lock.old" \
       "$TEMP_DIR/package.json.new" \
