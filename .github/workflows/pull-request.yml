@@ -24,6 +24,16 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
+  jest-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Skip Jest (frontend)
+        run: echo "Skipping - test is run in deploy workflow"
+  jest-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Skip Jest (backend)
+        run: echo "Skipping - test is run in deploy workflow"
   assignAuthor:
     if: github.event.pull_request.user.type != 'Bot'
     runs-on: ubuntu-latest
