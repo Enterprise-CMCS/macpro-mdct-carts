@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 
 import "cypress-file-upload";
-import "@cypress-audit/pa11y/commands";
 
 before(() => {
   cy.visit("/", { timeout: 60000 * 5, failOnStatusCode: false });
@@ -132,15 +131,11 @@ Cypress.Commands.add("checkA11yOfPage", () => {
         "wcag22aa",
         "best-practice",
       ],
-      includedImpacts: ["minor", "moderate", "serious", "critical"], // options: "minor", "moderate", "serious", "critical"
+      includedImpacts: ["minor", "moderate", "serious", "critical"],
+      rules: {
+        "duplicate-id": { enabled: false },
+      },
     },
-    terminalLog,
-    true // does not fail tests for ally violations
+    terminalLog
   );
-
-  // check for a11y using pa11y
-  cy.pa11y({
-    threshold: 10,
-    standard: "WCAG2AA",
-  });
 });

@@ -1,5 +1,4 @@
 const { defineConfig } = require("cypress");
-const { pa11y } = require("@cypress-audit/pa11y");
 require("dotenv").config({ path: "../../.env" });
 
 module.exports = defineConfig({
@@ -39,7 +38,6 @@ module.exports = defineConfig({
 
           return null;
         },
-        pa11y: pa11y(),
       });
 
       return config;

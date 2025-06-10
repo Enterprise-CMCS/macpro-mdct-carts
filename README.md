@@ -175,7 +175,7 @@ cd services/ui-src/
 yarn pa11y <url-endpoint>
 ```
 
-Cypress `a11y` tests use [cypress-axe](https://github.com/component-driven/cypress-axe), [@cypress-audit/pa11y](https://mfrachet.github.io/cypress-audit/guides/pa11y/installation.html).
+Cypress `a11y` tests use [cypress-axe](https://github.com/component-driven/cypress-axe)
 
 ### Prettier Linter
 
