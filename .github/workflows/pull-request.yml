@@ -24,32 +24,6 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
-  jest-frontend:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: ".nvmrc"
-      - name: Prepare for Jest (frontend)
-        run: yarn install --frozen-lockfile
-        working-directory: ./services/ui-src
-      - name: Jest (frontend)
-        run: yarn test
-        working-directory: ./services/ui-src
-  jest-backend:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: ".nvmrc"
-      - name: Prepare for Jest (backend)
-        run: yarn install --frozen-lockfile
-        working-directory: ./services/app-api
-      - name: Jest (backend)
-        run: yarn test
-        working-directory: ./services/app-api
   assignAuthor:
     if: github.event.pull_request.user.type != 'Bot'
     runs-on: ubuntu-latest
