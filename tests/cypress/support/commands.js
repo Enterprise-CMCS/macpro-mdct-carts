@@ -2,7 +2,6 @@
 
 import "cypress-file-upload";
 import "@cypress-audit/pa11y/commands";
-import "@cypress-audit/lighthouse/commands";
 
 before(() => {
   cy.visit("/", { timeout: 60000 * 5, failOnStatusCode: false });

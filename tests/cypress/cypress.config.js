@@ -1,5 +1,4 @@
 const { defineConfig } = require("cypress");
-const { lighthouse, prepareAudit } = require("@cypress-audit/lighthouse");
 const { pa11y } = require("@cypress-audit/pa11y");
 require("dotenv").config({ path: "../../.env" });
 
@@ -27,9 +26,6 @@ module.exports = defineConfig({
     supportFile: "support/index.js",
     excludeSpecPattern: "**/filterReports.spec.js",
     async setupNodeEvents(on, config) {
-      on("before:browser:launch", (_browser = {}, launchOptions) => {
-        prepareAudit(launchOptions);
-      });
       on("task", {
         log(message) {
           // eslint-disable-next-line no-console
@@ -44,7 +40,6 @@ module.exports = defineConfig({
           return null;
         },
         pa11y: pa11y(),
-        lighthouse: lighthouse(),
       });
 
       return config;
