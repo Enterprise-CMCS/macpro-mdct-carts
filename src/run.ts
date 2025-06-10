@@ -24,6 +24,7 @@ const deployedServices = [
   "ui",
   "ui-auth",
   "ui-src",
+  "carts-bigmac-streams",
 ];
 
 const project = process.env.PROJECT;

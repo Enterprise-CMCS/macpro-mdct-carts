@@ -4,9 +4,6 @@ jspm_packages
 
 *.zip
 
-# Serverless directories
-.serverless
-
 # ClamAV
 *.so.*
 *.so*
