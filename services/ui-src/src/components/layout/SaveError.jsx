@@ -14,7 +14,6 @@ const SaveError = () => {
 
   return (
     <div
-      aria-hidden={!showSaveErrorAlert}
       aria-live="polite"
       className={`alert--unexpected-error ${
         showSaveErrorAlert ? "alert--unexpected-error__active" : ""
@@ -34,14 +33,6 @@ const SaveError = () => {
             browser. Before this issue is resolved, new changes may be lost if
             you continue to make edits or if you refresh your browser.
           </div>
-          <button
-            aria-label="Close alert"
-            className="hide-alert-button"
-            onClick={() => setShowErrorAlert(false)}
-            aria-hidden={!showSaveErrorAlert}
-          >
-            X
-          </button>
         </div>
       </Alert>
     </div>
