@@ -9,10 +9,7 @@ const configFilePath = path.resolve(outputPath, "env-config.js");
 
 const region = "us-east-1";
 
-export async function writeLocalUiEnvFile(
-  apiUrl: string,
-  s3AttachmentsBucketName: string
-) {
+export async function writeLocalUiEnvFile(apiUrl: string) {
   const envVariables = {
     LOCAL_LOGIN: "false",
     API_REGION: region,
@@ -27,7 +24,7 @@ export async function writeLocalUiEnvFile(
     COGNITO_REDIRECT_SIGNOUT: "http://localhost:3000/postLogout",
     POST_SIGNOUT_REDIRECT: "http://localhost:3000/",
     S3_ATTACHMENTS_BUCKET_REGION: "us-east-1",
-    S3_ATTACHMENTS_BUCKET_NAME: s3AttachmentsBucketName,
+    S3_ATTACHMENTS_BUCKET_NAME: process.env.S3_ATTACHMENTS_BUCKET_NAME,
     BRANCH_NAME: "local",
     REACT_APP_LD_SDK_CLIENT: process.env.REACT_APP_LD_SDK_CLIENT,
     STAGE: "local",

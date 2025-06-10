@@ -11,7 +11,7 @@ window.env = {
   COGNITO_REDIRECT_SIGNOUT: "{{applicationEndpointUrl}}postLogout",
   POST_SIGNOUT_REDIRECT: "{{redirectSignout}}",
   S3_ATTACHMENTS_BUCKET_REGION: "us-east-1",
-  S3_ATTACHMENTS_BUCKET_NAME: "{{s3AttachmentsBucketName}}",
+  S3_ATTACHMENTS_BUCKET_NAME: "{{attachmentsBucketName}}",
   BRANCH_NAME: "{{stage}}",
   REACT_APP_LD_SDK_CLIENT: "{{launchDarklyClient}}",
   STAGE: "{{stage}}",

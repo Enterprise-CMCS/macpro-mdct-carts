@@ -54,7 +54,7 @@ export const psUpload = handler(async (event, _context) => {
 
   // Pre-sign url
   const psurl = await s3.createPresignedPost({
-    Bucket: process.env.uploadS3BucketName,
+    Bucket: process.env.attachmentsBucketName,
     Key: awsFilename,
   });
   return { psurl };

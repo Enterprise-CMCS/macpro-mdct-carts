@@ -77,14 +77,7 @@ function updateEnvFiles() {
       stdio: "inherit",
     });
 
-    execSync(
-      "op inject -i services/ui-src/.env.tpl -o services/ui-src/.env -f",
-      { stdio: "inherit" }
-    );
     execSync("sed -i '' -e 's/# pragma: allowlist secret//g' .env");
-    execSync(
-      "sed -i '' -e 's/# pragma: allowlist secret//g' services/ui-src/.env"
-    );
   } catch {
     // eslint-disable-next-line no-console
     console.error("Failed to update .env files using 1Password CLI.");
@@ -98,7 +91,7 @@ async function run_fe_locally(runner: LabeledProcessRunner) {
     "ApiUrl"
   );
 
-  await writeLocalUiEnvFile(apiUrl!, "placeholder");
+  await writeLocalUiEnvFile(apiUrl!);
   runner.run_command_and_output("ui", ["npm", "start"], "services/ui-src");
 }
 
