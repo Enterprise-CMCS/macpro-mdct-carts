@@ -38,6 +38,7 @@ const SaveError = () => {
             aria-label="Close alert"
             className="hide-alert-button"
             onClick={() => setShowErrorAlert(false)}
+            aria-hidden={!showSaveErrorAlert}
           >
             X
           </button>
