@@ -318,6 +318,7 @@ async function deploy(options: { stage: string }) {
         "yarn",
         "cdk",
         "deploy",
+        "--verbose",
         "--context",
         `stage=${options.stage}`,
         "--method=direct",
