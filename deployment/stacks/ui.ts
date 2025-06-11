@@ -41,7 +41,7 @@ export function createUiComponents(props: CreateUiComponentsProps) {
     encryption: s3.BucketEncryption.S3_MANAGED,
     removalPolicy: RemovalPolicy.DESTROY,
     autoDeleteObjects: true,
-    enforceSSL: true,
+    // enforceSSL: true,
     blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
     versioned: false,
   });
