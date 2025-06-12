@@ -15,7 +15,7 @@ import { DynamoDBTableIdentifiers } from "../constructs/dynamodb-table";
 
 interface CreateApiComponentsProps {
   docraptorApiKey: string;
-  fiscalYearTemplateS3BucketName?: string;
+  fiscalYearTemplateS3BucketName: string;
   isDev: boolean;
   project: string;
   scope: Construct;
@@ -132,6 +132,13 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     method: "GET",
     requestParameters: ["year"],
     ...commonProps,
+    additionalPolicies: [
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        actions: ["s3:GetObject"],
+        resources: [`arn:aws:s3:::${fiscalYearTemplateS3BucketName}/*`],
+      }),
+    ],
   });
 
   new Lambda(scope, "getStateStatus", {
