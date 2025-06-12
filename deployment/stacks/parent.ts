@@ -29,7 +29,9 @@ export class ParentStack extends Stack {
       ...props,
     };
 
-    const attachmentsBucketName = `uploads-${stage}-attachments-${Aws.ACCOUNT_ID}`;
+    const attachmentsBucketName = isLocalStack
+      ? process.env.S3_ATTACHMENTS_BUCKET_NAME
+      : `uploads-${stage}-attachments-${Aws.ACCOUNT_ID}`;
     const fiscalYearTemplateBucketName = `uploads-${stage}-carts-download-${Aws.ACCOUNT_ID}`;
 
     const customResourceRole = createCustomResourceRole({ ...commonProps });
@@ -48,7 +50,14 @@ export class ParentStack extends Stack {
     const { apiGatewayRestApiUrl, restApiId } = createApiComponents({
       ...commonProps,
       tables,
-      attachmentsBucketName,
+      attachmentsBucketName: attachmentsBucketName!,
+      fiscalYearTemplateBucketName,
+    });
+
+    const attachmentsBucketArn = createUploadsComponents({
+      ...commonProps,
+      loggingBucket,
+      attachmentsBucketName: attachmentsBucketName!,
       fiscalYearTemplateBucketName,
     });
 
@@ -62,13 +71,6 @@ export class ParentStack extends Stack {
       return;
     }
 
-    createUploadsComponents({
-      ...commonProps,
-      loggingBucket,
-      attachmentsBucketName,
-      fiscalYearTemplateBucketName,
-    });
-
     const { applicationEndpointUrl, distribution, uiBucket } =
       createUiComponents({
         ...commonProps,
@@ -81,6 +83,7 @@ export class ParentStack extends Stack {
         applicationEndpointUrl,
         customResourceRole,
         restApiId,
+        attachmentsBucketArn,
       });
 
     deployFrontend({
@@ -95,7 +98,7 @@ export class ParentStack extends Stack {
       userPoolClientId,
       userPoolClientDomain: `${userPoolDomainName}.auth.${Aws.REGION}.amazoncognito.com`,
       customResourceRole,
-      attachmentsBucketName,
+      attachmentsBucketName: attachmentsBucketName!,
     });
 
     if (!isDev) {

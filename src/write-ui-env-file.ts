@@ -11,7 +11,6 @@ const region = "us-east-1";
 
 export async function writeLocalUiEnvFile(apiUrl: string) {
   const envVariables = {
-    LOCAL_LOGIN: "false",
     API_REGION: region,
     API_URL: apiUrl.replace("https", "http"),
     COGNITO_REGION: region,
@@ -21,11 +20,10 @@ export async function writeLocalUiEnvFile(apiUrl: string) {
     COGNITO_USER_POOL_CLIENT_DOMAIN:
       process.env.COGNITO_USER_POOL_CLIENT_DOMAIN,
     COGNITO_REDIRECT_SIGNIN: "http://localhost:3000/",
-    COGNITO_REDIRECT_SIGNOUT: "http://localhost:3000/postLogout",
+    COGNITO_REDIRECT_SIGNOUT: "http://localhost:3000/",
     POST_SIGNOUT_REDIRECT: "http://localhost:3000/",
     S3_ATTACHMENTS_BUCKET_REGION: "us-east-1",
     S3_ATTACHMENTS_BUCKET_NAME: process.env.S3_ATTACHMENTS_BUCKET_NAME,
-    BRANCH_NAME: "local",
     REACT_APP_LD_SDK_CLIENT: process.env.REACT_APP_LD_SDK_CLIENT,
     STAGE: "local",
   };

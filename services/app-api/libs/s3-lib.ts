@@ -10,25 +10,16 @@ import {
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { logger } from "./debug-lib";
 
-const localConfig = {
-  endpoint: process.env.S3_LOCAL_ENDPOINT,
-  region: "localhost",
-  forcePathStyle: true,
-  credentials: {
-    accessKeyId: "S3RVER", // pragma: allowlist secret
-    secretAccessKey: "S3RVER", // pragma: allowlist secret
-  },
-  logger,
-};
-
-const awsConfig = {
-  region: "us-east-1",
-  logger,
-};
-
 export const getConfig = () => {
-  return process.env.S3_LOCAL_ENDPOINT ? localConfig : awsConfig;
+  return {
+    // THIS CONFIG MUST KNOW DEV CREDENTIALS TO BE ABLE TO HIT REAL S3 we think...
+    region: "us-east-1",
+    logger,
+  };
 };
+
+// have addtional config if needed for localstack? with isLocalStack
+
 const client = new S3Client(getConfig());
 
 export default {
@@ -38,9 +29,8 @@ export default {
   createPresignedPost: (params: PutObjectRequest) =>
     getSignedUrl(client, new PutObjectCommand(params), { expiresIn: 600 }),
 
-  getSignedDownloadUrl: (params: GetObjectRequest, forcedAws = false) => {
-    let myClient = forcedAws ? new S3Client(awsConfig) : client;
-    return getSignedUrl(myClient, new GetObjectCommand(params), {
+  getSignedDownloadUrl: (params: GetObjectRequest) => {
+    return getSignedUrl(client, new GetObjectCommand(params), {
       expiresIn: 3600,
     });
   },
