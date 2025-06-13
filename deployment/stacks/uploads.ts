@@ -6,7 +6,6 @@ import {
   aws_iam as iam,
   aws_events as events,
   aws_events_targets as eventstargets,
-  aws_logs as logs,
   Duration,
   RemovalPolicy,
   Aws,
@@ -174,13 +173,6 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
     ...commonLambdaProps,
   }).lambda;
 
-  // Attach a log group for avScanLambda
-  new logs.LogGroup(scope, "AvScanLambdaLogGroup", {
-    logGroupName: `/aws/lambda/${avScanLambda.functionName}`,
-    retention: 14, // days
-    removalPolicy: isDev ? RemovalPolicy.DESTROY : RemovalPolicy.RETAIN,
-  });
-
   attachmentsBucket.addEventNotification(
     s3.EventType.OBJECT_CREATED,
     new s3notifications.LambdaDestination(avScanLambda)
@@ -241,6 +233,4 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
       value: fiscalYearTemplateBucket.bucketName,
     });
   }
-
-  return attachmentsBucket.bucketArn;
 }
