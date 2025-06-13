@@ -12,13 +12,10 @@ import { logger } from "./debug-lib";
 
 export const getConfig = () => {
   return {
-    // THIS CONFIG MUST KNOW DEV CREDENTIALS TO BE ABLE TO HIT REAL S3 we think...
     region: "us-east-1",
     logger,
   };
 };
-
-// have addtional config if needed for localstack? with isLocalStack
 
 const client = new S3Client(getConfig());
 

@@ -29,9 +29,7 @@ export class ParentStack extends Stack {
       ...props,
     };
 
-    const attachmentsBucketName = isLocalStack
-      ? process.env.S3_ATTACHMENTS_BUCKET_NAME
-      : `uploads-${stage}-attachments-${Aws.ACCOUNT_ID}`;
+    const attachmentsBucketName = `uploads-${stage}-attachments-${Aws.ACCOUNT_ID}`;
     const fiscalYearTemplateBucketName = `uploads-${stage}-carts-download-${Aws.ACCOUNT_ID}`;
 
     const customResourceRole = createCustomResourceRole({ ...commonProps });

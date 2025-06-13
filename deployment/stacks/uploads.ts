@@ -6,6 +6,7 @@ import {
   aws_iam as iam,
   aws_events as events,
   aws_events_targets as eventstargets,
+  aws_logs as logs,
   Duration,
   RemovalPolicy,
   Aws,
@@ -132,10 +133,7 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
       PATH_TO_AV_DEFINITIONS: "lambda/s3-antivirus/av-definitions",
     },
   };
-  /*
-   * what if i move uploads up and put an isLocalStack check here
-   * then I can autostamp the isLocalStack uploads with the clean stamp etc..........
-   */
+
   let clamAvLayer: lambda.ILayerVersion | undefined;
   if (!isLocalStack) {
     clamAvLayer = new lambda.LayerVersion(scope, "ClamAvLayer", {
@@ -175,6 +173,13 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
     layers: isLocalStack ? [] : [clamAvLayer!],
     ...commonLambdaProps,
   }).lambda;
+
+  // Attach a log group for avScanLambda
+  new logs.LogGroup(scope, "AvScanLambdaLogGroup", {
+    logGroupName: `/aws/lambda/${avScanLambda.functionName}`,
+    retention: 14, // days
+    removalPolicy: isDev ? RemovalPolicy.DESTROY : RemovalPolicy.RETAIN,
+  });
 
   attachmentsBucket.addEventNotification(
     s3.EventType.OBJECT_CREATED,

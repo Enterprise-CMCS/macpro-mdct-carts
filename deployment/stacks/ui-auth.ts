@@ -25,7 +25,6 @@ interface CreateUiAuthComponentsProps {
   secureCloudfrontDomainName?: string;
   userPoolDomainPrefix?: string;
   restApiId: string;
-  attachmentsBucketArn: string;
 }
 
 export function createUiAuthComponents(props: CreateUiAuthComponentsProps) {
@@ -41,7 +40,6 @@ export function createUiAuthComponents(props: CreateUiAuthComponentsProps) {
     secureCloudfrontDomainName,
     userPoolDomainPrefix,
     restApiId,
-    attachmentsBucketArn,
   } = props;
 
   const userPool = new cognito.UserPool(scope, "UserPool", {
@@ -192,12 +190,6 @@ export function createUiAuthComponents(props: CreateUiAuthComponentsProps) {
             resources: [
               `arn:aws:execute-api:${Aws.REGION}:${Aws.ACCOUNT_ID}:${restApiId}/*`,
             ],
-            effect: iam.Effect.ALLOW,
-          }),
-          // MAY NOT NEED THIS AND CHANGES IT TOOK TO MAKE IT HAPPEN
-          new iam.PolicyStatement({
-            actions: ["s3:*"],
-            resources: [`${attachmentsBucketArn}/*`],
             effect: iam.Effect.ALLOW,
           }),
         ],
