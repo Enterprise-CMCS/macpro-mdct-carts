@@ -15,14 +15,6 @@ jest.mock("@aws-sdk/s3-request-presigner", () => ({
 }));
 
 describe("S3 Library", () => {
-  let originalEndpoint: string | undefined;
-  beforeAll(() => {
-    originalEndpoint = process.env.S3_LOCAL_ENDPOINT;
-  });
-  afterAll(() => {
-    process.env.S3_LOCAL_ENDPOINT = originalEndpoint;
-  });
-
   beforeEach(() => {
     jest.clearAllMocks();
     s3ClientMock.reset();
@@ -48,7 +40,6 @@ describe("S3 Library", () => {
   });
 
   test("Can create presigned download URL", async () => {
-    process.env.S3_LOCAL_ENDPOINT = "mock endpoint";
     const url = await s3Lib.getSignedDownloadUrl({ Bucket: "b", Key: "k" });
 
     expect(url).toBe("mock signed url");
@@ -59,13 +50,7 @@ describe("S3 Library", () => {
   });
 
   test("Gives live AWS download URLs if requested", async () => {
-    process.env.S3_LOCAL_ENDPOINT = "mock endpoint";
-    expect(getConfig()).toHaveProperty("region", "localhost");
-
-    const url = await s3Lib.getSignedDownloadUrl(
-      { Bucket: "b", Key: "k" },
-      true
-    );
+    const url = await s3Lib.getSignedDownloadUrl({ Bucket: "b", Key: "k" });
 
     expect(url).toBe("mock signed url");
     // eslint-disable-next-line no-unused-vars
@@ -75,14 +60,7 @@ describe("S3 Library", () => {
     expect(command).toBeInstanceOf(GetObjectCommand);
   });
 
-  test("Uses local config when appropriate", () => {
-    process.env.S3_LOCAL_ENDPOINT = "mock endpoint";
-    const config = getConfig();
-    expect(config).toHaveProperty("region", "localhost");
-  });
-
   test("Uses AWS config when appropriate", () => {
-    delete process.env.S3_LOCAL_ENDPOINT;
     const config = getConfig();
     expect(config).toHaveProperty("region", "us-east-1");
   });
