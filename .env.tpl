@@ -5,7 +5,6 @@ COGNITO_IDENTITY_POOL_ID=op://mdct_devs/carts_secrets/COGNITO_IDENTITY_POOL_ID
 POST_SIGNOUT_REDIRECT=op://mdct_devs/carts_secrets/POST_SIGNOUT_REDIRECT
 REACT_APP_LD_SDK_CLIENT=op://mdct_devs/carts_secrets/REACT_APP_LD_SDK_CLIENT
 docraptorApiKey=op://mdct_devs/carts_secrets/docraptorApiKey # pragma: allowlist secret
-S3_ATTACHMENTS_BUCKET_NAME=op://mdct_devs/carts_secrets/S3_ATTACHMENTS_BUCKET_NAME
 
 # Used by scripts
 dynamoPrefix="localstack"

@@ -85,13 +85,16 @@ function updateEnvFiles() {
   }
 }
 
-async function run_fe_locally(runner: LabeledProcessRunner) {
+async function run_fe_locally(
+  runner: LabeledProcessRunner,
+  options: { stage: string }
+) {
   const apiUrl = await getCloudFormationStackOutputValue(
     "carts-localstack",
     "ApiUrl"
   );
 
-  await writeLocalUiEnvFile(apiUrl!);
+  await writeLocalUiEnvFile(apiUrl!, options.stage);
   runner.run_command_and_output("ui", ["npm", "start"], "services/ui-src");
 }
 
@@ -141,7 +144,7 @@ async function run_watch(options: { stage: string }) {
   await prepare_services(runner);
 
   run_cdk_watch(runner, options);
-  run_fe_locally(runner);
+  run_fe_locally(runner, options);
 }
 
 async function getCloudFormationStackOutputValue(
@@ -254,7 +257,7 @@ async function run_local() {
     ],
     "."
   );
-  run_fe_locally(runner);
+  run_fe_locally(runner, { stage: "localstack" });
 }
 
 async function install_deps(runner: LabeledProcessRunner, service: string) {

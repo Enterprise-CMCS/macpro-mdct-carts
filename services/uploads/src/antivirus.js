@@ -119,7 +119,7 @@ async function lambdaHandleEvent(event, _context) {
     utils.generateSystemMessage("Download File from S3");
     const filePath = await downloadFileFromS3(s3ObjectKey, s3ObjectBucket);
     utils.generateSystemMessage("Set virusScanStatus");
-    virusScanStatus = clamav.scanLocalFile(filePath, isLocalStack);
+    virusScanStatus = clamav.scanLocalFile(filePath);
     utils.generateSystemMessage(`virusScanStatus=${virusScanStatus}`);
   }
 
