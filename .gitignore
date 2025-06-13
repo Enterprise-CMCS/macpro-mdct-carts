@@ -22,6 +22,5 @@ package-lock.json
 /output
 /.cdk
 cdk.context.json
-/.serverless
 .qlty/*
 !.qlty/qlty.toml

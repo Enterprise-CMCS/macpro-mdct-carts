@@ -36,7 +36,7 @@ export const deleteUpload = handler(async (event, _context) => {
 
   // DELETE AWS
   var params = {
-    Bucket: process.env.uploadS3BucketName,
+    Bucket: process.env.attachmentsBucketName,
     Key: document.awsFilename,
   };
   await s3.deleteObject(params);
