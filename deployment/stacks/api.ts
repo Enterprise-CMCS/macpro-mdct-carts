@@ -85,6 +85,8 @@ export function createApiComponents(props: CreateApiComponentsProps) {
       tables.map((table) => [`${table.id}TableName`, table.name])
     ),
   };
+  if (isLocalStack)
+    environment["AWS_ENDPOINT_URL"] = process.env.AWS_ENDPOINT_URL;
 
   const commonProps = {
     stackName: `${service}-${stage}`,
