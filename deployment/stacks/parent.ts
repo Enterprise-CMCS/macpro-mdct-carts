@@ -52,7 +52,7 @@ export class ParentStack extends Stack {
       fiscalYearTemplateBucketName,
     });
 
-    const attachmentsBucketArn = createUploadsComponents({
+    createUploadsComponents({
       ...commonProps,
       loggingBucket,
       attachmentsBucketName: attachmentsBucketName!,
@@ -81,7 +81,6 @@ export class ParentStack extends Stack {
         applicationEndpointUrl,
         customResourceRole,
         restApiId,
-        attachmentsBucketArn,
       });
 
     deployFrontend({

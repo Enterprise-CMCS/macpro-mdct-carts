@@ -2,6 +2,7 @@ import handler from "../../libs/handler-lib";
 import dynamoDb from "../../libs/dynamodb-lib";
 import s3 from "../../libs/s3-lib";
 import { NotFoundError } from "../../libs/httpErrors";
+import { fixLocalstackUrl } from "./localstack";
 
 /**
  * Returns the report Sections associated with a given year and state
@@ -29,12 +30,12 @@ export const getSignedFileUrl = handler(async (event, _context) => {
   }
   const document = results.Items[0];
   // Pre-sign url
-  const url = await s3.getSignedDownloadUrl({
+  let psurl = await s3.getSignedDownloadUrl({
     Bucket: process.env.attachmentsBucketName,
     Key: document.awsFilename,
     ResponseContentDisposition: `attachment; filename = ${document.filename}`,
   });
-  return {
-    psurl: url,
-  };
+  psurl = fixLocalstackUrl(psurl);
+
+  return { psurl };
 });
