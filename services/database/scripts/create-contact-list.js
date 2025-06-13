@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /*
  * Local:
- *    `DYNAMODB_URL="http://localhost:8000" dynamoPrefix="local" year="2024" node services/database/scripts/create-contact-list.js`
+ *    DYNAMODB_URL="http://localhost:4566" year="2024" node services/database/scripts/create-contact-list.js
  *  Branch:
  *    dynamoPrefix="YOUR BRANCH NAME" year="2024" node services/database/scripts/create-contact-list.js
  */
@@ -14,7 +14,7 @@ const OUTPUT_DIR = "output";
 const isLocal = !!process.env.DYNAMODB_URL;
 
 const sectionTableName = isLocal
-  ? "local-section"
+  ? "localstack-section"
   : process.env.dynamoPrefix + "-section";
 
 if (!fs.existsSync(OUTPUT_DIR)) {

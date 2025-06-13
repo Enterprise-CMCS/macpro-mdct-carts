@@ -3,7 +3,7 @@ const { buildDynamoClient, scan, update } = require("./utils/dynamodb.js");
 
 const isLocal = !!process.env.DYNAMODB_URL;
 const sectionTableName = isLocal
-  ? "local-section"
+  ? "localstack-section"
   : process.env.dynamoPrefix + "-section";
 
 async function handler() {

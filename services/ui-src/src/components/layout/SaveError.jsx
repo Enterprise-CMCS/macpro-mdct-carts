@@ -1,24 +1,16 @@
+import React from "react";
 import { Alert } from "@cmsgov/design-system";
-import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 // utils
 import { selectHasError } from "../../store/save.selectors";
 
 const SaveError = () => {
   const saveError = useSelector((state) => selectHasError(state));
-  const [showSaveErrorAlert, setShowErrorAlert] = useState(saveError);
 
-  useEffect(() => {
-    setShowErrorAlert(saveError);
-  }, [saveError]);
-
-  return (
+  return saveError ? (
     <div
-      aria-hidden={!showSaveErrorAlert}
       aria-live="polite"
-      className={`alert--unexpected-error ${
-        showSaveErrorAlert ? "alert--unexpected-error__active" : ""
-      }`}
+      className={`alert--unexpected-error "alert--unexpected-error__active"`}
     >
       <Alert
         autoFocus
@@ -34,16 +26,11 @@ const SaveError = () => {
             browser. Before this issue is resolved, new changes may be lost if
             you continue to make edits or if you refresh your browser.
           </div>
-          <button
-            aria-label="Close alert"
-            className="hide-alert-button"
-            onClick={() => setShowErrorAlert(false)}
-          >
-            X
-          </button>
         </div>
       </Alert>
     </div>
+  ) : (
+    <></>
   );
 };
 

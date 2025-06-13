@@ -10,7 +10,7 @@ Any utilities shareable across scripts can be added to the [scripts/utils/](./sc
 
 - In one terminal tab start CARTS locally
 - In a new terminal tab, from CARTS root, run:
-  `DYNAMODB_URL="http://localhost:8000" dynamoPrefix="local" node services/database/scripts/{script_name}.js`
+  `DYNAMODB_URL="http://localhost:4566" node services/database/scripts/{script_name}.js`
 
 ### Running against a deployed instance:
 

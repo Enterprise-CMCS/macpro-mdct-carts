@@ -62,7 +62,6 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
     serverAccessLogsPrefix: `AWSLogs/${Aws.ACCOUNT_ID}/s3/`,
   });
 
-  // TODO: one or some of the lambdas need s3:GetObject permissions to this bucket
   let fiscalYearTemplateBucket: s3.IBucket | undefined;
   if (!isDev) {
     fiscalYearTemplateBucket = new s3.Bucket(

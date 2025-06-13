@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /*
  * Local:
- *    `DYNAMODB_URL="http://localhost:8000" dynamoPrefix="local" node services/database/scripts/remove-readonly-in-section-3c.js`
+ *    DYNAMODB_URL="http://localhost:4566" node services/database/scripts/remove-readonly-in-section-3c.js
  *  Branch:
  *    dynamoPrefix="YOUR BRANCH NAME" node services/database/scripts/remove-readonly-in-section-3c.js
  */
@@ -11,7 +11,7 @@ const { buildDynamoClient, scan, update } = require("./utils/dynamodb.js");
 const isLocal = !!process.env.DYNAMODB_URL;
 
 const sectionTable = isLocal
-  ? "local-section"
+  ? "localstack-section"
   : process.env.dynamoPrefix + "-section";
 
 async function handler() {
