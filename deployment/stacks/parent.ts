@@ -62,19 +62,18 @@ export class ParentStack extends Stack {
       return;
     }
 
-    const { attachmentsBucket, fiscalYearTemplateBucket } =
-      createUploadsComponents({
-        ...commonProps,
-        loggingBucket,
-        attachmentsBucketName,
-        fiscalYearTemplateBucketName,
-      });
+    const { attachmentsBucket } = createUploadsComponents({
+      ...commonProps,
+      loggingBucket,
+      attachmentsBucketName,
+      fiscalYearTemplateBucketName,
+    });
 
     const { apiGatewayRestApiUrl, restApiId } = createApiComponents({
       ...commonProps,
       tables,
       uploadS3BucketName: attachmentsBucketName,
-      fiscalYearTemplateS3BucketName: fiscalYearTemplateBucket?.bucketName,
+      fiscalYearTemplateS3BucketName: fiscalYearTemplateBucketName,
     });
 
     const { applicationEndpointUrl, distribution, uiBucket } =
