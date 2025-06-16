@@ -3033,7 +3033,7 @@
   dependencies:
     "@types/istanbul-lib-report" "*"
 
-"@types/jest-axe@^3.5.7":
+"@types/jest-axe@^3.5.9":
   version "3.5.9"
   resolved "https://registry.yarnpkg.com/@types/jest-axe/-/jest-axe-3.5.9.tgz#97b1317371a48707ca93825d4c990b0d07690d99"
   integrity sha512-z98CzR0yVDalCEuhGXXO4/zN4HHuSebAukXDjTLJyjEAgoUf1H1i+sr7SUB/mz8CRS/03/XChsx0dcLjHkndoQ==
@@ -3313,7 +3313,7 @@ axe-core@^3.5.5:
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-3.5.6.tgz#e762a90d7f6dbd244ceacb4e72760ff8aad521b5"
   integrity sha512-LEUDjgmdJoA3LqklSTwKYqkjcZ4HKc4ddIYGSAiSkr46NTjzg2L9RNB+lekO9P7Dlpa87+hBtzc2Fzn/+GUWMQ==
 
-axe-core@^4.4.1, axe-core@~4.10.3:
+axe-core@^4.10.3, axe-core@~4.10.3:
   version "4.10.3"
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.10.3.tgz#04145965ac7894faddbac30861e5d8f11bfd14fc"
   integrity sha512-Xm7bpRXnDSX2YE2YFfBk2FnF0ep6tmG7xPh8iHee8MIcrgq762Nkce856dYtJYLkuIoYZvGfTs/PbZhideTcEg==
