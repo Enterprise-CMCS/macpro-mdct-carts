@@ -20,14 +20,14 @@
     "aws-sdk-client-mock": "^4.1.0",
     "jest": "^29.7.0",
     "serverless-associate-waf": "^1.2.1",
-    "ts-jest": "^29.2.5",
-    "typescript": "^5.7.2"
+    "ts-jest": "^29.3.4",
+    "typescript": "^5.8.3"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.817.0",
-    "@aws-sdk/client-s3": "^3.817.0",
-    "@aws-sdk/lib-dynamodb": "^3.817.0",
-    "@aws-sdk/s3-request-presigner": "^3.817.0",
+    "@aws-sdk/client-dynamodb": "^3.823.0",
+    "@aws-sdk/client-s3": "^3.824.0",
+    "@aws-sdk/lib-dynamodb": "^3.823.0",
+    "@aws-sdk/s3-request-presigner": "^3.824.0",
     "dompurify": "^3.2.6",
     "jsdom": "^26.1.0",
     "jsonpath-plus": "^10.3.0",
