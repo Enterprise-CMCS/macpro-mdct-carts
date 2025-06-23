@@ -99,10 +99,10 @@ resources:
     IsProdCondition: !Equals
       - "production"
       - ${self:custom.stage}
-    FiscalYearCreateBucketCondition: !Or
-      - !Condition IsMainCondition
-      - !Condition IsValCondition
-      - !Condition IsProdCondition
+    # FiscalYearCreateBucketCondition: !Or
+    #   - !Condition IsMainCondition
+    #   - !Condition IsValCondition
+    #   - !Condition IsProdCondition
   Resources:
     AttachmentsBucket:
       Type: AWS::S3::Bucket
@@ -145,7 +145,7 @@ resources:
 
     FiscalYearTemplateBucket:
       Type: AWS::S3::Bucket
-      Condition: FiscalYearCreateBucketCondition
+      # Condition: FiscalYearCreateBucketCondition
       Properties:
         BucketName: !Sub ${self:service}-${self:custom.stage}-carts-download-${AWS::AccountId}
         BucketEncryption:
@@ -263,7 +263,7 @@ resources:
 
     FiscalYearTemplateBucketPolicy:
       Type: AWS::S3::BucketPolicy
-      Condition: FiscalYearCreateBucketCondition
+      # Condition: FiscalYearCreateBucketCondition
       Properties:
         Bucket: !Ref FiscalYearTemplateBucket
         PolicyDocument:
