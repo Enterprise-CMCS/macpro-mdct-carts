@@ -1,7 +1,6 @@
 SKIP_PREFLIGHT_CHECK=true
 LOCAL_LOGIN=true
 attachmentsBucketName=op://mdct_devs/carts_secrets/attachmentsBucketName
-fiscalYearTemplateBucketName=op://mdct_devs/carts_secrets/fiscalYearTemplateBucketName
 loggingBucket=op://mdct_devs/carts_secrets/loggingBucket
 COGNITO_USER_POOL_ID=op://mdct_devs/carts_secrets/COGNITO_USER_POOL_ID
 COGNITO_USER_POOL_CLIENT_ID=op://mdct_devs/carts_secrets/COGNITO_USER_POOL_CLIENT_ID

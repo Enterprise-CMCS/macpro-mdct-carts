@@ -19,18 +19,10 @@ interface CreateUploadsComponentsProps {
   loggingBucket: s3.IBucket;
   isDev: boolean;
   attachmentsBucketName: string;
-  fiscalYearTemplateBucketName: string;
 }
 
 export function createUploadsComponents(props: CreateUploadsComponentsProps) {
-  const {
-    scope,
-    stage,
-    loggingBucket,
-    isDev,
-    attachmentsBucketName,
-    fiscalYearTemplateBucketName,
-  } = props;
+  const { scope, stage, loggingBucket, isDev, attachmentsBucketName } = props;
   const service = "uploads";
 
   const attachmentsBucket = new s3.Bucket(scope, "AttachmentsBucket", {
@@ -61,35 +53,6 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
     serverAccessLogsBucket: loggingBucket,
     serverAccessLogsPrefix: `AWSLogs/${Aws.ACCOUNT_ID}/s3/`,
   });
-
-  let fiscalYearTemplateBucket: s3.IBucket | undefined;
-  if (!isDev) {
-    fiscalYearTemplateBucket = new s3.Bucket(
-      scope,
-      "FiscalYearTemplateBucket",
-      {
-        bucketName: fiscalYearTemplateBucketName,
-        encryption: s3.BucketEncryption.S3_MANAGED,
-        versioned: true,
-        removalPolicy: RemovalPolicy.RETAIN,
-        publicReadAccess: false,
-        blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
-        objectOwnership: s3.ObjectOwnership.BUCKET_OWNER_PREFERRED,
-        cors: [
-          {
-            allowedOrigins: ["*"],
-            allowedMethods: [s3.HttpMethods.GET],
-            allowedHeaders: ["*"],
-            exposedHeaders: ["ETag"],
-            maxAge: 3000,
-          },
-        ],
-        enforceSSL: true,
-        serverAccessLogsBucket: loggingBucket,
-        serverAccessLogsPrefix: `AWSLogs/${Aws.ACCOUNT_ID}/s3/`,
-      }
-    );
-  }
 
   const clamDefsBucket = new s3.Bucket(scope, "ClamDefsBucket", {
     bucketName: `${service}-${stage}-avscan-${Aws.ACCOUNT_ID}`,
@@ -224,14 +187,7 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
     value: attachmentsBucket.bucketName,
   });
 
-  if (fiscalYearTemplateBucket) {
-    new CfnOutput(scope, "FiscalYearTemplateBucketName", {
-      value: fiscalYearTemplateBucket.bucketName,
-    });
-  }
-
   return {
     attachmentsBucket,
-    fiscalYearTemplateBucket,
   };
 }

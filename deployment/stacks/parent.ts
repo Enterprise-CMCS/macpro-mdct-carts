@@ -30,7 +30,6 @@ export class ParentStack extends Stack {
     };
 
     const attachmentsBucketName = `uploads-${stage}-attachments-${Aws.ACCOUNT_ID}`;
-    const fiscalYearTemplateBucketName = `uploads-${stage}-carts-download-${Aws.ACCOUNT_ID}`;
 
     const customResourceRole = createCustomResourceRole({ ...commonProps });
 
@@ -50,7 +49,6 @@ export class ParentStack extends Stack {
         ...commonProps,
         tables,
         uploadS3BucketName: "placeholder",
-        fiscalYearTemplateS3BucketName: "placeholder",
       });
 
       /*
@@ -66,14 +64,12 @@ export class ParentStack extends Stack {
       ...commonProps,
       loggingBucket,
       attachmentsBucketName,
-      fiscalYearTemplateBucketName,
     });
 
     const { apiGatewayRestApiUrl, restApiId } = createApiComponents({
       ...commonProps,
       tables,
       uploadS3BucketName: attachmentsBucketName,
-      fiscalYearTemplateS3BucketName: fiscalYearTemplateBucketName,
     });
 
     const { applicationEndpointUrl, distribution, uiBucket } =

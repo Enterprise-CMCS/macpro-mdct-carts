@@ -40,26 +40,4 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
     serverAccessLogsBucket: loggingBucket,
     serverAccessLogsPrefix: `AWSLogs/${Aws.ACCOUNT_ID}/s3/`,
   });
-
-  new s3.Bucket(scope, "FiscalYearTemplateBucket", {
-    bucketName: `${service}-${stage}-carts-download-${Aws.ACCOUNT_ID}`,
-    encryption: s3.BucketEncryption.S3_MANAGED,
-    versioned: true,
-    removalPolicy: RemovalPolicy.RETAIN,
-    publicReadAccess: false,
-    blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
-    objectOwnership: s3.ObjectOwnership.BUCKET_OWNER_PREFERRED,
-    cors: [
-      {
-        allowedOrigins: ["*"],
-        allowedMethods: [s3.HttpMethods.GET],
-        allowedHeaders: ["*"],
-        exposedHeaders: ["ETag"],
-        maxAge: 3000,
-      },
-    ],
-    enforceSSL: true,
-    serverAccessLogsBucket: loggingBucket,
-    serverAccessLogsPrefix: `AWSLogs/${Aws.ACCOUNT_ID}/s3/`,
-  });
 }
