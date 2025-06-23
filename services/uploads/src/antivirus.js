@@ -86,7 +86,9 @@ async function downloadFileFromS3(s3ObjectKey, s3ObjectBucket) {
 }
 
 async function lambdaHandleEvent(event, _context) {
-  const isLocalStack = event.requestContext.accountId === "000000000000";
+  const isLocalStack =
+    process.env.AWS_ENDPOINT_URL &&
+    process.env.AWS_ENDPOINT_URL.includes("localhost");
   utils.generateSystemMessage("Start Antivirus Lambda function");
 
   let s3ObjectKey = utils.extractKeyFromS3Event(event);

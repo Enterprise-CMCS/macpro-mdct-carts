@@ -1,9 +1,15 @@
 export const fixLocalstackUrl = (url: string): string => {
-  if (!process.env.AWS_ENDPOINT_URL) return url;
+  /*
+   * const isLocalStack =
+   *   process.env.AWS_ENDPOINT_URL &&
+   *   process.env.AWS_ENDPOINT_URL.includes("localhost");
+   */
+  /*
+   * if (isLocalStack) {
+   * Replace internal Docker IP with localhost
+   * return url.replace(".localstack.cloud", "");
+   * }
+   */
 
-  // Replace internal Docker IP with localhost
-  return url.replace(
-    /http:\/\/172\.17\.0\.\d+:4566/,
-    process.env.AWS_ENDPOINT_URL
-  );
+  return url;
 };
