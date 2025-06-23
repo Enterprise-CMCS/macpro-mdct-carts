@@ -9,12 +9,22 @@ import {
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { logger } from "./debug-lib";
+import { isLocalStack } from "./localstack";
+
+const BASE_CONFIG = {
+  region: "us-east-1",
+  logger,
+};
 
 export const getConfig = () => {
-  return {
-    region: "us-east-1",
-    logger,
-  };
+  if (isLocalStack()) {
+    return {
+      endpoint: process.env.AWS_ENDPOINT_URL,
+      forcePathStyle: !!process.env.AWS_ENDPOINT_URL,
+      ...BASE_CONFIG,
+    };
+  }
+  return BASE_CONFIG;
 };
 
 const client = new S3Client(getConfig());

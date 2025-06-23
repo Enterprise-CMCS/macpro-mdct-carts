@@ -2,7 +2,7 @@ import handler from "../../libs/handler-lib";
 import dynamoDb from "../../libs/dynamodb-lib";
 import s3 from "../../libs/s3-lib";
 import { NotFoundError } from "../../libs/httpErrors";
-import { fixLocalstackUrl } from "./localstack";
+import { fixLocalstackUrl } from "../../libs/localstack";
 
 /**
  * Returns the report Sections associated with a given year and state

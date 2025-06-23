@@ -1,6 +1,7 @@
 import handler from "../../libs/handler-lib";
 import dynamoDb from "../../libs/dynamodb-lib";
 import s3 from "../../libs/s3-lib";
+import { fixLocalstackUrl } from "../../libs/localstack";
 import { getUserCredentialsFromJwt } from "../../libs/authorization";
 import { AppRoles } from "../../types";
 import { convertToDynamoExpression } from "../dynamoUtils/convertToDynamoExpressionVars";
@@ -57,5 +58,6 @@ export const psUpload = handler(async (event, _context) => {
     Bucket: process.env.attachmentsBucketName,
     Key: awsFilename,
   });
+  psurl = fixLocalstackUrl(psurl);
   return { psurl };
 });
