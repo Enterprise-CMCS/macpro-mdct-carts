@@ -1,7 +1,7 @@
 exclude: "seed-section-base-*"
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.0.1
+    rev: v5.0.0
     hooks:
       - id: check-added-large-files
   - repo: https://github.com/pre-commit/mirrors-eslint
@@ -11,6 +11,7 @@ repos:
         files: '\.[jt]sx?$' # *.js, *.jsx, *.ts and *.tsx
         types: [file]
         additional_dependencies:
+          - "@eslint/js@9.29.0"
           - "eslint@9.29.0"
           - "@typescript-eslint/parser"
           - "@typescript-eslint/eslint-plugin"
