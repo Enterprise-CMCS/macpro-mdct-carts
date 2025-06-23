@@ -15,25 +15,25 @@ import { DynamoDBTableIdentifiers } from "../constructs/dynamodb-table";
 
 interface CreateApiComponentsProps {
   docraptorApiKey: string;
+  fiscalYearTemplateS3BucketName: string;
   isDev: boolean;
   project: string;
   scope: Construct;
   stage: string;
   tables: DynamoDBTableIdentifiers[];
   attachmentsBucketName: string;
-  fiscalYearTemplateBucketName: string;
 }
 
 export function createApiComponents(props: CreateApiComponentsProps) {
   const {
     docraptorApiKey,
+    fiscalYearTemplateS3BucketName,
     isDev,
     project,
     scope,
     stage,
     tables,
     attachmentsBucketName,
-    fiscalYearTemplateBucketName,
   } = props;
 
   const service = "app-api";
@@ -78,7 +78,7 @@ export function createApiComponents(props: CreateApiComponentsProps) {
   const environment = {
     stage,
     docraptorApiKey,
-    fiscalYearTemplateBucketName,
+    fiscalYearTemplateS3BucketName,
     attachmentsBucketName,
     NODE_OPTIONS: "--enable-source-maps",
     ...Object.fromEntries(
@@ -138,7 +138,7 @@ export function createApiComponents(props: CreateApiComponentsProps) {
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
         actions: ["s3:GetObject"],
-        resources: [`arn:aws:s3:::${fiscalYearTemplateBucketName}/*`],
+        resources: [`arn:aws:s3:::${fiscalYearTemplateS3BucketName}/*`],
       }),
     ],
   });

@@ -49,7 +49,7 @@ export class ParentStack extends Stack {
       ...commonProps,
       tables,
       attachmentsBucketName: attachmentsBucketName!,
-      fiscalYearTemplateBucketName,
+      fiscalYearTemplateS3BucketName: fiscalYearTemplateBucketName,
     });
 
     createUploadsComponents({

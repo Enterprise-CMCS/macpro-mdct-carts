@@ -11,7 +11,7 @@ export const getFiscalYearTemplateLink = handler(async (event, _context) => {
 
   const filename = ReportPdfs[year];
   const url = await s3.getSignedDownloadUrl({
-    Bucket: process.env.fiscalYearTemplateBucketName,
+    Bucket: process.env.fiscalYearTemplateS3BucketName,
     Key: filename,
     ResponseContentDisposition: `attachment; filename = ${filename}`,
   });
