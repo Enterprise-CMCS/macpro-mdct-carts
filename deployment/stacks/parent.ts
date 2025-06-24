@@ -48,14 +48,12 @@ export class ParentStack extends Stack {
       ...commonProps,
       tables,
       attachmentsBucketName: attachmentsBucketName!,
-      fiscalYearTemplateS3BucketName: fiscalYearTemplateBucketName,
     });
 
     createUploadsComponents({
       ...commonProps,
       loggingBucket,
       attachmentsBucketName: attachmentsBucketName!,
-      fiscalYearTemplateBucketName,
     });
 
     if (isLocalStack) {
