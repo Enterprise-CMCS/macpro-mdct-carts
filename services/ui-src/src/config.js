@@ -1,13 +1,9 @@
 //  @ts-nocheck
 
 export const configToExport = {
-  BRANCH_NAME: window.env.BRANCH_NAME,
   MAX_ATTACHMENT_SIZE: 5000000,
-  LOCAL_LOGIN: window.env.LOCAL_LOGIN,
-  IS_FEATURE_BRANCH: window.env.IS_FEATURE_BRANCH,
   REACT_APP_LD_SDK_CLIENT: window.env.REACT_APP_LD_SDK_CLIENT,
   s3: {
-    LOCAL_ENDPOINT: window.env.S3_LOCAL_ENDPOINT,
     REGION: window.env.S3_ATTACHMENTS_BUCKET_REGION,
     BUCKET: window.env.S3_ATTACHMENTS_BUCKET_NAME,
   },

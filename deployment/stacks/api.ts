@@ -20,7 +20,7 @@ interface CreateApiComponentsProps {
   scope: Construct;
   stage: string;
   tables: DynamoDBTableIdentifiers[];
-  uploadS3BucketName: string;
+  attachmentsBucketName: string;
 }
 
 export function createApiComponents(props: CreateApiComponentsProps) {
@@ -31,7 +31,7 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     scope,
     stage,
     tables,
-    uploadS3BucketName,
+    attachmentsBucketName,
   } = props;
 
   const service = "app-api";
@@ -82,6 +82,8 @@ export function createApiComponents(props: CreateApiComponentsProps) {
       tables.map((table) => [`${table.id}TableName`, table.name])
     ),
   };
+  if (isLocalStack)
+    environment["AWS_ENDPOINT_URL"] = process.env.AWS_ENDPOINT_URL;
 
   const commonProps = {
     stackName: `${service}-${stage}`,
@@ -177,7 +179,7 @@ export function createApiComponents(props: CreateApiComponentsProps) {
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
         actions: ["s3:PutObject"],
-        resources: [`arn:aws:s3:::${uploadS3BucketName}/*`],
+        resources: [`arn:aws:s3:::${attachmentsBucketName}/*`],
       }),
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
@@ -200,12 +202,12 @@ export function createApiComponents(props: CreateApiComponentsProps) {
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
         actions: ["s3:ListBucket"],
-        resources: [`arn:aws:s3:::${uploadS3BucketName}`],
+        resources: [`arn:aws:s3:::${attachmentsBucketName}`],
       }),
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
         actions: ["s3:GetObject"],
-        resources: [`arn:aws:s3:::${uploadS3BucketName}/*`],
+        resources: [`arn:aws:s3:::${attachmentsBucketName}/*`],
       }),
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
@@ -228,7 +230,7 @@ export function createApiComponents(props: CreateApiComponentsProps) {
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
         actions: ["s3:DeleteObject"],
-        resources: [`arn:aws:s3:::${uploadS3BucketName}/*`],
+        resources: [`arn:aws:s3:::${attachmentsBucketName}/*`],
       }),
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,

@@ -5,12 +5,12 @@
 [![Code Coverage](https://qlty.sh/badges/56366865-e4c7-43ff-9ee9-5a44fd29b0f2/test_coverage.svg)](https://qlty.sh/gh/Enterprise-CMCS/projects/macpro-mdct-carts)
 
 ## Integration Environment Deploy Status:
-| Branch  | Build Status |
-| ------------- | ------------- |
-| main  | ![deploy](https://github.com/Enterprise-CMCS/macpro-mdct-carts/actions/workflows/deploy.yml/badge.svg)  |
-| val  | ![deploy](https://github.com/Enterprise-CMCS/macpro-mdct-carts/actions/workflows/deploy.yml/badge.svg?branch=val)  |
-| production  | ![deploy](https://github.com/Enterprise-CMCS/macpro-mdct-carts/actions/workflows/deploy.yml/badge.svg?branch=production)  |
 
+| Branch     | Build Status                                                                                                             |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------ |
+| main       | ![deploy](https://github.com/Enterprise-CMCS/macpro-mdct-carts/actions/workflows/deploy.yml/badge.svg)                   |
+| val        | ![deploy](https://github.com/Enterprise-CMCS/macpro-mdct-carts/actions/workflows/deploy.yml/badge.svg?branch=val)        |
+| production | ![deploy](https://github.com/Enterprise-CMCS/macpro-mdct-carts/actions/workflows/deploy.yml/badge.svg?branch=production) |
 
 CARTS is the CMCS MDCT application for collecting state data related to coverage of CHIP state plans on an annual basis. The collected data assists CMCS in monitoring, managing, and better understanding Medicaid and CHIP programs.
 
@@ -29,7 +29,8 @@ _Note: The [`main`](https://github.com/Enterprise-CMCS/macpro-mdct-carts/tree/ma
 ## Quick Start
 
 ### Running MDCT Workspace Setup
-Team members are encouraged to setup all MDCT Products using the script located in the [MDCT Tools Repository](https://github.com/Enterprise-CMCS/macpro-mdct-tools). Please refer to the README for instructions running the MDCT Workspace Setup. After Running workspace setup team members can refer to the Running the project locally section below to proceed with running the application. 
+
+Team members are encouraged to setup all MDCT Products using the script located in the [MDCT Tools Repository](https://github.com/Enterprise-CMCS/macpro-mdct-tools). Please refer to the README for instructions running the MDCT Workspace Setup. After Running workspace setup team members can refer to the Running the project locally section below to proceed with running the application.
 
 ### One time only ( this is not needed if you've run the MDCT Workspace setup)
 
@@ -51,20 +52,15 @@ For local development there is a list of users that can be found at services/ui-
 
 ### DynamoDB locally
 
-In order to run dynamodb locally you will need to have java installed on your system. If not currently installed go here: https://java.com/en/download/ to download the latest version.
-
-If you want to a visual view of your dynamodb after the application is up and running you can install the dynamodb-admin tool from here: https://www.npmjs.com/package/dynamodb-admin
-
-- to run the dynamodb gui, run `DYNAMO_ENDPOINT=http://localhost:4566 dynamodb-admin` in a new terminal window
+Dynamo is run locally by localstack.
 
 ### Seed Data
 
 There are two mechanisms for seeding data.
 
-- Locally, seed data is controlled by the `database/serverless.yaml` seed section. Note the data is pulled from both the /seed and /seed-local folders.
+- Seed data is controlled by the `deployment/stacks/data.ts` seed section. Note the data is pulled from both the /seed (regardless of branch) and /seed-local (only on ephemeral branches) folders.
   - The seed and seed-local folders are just seperated for convention and clarity, they have no special behavior
-  - This relies on a serveless plugin for dynamo that does not work in deployed envs.
-- Seeding deployed environments is controlled with the seed lambda in the database service, and can be added to with the `handlers/seed/tables/index`, and pulling in data from the `data/seed` folder.
+- Seeding is done by the seed lambda in the database service, and can be added to with the `handlers/seed/tables/index`, and pulling in data from the `data/seed` folder.
   - This is useful for deploying data such as section base templates, and keeping it up to date with the code base.
   - Adding specific test seed data to environments may be useful for things like cypress tests. This can be accomplished with the test-tables directory, referencing the same seed-local tables if desired.
 
@@ -72,9 +68,7 @@ There are two mechanisms for seeding data.
 
 Local dev is configured in typescript project in `./src`. The entrypoint is `./src/run.ts`, it manages running the moving pieces locally: the API, the database, the filestore, and the frontend.
 
-Local dev is built around the Serverless plugin [`serverless-offline`](https://github.com/dherault/serverless-offline). `serverless-offline` runs an API gateway locally configured by `./services/app-api/serverless.yml` and hot reloads your lambdas on every save. The plugins [`serverless-dynamodb-local`](https://github.com/99x/serverless-dynamodb-local) and [`serverless-s3-local`](https://github.com/ar90n/serverless-s3-local) stand up the local db and local s3 in a similar fashion.
-
-When run locally, auth bypasses Cognito. The frontend mimics login in local storage with a mock user and sends an id in the `cognito-identity-id` header on every request. `serverless-offline` expects that and sets it as the cognitoId in the requestContext for your lambdas, just like Cognito would in AWS.
+It should be noted that while logged in as a state user, the download template button will not actually trigger a download of a fiscal year template in localhost, it will instead look at the main branches s3 bucket for the fiscal year template. The way the download is setup is that it is looking for an s3 bucket in main, val, or prod. Localhosting of the file is not supported.
 
 ## Adding a new Yearly Form
 
@@ -166,7 +160,7 @@ Most IDEs have a Prettier plugin that can be configured to run on file save. You
 
 ## Slack Webhooks
 
-This repository uses 3 webhooks to publish to  3 different channels all in CMS Slack.
+This repository uses 3 webhooks to publish to 3 different channels all in CMS Slack.
 
 - SLACK_WEBHOOK: This pubishes to the `macpro-mdct-carts-alerts` channel. Alerts published there are for deploy or test failures to the `main`, `val`, or `production` branches.
 
@@ -174,13 +168,26 @@ This repository uses 3 webhooks to publish to  3 different channels all in CMS S
 
 - PROD_RELEASE_SLACK_WEBHOOK: This is used to publish to the `mdct-prod-releases` channel upon successful release of CARTS to production.
 
-    - Webhooks are created by CMS tickets, populated into GitHub Secrets
+  - Webhooks are created by CMS tickets, populated into GitHub Secrets
 
 ## GitHub Actions Secret Management
-- Secrets are added to GitHub secrets by GitHub Admins 
+
+- Secrets are added to GitHub secrets by GitHub Admins
 - Development secrets are maintained in a 1Password vault
 
 ## Architecture
 
 TODO: Get an updated diagram
 ![Architecture Diagram](./.images/architecture.svg?raw=true)
+
+## CDK
+
+This project is built as a series of micro-services using the [CDK](https://aws.amazon.com/cdk/). CDK allows you to write typescript that compiles into CloudFormation Templates.
+
+### Configuration AWS Secrets Manager
+
+---
+
+Look in `deployment/deployment-config.ts` and look at the `DeploymentConfigProperties` interface which should give you a sense of which values are being injected into the app. The values must either be in `carts-default` secret or `carts-STAGE` to be picked up. The secrets are json objects so they contain multiple values each.
+
+No values should be specified in both secrets. Just don't do it. Ok if that did ever happen the stage value would supercede. But really I promise you don't need it.

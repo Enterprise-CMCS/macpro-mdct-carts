@@ -9,26 +9,24 @@ import {
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { logger } from "./debug-lib";
+import { isLocalStack } from "./localstack";
 
-const localConfig = {
-  endpoint: process.env.S3_LOCAL_ENDPOINT,
-  region: "localhost",
-  forcePathStyle: true,
-  credentials: {
-    accessKeyId: "S3RVER", // pragma: allowlist secret
-    secretAccessKey: "S3RVER", // pragma: allowlist secret
-  },
-  logger,
-};
-
-const awsConfig = {
+const BASE_CONFIG = {
   region: "us-east-1",
   logger,
 };
 
 export const getConfig = () => {
-  return process.env.S3_LOCAL_ENDPOINT ? localConfig : awsConfig;
+  if (isLocalStack()) {
+    return {
+      endpoint: process.env.AWS_ENDPOINT_URL,
+      forcePathStyle: !!process.env.AWS_ENDPOINT_URL,
+      ...BASE_CONFIG,
+    };
+  }
+  return BASE_CONFIG;
 };
+
 const client = new S3Client(getConfig());
 
 export default {
@@ -38,9 +36,8 @@ export default {
   createPresignedPost: (params: PutObjectRequest) =>
     getSignedUrl(client, new PutObjectCommand(params), { expiresIn: 600 }),
 
-  getSignedDownloadUrl: (params: GetObjectRequest, forcedAws = false) => {
-    let myClient = forcedAws ? new S3Client(awsConfig) : client;
-    return getSignedUrl(myClient, new GetObjectCommand(params), {
+  getSignedDownloadUrl: (params: GetObjectRequest) => {
+    return getSignedUrl(client, new GetObjectCommand(params), {
       expiresIn: 3600,
     });
   },

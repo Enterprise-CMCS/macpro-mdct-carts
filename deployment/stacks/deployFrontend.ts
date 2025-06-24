@@ -24,14 +24,14 @@ interface DeployFrontendProps {
   userPoolClientDomain: string;
   userPoolClientId: string;
   userPoolId: string;
-  s3AttachmentsBucketName: string;
+  attachmentsBucketName: string;
 }
 
 export function deployFrontend(props: DeployFrontendProps) {
   const {
     apiGatewayRestApiUrl,
     applicationEndpointUrl,
-    s3AttachmentsBucketName,
+    attachmentsBucketName,
     distribution,
     identityPoolId,
     launchDarklyClient,
@@ -51,24 +51,6 @@ export function deployFrontend(props: DeployFrontendProps) {
   execSync("SKIP_PREFLIGHT_CHECK=true yarn run build", {
     cwd: fullPath,
     stdio: "inherit",
-    env: {
-      ...process.env,
-      API_REGION: "us-east-1",
-      API_URL: apiGatewayRestApiUrl,
-      BRANCH_NAME: stage,
-      COGNITO_IDENTITY_POOL_ID: identityPoolId,
-      COGNITO_REDIRECT_SIGNIN: applicationEndpointUrl,
-      COGNITO_REDIRECT_SIGNOUT: applicationEndpointUrl + "postLogout",
-      COGNITO_REGION: "us-east-1",
-      COGNITO_USER_POOL_CLIENT_DOMAIN: userPoolClientDomain,
-      COGNITO_USER_POOL_CLIENT_ID: userPoolClientId,
-      COGNITO_USER_POOL_ID: userPoolId,
-      LOCAL_LOGIN: "false",
-      POST_SIGNOUT_REDIRECT: redirectSignout,
-      REACT_APP_LD_SDK_CLIENT: launchDarklyClient,
-      S3_ATTACHMENTS_BUCKET_NAME: s3AttachmentsBucketName,
-      S3_ATTACHMENTS_BUCKET_REGION: "us-east-1",
-    },
   });
 
   const deploymentRole = new iam.Role(scope, "BucketDeploymentRole", {
@@ -126,7 +108,7 @@ export function deployFrontend(props: DeployFrontendProps) {
       substitutions: {
         apiGatewayRestApiUrl,
         applicationEndpointUrl,
-        s3AttachmentsBucketName,
+        attachmentsBucketName,
         identityPoolId,
         launchDarklyClient,
         redirectSignout,

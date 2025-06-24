@@ -43,7 +43,7 @@ describe("Test Delete Upload Handler", () => {
       ...testEvent,
       pathParameters: { year: "2022", state: "AL", fileId: "uniqueIdString" },
     };
-    process.env.uploadS3BucketName = "fakeBucket";
+    process.env.attachmentsBucketName = "fakeBucket";
 
     const res = await deleteUpload(event, null);
 

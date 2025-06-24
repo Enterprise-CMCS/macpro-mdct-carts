@@ -44,13 +44,21 @@ export class ParentStack extends Stack {
       customResourceRole,
     });
 
-    if (isLocalStack) {
-      createApiComponents({
-        ...commonProps,
-        tables,
-        uploadS3BucketName: "placeholder",
-      });
+    const { apiGatewayRestApiUrl, restApiId } = createApiComponents({
+      ...commonProps,
+      tables,
+      attachmentsBucketName: attachmentsBucketName!,
+      fiscalYearTemplateS3BucketName: fiscalYearTemplateBucketName,
+    });
 
+    createUploadsComponents({
+      ...commonProps,
+      loggingBucket,
+      attachmentsBucketName: attachmentsBucketName!,
+      fiscalYearTemplateBucketName,
+    });
+
+    if (isLocalStack) {
       /*
        * For local dev, the LocalStack container will host the database and API.
        * The UI will self-host, so we don't need to tell CDK anything about it.
@@ -59,18 +67,6 @@ export class ParentStack extends Stack {
        */
       return;
     }
-
-    const { attachmentsBucket } = createUploadsComponents({
-      ...commonProps,
-      loggingBucket,
-      attachmentsBucketName,
-    });
-
-    const { apiGatewayRestApiUrl, restApiId } = createApiComponents({
-      ...commonProps,
-      tables,
-      uploadS3BucketName: attachmentsBucketName,
-    });
 
     const { applicationEndpointUrl, distribution, uiBucket } =
       createUiComponents({
@@ -83,7 +79,6 @@ export class ParentStack extends Stack {
         ...commonProps,
         applicationEndpointUrl,
         customResourceRole,
-        attachmentsBucketArn: attachmentsBucket!.bucketArn,
         restApiId,
       });
 
@@ -99,7 +94,7 @@ export class ParentStack extends Stack {
       userPoolClientId,
       userPoolClientDomain: `${userPoolDomainName}.auth.${Aws.REGION}.amazoncognito.com`,
       customResourceRole,
-      s3AttachmentsBucketName: attachmentsBucket!.bucketName,
+      attachmentsBucketName: attachmentsBucketName!,
     });
 
     if (!isDev) {
