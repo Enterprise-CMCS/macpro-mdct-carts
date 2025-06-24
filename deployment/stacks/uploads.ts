@@ -11,6 +11,7 @@ import {
   Aws,
   CfnOutput,
 } from "aws-cdk-lib";
+import { isLocalStack } from "../local/util";
 import { Lambda } from "../constructs/lambda";
 
 interface CreateUploadsComponentsProps {
@@ -132,33 +133,45 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
     },
   };
 
-  const clamAvLayer = new lambda.LayerVersion(scope, "ClamAvLayer", {
-    layerVersionName: `${service}-${stage}-clamDefs`,
-    code: lambda.Code.fromAsset("services/uploads/lambda_layer.zip"),
-    compatibleRuntimes: [lambda.Runtime.NODEJS_20_X],
-  });
+  let clamAvLayer: lambda.ILayerVersion | undefined;
+  if (!isLocalStack) {
+    clamAvLayer = new lambda.LayerVersion(scope, "ClamAvLayer", {
+      layerVersionName: `${service}-${stage}-clamDefs`,
+      code: lambda.Code.fromAsset("services/uploads/lambda_layer.zip"),
+      compatibleRuntimes: [lambda.Runtime.NODEJS_20_X],
+    });
+
+    const avDownloadDefinitionsLambda = new Lambda(
+      scope,
+      "AvDownloadDefinitionsLambda",
+      {
+        entry: "services/uploads/src/download-definitions.js",
+        handler: "lambdaHandleEvent",
+        memorySize: 3072,
+        timeout: Duration.seconds(300),
+        layers: [clamAvLayer],
+        ...commonLambdaProps,
+      }
+    ).lambda;
+
+    new events.Rule(scope, `schedule-av-download-definitions`, {
+      schedule: events.Schedule.cron({ minute: "15", hour: "1" }),
+      targets: [
+        new eventstargets.LambdaFunction(avDownloadDefinitionsLambda, {
+          retryAttempts: 2,
+        }),
+      ],
+    });
+  }
 
   const avScanLambda = new Lambda(scope, "AvScanLambda", {
     entry: "services/uploads/src/antivirus.js",
     handler: "lambdaHandleEvent",
     memorySize: 3008,
     timeout: Duration.seconds(300),
-    layers: [clamAvLayer],
+    layers: isLocalStack ? [] : [clamAvLayer!],
     ...commonLambdaProps,
   }).lambda;
-
-  const avDownloadDefinitionsLambda = new Lambda(
-    scope,
-    "AvDownloadDefinitionsLambda",
-    {
-      entry: "services/uploads/src/download-definitions.js",
-      handler: "lambdaHandleEvent",
-      memorySize: 3072,
-      timeout: Duration.seconds(300),
-      layers: [clamAvLayer],
-      ...commonLambdaProps,
-    }
-  ).lambda;
 
   attachmentsBucket.addEventNotification(
     s3.EventType.OBJECT_CREATED,
@@ -211,15 +224,6 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
     })
   );
 
-  new events.Rule(scope, `schedule-av-download-definitions`, {
-    schedule: events.Schedule.cron({ minute: "15", hour: "1" }),
-    targets: [
-      new eventstargets.LambdaFunction(avDownloadDefinitionsLambda, {
-        retryAttempts: 2,
-      }),
-    ],
-  });
-
   new CfnOutput(scope, "AttachmentsBucketName", {
     value: attachmentsBucket.bucketName,
   });
@@ -229,9 +233,4 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
       value: fiscalYearTemplateBucket.bucketName,
     });
   }
-
-  return {
-    attachmentsBucket,
-    fiscalYearTemplateBucket,
-  };
 }
