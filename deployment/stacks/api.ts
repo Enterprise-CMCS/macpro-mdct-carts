@@ -15,7 +15,6 @@ import { DynamoDBTableIdentifiers } from "../constructs/dynamodb-table";
 
 interface CreateApiComponentsProps {
   docraptorApiKey: string;
-  fiscalYearTemplateS3BucketName: string;
   isDev: boolean;
   project: string;
   scope: Construct;
@@ -27,7 +26,6 @@ interface CreateApiComponentsProps {
 export function createApiComponents(props: CreateApiComponentsProps) {
   const {
     docraptorApiKey,
-    fiscalYearTemplateS3BucketName,
     isDev,
     project,
     scope,
@@ -78,7 +76,6 @@ export function createApiComponents(props: CreateApiComponentsProps) {
   const environment = {
     stage,
     docraptorApiKey,
-    fiscalYearTemplateS3BucketName,
     attachmentsBucketName,
     NODE_OPTIONS: "--enable-source-maps",
     ...Object.fromEntries(
@@ -125,22 +122,6 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     method: "GET",
     requestParameters: ["year", "state"],
     ...commonProps,
-  });
-
-  new Lambda(scope, "getFiscalYearTemplateLink", {
-    entry: "services/app-api/handlers/fiscalYearTemplate/get.ts",
-    handler: "getFiscalYearTemplateLink",
-    path: "/fiscalYearTemplate/{year}",
-    method: "GET",
-    requestParameters: ["year"],
-    ...commonProps,
-    additionalPolicies: [
-      new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        actions: ["s3:GetObject"],
-        resources: [`arn:aws:s3:::${fiscalYearTemplateS3BucketName}/*`],
-      }),
-    ],
   });
 
   new Lambda(scope, "getStateStatus", {

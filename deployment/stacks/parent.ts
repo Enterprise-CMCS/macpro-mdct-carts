@@ -30,7 +30,6 @@ export class ParentStack extends Stack {
     };
 
     const attachmentsBucketName = `uploads-${stage}-attachments-${Aws.ACCOUNT_ID}`;
-    const fiscalYearTemplateBucketName = `uploads-${stage}-carts-download-${Aws.ACCOUNT_ID}`;
 
     const customResourceRole = createCustomResourceRole({ ...commonProps });
 
@@ -49,14 +48,12 @@ export class ParentStack extends Stack {
       ...commonProps,
       tables,
       attachmentsBucketName: attachmentsBucketName!,
-      fiscalYearTemplateS3BucketName: fiscalYearTemplateBucketName,
     });
 
     createUploadsComponents({
       ...commonProps,
       loggingBucket,
       attachmentsBucketName: attachmentsBucketName!,
-      fiscalYearTemplateBucketName,
     });
 
     if (isLocalStack) {
