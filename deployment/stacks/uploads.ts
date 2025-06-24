@@ -190,5 +190,4 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
   new CfnOutput(scope, "AttachmentsBucketName", {
     value: attachmentsBucket.bucketName,
   });
-
 }
