@@ -76,7 +76,7 @@ export function createApiComponents(props: CreateApiComponentsProps) {
   const environment = {
     stage,
     docraptorApiKey,
-    uploadS3BucketName,
+    attachmentsBucketName,
     NODE_OPTIONS: "--enable-source-maps",
     ...Object.fromEntries(
       tables.map((table) => [`${table.id}TableName`, table.name])
