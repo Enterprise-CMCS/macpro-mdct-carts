@@ -25,8 +25,8 @@ const Objective = ({ headerRef, objective, objectiveNumber, printView }) => {
       </div>
       <AccordionPanel>
         {children.map((q) => (
-          <div className="ds-c-choice__checkedChild">
-            <Question key={q.id} question={q} printView={printView} />
+          <div className="ds-c-choice__checkedChild" key={q.id}>
+            <Question question={q} printView={printView} />
           </div>
         ))}
       </AccordionPanel>
