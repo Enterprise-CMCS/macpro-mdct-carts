@@ -6,6 +6,8 @@ import { convertToDynamoExpression } from "../dynamoUtils/convertToDynamoExpress
 
 export const getStateStatus = handler(async (event, _context) => {
   const user = getUserCredentialsFromJwt(event);
+  // eslint-disable-next-line no-console
+  console.log("beep");
   if (user.role === AppRoles.STATE_USER && !!user.state) {
     // Return only the user's state
     const params = {
