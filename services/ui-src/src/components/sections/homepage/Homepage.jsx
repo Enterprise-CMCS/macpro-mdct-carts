@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import ReportItem from "./ReportItem";
 import TemplateDownload from "./TemplateDownload";
-import { getFiscalYearTemplate } from "../../../actions/download";
 import { REPORT_STATUS, STATUS_MAPPING, AppRoles } from "../../../types";
 
 function formatStateStatus(item) {
@@ -27,7 +26,11 @@ function formatStateStatus(item) {
   }
 }
 
-const Homepage = ({ reportStatus, getFiscalYearTemplateLink }) => {
+const Homepage = ({ reportStatus }) => {
+  const getFiscalYearTemplateLink = (year) => {
+    return `/templates/FFY_${year}_CARTS_Template.pdf`;
+  };
+
   return (
     <main className="homepage">
       <div className="ds-l-container">
@@ -71,15 +74,10 @@ const Homepage = ({ reportStatus, getFiscalYearTemplateLink }) => {
 };
 Homepage.propTypes = {
   reportStatus: PropTypes.object.isRequired,
-  getFiscalYearTemplateLink: PropTypes.func.isRequired,
 };
 
 const mapState = (state) => ({
   reportStatus: state.reportStatus,
 });
 
-const mapDispatch = {
-  getFiscalYearTemplateLink: getFiscalYearTemplate ?? {},
-};
-
-export default connect(mapState, mapDispatch)(Homepage);
+export default connect(mapState)(Homepage);

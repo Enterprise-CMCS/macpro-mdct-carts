@@ -11,6 +11,7 @@ import {
   Aws,
   CfnOutput,
 } from "aws-cdk-lib";
+import { isLocalStack } from "../local/util";
 import { Lambda } from "../constructs/lambda";
 
 interface CreateUploadsComponentsProps {
@@ -19,18 +20,10 @@ interface CreateUploadsComponentsProps {
   loggingBucket: s3.IBucket;
   isDev: boolean;
   attachmentsBucketName: string;
-  fiscalYearTemplateBucketName: string;
 }
 
 export function createUploadsComponents(props: CreateUploadsComponentsProps) {
-  const {
-    scope,
-    stage,
-    loggingBucket,
-    isDev,
-    attachmentsBucketName,
-    fiscalYearTemplateBucketName,
-  } = props;
+  const { scope, stage, loggingBucket, isDev, attachmentsBucketName } = props;
   const service = "uploads";
 
   const attachmentsBucket = new s3.Bucket(scope, "AttachmentsBucket", {
@@ -61,35 +54,6 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
     serverAccessLogsBucket: loggingBucket,
     serverAccessLogsPrefix: `AWSLogs/${Aws.ACCOUNT_ID}/s3/`,
   });
-
-  let fiscalYearTemplateBucket: s3.IBucket | undefined;
-  if (!isDev) {
-    fiscalYearTemplateBucket = new s3.Bucket(
-      scope,
-      "FiscalYearTemplateBucket",
-      {
-        bucketName: fiscalYearTemplateBucketName,
-        encryption: s3.BucketEncryption.S3_MANAGED,
-        versioned: true,
-        removalPolicy: RemovalPolicy.RETAIN,
-        publicReadAccess: false,
-        blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
-        objectOwnership: s3.ObjectOwnership.BUCKET_OWNER_PREFERRED,
-        cors: [
-          {
-            allowedOrigins: ["*"],
-            allowedMethods: [s3.HttpMethods.GET],
-            allowedHeaders: ["*"],
-            exposedHeaders: ["ETag"],
-            maxAge: 3000,
-          },
-        ],
-        enforceSSL: true,
-        serverAccessLogsBucket: loggingBucket,
-        serverAccessLogsPrefix: `AWSLogs/${Aws.ACCOUNT_ID}/s3/`,
-      }
-    );
-  }
 
   const clamDefsBucket = new s3.Bucket(scope, "ClamDefsBucket", {
     bucketName: `${service}-${stage}-avscan-${Aws.ACCOUNT_ID}`,
@@ -132,33 +96,45 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
     },
   };
 
-  const clamAvLayer = new lambda.LayerVersion(scope, "ClamAvLayer", {
-    layerVersionName: `${service}-${stage}-clamDefs`,
-    code: lambda.Code.fromAsset("services/uploads/lambda_layer.zip"),
-    compatibleRuntimes: [lambda.Runtime.NODEJS_20_X],
-  });
+  let clamAvLayer: lambda.ILayerVersion | undefined;
+  if (!isLocalStack) {
+    clamAvLayer = new lambda.LayerVersion(scope, "ClamAvLayer", {
+      layerVersionName: `${service}-${stage}-clamDefs`,
+      code: lambda.Code.fromAsset("services/uploads/lambda_layer.zip"),
+      compatibleRuntimes: [lambda.Runtime.NODEJS_20_X],
+    });
+
+    const avDownloadDefinitionsLambda = new Lambda(
+      scope,
+      "AvDownloadDefinitionsLambda",
+      {
+        entry: "services/uploads/src/download-definitions.js",
+        handler: "lambdaHandleEvent",
+        memorySize: 3072,
+        timeout: Duration.seconds(300),
+        layers: [clamAvLayer],
+        ...commonLambdaProps,
+      }
+    ).lambda;
+
+    new events.Rule(scope, `schedule-av-download-definitions`, {
+      schedule: events.Schedule.cron({ minute: "15", hour: "1" }),
+      targets: [
+        new eventstargets.LambdaFunction(avDownloadDefinitionsLambda, {
+          retryAttempts: 2,
+        }),
+      ],
+    });
+  }
 
   const avScanLambda = new Lambda(scope, "AvScanLambda", {
     entry: "services/uploads/src/antivirus.js",
     handler: "lambdaHandleEvent",
     memorySize: 3008,
     timeout: Duration.seconds(300),
-    layers: [clamAvLayer],
+    layers: isLocalStack ? [] : [clamAvLayer!],
     ...commonLambdaProps,
   }).lambda;
-
-  const avDownloadDefinitionsLambda = new Lambda(
-    scope,
-    "AvDownloadDefinitionsLambda",
-    {
-      entry: "services/uploads/src/download-definitions.js",
-      handler: "lambdaHandleEvent",
-      memorySize: 3072,
-      timeout: Duration.seconds(300),
-      layers: [clamAvLayer],
-      ...commonLambdaProps,
-    }
-  ).lambda;
 
   attachmentsBucket.addEventNotification(
     s3.EventType.OBJECT_CREATED,
@@ -211,27 +187,7 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
     })
   );
 
-  new events.Rule(scope, `schedule-av-download-definitions`, {
-    schedule: events.Schedule.cron({ minute: "15", hour: "1" }),
-    targets: [
-      new eventstargets.LambdaFunction(avDownloadDefinitionsLambda, {
-        retryAttempts: 2,
-      }),
-    ],
-  });
-
   new CfnOutput(scope, "AttachmentsBucketName", {
     value: attachmentsBucket.bucketName,
   });
-
-  if (fiscalYearTemplateBucket) {
-    new CfnOutput(scope, "FiscalYearTemplateBucketName", {
-      value: fiscalYearTemplateBucket.bucketName,
-    });
-  }
-
-  return {
-    attachmentsBucket,
-    fiscalYearTemplateBucket,
-  };
 }

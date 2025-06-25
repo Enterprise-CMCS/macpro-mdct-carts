@@ -1,6 +1,7 @@
 import handler from "../../libs/handler-lib";
 import dynamoDb from "../../libs/dynamodb-lib";
 import s3 from "../../libs/s3-lib";
+import { fixLocalstackUrl } from "../../libs/localstack";
 import { getUserCredentialsFromJwt } from "../../libs/authorization";
 import { AppRoles } from "../../types";
 import { convertToDynamoExpression } from "../dynamoUtils/convertToDynamoExpressionVars";
@@ -53,9 +54,10 @@ export const psUpload = handler(async (event, _context) => {
   await dynamoDb.update(params);
 
   // Pre-sign url
-  const psurl = await s3.createPresignedPost({
-    Bucket: process.env.uploadS3BucketName,
+  let psurl = await s3.createPresignedPost({
+    Bucket: process.env.attachmentsBucketName,
     Key: awsFilename,
   });
+  psurl = fixLocalstackUrl(psurl);
   return { psurl };
 });
