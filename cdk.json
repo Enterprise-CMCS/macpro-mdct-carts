@@ -1,6 +1,7 @@
 {
   "app": "npx tsx deployment/app.ts",
   "requireApproval": "never",
+  "output": ".cdk/cdk.out",
   "watch": {
     "hot": true,
     "include": ["**"],
