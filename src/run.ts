@@ -317,7 +317,7 @@ async function deploy(options: { stage: string }) {
         "deploy",
         "--context",
         `stage=${options.stage}`,
-        "--method=direct",
+        // "--method=direct",
         "--all",
       ],
       "."
