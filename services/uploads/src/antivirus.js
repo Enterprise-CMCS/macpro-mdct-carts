@@ -86,6 +86,9 @@ async function downloadFileFromS3(s3ObjectKey, s3ObjectBucket) {
 }
 
 async function lambdaHandleEvent(event, _context) {
+  const isLocalStack =
+    process.env.AWS_ENDPOINT_URL &&
+    process.env.AWS_ENDPOINT_URL.includes("localhost");
   utils.generateSystemMessage("Start Antivirus Lambda function");
 
   let s3ObjectKey = utils.extractKeyFromS3Event(event);
@@ -101,7 +104,9 @@ async function lambdaHandleEvent(event, _context) {
    * You need to verify that you are not getting too large a file
    * currently lambdas max out at 500MB storage.
    */
-  if (await isS3FileTooBig(s3ObjectKey, s3ObjectBucket)) {
+  if (isLocalStack) {
+    virusScanStatus = constants.STATUS_CLEAN_FILE;
+  } else if (await isS3FileTooBig(s3ObjectKey, s3ObjectBucket)) {
     virusScanStatus = constants.STATUS_SKIPPED_FILE;
     utils.generateSystemMessage(
       `S3 File is too big. virusScanStatus=${virusScanStatus}`

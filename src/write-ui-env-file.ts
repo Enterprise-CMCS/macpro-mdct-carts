@@ -9,12 +9,8 @@ const configFilePath = path.resolve(outputPath, "env-config.js");
 
 const region = "us-east-1";
 
-export async function writeLocalUiEnvFile(
-  apiUrl: string,
-  s3AttachmentsBucketName: string
-) {
+export async function writeLocalUiEnvFile(apiUrl: string, stage: string) {
   const envVariables = {
-    LOCAL_LOGIN: "false",
     API_REGION: region,
     API_URL: apiUrl.replace("https", "http"),
     COGNITO_REGION: region,
@@ -24,11 +20,10 @@ export async function writeLocalUiEnvFile(
     COGNITO_USER_POOL_CLIENT_DOMAIN:
       process.env.COGNITO_USER_POOL_CLIENT_DOMAIN,
     COGNITO_REDIRECT_SIGNIN: "http://localhost:3000/",
-    COGNITO_REDIRECT_SIGNOUT: "http://localhost:3000/postLogout",
+    COGNITO_REDIRECT_SIGNOUT: "http://localhost:3000/",
     POST_SIGNOUT_REDIRECT: "http://localhost:3000/",
     S3_ATTACHMENTS_BUCKET_REGION: "us-east-1",
-    S3_ATTACHMENTS_BUCKET_NAME: s3AttachmentsBucketName,
-    BRANCH_NAME: "local",
+    S3_ATTACHMENTS_BUCKET_NAME: `uploads-${stage}-attachments-000000000000`,
     REACT_APP_LD_SDK_CLIENT: process.env.REACT_APP_LD_SDK_CLIENT,
     STAGE: "local",
   };

@@ -3,9 +3,6 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "0 0 1 * *" # monthly on day 1
-  push:
-    branches:
-      - cmdct-4692
 
 permissions:
   contents: write
