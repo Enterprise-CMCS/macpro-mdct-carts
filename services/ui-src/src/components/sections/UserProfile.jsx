@@ -7,32 +7,30 @@ const UserProfile = () => {
     <div className="page-info ds-l-container">
       <div className="ds-l-row">
         <div className="ds-l-col--12">
-          <header>
-            <h1>User Profile</h1>
-          </header>
           <main className="main">
+            <h1>User Profile</h1>
             If any information is incorrect, please contact the{" "}
             <a href="mailto:mdct_help@cms.hhs.gov">mdct_help@cms.hhs.gov</a>.
-            <div className="profile-information">
+            <dl className="profile-information">
               <div>
-                <div>EUA Id: </div>
-                <div>{currentUser.username}</div>
+                <dt>EUA Id:</dt>
+                <dd>{currentUser.username}</dd>
               </div>
               <div>
-                <div>Name: </div>
-                <div>
+                <dt>Name:</dt>
+                <dd>
                   {currentUser.firstname} {currentUser.lastname}
-                </div>
+                </dd>
               </div>
               <div>
-                <div>Email: </div>
-                <div>{currentUser.email}</div>
+                <dt>Email:</dt>
+                <dd>{currentUser.email}</dd>
               </div>
               <div>
-                <div>Role: </div>
-                <div>{currentUser.role}</div>
+                <dt>Role:</dt>
+                <dd>{currentUser.role}</dd>
               </div>
-            </div>
+            </dl>
           </main>
         </div>
       </div>
