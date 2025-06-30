@@ -102,7 +102,7 @@ const SynthesizedTable = ({ question, tableTitle, printView }) => {
 };
 SynthesizedTable.propTypes = {
   question: PropTypes.object.isRequired,
-  tableTitle: PropTypes.string.isOptional,
+  tableTitle: PropTypes.string,
 };
 
 export default SynthesizedTable;

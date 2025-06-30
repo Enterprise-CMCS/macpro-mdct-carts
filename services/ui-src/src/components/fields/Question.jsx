@@ -57,14 +57,7 @@ Container.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const Question = ({
-  hideNumber,
-  question,
-  prevYear,
-  tableTitle,
-  printView,
-  ...props
-}) => {
+const Question = ({ hideNumber, question, prevYear, printView }) => {
   let Component = Text;
   if (questionTypes.has(question.type)) {
     Component = questionTypes.get(question.type);
@@ -134,15 +127,13 @@ const Question = ({
           />
         )}
         <Component
-          {...props}
-          id={props?.id || question?.id}
+          id={question?.id}
           label={""}
           hint={undefined}
           question={question}
           name={question.id}
           onChange={onChange}
           onClick={onClick}
-          tableTitle={tableTitle}
           disabled={
             prevYearDisabled ||
             pageDisable ||
