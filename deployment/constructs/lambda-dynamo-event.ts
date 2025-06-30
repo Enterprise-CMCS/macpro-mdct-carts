@@ -7,6 +7,7 @@ import {
 } from "aws-cdk-lib";
 import { DynamoDBTableIdentifiers } from "../constructs/dynamodb-table";
 import { isDefined } from "../utils/misc";
+import { LogLevel } from "aws-cdk-lib/aws-lambda-nodejs";
 
 interface LambdaDynamoEventProps
   extends Partial<lambda_nodejs.NodejsFunctionProps> {
@@ -81,6 +82,7 @@ export class LambdaDynamoEventSource extends Construct {
         minify: true,
         sourceMap: true,
         nodeModules: ["kafkajs"],
+        logLevel: LogLevel.INFO,
       },
       environment,
       ...restProps,
