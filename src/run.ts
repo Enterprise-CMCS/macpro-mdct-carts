@@ -319,6 +319,7 @@ async function deploy(options: { stage: string }) {
         `stage=${options.stage}`,
         "--method=direct",
         "--all",
+        "--force true",
       ],
       "."
     );
