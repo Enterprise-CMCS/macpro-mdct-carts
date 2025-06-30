@@ -25,7 +25,7 @@ export const determineDeploymentConfig = async (stage: string) => {
   const project = process.env.PROJECT!;
   const isDev =
     isLocalStack ||
-    !["main", "master", "val", "prod", "production"].includes(stage);
+    !["main", "master", "val", "valjon", "prod", "production"].includes(stage);
   const secretConfigOptions = {
     ...(await loadDefaultSecret(project, stage)),
     ...(await loadStageSecret(project, stage)),
