@@ -77,6 +77,7 @@ export class LambdaKafkaEventSource extends Construct {
       memorySize,
       role,
       bundling: {
+        forceDockerBundling: true,
         minify: true,
         sourceMap: true,
         nodeModules: ["kafkajs"],
