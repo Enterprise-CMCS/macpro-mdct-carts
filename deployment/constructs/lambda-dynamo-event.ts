@@ -78,6 +78,7 @@ export class LambdaDynamoEventSource extends Construct {
       memorySize,
       role,
       bundling: {
+        forceDockerBundling: true,
         minify: true,
         sourceMap: true,
         nodeModules: ["kafkajs"],
