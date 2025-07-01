@@ -24,7 +24,6 @@ const Checkbox = ({ onChange, question, ...props }) => {
           key={props.name + "-" + checkBoxValue + "-" + idx}
         >
           <input
-            {...props}
             aria-label={`Question: ${question.label}, Answer: ${label}`}
             id={`${props.name}-${checkBoxValue}`}
             key={checkBoxValue}

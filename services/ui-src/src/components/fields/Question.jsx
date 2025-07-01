@@ -63,7 +63,6 @@ const Question = ({
   prevYear,
   tableTitle,
   printView,
-  ...props
 }) => {
   let Component = Text;
   if (questionTypes.has(question.type)) {
@@ -134,8 +133,7 @@ const Question = ({
           />
         )}
         <Component
-          {...props}
-          id={props?.id || question?.id}
+          id={question?.id}
           label={""}
           hint={undefined}
           question={question}

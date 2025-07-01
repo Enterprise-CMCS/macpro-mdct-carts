@@ -86,7 +86,6 @@ const Text = ({ question, ...props }) => {
             (question.answer && question.answer.entry) || prevYearValue || ""
           }
           type="text"
-          {...props}
           disabled={!!props.disabled}
         />
       </div>
