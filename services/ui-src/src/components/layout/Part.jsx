@@ -61,9 +61,9 @@ const Part = ({ partId, partNumber, nestedSubsectionTitle, printView }) => {
       return (
         <>
           {text && <Text data-testid="part-text">{text}</Text>}
-          {questions.map((question) => (
+          {questions.map((question, index) => (
             <Question
-              key={question.id}
+              key={question.id || index}
               question={question}
               tableTitle={title}
               data-testid="part-question"
