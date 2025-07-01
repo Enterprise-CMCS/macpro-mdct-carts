@@ -125,16 +125,15 @@ const Question = ({
       <Container question={question}>
         {question.label && (
           <CMSLegend
+            id={fieldsetId || question.id}
             hideNumber={hideNumber}
             hint={question.hint}
-            id={fieldsetId || question.id}
             label={question.label}
             questionType={question.type}
           />
         )}
         <Component
           id={question?.id}
-          label={""}
           hint={undefined}
           question={question}
           name={question.id}

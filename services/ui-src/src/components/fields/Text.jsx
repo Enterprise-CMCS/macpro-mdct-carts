@@ -82,6 +82,8 @@ const Text = ({ question, ...props }) => {
             question.hint ? ` ${question.hint}` : ""
           }`}
           id={question.id}
+          label={""}
+          name={""}
           value={
             (question.answer && question.answer.entry) || prevYearValue || ""
           }
