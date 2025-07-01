@@ -48,7 +48,7 @@ jobs:
     needs:
       - endpoint
     # avoiding notifications for automated Snyk Pull Requests and draft pull requests
-    if: github.actor != 'mdct-github-service-account' && !github.event.pull_request.draft
+    if: github.actor != 'mdct-github-service-account' && github.actor != 'dependabot[bot]' && github.actor != 'github-actions[bot]' && !github.event.pull_request.draft
     steps:
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
