@@ -39,7 +39,7 @@ const CMSLegend = ({ hideNumber, hint, id, label, questionType }) => {
 CMSLegend.propTypes = {
   hideNumber: PropTypes.bool,
   hint: PropTypes.string,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string,
   label: PropTypes.string.isRequired,
   questionType: PropTypes.string.isRequired,
 };
