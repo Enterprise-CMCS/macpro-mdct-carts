@@ -148,7 +148,6 @@ const Question = ({
             (question.answer && question.answer.readonly) ||
             false
           }
-          categories={question.questionType === "ranges" && question.categories}
           prevYear={prevYear}
           printView={printView}
         />
