@@ -82,13 +82,12 @@ const Text = ({ question, ...props }) => {
             question.hint ? ` ${question.hint}` : ""
           }`}
           id={question.id}
-          label={question.label || ""}
+          label={props.label}
           value={
             (question.answer && question.answer.entry) || prevYearValue || ""
           }
           type="text"
           disabled={!!props.disabled}
-          {...props}
         />
       </div>
       <p className="print-text-area">
