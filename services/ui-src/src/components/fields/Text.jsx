@@ -81,13 +81,12 @@ const Text = ({ question, ...props }) => {
           aria-label={`${question.label}${
             question.hint ? ` ${question.hint}` : ""
           }`}
-          id={props.id || question.id}
-          label={props.label}
+          id={question.id}
           value={
             (question.answer && question.answer.entry) || prevYearValue || ""
           }
           type="text"
-          onChange={props.onChange}
+          {...props}
           disabled={!!props.disabled}
         />
       </div>

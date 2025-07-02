@@ -63,6 +63,7 @@ const Question = ({
   prevYear,
   tableTitle,
   printView,
+  ...props
 }) => {
   let Component = Text;
   if (questionTypes.has(question.type)) {
@@ -120,20 +121,31 @@ const Question = ({
   // Check if question should be shown based on pathname
   const pageDisable = showQuestionByPath(window.location.pathname);
 
+  function questionProps(questionType) {
+    switch (questionType) {
+      case "fieldset":
+      case "integer":
+        return { prevYear };
+      default:
+        return {};
+    }
+  }
+
   return (
     <div className="question">
       <Container question={question}>
         {question.label && (
           <CMSLegend
-            id={fieldsetId || question.id}
             hideNumber={hideNumber}
             hint={question.hint}
+            id={fieldsetId || question.id}
             label={question.label}
             questionType={question.type}
           />
         )}
         <Component
-          id={question?.id}
+          {...props}
+          {...questionProps(question.type)}
           label={""}
           hint={undefined}
           question={question}
@@ -148,7 +160,6 @@ const Question = ({
             (question.answer && question.answer.readonly) ||
             false
           }
-          prevYear={prevYear}
           printView={printView}
         />
 
