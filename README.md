@@ -74,6 +74,21 @@ It should be noted that while logged in as a state user, the download template b
 
 Refer to [this walkthrough](services/database/YEARLY_UPDATE.md) for steps to take when adding a new annual form.
 
+## FMAP and ACS Data
+
+### Where to find the data
+Each year, the FMAP and ACS data needs to be updated. Updates to the federal Register happen around November each year and report the upcoming year, while the ACS numbers tend to come in around October and report on the prior year. 
+
+FMAP numbers can be found on the [federal register website](https://www.federalregister.gov/), and will look like [this document here](https://www.federalregister.gov/documents/2023/11/21/2023-25636/federal-financial-participation-in-state-assistance-expenditures-federal-matching-shares-for). You can search for the latest update by grabing the title of the document, "Federal Financial Particiaption in State Assistance Expenditures", and use the search feature on the site to find the latest updates. If you scroll down the page after opening the document, you'll find the a long table with 3 columns: State, Federal medical assistance percentages (FMAP) and the Enhanced federal medical assistance percentages (EFMAP). CARTS uses this right most column, the Enhanced federal medical assitance percentages.
+
+ACS Data can be found in a similar way. This data lives in the [census.gov website](https://www.census.gov/), and will post updated numbers every year at [this link](https://www.census.gov/data/tables/time-series/demo/health-insurance/acs-hi.html). On this site, you'll look for the heading HI-10_ACS, of which has a link for "Table HI10_ACS Number and Percent of Children Under 19 Below 200% of Poverty by Health Insurance Coverage and State". Opening that document up, you'll find we're using the numbers from columns D-G.
+
+### How it works
+In this repo theres 2 files that store updated ACS and FMAP numbers, the seed-acs-{enterYearHere}.json and the seed-fmap.json, both of which are located in the services/database/data/seed folder. Following the [how to update guide](services/database/YEARLY_UPDATE.md), you'll update these folders with the relevant data. When this happens, the seedrunner will trigger a lambda when the instance gets deployed to the main/val/prod environments. This is what calls our seed script and updates the dynamoDB tables with the ACS and FMAP numbers. After that, the user will open a report which will call on this table by passing it the reports year and state, and the table will return with the associated numbers for that report. The specific files that all of this is happening in are: The (data.ts file)[deployment/stacks/data.ts], the (seed.js file)[services/database/handlers/seed/seed.js], and the [seedRunner file](services/database/handlers/seed/services/seedRunner.js).
+
+### How to update the FMAP and ACS data
+Refer to [the yearly update walkthrough](services/database/YEARLY_UPDATE.md) for steps to take when working to update this data.
+
 ## SEDS Data
 
 SEDS CHIP Data regarding enrollment counts is populated into Section 2 Part 1.
