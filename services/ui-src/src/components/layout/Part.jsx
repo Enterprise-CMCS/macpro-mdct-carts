@@ -1,4 +1,5 @@
 import React from "react";
+import { v4 as uuidv4 } from "uuid";
 import { shallowEqual, useSelector } from "react-redux";
 import { Alert } from "@cmsgov/design-system";
 // components
@@ -63,7 +64,7 @@ const Part = ({ partId, partNumber, nestedSubsectionTitle, printView }) => {
           {text && <Text data-testid="part-text">{text}</Text>}
           {questions.map((question) => (
             <Question
-              key={question.id}
+              key={question.id || uuidv4()}
               question={question}
               tableTitle={title}
               data-testid="part-question"
