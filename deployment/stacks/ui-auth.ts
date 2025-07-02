@@ -24,7 +24,6 @@ interface CreateUiAuthComponentsProps {
   bootstrapUsersPassword?: string;
   secureCloudfrontDomainName?: string;
   userPoolDomainPrefix?: string;
-  attachmentsBucketArn: string;
   restApiId: string;
 }
 
