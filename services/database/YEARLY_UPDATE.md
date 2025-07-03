@@ -167,7 +167,7 @@ CARTS uses a separate handler to seed the FMAP and ACS Data. FMAP follows a simi
 ]
 ```
 
-5. Create and PR and deploy the application
+5. Merge this change and deploy the application
 6. Open the deployed instance 
 7. Open up an associated year's report
 8. Navigate to Section 5, Part 2 Table 3 (Federal and State Shares Table)
