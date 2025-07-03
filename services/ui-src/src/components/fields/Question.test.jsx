@@ -39,47 +39,78 @@ const store = mockStore({
   },
 });
 
-const TestComponent = (props) => (
-  <Provider store={store}>
-    <Question {...props} />
-  </Provider>
-);
+const baseProps = {
+  hideNumber: false,
+  prevYear: { value: 10 },
+  printView: false,
+  tableTitle: "",
+};
+
+const renderWithStore = (props) =>
+  render(
+    <Provider store={store}>
+      <Question {...props} />
+    </Provider>
+  );
+
+const mockComponent = (path, spyFn) => {
+  jest.doMock(path, () => ({
+    __esModule: true,
+    default: function Mocked(props) {
+      spyFn(props);
+      return <div />;
+    },
+  }));
+};
+
+const checkboxQuestion = {
+  type: "checkbox",
+  id: "1",
+  label: "Mock checkbox question",
+  name: "mock-checkbox",
+  answer: {
+    options: [
+      {
+        label: "Mock checkbox answer",
+        value: "mock-checkbox-answer",
+      },
+    ],
+  },
+};
+
+const integerQuestion = {
+  type: "integer",
+  id: "2",
+  label: "Mock integer question",
+  answer: { entry: 12345 },
+};
+
+const textQuestion = {
+  type: "text",
+  id: "3",
+  label: "Mock text question",
+  answer: { entry: "Mock answer" },
+};
 
 describe("<Question />", () => {
   describe("Text question", () => {
     const props = {
-      hideNumber: false,
-      question: {
-        type: "text",
-        id: "1",
-        label: "Mock text question",
-        answer: { entry: "Mock answer" },
-      },
-      prevYear: { value: 10 },
-      tableTitle: "",
-      printView: false,
+      ...baseProps,
+      question: textQuestion,
     };
 
-    test("renders", () => {
-      render(<TestComponent {...props} />);
+    test("renders Text", () => {
+      renderWithStore(props);
       const input = screen.getByRole("textbox", { name: "Mock text question" });
       expect(input).toHaveValue("Mock answer");
     });
 
     test("renders without prevYear prop", () => {
       const textPropSpy = jest.fn();
-
-      jest.doMock("./Text", () => ({
-        __esModule: true,
-        default: function MockTextComponent(props) {
-          textPropSpy(props);
-          return <div data-testid="mocked-child" />;
-        },
-      }));
+      mockComponent("./Text", textPropSpy);
 
       jest.isolateModules(() => {
         const MockQuestion = require("./Question").default;
-
         render(
           <Provider store={store}>
             <MockQuestion {...props} />
@@ -97,41 +128,25 @@ describe("<Question />", () => {
 
   describe("Integer question", () => {
     const props = {
-      hideNumber: false,
-      question: {
-        type: "integer",
-        id: "2",
-        label: "Mock integer question",
-        answer: { entry: 0 },
-      },
-      prevYear: { value: 10 },
-      tableTitle: "",
-      printView: false,
+      ...baseProps,
+      question: integerQuestion,
     };
 
-    test("renders correctly", async () => {
-      render(<TestComponent {...props} />);
+    test("renders Integer", async () => {
+      renderWithStore(props);
       const group = screen.getByRole("group", {
-        name: "2. Mock integer question",
+        name: `${integerQuestion.id}. Mock integer question`,
       });
       const numberInput = within(group).getByRole("textbox");
-      expect(numberInput).toHaveValue("0");
+      expect(numberInput).toHaveValue("12345");
     });
 
     test("renders with prevYear prop", () => {
       const integerPropSpy = jest.fn();
-
-      jest.doMock("./Integer", () => ({
-        __esModule: true,
-        default: function MockTextComponent(props) {
-          integerPropSpy(props);
-          return <div data-testid="mocked-child" />;
-        },
-      }));
+      mockComponent("./Integer", integerPropSpy);
 
       jest.isolateModules(() => {
         const MockQuestion = require("./Question").default;
-
         render(
           <Provider store={store}>
             <MockQuestion {...props} />
@@ -149,65 +164,34 @@ describe("<Question />", () => {
 
   describe("Fieldset question", () => {
     const props = {
-      hideNumber: false,
+      ...baseProps,
       question: {
         type: "fieldset",
         fieldset_info: {},
-        questions: [
-          {
-            type: "text",
-            id: "1",
-            label: "Mock text question",
-            answer: { entry: "Mock answer" },
-          },
-          {
-            type: "integer",
-            id: "2",
-            label: "Mock integer question",
-            answer: { entry: 0 },
-          },
-        ],
+        questions: [textQuestion, integerQuestion],
       },
-      prevYear: { value: 10 },
-      tableTitle: "Mock fieldset title",
-      printView: false,
     };
 
-    test("renders correctly", async () => {
-      render(<TestComponent {...props} />);
+    test("renders Text and Integer", async () => {
+      renderWithStore(props);
       const input = screen.getByRole("textbox", { name: "Mock text question" });
       expect(input).toHaveValue("Mock answer");
 
       const group = screen.getByRole("group", {
-        name: "2. Mock integer question",
+        name: `${integerQuestion.id}. Mock integer question`,
       });
       const numberInput = within(group).getByRole("textbox");
-      expect(numberInput).toHaveValue("0");
+      expect(numberInput).toHaveValue("12345");
     });
 
-    test("renders Integer component with prevYear prop and Text without", () => {
+    test("renders Integer with prevYear prop and Text without", () => {
       const integerPropSpy = jest.fn();
       const textPropSpy = jest.fn();
-
-      jest.doMock("./Integer", () => ({
-        __esModule: true,
-        default: function MockTextComponent(props) {
-          integerPropSpy(props);
-          return <div data-testid="mocked-child" />;
-        },
-      }));
-
-      jest.doMock("./Text", () => ({
-        __esModule: true,
-        default: function MockTextComponent(props) {
-          textPropSpy(props);
-          return <div data-testid="mocked-child" />;
-        },
-      }));
+      mockComponent("./Integer", integerPropSpy);
+      mockComponent("./Text", textPropSpy);
 
       jest.isolateModules(() => {
         const MockQuestion = require("./Question").default;
-
         render(
           <Provider store={store}>
             <MockQuestion {...props} />
@@ -231,43 +215,16 @@ describe("<Question />", () => {
 
   describe("question with children", () => {
     const props = {
-      hideNumber: false,
+      ...baseProps,
       question: {
-        type: "checkbox",
-        id: "1",
-        label: "Mock checkbox question",
-        name: "mock-checkbox",
-        answer: {
-          options: [
-            {
-              label: "Mock checkbox answer",
-              value: "mock-checkbox-answer",
-            },
-          ],
-        },
-        questions: [
-          {
-            type: "text",
-            id: "2",
-            label: "Mock text question",
-            answer: { entry: "Mock answer" },
-          },
-          {
-            type: "integer",
-            id: "3",
-            label: "Mock integer question",
-            answer: { entry: 0 },
-          },
-        ],
+        ...checkboxQuestion,
+        questions: [textQuestion, integerQuestion],
       },
-      prevYear: { value: 10 },
-      tableTitle: "",
-      printView: false,
     };
 
     test("renders correctly", async () => {
       useDispatch.mockReturnValue(mockDispatch);
-      render(<TestComponent {...props} />);
+      renderWithStore(props);
 
       const checkbox = screen.getByRole("checkbox", {
         name: "Question: Mock checkbox question, Answer: Mock checkbox answer",
@@ -285,10 +242,10 @@ describe("<Question />", () => {
       expect(mockDispatch).toHaveBeenCalled();
 
       const group = screen.getByRole("group", {
-        name: "3. Mock integer question",
+        name: `${integerQuestion.id}. Mock integer question`,
       });
       const numberInput = within(group).getByRole("textbox");
-      expect(numberInput).toHaveValue("0");
+      expect(numberInput).toHaveValue("12345");
     });
   });
 });
