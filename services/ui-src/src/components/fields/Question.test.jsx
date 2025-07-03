@@ -79,7 +79,6 @@ const baseProps = {
   hideNumber: false,
   prevYear: { value: 10 },
   printView: false,
-  tableTitle: "",
 };
 
 const checkboxQuestion = {
