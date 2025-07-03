@@ -34,7 +34,7 @@ const Objective = ({ headerRef, objective, objectiveNumber, printView }) => {
   );
 };
 Objective.propTypes = {
-  headerRef: PropTypes.func.isRequired,
+  headerRef: PropTypes.object.isRequired,
   objective: PropTypes.object.isRequired,
   objectiveNumber: PropTypes.number.isRequired,
   printView: PropTypes.bool,
