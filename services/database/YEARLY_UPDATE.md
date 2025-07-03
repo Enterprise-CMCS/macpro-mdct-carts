@@ -169,6 +169,6 @@ CARTS uses a separate handler to seed the FMAP and ACS Data. FMAP follows a simi
 
 5. Create and PR and deploy the application
 6. Open the deployed instance 
-7. Open up a associated year's report
+7. Open up an associated year's report
 8. Navigate to Section 5, Part 2 Table 3 (Federal and State Shares Table)
 9. Using the seed-fmap.json file, note that the table here has the exact same numbers for 2025 as the seed file.
