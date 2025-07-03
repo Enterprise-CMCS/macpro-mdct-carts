@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useDispatch, Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
@@ -218,7 +218,7 @@ describe("<Question />", () => {
       expect(checkbox.value).toBe("mock-checkbox-answer");
       expect(checkbox).not.toBeChecked();
 
-      fireEvent.click(checkbox);
+      await userEvent.click(checkbox);
       expect(mockDispatch).toHaveBeenCalled();
 
       const input = screen.getByRole("textbox", { name: "Mock text question" });
