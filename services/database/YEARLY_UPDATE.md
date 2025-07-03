@@ -137,7 +137,7 @@ CARTS uses a separate handler to seed the FMAP and ACS Data. FMAP follows a simi
 1. Navigate to the services/database/data/seed folder
 2. Open the seed-fmap.json file 
 3. Add the data from the first table's rightmost column (The Enhanced federal medical assistance percentages). See prior heading for how to find this page.
-4. You'll note that like ACS, this uses and array of objects format. Unlike ACS, all the data is located in this one file. You'll simply append the newest years data to the bottom of the array. It should look something like this:
+4. Unlike ACS, all the data is located in this one file. Append the latest year's data to the bottom of the array. The format for this data is as follows:
 
 ```
 [
