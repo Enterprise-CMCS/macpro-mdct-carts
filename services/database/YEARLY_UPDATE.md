@@ -76,7 +76,7 @@ CARTS uses a separate handler to seed the FMAP and ACS Data. You'll need to do t
 
 1. Navigate to the services/database/data/seed folder
 2. Create a seed-acs-{enterYearHere}.json file (For example, you'd put seed-acs-2023) 
-3. In the seed-acs-2023 file, you will add the data from columns D-G in the ACS file (See prior heading on how to find this). It will go in an array of object format that looks like this:
+3. In the seed-acs-2023 file, you will add the data from columns D-G in the ACS file (See [the readme](../../README.md) on how to find this). It will go in an array of object format that looks like this:
 
 ```
 [
@@ -136,7 +136,7 @@ CARTS uses a separate handler to seed the FMAP and ACS Data. FMAP follows a simi
 
 1. Navigate to the services/database/data/seed folder
 2. Open the seed-fmap.json file 
-3. Add the data from the first table's rightmost column (The Enhanced federal medical assistance percentages). See prior heading for how to find this page.
+3. Add the data from the first table's rightmost column (The Enhanced federal medical assistance percentages). See [the readme](../../README.md) on how to find this
 4. Unlike ACS, all the data is located in this one file. Append the latest year's data to the bottom of the array. The format for this data is as follows:
 
 ```
@@ -171,4 +171,4 @@ CARTS uses a separate handler to seed the FMAP and ACS Data. FMAP follows a simi
 6. Open the deployed instance 
 7. Open up an associated year's report
 8. Navigate to Section 5, Part 2 Table 3 (Federal and State Shares Table)
-9. Using the seed-fmap.json file, note that the table here has the exact same numbers for 2025 as the seed file.
+9. Using the seed-fmap.json file, ensure that the table here displays the same numbers as the seed-fmap.json file.
