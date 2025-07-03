@@ -114,6 +114,16 @@ const Question = ({ hideNumber, question, prevYear, printView, ...props }) => {
   // Check if question should be shown based on pathname
   const pageDisable = showQuestionByPath(window.location.pathname);
 
+  function questionProps(questionType) {
+    switch (questionType) {
+      case "fieldset":
+      case "integer":
+        return { prevYear };
+      default:
+        return {};
+    }
+  }
+
   return (
     <div className="question">
       <Container question={question}>
@@ -128,6 +138,7 @@ const Question = ({ hideNumber, question, prevYear, printView, ...props }) => {
         )}
         <Component
           {...props}
+          {...questionProps(question.type)}
           id={props?.id || question?.id}
           label={""}
           hint={undefined}
@@ -142,7 +153,6 @@ const Question = ({ hideNumber, question, prevYear, printView, ...props }) => {
             (question.answer && question.answer.readonly) ||
             false
           }
-          prevYear={prevYear}
           printView={printView}
         />
 
