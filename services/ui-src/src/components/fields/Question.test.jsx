@@ -71,20 +71,21 @@ questionProps["checkbox_flag"] = {
   };
 });
 
-(questions["fieldset"] = {
+questions["fieldset"] = {
   ...questions["fieldset"],
   fieldset_info: {
     id: "mock-fieldset_info",
   },
   questions: [questions["integer"], questions["text"]],
-}),
-  (questions["daterange"] = {
-    ...questions["daterange"],
-    answer: {
-      entry: "Mock daterange answer",
-      labels: ["Mock daterange start", "Mock daterange end"],
-    },
-  });
+};
+
+questions["daterange"] = {
+  ...questions["daterange"],
+  answer: {
+    entry: "Mock daterange answer",
+    labels: ["Mock daterange start", "Mock daterange end"],
+  },
+};
 questionProps["daterange"] = {
   onChange: () => {},
 };
@@ -288,17 +289,49 @@ describe("<Question />", () => {
       question: {
         ...questions["integer"],
         id: `2025-${questionId}-a`,
-        answer: { entry: null },
       },
+      printView: true,
     };
 
-    test("renders Integer with prevYear value", async () => {
+    test("renders current value", () => {
+      renderQuestion(props);
+      const group = screen.getByRole("group", {
+        name: /Mock integer question/,
+      });
+      const numberInput = within(group).getByRole("textbox");
+      expect(numberInput).toHaveValue("5555555555");
+    });
+
+    test("renders current value with mask", () => {
+      props.question.answer = { entry: 10 };
+      props.question.mask = "lessThanEleven";
+      renderQuestion(props);
+      const group = screen.getByRole("group", {
+        name: /Mock integer question/,
+      });
+      const numberInput = within(group).getByRole("textbox");
+      expect(numberInput).toHaveValue("<11");
+    });
+
+    test("renders prevYear value", () => {
+      props.question.answer = { entry: null };
+      props.question.mask = undefined;
       renderQuestion(props);
       const group = screen.getByRole("group", {
         name: /Mock integer question/,
       });
       const numberInput = within(group).getByRole("textbox");
       expect(numberInput).toHaveValue("10");
+    });
+
+    test("renders prevYear value with mask", () => {
+      props.question.mask = "lessThanEleven";
+      renderQuestion(props);
+      const group = screen.getByRole("group", {
+        name: /Mock integer question/,
+      });
+      const numberInput = within(group).getByRole("textbox");
+      expect(numberInput).toHaveValue("<11");
     });
   });
 
@@ -307,18 +340,6 @@ describe("<Question />", () => {
       ...baseProps,
       question: questions["fieldset"],
     };
-
-    test("renders Text and Integer", async () => {
-      renderQuestion(props);
-      const input = screen.getByRole("textbox", { name: "Mock text question" });
-      expect(input).toHaveValue("Mock text answer");
-
-      const group = screen.getByRole("group", {
-        name: /Mock integer question/,
-      });
-      const numberInput = within(group).getByRole("textbox");
-      expect(numberInput).toHaveValue("5555555555");
-    });
 
     test("renders Integer with prevYear prop and Text without", () => {
       mockComponent("./Integer", integerPropSpy);
@@ -346,7 +367,7 @@ describe("<Question />", () => {
       },
     };
 
-    test("renders correctly", async () => {
+    test("renders correctly", () => {
       renderQuestion(props);
 
       const checkbox = screen.getByRole("checkbox", {
