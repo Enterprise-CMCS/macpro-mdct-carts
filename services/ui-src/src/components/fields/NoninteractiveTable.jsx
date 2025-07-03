@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
 
-const NoninteractiveTable = ({ question, tableTitle }) => {
+const NoninteractiveTable = ({ question }) => {
   const columnWidth = 100 / question.fieldset_info.headers.length;
   // eslint-disable-next-line
   let percentLocation = [];
@@ -12,11 +12,7 @@ const NoninteractiveTable = ({ question, tableTitle }) => {
       <table
         className="ds-c-table"
         width="100%"
-        summary={
-          question.label ||
-          tableTitle ||
-          "This is a table for the CARTS Application"
-        }
+        summary={question.label || "This is a table for the CARTS Application"}
       >
         <thead>
           <tr>
@@ -150,7 +146,6 @@ const NoninteractiveTable = ({ question, tableTitle }) => {
 };
 NoninteractiveTable.propTypes = {
   question: PropTypes.object.isRequired,
-  tableTitle: PropTypes.string,
 };
 export { NoninteractiveTable };
 export default NoninteractiveTable;

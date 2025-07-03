@@ -57,14 +57,7 @@ Container.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const Question = ({
-  hideNumber,
-  question,
-  prevYear,
-  tableTitle,
-  printView,
-  ...props
-}) => {
+const Question = ({ hideNumber, question, prevYear, printView, ...props }) => {
   let Component = Text;
   if (questionTypes.has(question.type)) {
     Component = questionTypes.get(question.type);
@@ -121,6 +114,16 @@ const Question = ({
   // Check if question should be shown based on pathname
   const pageDisable = showQuestionByPath(window.location.pathname);
 
+  function questionProps(questionType) {
+    switch (questionType) {
+      case "fieldset":
+      case "integer":
+        return { prevYear };
+      default:
+        return {};
+    }
+  }
+
   return (
     <div className="question">
       <Container question={question}>
@@ -135,6 +138,7 @@ const Question = ({
         )}
         <Component
           {...props}
+          {...questionProps(question.type)}
           id={props?.id || question?.id}
           label={""}
           hint={undefined}
@@ -142,7 +146,6 @@ const Question = ({
           name={question.id}
           onChange={onChange}
           onClick={onClick}
-          tableTitle={tableTitle}
           disabled={
             prevYearDisabled ||
             pageDisable ||
@@ -150,7 +153,6 @@ const Question = ({
             (question.answer && question.answer.readonly) ||
             false
           }
-          prevYear={prevYear}
           printView={printView}
         />
 
@@ -179,7 +181,6 @@ Question.propTypes = {
   hideNumber: PropTypes.bool,
   question: PropTypes.object.isRequired,
   prevYear: PropTypes.object,
-  tableTitle: PropTypes.string,
   printView: PropTypes.bool,
 };
 Question.defaultProps = {
