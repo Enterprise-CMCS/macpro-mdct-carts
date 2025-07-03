@@ -200,7 +200,7 @@ describe("<Question />", () => {
     });
   });
 
-  describe("question with children", () => {
+  describe("Checkbox question with children", () => {
     const props = {
       ...baseProps,
       question: {
