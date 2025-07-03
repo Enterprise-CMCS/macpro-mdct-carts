@@ -77,7 +77,7 @@ Refer to [this walkthrough](services/database/YEARLY_UPDATE.md) for steps to tak
 ## FMAP and ACS Data
 
 ### Where to find the data
-Each year, the FMAP and ACS data needs to be updated. Updates to the federal Register happen around November each year and report the upcoming year, while the ACS numbers tend to come in around October and report on the prior year. 
+Each year, the FMAP and ACS data needs to be updated. Updates to the Federal Register happen around November each year and report the upcoming year, while the ACS numbers tend to come in around October and report on the prior year. 
 
 FMAP numbers can be found on the [federal register website](https://www.federalregister.gov/), and will look like [this document here](https://www.federalregister.gov/documents/2023/11/21/2023-25636/federal-financial-participation-in-state-assistance-expenditures-federal-matching-shares-for). You can search for the latest update by grabing the title of the document, "Federal Financial Particiaption in State Assistance Expenditures", and use the search feature on the site to find the latest updates. If you scroll down the page after opening the document, you'll find the a long table with 3 columns: State, Federal medical assistance percentages (FMAP) and the Enhanced federal medical assistance percentages (EFMAP). CARTS uses this right most column, the Enhanced federal medical assitance percentages.
 
