@@ -146,6 +146,7 @@ const Question = ({
         <Component
           {...props}
           {...questionProps(question.type)}
+          id={props?.id || question?.id}
           label={""}
           hint={undefined}
           question={question}

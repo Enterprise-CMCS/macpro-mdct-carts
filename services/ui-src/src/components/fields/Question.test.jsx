@@ -46,11 +46,7 @@ const TestComponent = (props) => (
 );
 
 describe("<Question />", () => {
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
-  describe("text question", () => {
+  describe("Text question", () => {
     const props = {
       hideNumber: false,
       question: {
@@ -69,9 +65,37 @@ describe("<Question />", () => {
       const input = screen.getByRole("textbox", { name: "Mock text question" });
       expect(input).toHaveValue("Mock answer");
     });
+
+    test("renders without prevYear prop", () => {
+      const textPropSpy = jest.fn();
+
+      jest.doMock("./Text", () => ({
+        __esModule: true,
+        default: function MockTextComponent(props) {
+          textPropSpy(props);
+          return <div data-testid="mocked-child" />;
+        },
+      }));
+
+      jest.isolateModules(() => {
+        const MockQuestion = require("./Question").default;
+
+        render(
+          <Provider store={store}>
+            <MockQuestion {...props} />
+          </Provider>
+        );
+      });
+
+      expect(textPropSpy).not.toHaveBeenCalledWith(
+        expect.objectContaining({
+          prevYear: { value: 10 },
+        })
+      );
+    });
   });
 
-  describe("integer question", () => {
+  describe("Integer question", () => {
     const props = {
       hideNumber: false,
       question: {
@@ -93,9 +117,37 @@ describe("<Question />", () => {
       const numberInput = within(group).getByRole("textbox");
       expect(numberInput).toHaveValue("0");
     });
+
+    test("renders with prevYear prop", () => {
+      const integerPropSpy = jest.fn();
+
+      jest.doMock("./Integer", () => ({
+        __esModule: true,
+        default: function MockTextComponent(props) {
+          integerPropSpy(props);
+          return <div data-testid="mocked-child" />;
+        },
+      }));
+
+      jest.isolateModules(() => {
+        const MockQuestion = require("./Question").default;
+
+        render(
+          <Provider store={store}>
+            <MockQuestion {...props} />
+          </Provider>
+        );
+      });
+
+      expect(integerPropSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          prevYear: { value: 10 },
+        })
+      );
+    });
   });
 
-  describe("fieldset question", () => {
+  describe("Fieldset question", () => {
     const props = {
       hideNumber: false,
       question: {
@@ -131,6 +183,49 @@ describe("<Question />", () => {
       });
       const numberInput = within(group).getByRole("textbox");
       expect(numberInput).toHaveValue("0");
+    });
+
+    test("renders Integer component with prevYear prop and Text without", () => {
+      const integerPropSpy = jest.fn();
+      const textPropSpy = jest.fn();
+
+      jest.doMock("./Integer", () => ({
+        __esModule: true,
+        default: function MockTextComponent(props) {
+          integerPropSpy(props);
+          return <div data-testid="mocked-child" />;
+        },
+      }));
+
+      jest.doMock("./Text", () => ({
+        __esModule: true,
+        default: function MockTextComponent(props) {
+          textPropSpy(props);
+          return <div data-testid="mocked-child" />;
+        },
+      }));
+
+      jest.isolateModules(() => {
+        const MockQuestion = require("./Question").default;
+
+        render(
+          <Provider store={store}>
+            <MockQuestion {...props} />
+          </Provider>
+        );
+      });
+
+      expect(integerPropSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          prevYear: { value: 10 },
+        })
+      );
+
+      expect(textPropSpy).not.toHaveBeenCalledWith(
+        expect.objectContaining({
+          prevYear: { value: 10 },
+        })
+      );
     });
   });
 
