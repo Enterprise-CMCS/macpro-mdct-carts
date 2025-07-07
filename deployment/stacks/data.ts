@@ -128,7 +128,9 @@ export function createDataComponents(props: CreateDataComponentsProps) {
       dynamoPrefix: stage,
       seedTestData: isDev.toString(),
     },
+
     bundling: {
+      forceDockerBundling: true,
       commandHooks: {
         beforeBundling(inputDir: string, outputDir: string): string[] {
           return [
