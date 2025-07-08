@@ -28,10 +28,10 @@ const Repeatable = ({ headerRef, number, question, type, printView }) => {
   );
 };
 Repeatable.propTypes = {
-  headerRef: PropTypes.func.isRequired,
+  headerRef: PropTypes.object.isRequired,
   number: PropTypes.number.isRequired,
   question: PropTypes.object.isRequired,
-  type: PropTypes.oneOf([PropTypes.string, null]),
+  type: PropTypes.string,
   printView: PropTypes.bool,
 };
 
