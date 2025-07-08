@@ -1,4 +1,5 @@
 import React from "react";
+import { v4 as uuidv4 } from "uuid";
 import PropTypes from "prop-types";
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
 // components
@@ -174,7 +175,7 @@ const Question = ({
           <div className="ds-c-choice__checkedChild">
             {question.questions.map((q) => (
               <Question
-                key={q.id}
+                key={q.id || `question-${uuidv4()}`}
                 question={q}
                 setAnswer={setAnswerEntry}
                 printView={printView}
