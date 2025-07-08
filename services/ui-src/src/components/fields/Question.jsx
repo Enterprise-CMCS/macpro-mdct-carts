@@ -143,7 +143,7 @@ const Question = ({
           <CMSLegend
             hideNumber={hideNumber}
             hint={question.hint}
-            id={fieldsetId || (question.id ?? "")}
+            id={fieldsetId || question.id}
             label={question.label}
             questionType={question.type}
           />
