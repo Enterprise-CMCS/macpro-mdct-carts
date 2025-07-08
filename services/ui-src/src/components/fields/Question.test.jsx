@@ -1,10 +1,20 @@
 import React from "react";
-import { render, screen, within } from "@testing-library/react";
+import { act, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useDispatch, Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
+// components
 import Question from "./Question";
+// constants
+import { lteMask } from "../../util/constants";
+// types
 import { AppRoles } from "../../types";
+// utils
+import {
+  mockQuestionProps,
+  mockQuestionTypes,
+  mockQuestions,
+} from "../../util/testing/mockQuestions.js";
 
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
@@ -12,22 +22,67 @@ jest.mock("react-redux", () => ({
   useDispatch: jest.fn(),
 }));
 
-const mockStore = configureMockStore();
+// Question for specific conditionals
+const questionId = "03-c-05-09";
 
 // Minimum store needed
+const mockStore = configureMockStore();
 const store = mockStore({
+  // Mocked for getValueFromLastYear
+  lastYearFormData: [
+    {},
+    {},
+    {},
+    {
+      contents: {
+        section: {
+          year: 2024,
+          state: "KY",
+          subsections: [
+            {},
+            {},
+            {
+              parts: [
+                {},
+                {},
+                {},
+                {},
+                {
+                  questions: [
+                    {
+                      ...mockQuestions["text"],
+                      id: `2024-${questionId}`,
+                      fieldset_info: {
+                        id: `2024-${questionId}`,
+                      },
+                      questions: [
+                        {
+                          ...mockQuestions["integer"],
+                          answer: { entry: null },
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    },
+  ],
   formData: [
     {
       contents: {
         section: {
-          year: 0,
+          year: 2025,
           state: "KY",
         },
       },
     },
   ],
   reportStatus: {
-    KY0: {},
+    KY2025: {},
   },
   stateUser: {
     currentUser: {
@@ -35,7 +90,7 @@ const store = mockStore({
     },
   },
   global: {
-    formYear: 0,
+    formYear: 2025,
   },
 });
 
@@ -81,54 +136,49 @@ const baseProps = {
   printView: false,
 };
 
-const checkboxQuestion = {
-  type: "checkbox",
-  id: "1",
-  label: "Mock checkbox question",
-  name: "mock-checkbox",
-  answer: {
-    options: [
-      {
-        label: "Mock checkbox answer",
-        value: "mock-checkbox-answer",
-      },
-    ],
-  },
-};
-
-const integerQuestion = {
-  type: "integer",
-  id: "2",
-  label: "Mock integer question",
-  answer: { entry: 12345 },
-};
-
-const textQuestion = {
-  type: "text",
-  id: "3",
-  label: "Mock text question",
-  answer: { entry: "Mock answer" },
-};
-
 describe("<Question />", () => {
+  describe("All question types", () => {
+    test.each(mockQuestionTypes)("%s renders without errors", async (key) => {
+      const props = {
+        ...baseProps,
+        ...mockQuestionProps[key],
+        question: mockQuestions[key],
+      };
+
+      useDispatch.mockReturnValue(mockDispatch);
+      await act(async () => {
+        renderQuestion(props);
+      });
+
+      const checkbox = screen.queryAllByRole("checkbox")[0];
+      if (checkbox) {
+        await userEvent.click(checkbox);
+        expect(mockDispatch).toHaveBeenCalled();
+      }
+
+      const textbox = screen.queryAllByRole("textbox")[0];
+      if (textbox) {
+        await userEvent.type(textbox, "Change");
+        expect(mockDispatch).toHaveBeenCalled();
+      }
+    });
+  });
+
   describe("Text question", () => {
     const props = {
       ...baseProps,
-      question: textQuestion,
+      question: {
+        ...mockQuestions["text"],
+      },
     };
 
-    test("renders Text", () => {
-      renderQuestion(props);
-      const input = screen.getByRole("textbox", { name: "Mock text question" });
-      expect(input).toHaveValue("Mock answer");
-    });
-
-    test("renders without prevYear prop", () => {
+    test("renders without extra props", () => {
       mockComponent("./Text", textPropSpy);
       renderMockedQuestion(props);
       expect(textPropSpy).not.toHaveBeenCalledWith(
         expect.objectContaining({
           prevYear: { value: 10 },
+          printView: false,
         })
       );
     });
@@ -137,24 +187,60 @@ describe("<Question />", () => {
   describe("Integer question", () => {
     const props = {
       ...baseProps,
-      question: integerQuestion,
+      question: {
+        ...mockQuestions["integer"],
+      },
+      printView: true,
     };
 
-    test("renders Integer", async () => {
+    test("renders current value", () => {
       renderQuestion(props);
       const group = screen.getByRole("group", {
-        name: "2. Mock integer question",
+        name: /Mock integer question/,
       });
       const numberInput = within(group).getByRole("textbox");
-      expect(numberInput).toHaveValue("12345");
+      expect(numberInput).toHaveValue("5555555555");
     });
 
-    test("renders with prevYear prop", () => {
+    test("renders current value with mask", () => {
+      props.question.answer = { entry: 10 };
+      props.question.mask = lteMask;
+      renderQuestion(props);
+      const group = screen.getByRole("group", {
+        name: /Mock integer question/,
+      });
+      const numberInput = within(group).getByRole("textbox");
+      expect(numberInput).toHaveValue("<11");
+    });
+
+    test("renders prevYear value", () => {
+      props.question.answer = { entry: null };
+      props.question.mask = undefined;
+      renderQuestion(props);
+      const group = screen.getByRole("group", {
+        name: /Mock integer question/,
+      });
+      const numberInput = within(group).getByRole("textbox");
+      expect(numberInput).toHaveValue("10");
+    });
+
+    test("renders prevYear value with mask", () => {
+      props.question.mask = lteMask;
+      renderQuestion(props);
+      const group = screen.getByRole("group", {
+        name: /Mock integer question/,
+      });
+      const numberInput = within(group).getByRole("textbox");
+      expect(numberInput).toHaveValue("<11");
+    });
+
+    test("renders Integer with extra props", () => {
       mockComponent("./Integer", integerPropSpy);
       renderMockedQuestion(props);
       expect(integerPropSpy).toHaveBeenCalledWith(
         expect.objectContaining({
           prevYear: { value: 10 },
+          printView: true,
         })
       );
     });
@@ -163,37 +249,23 @@ describe("<Question />", () => {
   describe("Fieldset question", () => {
     const props = {
       ...baseProps,
-      question: {
-        type: "fieldset",
-        fieldset_info: {},
-        questions: [textQuestion, integerQuestion],
-      },
+      question: mockQuestions["fieldset"],
     };
 
-    test("renders Text and Integer", async () => {
-      renderQuestion(props);
-      const input = screen.getByRole("textbox", { name: "Mock text question" });
-      expect(input).toHaveValue("Mock answer");
-
-      const group = screen.getByRole("group", {
-        name: "2. Mock integer question",
-      });
-      const numberInput = within(group).getByRole("textbox");
-      expect(numberInput).toHaveValue("12345");
-    });
-
-    test("renders Integer with prevYear prop and Text without", () => {
+    test("renders Integer with extra props and Text without", () => {
       mockComponent("./Integer", integerPropSpy);
       mockComponent("./Text", textPropSpy);
       renderMockedQuestion(props);
       expect(integerPropSpy).toHaveBeenCalledWith(
         expect.objectContaining({
           prevYear: { value: 10 },
+          printView: false,
         })
       );
       expect(textPropSpy).not.toHaveBeenCalledWith(
         expect.objectContaining({
           prevYear: { value: 10 },
+          printView: false,
         })
       );
     });
@@ -203,13 +275,12 @@ describe("<Question />", () => {
     const props = {
       ...baseProps,
       question: {
-        ...checkboxQuestion,
-        questions: [textQuestion, integerQuestion],
+        ...mockQuestions["checkbox"],
+        questions: [mockQuestions["integer"], mockQuestions["text"]],
       },
     };
 
-    test("renders correctly", async () => {
-      useDispatch.mockReturnValue(mockDispatch);
+    test("renders correctly", () => {
       renderQuestion(props);
 
       const checkbox = screen.getByRole("checkbox", {
@@ -218,20 +289,14 @@ describe("<Question />", () => {
       expect(checkbox.value).toBe("mock-checkbox-answer");
       expect(checkbox).not.toBeChecked();
 
-      await userEvent.click(checkbox);
-      expect(mockDispatch).toHaveBeenCalled();
-
       const input = screen.getByRole("textbox", { name: "Mock text question" });
-      expect(input).toHaveValue("Mock answer");
-
-      await userEvent.type(input, "Changed mock answer");
-      expect(mockDispatch).toHaveBeenCalled();
+      expect(input).toHaveValue("Mock text answer");
 
       const group = screen.getByRole("group", {
-        name: "2. Mock integer question",
+        name: /Mock integer question/,
       });
       const numberInput = within(group).getByRole("textbox");
-      expect(numberInput).toHaveValue("12345");
+      expect(numberInput).toHaveValue("5555555555");
     });
   });
 });
