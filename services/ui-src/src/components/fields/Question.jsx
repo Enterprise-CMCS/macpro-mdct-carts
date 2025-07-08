@@ -27,7 +27,7 @@ import { setAnswerEntry } from "../../actions/initial";
 import { selectIsFormEditable } from "../../store/selectors";
 import { showQuestionByPath } from "../utils/helperFunctions";
 
-const questionTypes = new Map([
+export const questionTypes = new Map([
   ["checkbox", Checkbox],
   ["checkbox_flag", CheckboxFlag],
   ["daterange", DateRange],
@@ -58,7 +58,15 @@ Container.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const Question = ({ hideNumber, question, prevYear, printView, ...props }) => {
+const Question = ({
+  hideNumber,
+  question,
+  prevYear,
+  printView,
+  // eslint-disable-next-line no-unused-vars
+  setAnswer,
+  ...props
+}) => {
   let Component = Text;
   if (questionTypes.has(question.type)) {
     Component = questionTypes.get(question.type);
@@ -119,7 +127,10 @@ const Question = ({ hideNumber, question, prevYear, printView, ...props }) => {
     switch (questionType) {
       case "fieldset":
       case "integer":
-        return { prevYear };
+        return { prevYear, printView };
+      case "objectives":
+      case "repeatables":
+        return { printView };
       default:
         return {};
     }
@@ -154,7 +165,6 @@ const Question = ({ hideNumber, question, prevYear, printView, ...props }) => {
             (question.answer && question.answer.readonly) ||
             false
           }
-          printView={printView}
         />
 
         {/* If there are subquestions, wrap them so they are indented with the
