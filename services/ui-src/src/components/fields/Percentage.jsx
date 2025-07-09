@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { TextField } from "@cmsgov/design-system";
 import { generateQuestionNumber } from "../utils/helperFunctions";
 
-const Percentage = ({ onChange, question }) => {
+const Percentage = ({ onChange, question, ...props }) => {
   const [error, setError] = useState(false);
 
   const change = ({ target: { name, value: newValue } }) => {
@@ -68,6 +68,7 @@ const Percentage = ({ onChange, question }) => {
       numeric
       onChange={change}
       value={question.answer.entry || ""}
+      {...props}
     />
   );
 };

@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import Integer from "./Integer";
 
-const Money = ({ question }) => {
-  return <Integer question={question} inputMode="currency" mask="currency" />;
+const Money = ({ ...props }) => {
+  return <Integer {...props} inputMode="currency" mask="currency" />;
 };
 Money.propTypes = {
   onChange: PropTypes.func.isRequired,

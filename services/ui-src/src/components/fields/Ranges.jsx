@@ -112,7 +112,7 @@ const Range = ({
         <div className="ds-l-row">
           <div className="cmsrange-container range-start">
             <Input
-              {...props}
+              // {...props}
               id={`${id}-${row}-${index}-0`}
               label={category[0]}
               className="cmsrange-input"
@@ -129,7 +129,7 @@ const Range = ({
           </div>
           <div className="cmsrange-container cmsrange-end">
             <Input
-              {...props}
+              // {...props}
               id={`${id}-${row}-${index}-1`}
               label={category[1]}
               className="cmsrange-input"
