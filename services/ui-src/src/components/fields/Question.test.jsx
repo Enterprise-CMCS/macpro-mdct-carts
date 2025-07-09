@@ -16,10 +16,21 @@ import {
   mockQuestions,
 } from "../../util/testing/mockQuestions.js";
 
+// Mock Redux calls
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
   ...jest.requireActual("react-redux"),
   useDispatch: jest.fn(),
+  connect: () => (Component) => Component,
+}));
+
+// Mock UploadComponent calls
+jest.mock("../../util/fileApi", () => ({
+  recordFileInDatabaseAndGetUploadUrl: jest.fn(),
+  uploadFileToS3: jest.fn(),
+  getFileDownloadUrl: jest.fn(),
+  getUploadedFiles: jest.fn(),
+  deleteUploadedFile: jest.fn(),
 }));
 
 // Question for specific conditionals
@@ -116,10 +127,10 @@ const renderMockedQuestion = (props) => {
 };
 
 // Helper to mock child components
-const mockComponent = (path, spyFn) => {
+const mockComponent = (path, spyFn, exported = "default") => {
   jest.doMock(path, () => ({
     __esModule: true,
-    default: function Mocked(props) {
+    [exported]: function Mocked(props) {
       spyFn(props);
       return <div />;
     },
@@ -127,8 +138,9 @@ const mockComponent = (path, spyFn) => {
 };
 
 // Spies
-const integerPropSpy = jest.fn();
-const textPropSpy = jest.fn();
+const propSpies = Object.fromEntries(
+  mockQuestionTypes.map((key) => [key, jest.fn()])
+);
 
 const baseProps = {
   hideNumber: false,
@@ -173,9 +185,9 @@ describe("<Question />", () => {
     };
 
     test("renders without extra props", () => {
-      mockComponent("./Text", textPropSpy);
+      mockComponent("./Text", propSpies["text"]);
       renderMockedQuestion(props);
-      expect(textPropSpy).not.toHaveBeenCalledWith(
+      expect(propSpies["text"]).not.toHaveBeenCalledWith(
         expect.objectContaining({
           prevYear: { value: 10 },
           printView: false,
@@ -235,9 +247,9 @@ describe("<Question />", () => {
     });
 
     test("renders Integer with extra props", () => {
-      mockComponent("./Integer", integerPropSpy);
+      mockComponent("./Integer", propSpies["integer"]);
       renderMockedQuestion(props);
-      expect(integerPropSpy).toHaveBeenCalledWith(
+      expect(propSpies["integer"]).toHaveBeenCalledWith(
         expect.objectContaining({
           prevYear: { value: 10 },
           printView: true,
@@ -253,19 +265,43 @@ describe("<Question />", () => {
     };
 
     test("renders Integer with extra props and Text without", () => {
-      mockComponent("./Integer", integerPropSpy);
-      mockComponent("./Text", textPropSpy);
+      mockComponent("./Integer", propSpies["integer"]);
+      mockComponent("./Text", propSpies["text"]);
       renderMockedQuestion(props);
-      expect(integerPropSpy).toHaveBeenCalledWith(
+      expect(propSpies["integer"]).toHaveBeenCalledWith(
         expect.objectContaining({
           prevYear: { value: 10 },
           printView: false,
         })
       );
-      expect(textPropSpy).not.toHaveBeenCalledWith(
+      expect(propSpies["text"]).not.toHaveBeenCalledWith(
         expect.objectContaining({
           prevYear: { value: 10 },
           printView: false,
+        })
+      );
+    });
+  });
+
+  const connectedComponentsExported = ["Objectives", "Repeatables"];
+
+  describe.each(connectedComponentsExported)("%s question", (exported) => {
+    const questionType = exported.toLowerCase();
+
+    const props = {
+      ...baseProps,
+      question: {
+        ...mockQuestions[questionType],
+      },
+      printView: true,
+    };
+
+    test("renders with extra props", () => {
+      mockComponent(`./${exported}`, propSpies[questionType], exported);
+      renderMockedQuestion(props);
+      expect(propSpies[questionType]).toHaveBeenCalledWith(
+        expect.objectContaining({
+          printView: true,
         })
       );
     });

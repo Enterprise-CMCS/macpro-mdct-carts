@@ -1,10 +1,6 @@
 import { questionTypes } from "../../components/fields/Question";
 
-// Temporarily exclude these question types
-const excludedTypes = ["file_upload", "objectives", "repeatables"];
-export const mockQuestionTypes = Array.from(questionTypes.keys()).filter(
-  (key) => !excludedTypes.includes(key)
-);
+export const mockQuestionTypes = Array.from(questionTypes.keys());
 export const mockQuestions = Object.fromEntries(
   mockQuestionTypes.map((key) => [key, {}])
 );
@@ -79,6 +75,21 @@ mockQuestionProps["daterange"] = {
   onChange: () => {},
 };
 
+mockQuestions["objectives"] = {
+  ...mockQuestions["objectives"],
+  questions: [
+    {
+      ...mockQuestions["checkbox"],
+      questions: [mockQuestions["integer"], mockQuestions["text"]],
+    },
+  ],
+};
+mockQuestionProps["objectives"] = {
+  addObjectiveTo: () => {},
+  disabled: false,
+  removeObjectiveFrom: () => {},
+};
+
 mockQuestions["ranges"] = {
   ...mockQuestions["ranges"],
   answer: {
@@ -92,6 +103,16 @@ mockQuestions["ranges"] = {
 };
 mockQuestionProps["ranges"] = {
   onChange: () => {},
+};
+
+mockQuestions["repeatables"] = {
+  ...mockQuestions["repeatables"],
+  questions: [mockQuestions["integer"], mockQuestions["text"]],
+};
+mockQuestionProps["repeatables"] = {
+  addRepeatableTo: () => {},
+  disabled: false,
+  removeRepeatableFrom: () => {},
 };
 
 mockQuestions["skip_text"] = {
