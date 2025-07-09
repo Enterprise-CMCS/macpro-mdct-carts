@@ -91,6 +91,7 @@ const Question = ({
   );
 
   const prevYearDisabled = prevYear ? prevYear.disabled : false;
+  const fieldType = question.fieldType;
 
   const onChange = ({ target: { name: id, value } }) => {
     dispatch(setAnswerEntry(id, value));
@@ -128,6 +129,8 @@ const Question = ({
       case "fieldset":
       case "integer":
         return { prevYear, printView };
+      case "ranges":
+        return { fieldType };
       case "objectives":
       case "repeatables":
         return { printView };
