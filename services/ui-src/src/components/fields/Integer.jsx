@@ -50,7 +50,7 @@ const getPrevYearValue = (question, lastYearFormData) => {
   return prevYearValue;
 };
 
-const Integer = ({ onChange, question, prevYear, printView, ...props }) => {
+const Integer = ({ onChange, question, prevYear, printView }) => {
   const [error, setError] = useState(false);
   const [answer, setAnswer] = useState(question.answer.entry);
   const lastYearFormData = useSelector((state) => state.lastYearFormData);
@@ -95,7 +95,6 @@ const Integer = ({ onChange, question, prevYear, printView, ...props }) => {
       numeric
       onChange={change}
       value={renderAnswer()}
-      {...props}
     />
   );
 };
