@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
 
@@ -20,8 +21,16 @@ const parseLinks = (str) => {
        * preceding text and the link into the parts.
        */
       const [precedingText] = remainingStr.split(fullMatch);
-      parts.push(precedingText, <a href={href}>{text}</a>);
 
+      if (precedingText) {
+        parts.push(<span key={uuidv4()}>{precedingText}</span>);
+      }
+
+      parts.push(
+        <a key={uuidv4()} href={href}>
+          {text}
+        </a>
+      );
       /*
        * Recompute the remaining string to remove the preceding text and the
        * link that we've already added to the parts.
@@ -37,13 +46,15 @@ const parseLinks = (str) => {
      * Add any remaining string to the parts. This is the part of the string
      * that follows the last link.
      */
-    parts.push(remainingStr);
+    if (remainingStr) {
+      parts.push(<span key={uuidv4()}>{remainingStr}</span>);
+    }
 
     return parts;
   }
 
   // If there aren't any links, return the original string in an array.
-  return [str];
+  return [<span key={uuidv4()}>{str}</span>];
 };
 
 const Text = ({ children }) => {
@@ -54,11 +65,11 @@ const Text = ({ children }) => {
 
         const brokenLines = [...parseLinks(lines[0])];
         for (let i = 1; i < lines.length; i += 1) {
-          brokenLines.push(<br />, ...parseLinks(lines[i]));
+          brokenLines.push(<br key={uuidv4()} />, ...parseLinks(lines[i]));
         }
 
         if (index > 0) {
-          return <p>{brokenLines}</p>;
+          return <p key={uuidv4()}>{brokenLines}</p>;
         }
         return brokenLines;
       });

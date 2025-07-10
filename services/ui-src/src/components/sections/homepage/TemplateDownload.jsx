@@ -12,6 +12,10 @@ import PropTypes from "prop-types";
 const TemplateDownload = ({ getTemplate }) => {
   const currentYear = "2024";
 
+  const handleDownload = () => {
+    window.location.href = getTemplate(currentYear);
+  };
+
   return (
     <div className="ds-l-row">
       <div className="updates ds-l-col--12">
@@ -61,7 +65,7 @@ const TemplateDownload = ({ getTemplate }) => {
             <div className="download">
               <button
                 className="ds-c-button ds-c-button--solid"
-                onClick={() => getTemplate(currentYear)}
+                onClick={handleDownload}
               >
                 <span className="button-display">Download template</span>
                 <span className="fa-layers fa-fw">

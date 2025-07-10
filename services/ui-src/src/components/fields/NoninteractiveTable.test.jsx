@@ -5,7 +5,6 @@ import NoninteractiveTable from "./NoninteractiveTable";
 describe("<NoninteractiveTable />", () => {
   test("should render data in a proper table structure", () => {
     const props = {
-      tableTitle: "Mock Table Title",
       question: {
         fieldset_info: {
           headers: ["Header1", "Header2"],
@@ -19,7 +18,10 @@ describe("<NoninteractiveTable />", () => {
     const { container } = render(<NoninteractiveTable {...props} />);
 
     const table = container.querySelector("table");
-    expect(table).toHaveAttribute("summary", "Mock Table Title");
+    expect(table).toHaveAttribute(
+      "summary",
+      "This is a table for the CARTS Application"
+    );
 
     const columnHeaders = container.querySelectorAll("table > thead > tr > th");
     expect(columnHeaders[0]).toHaveTextContent("Header1");
@@ -40,7 +42,6 @@ describe("<NoninteractiveTable />", () => {
 
   test("should render percentages nicely", () => {
     const props = {
-      tableTitle: "Mock Table Title",
       question: {
         fieldset_info: {
           headers: ["Foo Percent", "Percent of Bar"],
@@ -56,7 +57,6 @@ describe("<NoninteractiveTable />", () => {
 
   test("should contain special logic for CHIP enrollment", () => {
     const props = {
-      tableTitle: "Mock Table Title",
       question: {
         fieldset_info: {
           headers: [

@@ -31,7 +31,6 @@ const store = mockStore({
 });
 
 const defaultProps = {
-  tableTitle: "Managed Care Costs",
   question: {
     questions: [],
     fieldset_info: {

@@ -1,5 +1,4 @@
 window.env = {
-  LOCAL_LOGIN: "false",
   API_REGION: "us-east-1",
   API_URL: "{{apiGatewayRestApiUrl}}",
   COGNITO_REGION: "us-east-1",
@@ -11,8 +10,7 @@ window.env = {
   COGNITO_REDIRECT_SIGNOUT: "{{applicationEndpointUrl}}postLogout",
   POST_SIGNOUT_REDIRECT: "{{redirectSignout}}",
   S3_ATTACHMENTS_BUCKET_REGION: "us-east-1",
-  S3_ATTACHMENTS_BUCKET_NAME: "{{s3AttachmentsBucketName}}",
-  BRANCH_NAME: "{{stage}}",
+  S3_ATTACHMENTS_BUCKET_NAME: "{{attachmentsBucketName}}",
   REACT_APP_LD_SDK_CLIENT: "{{launchDarklyClient}}",
   STAGE: "{{stage}}",
   TIMESTAMP: "{{timestamp}}",

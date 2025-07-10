@@ -13,8 +13,8 @@ const CheckboxFlag = ({ onChange, question, ...props }) => {
     <ChoiceList
       label=""
       type="checkbox"
-      choices={[{ label: "Select", value: true, checked: value }]}
-      value={value}
+      choices={[{ label: "Select", value: "true", checked: !!value }]}
+      value={value.toString()}
       onChange={change}
       {...props}
     />
