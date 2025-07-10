@@ -21,6 +21,7 @@ function formatStateStatus(item) {
         statusText={STATUS_MAPPING[item.status]}
         userRole={AppRoles.STATE_USER}
         year={item.year}
+        stateAbbr={item.stateCode}
       />
     );
   }
