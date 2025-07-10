@@ -1,4 +1,5 @@
 import React from "react";
+import { v4 as uuidv4 } from "uuid";
 import PropTypes from "prop-types";
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
 // components
@@ -26,7 +27,7 @@ import { setAnswerEntry } from "../../actions/initial";
 import { selectIsFormEditable } from "../../store/selectors";
 import { showQuestionByPath } from "../utils/helperFunctions";
 
-const questionTypes = new Map([
+export const questionTypes = new Map([
   ["checkbox", Checkbox],
   ["checkbox_flag", CheckboxFlag],
   ["daterange", DateRange],
@@ -61,8 +62,9 @@ const Question = ({
   hideNumber,
   question,
   prevYear,
-  tableTitle,
   printView,
+  // eslint-disable-next-line no-unused-vars
+  setAnswer,
   ...props
 }) => {
   let Component = Text;
@@ -121,6 +123,19 @@ const Question = ({
   // Check if question should be shown based on pathname
   const pageDisable = showQuestionByPath(window.location.pathname);
 
+  function questionProps(questionType) {
+    switch (questionType) {
+      case "fieldset":
+      case "integer":
+        return { prevYear, printView };
+      case "objectives":
+      case "repeatables":
+        return { printView };
+      default:
+        return {};
+    }
+  }
+
   return (
     <div className="question">
       <Container question={question}>
@@ -135,6 +150,7 @@ const Question = ({
         )}
         <Component
           {...props}
+          {...questionProps(question.type)}
           id={props?.id || question?.id}
           label={""}
           hint={undefined}
@@ -142,7 +158,6 @@ const Question = ({
           name={question.id}
           onChange={onChange}
           onClick={onClick}
-          tableTitle={tableTitle}
           disabled={
             prevYearDisabled ||
             pageDisable ||
@@ -150,8 +165,6 @@ const Question = ({
             (question.answer && question.answer.readonly) ||
             false
           }
-          prevYear={prevYear}
-          printView={printView}
         />
 
         {/* If there are subquestions, wrap them so they are indented with the
@@ -162,7 +175,7 @@ const Question = ({
           <div className="ds-c-choice__checkedChild">
             {question.questions.map((q) => (
               <Question
-                key={q.id}
+                key={q.id || `question-${uuidv4()}`}
                 question={q}
                 setAnswer={setAnswerEntry}
                 printView={printView}
@@ -179,7 +192,6 @@ Question.propTypes = {
   hideNumber: PropTypes.bool,
   question: PropTypes.object.isRequired,
   prevYear: PropTypes.object,
-  tableTitle: PropTypes.string,
   printView: PropTypes.bool,
 };
 Question.defaultProps = {

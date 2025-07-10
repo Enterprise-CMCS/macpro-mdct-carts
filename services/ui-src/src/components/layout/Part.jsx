@@ -66,7 +66,6 @@ const Part = ({ partId, partNumber, nestedSubsectionTitle, printView }) => {
             <Question
               key={question.id || uuidv4()}
               question={question}
-              tableTitle={title}
               data-testid="part-question"
               printView={printView}
             />

@@ -108,7 +108,7 @@ Repeatables.propTypes = {
   disabled: PropTypes.bool.isRequired,
   question: PropTypes.object.isRequired,
   removeRepeatableFrom: PropTypes.func.isRequired,
-  type: PropTypes.oneOf([PropTypes.string, null]),
+  type: PropTypes.string,
   printView: PropTypes.bool,
 };
 Repeatables.defaultProps = {
