@@ -62,6 +62,7 @@ const Question = ({
   "data-testid": dataTestId,
   disabled = false,
   hideNumber = false,
+  // eslint-disable-next-line no-unused-vars
   hint,
   id,
   // eslint-disable-next-line no-unused-vars
@@ -164,7 +165,7 @@ const Question = ({
           data-testid={dataTestId}
           id={id || question?.id}
           label={""}
-          hint={hint}
+          hint={undefined}
           question={question}
           name={question.id}
           onChange={handleOnChange}

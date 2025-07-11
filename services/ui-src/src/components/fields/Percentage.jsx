@@ -90,7 +90,7 @@ const Percentage = ({
       onBlur={onBlur}
       onChange={change}
       onClick={onClick}
-      value={question.answer.entry ?? value ?? ""}
+      value={value ?? question.answer.entry ?? ""}
       {...props}
     />
   );

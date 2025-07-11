@@ -124,7 +124,7 @@ const Integer = ({
       onBlur={onBlur}
       onClick={onClick}
       onChange={change}
-      value={renderAnswer() ?? value ?? ""}
+      value={value ?? renderAnswer() ?? ""}
       {...props}
     />
   );
