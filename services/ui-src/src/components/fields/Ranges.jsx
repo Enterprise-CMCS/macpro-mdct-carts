@@ -119,43 +119,45 @@ const Range = ({
       <div className="cmsrange-outer ds-l-container">
         {rangeError ? <div className="errors">{rangeError}</div> : null}
         <div className="ds-l-row">
-          <div className="cmsrange-container range-start">
-            <Component
-              className="cmsrange-input"
-              data-testid={dataTestId}
-              disabled={disabled}
-              hint={hint}
-              id={`${id}-${row}-${index}-0`}
-              label={category[0] ?? label}
-              name={name}
-              onBlur={validateInequality}
-              onChange={changeStart}
-              onClick={onClick}
-              question={startQuestion}
-              value={startValue ?? ""}
-              {...props}
-            />
-          </div>
-          <div className="cmsrange-arrow">
-            <i className="fa fa-arrow-right" aria-hidden="true" />
-          </div>
-          <div className="cmsrange-container cmsrange-end">
-            <Component
-              className="cmsrange-input"
-              data-testid={dataTestId}
-              disabled={disabled}
-              hint={hint}
-              id={`${id}-${row}-${index}-1`}
-              label={category[1] ?? label}
-              name={name}
-              onBlur={validateInequality}
-              onChange={changeEnd}
-              onClick={onClick}
-              question={endQuestion}
-              value={endValue ?? ""}
-              {...props}
-            />
-          </div>
+          {[
+            {
+              className: "range-start",
+              question: startQuestion,
+              value: startValue,
+              onChange: changeStart,
+            },
+            {
+              className: "cmsrange-end",
+              question: endQuestion,
+              value: endValue,
+              onChange: changeEnd,
+            },
+          ].map(({ className, question, value, onChange }, i) => (
+            <React.Fragment key={`${id}-${row}-${index}-${i}`}>
+              <div className={`cmsrange-container ${className}`}>
+                <Component
+                  className="cmsrange-input"
+                  data-testid={dataTestId}
+                  disabled={disabled}
+                  hint={hint}
+                  id={`${id}-${row}-${index}-${i}`}
+                  label={category[i] ?? label}
+                  name={name}
+                  onBlur={validateInequality}
+                  onChange={onChange}
+                  onClick={onClick}
+                  question={question}
+                  value={value ?? ""}
+                  {...props}
+                />
+              </div>
+              {i === 0 && (
+                <div className="cmsrange-arrow">
+                  <i className="fa fa-arrow-right" aria-hidden="true" />
+                </div>
+              )}
+            </React.Fragment>
+          ))}
         </div>
       </div>
     </div>
