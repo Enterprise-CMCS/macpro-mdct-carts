@@ -16,9 +16,15 @@ const inputs = new Map([
 
 const Range = ({
   category,
+  "data-testid": dataTestId,
+  disabled = false,
+  hint,
   id,
   index,
+  label,
+  name,
   onChange,
+  onClick,
   row,
   type,
   values,
@@ -32,10 +38,10 @@ const Range = ({
     validateInequality();
   }, []);
 
-  // This chooses the appropriate mask for the <Input/>, Money, Percentage or Text
-  let Input = Text;
+  // This chooses the appropriate mask for the <Component/>: Money, Percentage or Text
+  let Component = Text;
   if (inputs.has(type)) {
-    Input = inputs.get(type);
+    Component = inputs.get(type);
   }
 
   /*
@@ -105,38 +111,49 @@ const Range = ({
     onChange(row, index, 1, value);
   };
 
+  const startValue = rangeValues[0] ? rangeValues[0] : values[0];
+  const endValue = rangeValues[1] ? rangeValues[1] : values[1];
+
   return (
     <div className="cmsrange">
       <div className="cmsrange-outer ds-l-container">
         {rangeError ? <div className="errors">{rangeError}</div> : null}
         <div className="ds-l-row">
           <div className="cmsrange-container range-start">
-            <Input
-              {...props}
-              id={`${id}-${row}-${index}-0`}
-              label={category[0]}
+            <Component
               className="cmsrange-input"
-              question={startQuestion}
-              onChange={changeStart}
+              data-testid={dataTestId}
+              disabled={disabled}
+              hint={hint}
+              id={`${id}-${row}-${index}-0`}
+              label={label || category[0]}
+              name={name}
               onBlur={validateInequality}
-              value={rangeValues[0] ? rangeValues[0] : values[0]}
-              disabled={props.disabled}
+              onChange={changeStart}
+              onClick={onClick}
+              question={startQuestion}
+              value={startValue ?? ""}
+              {...props}
             />
           </div>
           <div className="cmsrange-arrow">
             <i className="fa fa-arrow-right" aria-hidden="true" />
           </div>
           <div className="cmsrange-container cmsrange-end">
-            <Input
-              {...props}
-              id={`${id}-${row}-${index}-1`}
-              label={category[1]}
+            <Component
               className="cmsrange-input"
-              question={endQuestion}
-              onChange={changeEnd}
+              data-testid={dataTestId}
+              disabled={disabled}
+              hint={hint}
+              id={`${id}-${row}-${index}-1`}
+              label={label || category[1]}
+              name={name}
               onBlur={validateInequality}
-              value={rangeValues[1] ? rangeValues[1] : values[1]}
-              disabled={props.disabled}
+              onChange={changeEnd}
+              onClick={onClick}
+              question={endQuestion}
+              value={endValue ?? ""}
+              {...props}
             />
           </div>
         </div>
@@ -146,15 +163,35 @@ const Range = ({
 };
 Range.propTypes = {
   category: PropTypes.arrayOf(PropTypes.string).isRequired,
+  "data-testid": PropTypes.string,
+  disabled: PropTypes.bool,
+  hint: PropTypes.string,
   id: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
+  label: PropTypes.string,
+  name: PropTypes.string,
   onChange: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   row: PropTypes.number.isRequired,
   type: PropTypes.string.isRequired,
   values: PropTypes.array.isRequired,
 };
+Range.defaultProps = {
+  disabled: false,
+};
 
-const Ranges = ({ onChange, question, ...props }) => {
+const Ranges = ({
+  "data-testid": dataTestId,
+  disabled = false,
+  hint,
+  id,
+  label,
+  name,
+  onChange,
+  onClick,
+  question,
+  ...props
+}) => {
   const {
     answer: {
       entry,
@@ -204,16 +241,21 @@ const Ranges = ({ onChange, question, ...props }) => {
       {values.map((rowValues, row) =>
         rowValues.map((categoryValues, index) => (
           <Range
-            {...props}
-            key={`${row}.${index}`}
             category={categories[index]}
-            id={question.id}
+            data-testid={dataTestId}
+            disabled={disabled}
+            hint={hint}
+            key={`${row}.${index}`}
+            id={id || question.id}
             index={index}
+            label={label}
+            name={name}
             onChange={rowChange}
+            onClick={onClick}
             row={row}
             type={types[index]}
             values={categoryValues}
-            disabled={props.disabled}
+            {...props}
           />
         ))
       )}
@@ -223,7 +265,7 @@ const Ranges = ({ onChange, question, ...props }) => {
           onClick={addRow}
           type="button"
           variation="solid"
-          disabled={props.disabled}
+          disabled={disabled}
         >
           Add another? <FontAwesomeIcon icon={faPlus} />
         </Button>
@@ -233,7 +275,7 @@ const Ranges = ({ onChange, question, ...props }) => {
           onClick={removeRow}
           type="button"
           variation="solid"
-          disabled={props.disabled}
+          disabled={disabled}
         >
           Remove Last Entry <FontAwesomeIcon icon={faMinusCircle} />
         </Button>
@@ -242,8 +284,18 @@ const Ranges = ({ onChange, question, ...props }) => {
   );
 };
 Ranges.propTypes = {
+  "data-testid": PropTypes.string,
+  disabled: PropTypes.bool,
+  hint: PropTypes.string,
+  id: PropTypes.string.isRequired,
+  label: PropTypes.string,
+  name: PropTypes.string,
   onChange: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   question: PropTypes.object.isRequired,
+};
+Ranges.defaultProps = {
+  disabled: false,
 };
 
 export { Range, Ranges };

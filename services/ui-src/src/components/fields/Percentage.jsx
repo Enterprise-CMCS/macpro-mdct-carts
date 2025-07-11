@@ -3,7 +3,21 @@ import PropTypes from "prop-types";
 import { TextField } from "@cmsgov/design-system";
 import { generateQuestionNumber } from "../utils/helperFunctions";
 
-const Percentage = ({ onChange, question, ...props }) => {
+const Percentage = ({
+  className,
+  "data-testid": dataTestId,
+  disabled = false,
+  hint,
+  id,
+  label,
+  name,
+  onBlur,
+  onChange,
+  onClick,
+  question,
+  value,
+  ...props
+}) => {
   const [error, setError] = useState(false);
 
   const change = ({ target: { name, value: newValue } }) => {
@@ -57,24 +71,46 @@ const Percentage = ({ onChange, question, ...props }) => {
     ref = inputComponent;
   };
 
+  const questionLabel = generateQuestionNumber(question.id)
+    ? `${generateQuestionNumber(question.id)}${question.label}`
+    : question.label;
+
   return (
     <TextField
-      className="ds-c-input"
+      className={className || "ds-c-input"}
+      data-testid={dataTestId}
+      disabled={disabled}
       errorMessage={error}
+      hint={hint || question.hint}
+      id={id || question.id}
       inputRef={setRef}
-      label={`${generateQuestionNumber(question.id)}${question.label}`}
-      hint={question.hint}
-      name={question.id}
+      label={label ?? questionLabel}
+      name={name || question.id}
       numeric
+      onBlur={onBlur}
       onChange={change}
-      value={question.answer.entry || ""}
+      onClick={onClick}
+      value={question.answer.entry ?? value ?? ""}
       {...props}
     />
   );
 };
 Percentage.propTypes = {
+  className: PropTypes.string,
+  "data-testid": PropTypes.string,
+  disabled: PropTypes.bool,
+  hint: PropTypes.string,
+  id: PropTypes.string,
+  label: PropTypes.string,
+  name: PropTypes.string,
+  onBlur: PropTypes.func,
   onChange: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   question: PropTypes.object.isRequired,
+  value: PropTypes.string,
+};
+Percentage.defaultProps = {
+  disabled: false,
 };
 
 export { Percentage };

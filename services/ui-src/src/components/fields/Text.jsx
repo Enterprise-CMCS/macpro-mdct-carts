@@ -7,7 +7,20 @@ import { generateQuestionNumber } from "../utils/helperFunctions";
 // types
 import PropTypes from "prop-types";
 
-const Text = ({ question, ...props }) => {
+const Text = ({
+  "data-testid": dataTestId,
+  disabled = false,
+  hint,
+  id,
+  label,
+  multiline = false,
+  name,
+  onChange,
+  onClick,
+  question,
+  rows,
+  ...props
+}) => {
   const [prevYearValue, setPrevYearValue] = useState();
   const [state, lastYearFormData] = useSelector(
     (state) => [
@@ -81,24 +94,42 @@ const Text = ({ question, ...props }) => {
           aria-label={`${question.label}${
             question.hint ? ` ${question.hint}` : ""
           }`}
-          id={question.id}
-          value={
-            (question.answer && question.answer.entry) || prevYearValue || ""
-          }
+          data-testid={dataTestId}
+          disabled={disabled}
+          hint={hint}
+          id={id || question.id}
+          label={label || ""}
+          multiline={multiline}
+          name={name || question.id}
+          onChange={onChange}
+          onClick={onClick}
+          rows={rows}
           type="text"
+          value={question.answer?.entry ?? prevYearValue ?? ""}
           {...props}
-          disabled={!!props.disabled}
         />
       </div>
       <p className="print-text-area">
-        {(question.answer && question.answer.entry) || prevYearValue || ""}
+        {question.answer?.entry ?? prevYearValue ?? ""}
       </p>
     </>
   );
 };
 Text.propTypes = {
-  question: PropTypes.object.isRequired,
+  "data-testid": PropTypes.string,
   disabled: PropTypes.bool,
+  hint: PropTypes.string,
+  id: PropTypes.string,
+  label: PropTypes.string,
+  multiline: PropTypes.bool,
+  name: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
+  question: PropTypes.object.isRequired,
+  rows: PropTypes.number,
 };
-
+Text.defaultProps = {
+  disabled: false,
+  multiline: false,
+};
 export default Text;
