@@ -50,7 +50,25 @@ const getPrevYearValue = (question, lastYearFormData) => {
   return prevYearValue;
 };
 
-const Integer = ({ onChange, question, prevYear, printView, ...props }) => {
+const Integer = ({
+  className,
+  "data-testid": dataTestId,
+  disabled = false,
+  hint,
+  id,
+  inputMode,
+  label,
+  mask,
+  name,
+  onBlur,
+  onChange,
+  onClick,
+  question,
+  prevYear,
+  printView,
+  value,
+  ...props
+}) => {
   const [error, setError] = useState(false);
   const [answer, setAnswer] = useState(question.answer.entry);
   const lastYearFormData = useSelector((state) => state.lastYearFormData);
@@ -85,25 +103,53 @@ const Integer = ({ onChange, question, prevYear, printView, ...props }) => {
       return answer || Number.isInteger(answer) ? answer : "";
     }
   };
+
+  const questionLabel = generateQuestionNumber(question.id)
+    ? `${generateQuestionNumber(question.id)}${question.label}`
+    : question.label;
+
   return (
     <TextField
-      className="ds-c-input"
+      className={className || "ds-c-input"}
+      data-testid={dataTestId}
+      disabled={disabled}
       errorMessage={error}
-      label={`${generateQuestionNumber(question.id)}${question.label}`}
-      hint={question.hint}
-      name={question.id}
+      id={id || question.id}
+      hint={hint || question.hint}
+      inputMode={inputMode}
+      label={label ?? questionLabel}
+      mask={mask}
+      name={name || question.id}
       numeric
+      onBlur={onBlur}
+      onClick={onClick}
       onChange={change}
-      value={renderAnswer()}
+      value={value ?? renderAnswer() ?? ""}
       {...props}
     />
   );
 };
 Integer.propTypes = {
+  className: PropTypes.string,
+  "data-testid": PropTypes.string,
+  disabled: PropTypes.bool,
+  hint: PropTypes.string,
+  id: PropTypes.string,
+  inputMode: PropTypes.string,
+  label: PropTypes.string,
+  mask: PropTypes.string,
+  name: PropTypes.string,
+  onBlur: PropTypes.func,
   onChange: PropTypes.func.isRequired,
-  question: PropTypes.object.isRequired,
+  onClick: PropTypes.func,
   prevYear: PropTypes.object,
   printView: PropTypes.bool,
+  question: PropTypes.object.isRequired,
+  value: PropTypes.string,
+};
+Integer.defaultProps = {
+  disabled: false,
+  printView: false,
 };
 
 export default Integer;
