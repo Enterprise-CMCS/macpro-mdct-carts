@@ -47,11 +47,16 @@
   {
     "stateId": "AL",
     "fiscalYear": 2023,
-    "enhancedFmap": 80.70
+    "enhancedFmap": 80.7
   },
   {
     "stateId": "AL",
     "fiscalYear": 2024,
     "enhancedFmap": 81.81
+  },
+  {
+    "stateId": "AL",
+    "fiscalYear": 2025,
+    "enhancedFmap": 80.84
   }
 ]

@@ -1373,5 +1373,280 @@
     "stateId": "WY",
     "fiscalYear": 2025,
     "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "AL",
+    "fiscalYear": 2026,
+    "enhancedFmap": 80.84
+  },
+  {
+    "stateId": "AK",
+    "fiscalYear": 2026,
+    "enhancedFmap": 66.69
+  },
+  {
+    "stateId": "AS",
+    "fiscalYear": 2026,
+    "enhancedFmap": 85.0
+  },
+  {
+    "stateId": "AZ",
+    "fiscalYear": 2026,
+    "enhancedFmap": 75.04
+  },
+  {
+    "stateId": "AR",
+    "fiscalYear": 2026,
+    "enhancedFmap": 78.46
+  },
+  {
+    "stateId": "CA",
+    "fiscalYear": 2026,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "CO",
+    "fiscalYear": 2026,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "CT",
+    "fiscalYear": 2026,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "DE",
+    "fiscalYear": 2026,
+    "enhancedFmap": 71.59
+  },
+  {
+    "stateId": "DC",
+    "fiscalYear": 2026,
+    "enhancedFmap": 79.0
+  },
+  {
+    "stateId": "FL",
+    "fiscalYear": 2026,
+    "enhancedFmap": 70.05
+  },
+  {
+    "stateId": "GA",
+    "fiscalYear": 2026,
+    "enhancedFmap": 76.48
+  },
+  {
+    "stateId": "GU",
+    "fiscalYear": 2026,
+    "enhancedFmap": 85.0
+  },
+  {
+    "stateId": "HI",
+    "fiscalYear": 2026,
+    "enhancedFmap": 71.78
+  },
+  {
+    "stateId": "ID",
+    "fiscalYear": 2026,
+    "enhancedFmap": 76.84
+  },
+  {
+    "stateId": "IL",
+    "fiscalYear": 2026,
+    "enhancedFmap": 66.27
+  },
+  {
+    "stateId": "IN",
+    "fiscalYear": 2026,
+    "enhancedFmap": 75.32
+  },
+  {
+    "stateId": "IA",
+    "fiscalYear": 2026,
+    "enhancedFmap": 73.89
+  },
+  {
+    "stateId": "KS",
+    "fiscalYear": 2026,
+    "enhancedFmap": 72.47
+  },
+  {
+    "stateId": "KY",
+    "fiscalYear": 2026,
+    "enhancedFmap": 79.99
+  },
+  {
+    "stateId": "LA",
+    "fiscalYear": 2026,
+    "enhancedFmap": 77.48
+  },
+  {
+    "stateId": "ME",
+    "fiscalYear": 2026,
+    "enhancedFmap": 72.9
+  },
+  {
+    "stateId": "MD",
+    "fiscalYear": 2026,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "MA",
+    "fiscalYear": 2026,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "MI",
+    "fiscalYear": 2026,
+    "enhancedFmap": 75.71
+  },
+  {
+    "stateId": "MN",
+    "fiscalYear": 2026,
+    "enhancedFmap": 65.48
+  },
+  {
+    "stateId": "MS",
+    "fiscalYear": 2026,
+    "enhancedFmap": 83.83
+  },
+  {
+    "stateId": "MO",
+    "fiscalYear": 2026,
+    "enhancedFmap": 75.11
+  },
+  {
+    "stateId": "MT",
+    "fiscalYear": 2026,
+    "enhancedFmap": 73.03
+  },
+  {
+    "stateId": "NE",
+    "fiscalYear": 2026,
+    "enhancedFmap": 68.05
+  },
+  {
+    "stateId": "NV",
+    "fiscalYear": 2026,
+    "enhancedFmap": 71.86
+  },
+  {
+    "stateId": "NH",
+    "fiscalYear": 2026,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "NJ",
+    "fiscalYear": 2026,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "NM",
+    "fiscalYear": 2026,
+    "enhancedFmap": 80.16
+  },
+  {
+    "stateId": "NY",
+    "fiscalYear": 2026,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "NC",
+    "fiscalYear": 2026,
+    "enhancedFmap": 75.23
+  },
+  {
+    "stateId": "ND",
+    "fiscalYear": 2026,
+    "enhancedFmap": 65.69
+  },
+  {
+    "stateId": "OH",
+    "fiscalYear": 2026,
+    "enhancedFmap": 75.4
+  },
+  {
+    "stateId": "OK",
+    "fiscalYear": 2026,
+    "enhancedFmap": 76.53
+  },
+  {
+    "stateId": "OR",
+    "fiscalYear": 2026,
+    "enhancedFmap": 70.43
+  },
+  {
+    "stateId": "PA",
+    "fiscalYear": 2026,
+    "enhancedFmap": 69.24
+  },
+  {
+    "stateId": "PR",
+    "fiscalYear": 2026,
+    "enhancedFmap": 83.2
+  },
+  {
+    "stateId": "RI",
+    "fiscalYear": 2026,
+    "enhancedFmap": 70.25
+  },
+  {
+    "stateId": "SC",
+    "fiscalYear": 2026,
+    "enhancedFmap": 78.67
+  },
+  {
+    "stateId": "SD",
+    "fiscalYear": 2026,
+    "enhancedFmap": 65.71
+  },
+  {
+    "stateId": "TN",
+    "fiscalYear": 2026,
+    "enhancedFmap": 74.91
+  },
+  {
+    "stateId": "TX",
+    "fiscalYear": 2026,
+    "enhancedFmap": 71.88
+  },
+  {
+    "stateId": "UT",
+    "fiscalYear": 2026,
+    "enhancedFmap": 73.72
+  },
+  {
+    "stateId": "VT",
+    "fiscalYear": 2026,
+    "enhancedFmap": 71.31
+  },
+  {
+    "stateId": "VI",
+    "fiscalYear": 2026,
+    "enhancedFmap": 85.0
+  },
+  {
+    "stateId": "VA",
+    "fiscalYear": 2026,
+    "enhancedFmap": 65.27
+  },
+  {
+    "stateId": "WA",
+    "fiscalYear": 2026,
+    "enhancedFmap": 65.0
+  },
+  {
+    "stateId": "WV",
+    "fiscalYear": 2026,
+    "enhancedFmap": 81.95
+  },
+  {
+    "stateId": "WI",
+    "fiscalYear": 2026,
+    "enhancedFmap": 72.48
+  },
+  {
+    "stateId": "WY",
+    "fiscalYear": 2026,
+    "enhancedFmap": 65.0
   }
 ]

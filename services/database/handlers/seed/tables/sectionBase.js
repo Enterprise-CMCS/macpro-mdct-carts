@@ -4,6 +4,7 @@ const sectionData = [
   ...require("../../../data/seed/seed-section-base-2022.json"),
   ...require("../../../data/seed/seed-section-base-2023.json"),
   ...require("../../../data/seed/seed-section-base-2024.json"),
+  ...require("../../../data/seed/seed-section-base-2025.json"),
 ];
 
 const seed = {
