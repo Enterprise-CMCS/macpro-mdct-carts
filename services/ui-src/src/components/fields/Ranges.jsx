@@ -287,7 +287,7 @@ Ranges.propTypes = {
   "data-testid": PropTypes.string,
   disabled: PropTypes.bool,
   hint: PropTypes.string,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string,
   label: PropTypes.string,
   name: PropTypes.string,
   onChange: PropTypes.func.isRequired,
