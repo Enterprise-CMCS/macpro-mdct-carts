@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { v4 as uuidv4 } from "uuid";
 
 import Question from "./Question";
 import DataGrid from "./DataGrid";
@@ -28,7 +27,7 @@ const Fieldset = ({ question, ...props }) => {
       return <NoninteractiveTable question={question} {...props} />;
     default:
       return question.questions.map((q) => (
-        <Question key={q.id || uuidv4()} question={q} {...props} />
+        <Question key={q.id} question={q} {...props} />
       ));
   }
 };
