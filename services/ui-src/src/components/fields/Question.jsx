@@ -1,5 +1,4 @@
 import React from "react";
-import { v4 as uuidv4 } from "uuid";
 import PropTypes from "prop-types";
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
 // components
@@ -59,10 +58,23 @@ Container.propTypes = {
 };
 
 const Question = ({
-  hideNumber,
+  "data-testid": dataTestId,
+  disabled = false,
+  hideNumber = false,
+  // eslint-disable-next-line no-unused-vars
+  hint,
+  id,
+  // eslint-disable-next-line no-unused-vars
+  label,
+  // eslint-disable-next-line no-unused-vars
+  name,
+  // eslint-disable-next-line no-unused-vars
+  onChange,
+  // eslint-disable-next-line no-unused-vars
+  onClick,
   question,
   prevYear,
-  printView,
+  printView = false,
   // eslint-disable-next-line no-unused-vars
   setAnswer,
   ...props
@@ -92,11 +104,11 @@ const Question = ({
 
   const prevYearDisabled = prevYear ? prevYear.disabled : false;
 
-  const onChange = ({ target: { name: id, value } }) => {
+  const handleOnChange = ({ target: { name: id, value } }) => {
     dispatch(setAnswerEntry(id, value));
   };
 
-  const onClick = (e) => {
+  const handleOnClick = (e) => {
     if (e.target.checked) {
       dispatch(setAnswerEntry(e.target.name, ""));
     } else if (e.target.checked !== undefined) {
@@ -149,22 +161,23 @@ const Question = ({
           />
         )}
         <Component
-          {...props}
-          {...questionProps(question.type)}
-          id={props?.id || question?.id}
+          data-testid={dataTestId}
+          id={id || question?.id}
           label={""}
           hint={undefined}
           question={question}
           name={question.id}
-          onChange={onChange}
-          onClick={onClick}
+          onChange={handleOnChange}
+          onClick={handleOnClick}
           disabled={
             prevYearDisabled ||
             pageDisable ||
             readonly ||
             (question.answer && question.answer.readonly) ||
-            false
+            disabled
           }
+          {...props}
+          {...questionProps(question.type)}
         />
 
         {/* If there are subquestions, wrap them so they are indented with the
@@ -175,7 +188,7 @@ const Question = ({
           <div className="ds-c-choice__checkedChild">
             {question.questions.map((q) => (
               <Question
-                key={q.id || `question-${uuidv4()}`}
+                key={q.id}
                 question={q}
                 setAnswer={setAnswerEntry}
                 printView={printView}
@@ -189,13 +202,24 @@ const Question = ({
 };
 
 Question.propTypes = {
+  "data-testid": PropTypes.string,
+  disabled: PropTypes.bool,
   hideNumber: PropTypes.bool,
+  hint: PropTypes.string,
+  id: PropTypes.string,
+  label: PropTypes.string,
+  name: PropTypes.string,
+  onChange: PropTypes.func,
+  onClick: PropTypes.func,
   question: PropTypes.object.isRequired,
   prevYear: PropTypes.object,
   printView: PropTypes.bool,
+  setAnswer: PropTypes.func,
 };
 Question.defaultProps = {
+  disabled: false,
   hideNumber: false,
+  printView: false,
 };
 
 export default Question;

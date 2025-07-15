@@ -22,7 +22,9 @@ const generateQuestionNumber = (id) => {
         id.substring(id.length - 4, id.length - 2),
         10
       );
-      labelBits = `${numberBit}${id.substring(id.length - 1)}. `;
+      if (!Number.isNaN(numberBit)) {
+        labelBits = `${numberBit}${id.substring(id.length - 1)}. `;
+      }
     } else {
       labelBits = `${lastHunk}. `;
     }
