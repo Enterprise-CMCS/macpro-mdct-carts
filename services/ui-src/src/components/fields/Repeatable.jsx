@@ -19,8 +19,8 @@ const Repeatable = ({ headerRef, number, question, type, printView }) => {
         </span>
       </div>
       <AccordionPanel>
-        {children.map((q) => (
-          <Question key={q.id} question={q} printView={printView} />
+        {children.map((q, index) => (
+          <Question key={q.id || index} question={q} printView={printView} />
         ))}
       </AccordionPanel>
     </>
