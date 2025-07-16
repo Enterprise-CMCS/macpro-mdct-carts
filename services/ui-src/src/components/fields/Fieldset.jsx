@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-
 import Question from "./Question";
 import DataGrid from "./DataGrid";
 import SynthesizedTable from "./SynthesizedTable";
@@ -26,8 +25,8 @@ const Fieldset = ({ question, ...props }) => {
     case "noninteractive_table":
       return <NoninteractiveTable question={question} {...props} />;
     default:
-      return question.questions.map((q) => (
-        <Question key={q.id} question={q} {...props} />
+      return question.questions.map((q, index) => (
+        <Question key={q.id || index} question={q} {...props} />
       ));
   }
 };

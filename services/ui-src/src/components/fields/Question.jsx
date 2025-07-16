@@ -186,9 +186,9 @@ const Question = ({
              not, then its children shouldn't be indented either. */}
         {shouldRenderChildren && (
           <div className="ds-c-choice__checkedChild">
-            {question.questions.map((q) => (
+            {question.questions.map((q, index) => (
               <Question
-                key={q.id}
+                key={q.id || `question-${index}`}
                 question={q}
                 setAnswer={setAnswerEntry}
                 printView={printView}
