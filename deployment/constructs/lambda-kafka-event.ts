@@ -5,6 +5,7 @@ import {
   aws_lambda_nodejs as lambda_nodejs,
   Duration,
 } from "aws-cdk-lib";
+import { LogLevel } from "aws-cdk-lib/aws-lambda-nodejs";
 
 interface LambdaKafkaEventProps
   extends Partial<lambda_nodejs.NodejsFunctionProps> {
@@ -77,9 +78,11 @@ export class LambdaKafkaEventSource extends Construct {
       memorySize,
       role,
       bundling: {
+        forceDockerBundling: true,
         minify: true,
         sourceMap: true,
         nodeModules: ["kafkajs"],
+        logLevel: LogLevel.INFO,
       },
       environment,
       ...restProps,

@@ -1,5 +1,6 @@
 import { Construct } from "constructs";
 import {
+  LogLevel,
   NodejsFunction,
   NodejsFunctionProps,
 } from "aws-cdk-lib/aws-lambda-nodejs";
@@ -83,9 +84,11 @@ export class Lambda extends Construct {
       memorySize,
       role,
       bundling: {
+        forceDockerBundling: true,
         minify: true,
         sourceMap: true,
         nodeModules: ["jsdom"],
+        logLevel: LogLevel.INFO,
       },
       environment,
       ...restProps,

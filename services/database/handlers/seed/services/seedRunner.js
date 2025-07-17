@@ -64,6 +64,7 @@ const convertToDynamoExpression = (listOfVars) => {
 
 const buildSeedRunner = () => {
   const dynamoConfig = {
+    region: "us-east-1",
     logger: {
       debug: console.debug, // eslint-disable-line no-console
       info: console.info, // eslint-disable-line no-console
@@ -71,19 +72,7 @@ const buildSeedRunner = () => {
       error: console.error, // eslint-disable-line no-console
     },
   };
-  const endpoint = process.env.DYNAMODB_URL;
-  if (endpoint) {
-    dynamoConfig.endpoint = endpoint;
-    dynamoConfig.region = "localhost";
-    dynamoConfig.credentials = {
-      accessKeyId: "LOCALFAKEKEY", // pragma: allowlist secret
-      secretAccessKey: "LOCALFAKESECRET", // pragma: allowlist secret
-    };
-    dynamoPrefix = "localstack";
-  } else {
-    dynamoConfig["region"] = "us-east-1";
-    dynamoPrefix = process.env.dynamoPrefix;
-  }
+  dynamoPrefix = process.env.dynamoPrefix;
 
   const bareBonesClient = new DynamoDBClient(dynamoConfig);
   dynamoClient = DynamoDBDocumentClient.from(bareBonesClient);

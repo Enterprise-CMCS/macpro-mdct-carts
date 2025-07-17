@@ -25,8 +25,8 @@ const Objective = ({ headerRef, objective, objectiveNumber, printView }) => {
       </div>
       <AccordionPanel>
         {children.map((q) => (
-          <div className="ds-c-choice__checkedChild">
-            <Question key={q.id} question={q} printView={printView} />
+          <div className="ds-c-choice__checkedChild" key={q.id}>
+            <Question question={q} printView={printView} />
           </div>
         ))}
       </AccordionPanel>
@@ -34,7 +34,7 @@ const Objective = ({ headerRef, objective, objectiveNumber, printView }) => {
   );
 };
 Objective.propTypes = {
-  headerRef: PropTypes.func.isRequired,
+  headerRef: PropTypes.object.isRequired,
   objective: PropTypes.object.isRequired,
   objectiveNumber: PropTypes.number.isRequired,
   printView: PropTypes.bool,

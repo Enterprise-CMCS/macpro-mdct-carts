@@ -26,7 +26,7 @@ import { setAnswerEntry } from "../../actions/initial";
 import { selectIsFormEditable } from "../../store/selectors";
 import { showQuestionByPath } from "../utils/helperFunctions";
 
-const questionTypes = new Map([
+export const questionTypes = new Map([
   ["checkbox", Checkbox],
   ["checkbox_flag", CheckboxFlag],
   ["daterange", DateRange],
@@ -58,11 +58,25 @@ Container.propTypes = {
 };
 
 const Question = ({
-  hideNumber,
+  "data-testid": dataTestId,
+  disabled = false,
+  hideNumber = false,
+  // eslint-disable-next-line no-unused-vars
+  hint,
+  id,
+  // eslint-disable-next-line no-unused-vars
+  label,
+  // eslint-disable-next-line no-unused-vars
+  name,
+  // eslint-disable-next-line no-unused-vars
+  onChange,
+  // eslint-disable-next-line no-unused-vars
+  onClick,
   question,
   prevYear,
-  tableTitle,
-  printView,
+  printView = false,
+  // eslint-disable-next-line no-unused-vars
+  setAnswer,
   ...props
 }) => {
   let Component = Text;
@@ -90,11 +104,11 @@ const Question = ({
 
   const prevYearDisabled = prevYear ? prevYear.disabled : false;
 
-  const onChange = ({ target: { name: id, value } }) => {
+  const handleOnChange = ({ target: { name: id, value } }) => {
     dispatch(setAnswerEntry(id, value));
   };
 
-  const onClick = (e) => {
+  const handleOnClick = (e) => {
     if (e.target.checked) {
       dispatch(setAnswerEntry(e.target.name, ""));
     } else if (e.target.checked !== undefined) {
@@ -121,6 +135,19 @@ const Question = ({
   // Check if question should be shown based on pathname
   const pageDisable = showQuestionByPath(window.location.pathname);
 
+  function questionProps(questionType) {
+    switch (questionType) {
+      case "fieldset":
+      case "integer":
+        return { prevYear, printView };
+      case "objectives":
+      case "repeatables":
+        return { printView };
+      default:
+        return {};
+    }
+  }
+
   return (
     <div className="question">
       <Container question={question}>
@@ -134,24 +161,23 @@ const Question = ({
           />
         )}
         <Component
-          {...props}
-          id={props?.id || question?.id}
-          label={undefined}
+          data-testid={dataTestId}
+          id={id || question?.id}
+          label={""}
           hint={undefined}
           question={question}
           name={question.id}
-          onChange={onChange}
-          onClick={onClick}
-          tableTitle={tableTitle}
+          onChange={handleOnChange}
+          onClick={handleOnClick}
           disabled={
             prevYearDisabled ||
             pageDisable ||
             readonly ||
             (question.answer && question.answer.readonly) ||
-            false
+            disabled
           }
-          prevYear={prevYear}
-          printView={printView}
+          {...props}
+          {...questionProps(question.type)}
         />
 
         {/* If there are subquestions, wrap them so they are indented with the
@@ -160,9 +186,9 @@ const Question = ({
              not, then its children shouldn't be indented either. */}
         {shouldRenderChildren && (
           <div className="ds-c-choice__checkedChild">
-            {question.questions.map((q) => (
+            {question.questions.map((q, index) => (
               <Question
-                key={q.id}
+                key={q.id || `question-${index}`}
                 question={q}
                 setAnswer={setAnswerEntry}
                 printView={printView}
@@ -176,14 +202,24 @@ const Question = ({
 };
 
 Question.propTypes = {
+  "data-testid": PropTypes.string,
+  disabled: PropTypes.bool,
   hideNumber: PropTypes.bool,
+  hint: PropTypes.string,
+  id: PropTypes.string,
+  label: PropTypes.string,
+  name: PropTypes.string,
+  onChange: PropTypes.func,
+  onClick: PropTypes.func,
   question: PropTypes.object.isRequired,
   prevYear: PropTypes.object,
-  tableTitle: PropTypes.string,
   printView: PropTypes.bool,
+  setAnswer: PropTypes.func,
 };
 Question.defaultProps = {
+  disabled: false,
   hideNumber: false,
+  printView: false,
 };
 
 export default Question;

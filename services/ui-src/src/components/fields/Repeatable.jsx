@@ -19,18 +19,18 @@ const Repeatable = ({ headerRef, number, question, type, printView }) => {
         </span>
       </div>
       <AccordionPanel>
-        {children.map((q) => (
-          <Question key={q.id} question={q} printView={printView} />
+        {children.map((q, index) => (
+          <Question key={q.id || index} question={q} printView={printView} />
         ))}
       </AccordionPanel>
     </>
   );
 };
 Repeatable.propTypes = {
-  headerRef: PropTypes.func.isRequired,
+  headerRef: PropTypes.object.isRequired,
   number: PropTypes.number.isRequired,
   question: PropTypes.object.isRequired,
-  type: PropTypes.oneOf([PropTypes.string, null]),
+  type: PropTypes.string,
   printView: PropTypes.bool,
 };
 

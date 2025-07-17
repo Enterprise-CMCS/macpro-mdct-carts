@@ -15,25 +15,23 @@ import { DynamoDBTableIdentifiers } from "../constructs/dynamodb-table";
 
 interface CreateApiComponentsProps {
   docraptorApiKey: string;
-  fiscalYearTemplateS3BucketName: string;
   isDev: boolean;
   project: string;
   scope: Construct;
   stage: string;
   tables: DynamoDBTableIdentifiers[];
-  uploadS3BucketName: string;
+  attachmentsBucketName: string;
 }
 
 export function createApiComponents(props: CreateApiComponentsProps) {
   const {
     docraptorApiKey,
-    fiscalYearTemplateS3BucketName,
     isDev,
     project,
     scope,
     stage,
     tables,
-    uploadS3BucketName,
+    attachmentsBucketName,
   } = props;
 
   const service = "app-api";
@@ -78,13 +76,14 @@ export function createApiComponents(props: CreateApiComponentsProps) {
   const environment = {
     stage,
     docraptorApiKey,
-    fiscalYearTemplateS3BucketName,
-    uploadS3BucketName,
+    attachmentsBucketName,
     NODE_OPTIONS: "--enable-source-maps",
     ...Object.fromEntries(
       tables.map((table) => [`${table.id}TableName`, table.name])
     ),
   };
+  if (isLocalStack)
+    environment["AWS_ENDPOINT_URL"] = process.env.AWS_ENDPOINT_URL;
 
   const commonProps = {
     stackName: `${service}-${stage}`,
@@ -123,22 +122,6 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     method: "GET",
     requestParameters: ["year", "state"],
     ...commonProps,
-  });
-
-  new Lambda(scope, "getFiscalYearTemplateLink", {
-    entry: "services/app-api/handlers/fiscalYearTemplate/get.ts",
-    handler: "getFiscalYearTemplateLink",
-    path: "/fiscalYearTemplate/{year}",
-    method: "GET",
-    requestParameters: ["year"],
-    ...commonProps,
-    additionalPolicies: [
-      new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        actions: ["s3:GetObject"],
-        resources: [`arn:aws:s3:::${fiscalYearTemplateS3BucketName}/*`],
-      }),
-    ],
   });
 
   new Lambda(scope, "getStateStatus", {
@@ -196,7 +179,7 @@ export function createApiComponents(props: CreateApiComponentsProps) {
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
         actions: ["s3:PutObject"],
-        resources: [`arn:aws:s3:::${uploadS3BucketName}/*`],
+        resources: [`arn:aws:s3:::${attachmentsBucketName}/*`],
       }),
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
@@ -219,12 +202,12 @@ export function createApiComponents(props: CreateApiComponentsProps) {
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
         actions: ["s3:ListBucket"],
-        resources: [`arn:aws:s3:::${uploadS3BucketName}`],
+        resources: [`arn:aws:s3:::${attachmentsBucketName}`],
       }),
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
         actions: ["s3:GetObject"],
-        resources: [`arn:aws:s3:::${uploadS3BucketName}/*`],
+        resources: [`arn:aws:s3:::${attachmentsBucketName}/*`],
       }),
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
@@ -247,7 +230,7 @@ export function createApiComponents(props: CreateApiComponentsProps) {
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
         actions: ["s3:DeleteObject"],
-        resources: [`arn:aws:s3:::${uploadS3BucketName}/*`],
+        resources: [`arn:aws:s3:::${attachmentsBucketName}/*`],
       }),
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,

@@ -19,6 +19,7 @@ const ReportItem = ({
   username,
   lastChanged,
   timeZone,
+  stateAbbr,
 }) => {
   const dispatch = useDispatch();
   const anchorTarget = "_self";
@@ -60,6 +61,10 @@ const ReportItem = ({
     AppRoles.CMS_APPROVER,
   ];
 
+  const printFormUrl = (formYear) => {
+    return `/print?year=${formYear}&state=${stateAbbr}`;
+  };
+
   return (
     <>
       {!isStateUser && (
@@ -89,6 +94,18 @@ const ReportItem = ({
                   </button>
                 </span>
               )}
+            <span>
+              {" "}
+              <Link
+                className="ds-c-button--solid ds-c-button--small"
+                to={printFormUrl(year)}
+                title={`Print ${stateAbbr} ${year} form`}
+                target="_blank"
+                data-testid="print-form"
+              >
+                Print
+              </Link>
+            </span>
           </div>
 
           {isShowing && (
@@ -119,13 +136,22 @@ const ReportItem = ({
           <div className="name ds-l-col--2">{name}</div>
           <div className="status ds-l-col--2">{statusText}</div>
           <div className="actions ds-l-col--3">{lastEditedNote}</div>
-          <div className="actions ds-l-col--1">
+          <div className="actions ds-l-col--auto">
             <Link
               to={link1URL}
               target={anchorTarget}
               data-testid="report-action-button"
             >
               {link1Text}
+            </Link>{" "}
+            <Link
+              className="ds-c-button--solid ds-c-button--small"
+              to={printFormUrl(year)}
+              title={`Print ${stateAbbr} ${year} form`}
+              target="_blank"
+              data-testid="print-form"
+            >
+              Print
             </Link>
           </div>
         </div>
@@ -144,6 +170,7 @@ ReportItem.propTypes = {
   username: PropTypes.string,
   lastChanged: PropTypes.string.isRequired,
   timeZone: PropTypes.string,
+  stateAbbr: PropTypes.string.isRequired,
 };
 
 export default ReportItem;
