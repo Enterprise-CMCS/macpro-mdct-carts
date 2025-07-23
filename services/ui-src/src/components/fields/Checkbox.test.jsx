@@ -117,5 +117,3 @@ describe("Checkbox component", () => {
     expect(container.querySelectorAll("input[type='checkbox']").length).toBe(0);
   });
 });
-
-// We recommend installing an extension to run jest tests.
