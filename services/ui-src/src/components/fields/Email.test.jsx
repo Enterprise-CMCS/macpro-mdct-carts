@@ -33,26 +33,25 @@ const defaultQuestion = {
   label: "Email Address",
 };
 
+const onChange = jest.fn();
+
 describe("Email component", () => {
+  const basicEmailProvider = emailProvider({
+    question: defaultQuestion,
+    onChange,
+  });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("renders without crashing", () => {
-    const onChange = jest.fn();
-    render(
-      emailProvider({
-        question: defaultQuestion,
-        onChange,
-      })
-    );
+    render(basicEmailProvider);
     expect(screen.getByLabelText(/email address/i)).toBeInTheDocument();
   });
 
   it("calls onChange with valid email", async () => {
-    const onChange = jest.fn();
-    render(
-      emailProvider({
-        question: defaultQuestion,
-        onChange,
-      })
-    );
+    render(basicEmailProvider);
 
     const expectedLabelText = defaultQuestion.label;
     const inputElement = screen.getByLabelText(expectedLabelText);
@@ -65,13 +64,7 @@ describe("Email component", () => {
   });
 
   it("shows error for invalid email", async () => {
-    const onChange = jest.fn();
-    render(
-      emailProvider({
-        question: defaultQuestion,
-        onChange,
-      })
-    );
+    render(basicEmailProvider);
 
     const expectedLabelText = defaultQuestion.label;
     const inputElement = screen.getByLabelText(expectedLabelText);
@@ -84,13 +77,7 @@ describe("Email component", () => {
   });
 
   it("clears error when input is cleared", async () => {
-    const onChange = jest.fn();
-    render(
-      emailProvider({
-        question: defaultQuestion,
-        onChange,
-      })
-    );
+    render(basicEmailProvider);
 
     const expectedLabelText = defaultQuestion.label;
     const inputElement = screen.getByLabelText(expectedLabelText);
@@ -109,7 +96,6 @@ describe("Email component", () => {
   });
 
   it("renders with initial value", () => {
-    const onChange = jest.fn();
     render(
       emailProvider({
         question: { ...defaultQuestion, answer: { entry: "init@example.com" } },
