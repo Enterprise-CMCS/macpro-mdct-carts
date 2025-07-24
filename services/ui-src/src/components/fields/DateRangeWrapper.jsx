@@ -13,5 +13,3 @@ DateRangeWrapper.propTypes = {
   onChange: PropTypes.func.isRequired,
   question: PropTypes.object.isRequired,
 };
-
-export default DateRangeWrapper;
