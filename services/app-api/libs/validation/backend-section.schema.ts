@@ -338,7 +338,6 @@ export const sectionSchema = {
           type: {
             enum: [
               "checkbox",
-              "checkbox_flag",
               "daterange",
               "email",
               "file_upload",
