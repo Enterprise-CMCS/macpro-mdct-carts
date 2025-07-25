@@ -4,7 +4,12 @@ import { AccordionButton, AccordionPanel } from "@reach/accordion";
 
 import Question from "./Question";
 
-const Objective = ({ headerRef, objective, objectiveNumber, printView }) => {
+export const Objective = ({
+  headerRef,
+  objective,
+  objectiveNumber,
+  printView,
+}) => {
   const first = objective.questions[0].answer.readonly === true;
   const name = first
     ? objective.questions[0].answer.default_entry
@@ -39,6 +44,3 @@ Objective.propTypes = {
   objectiveNumber: PropTypes.number.isRequired,
   printView: PropTypes.bool,
 };
-
-export { Objective };
-export default Objective;
