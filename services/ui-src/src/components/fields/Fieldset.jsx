@@ -14,7 +14,7 @@ import SynthesizedValue from "./SynthesizedValue";
  * unmarked_descendants
  */
 
-const Fieldset = ({ question, ...props }) => {
+export const Fieldset = ({ question, ...props }) => {
   switch (question.fieldset_type) {
     case "datagrid":
       return <DataGrid question={question} {...props} />;
@@ -33,6 +33,3 @@ const Fieldset = ({ question, ...props }) => {
 Fieldset.propTypes = {
   question: PropTypes.object.isRequired,
 };
-
-export { Fieldset };
-export default Fieldset;
