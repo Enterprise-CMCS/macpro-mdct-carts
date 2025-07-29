@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormFields } from "../../../hooks/useFormFields";
 import { loginUser } from "../../../util/apiLib";
+import { loginError } from "verbiage/errors";
+import { Alert } from "@cmsgov/design-system";
 
 const LocalLogin = () => {
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
   const [fields, handleFieldChange] = useFormFields({
     email: "",
@@ -15,18 +18,18 @@ const LocalLogin = () => {
       await loginUser(fields.email, fields.password);
       navigate("/");
     } catch (error) {
-      let errorMessage = {
-        title: "Unable to login",
-        description: error.message,
-      };
-      // eslint-disable-next-line no-console
-      console.log(errorMessage);
+      setError(loginError);
     }
   }
 
   return (
     <div className="login-option">
       <h2>Log In with Cognito</h2>
+      {error && (
+        <Alert variation="error" heading="There was an issue logging in.">
+          <p>Verify credentials and try again or contact support.</p>
+        </Alert>
+      )}
       <form onSubmit={(event) => handleLogin(event)}>
         <label htmlFor="email">
           <p className="ds-c-field__hint">Email:</p>
