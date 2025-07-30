@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useFormFields } from "../../../hooks/useFormFields";
+//components
+import { AlertNotification } from "../../alerts/AlertNotification";
+//utils
 import { loginUser } from "../../../util/apiLib";
-import { loginError } from "verbiage/errors";
-import { Alert } from "@cmsgov/design-system";
+import { useFormFields } from "../../../hooks/useFormFields";
+import { loginError } from "../../../verbiage/errors";
+import { useNavigate } from "react-router-dom";
 
 const LocalLogin = () => {
   const [error, setError] = useState(false);
@@ -18,7 +20,7 @@ const LocalLogin = () => {
       await loginUser(fields.email, fields.password);
       navigate("/");
     } catch (error) {
-      setError(loginError);
+      setError(error);
     }
   }
 
@@ -26,9 +28,11 @@ const LocalLogin = () => {
     <div className="login-option">
       <h2>Log In with Cognito</h2>
       {error && (
-        <Alert variation="error" heading="There was an issue logging in.">
-          <p>Verify credentials and try again or contact support.</p>
-        </Alert>
+        <AlertNotification
+          variation={loginError.variation}
+          title={loginError.title}
+          description={loginError.description}
+        />
       )}
       <form onSubmit={(event) => handleLogin(event)}>
         <label htmlFor="email">
