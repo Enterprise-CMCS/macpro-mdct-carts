@@ -9,20 +9,38 @@ const mockStore = configureMockStore();
 const store = mockStore(mockInitialState);
 
 jest.mock("../../store/selectors", () => ({
-  selectSubsectionTitleAndPartIDs: jest.fn().mockReturnValue({
-    parts: [{}],
-  }),
+  selectSubsectionTitleAndPartIDs: jest
+    .fn()
+    .mockReturnValue({
+      parts: ["mock-partId"],
+      title: "Mock part title",
+      text: "Mock part hint",
+    }),
 }));
 
-jest.mock("./Part", () => () => <div data-testid="part" />);
+const mockPart = jest.fn(() => <div data-testid="part" />);
+jest.mock("./Part", () => (props) => mockPart(props));
 
 describe("Subsection component", () => {
   test("renders", () => {
-    render(
+    const { container } = render(
       <Provider store={store}>
-        <Subsection subsectionId={"subsection 1"} />
+        <Subsection subsectionId={"subsection-1"} />
       </Provider>
     );
-    expect(screen.getByTestId("part")).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "Mock part title" })
+    ).toBeVisible();
+    expect(screen.getByText("Mock part hint")).toBeVisible();
+    expect(mockPart).toHaveBeenCalledWith(
+      expect.objectContaining({
+        nestedSubsectionTitle: true,
+        partId: "mock-partId",
+        partNumber: null,
+        printView: undefined,
+      })
+    );
+    const subSectionDivId = container.querySelector("#subsection-1");
+    expect(subSectionDivId).toBeVisible();
   });
 });

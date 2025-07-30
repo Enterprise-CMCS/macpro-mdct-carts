@@ -3,7 +3,8 @@ import { Accordion, AccordionItem } from "@reach/accordion";
 import { render, screen } from "@testing-library/react";
 import Repeatable from "./Repeatable";
 
-jest.mock("./Question", () => () => <div data-testid="question" />);
+const mockQuestion = jest.fn(() => <div data-testid="question" />);
+jest.mock("./Question", () => (props) => mockQuestion(props));
 
 describe("Repeatable component", () => {
   test("renders", () => {
@@ -27,7 +28,14 @@ describe("Repeatable component", () => {
         </AccordionItem>
       </Accordion>
     );
-    expect(screen.getByText("mock repeatable 1")).toBeInTheDocument();
-    expect(screen.getByTestId("question")).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "mock repeatable 1" })
+    ).toBeVisible();
+    expect(mockQuestion).toHaveBeenCalledWith(
+      expect.objectContaining({
+        question: { id: "mock q 1" },
+        printView: false,
+      })
+    );
   });
 });
