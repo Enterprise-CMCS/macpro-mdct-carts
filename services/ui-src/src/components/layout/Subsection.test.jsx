@@ -10,10 +10,10 @@ const store = mockStore(mockInitialState);
 
 jest.mock("../../store/selectors", () => ({
   selectSubsectionTitleAndPartIDs: jest.fn().mockReturnValue({
-      parts: ["mock-partId"],
-      title: "Mock part title",
-      text: "Mock part hint",
-    }),
+    parts: ["mock-partId"],
+    title: "Mock part title",
+    text: "Mock part hint",
+  }),
 }));
 
 const mockPart = jest.fn(() => <div data-testid="part" />);
