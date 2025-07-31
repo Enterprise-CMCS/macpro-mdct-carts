@@ -77,7 +77,7 @@ const ReportItem = ({
             <Link
               to={link1URL}
               target={anchorTarget}
-              aria-label={`${link1Text} ${name} ${year}`}
+              aria-label={`${link1Text} ${stateAbbr} ${year} report`}
             >
               {link1Text}
             </Link>
@@ -87,6 +87,7 @@ const ReportItem = ({
                   {" "}
                   <button
                     data-testid={"uncertifyButton"}
+                    aria-label={`Uncertify ${stateAbbr} ${year} report`}
                     className="link"
                     onClick={toggleModal}
                   >
@@ -99,7 +100,7 @@ const ReportItem = ({
               <Link
                 className="ds-c-button--solid ds-c-button--small"
                 to={printFormUrl(year)}
-                title={`Print ${stateAbbr} ${year} form`}
+                aria-label={`Print ${stateAbbr} ${year} report`}
                 target="_blank"
                 data-testid="print-form"
               >
@@ -113,13 +114,13 @@ const ReportItem = ({
               data-testid={"uncertifyModal"}
               isShowing={isShowing}
               onExit={toggleModal}
-              heading="Uncertify this Report?"
+              heading={`Uncertify ${stateAbbr} ${year} report?`}
               actions={[
                 <button
                   className="ds-c-button ds-c-button--solid ds-u-margin-right--1"
                   key="primary"
                   onClick={uncertify}
-                  aria-label="Uncertify this Report"
+                  aria-label={`Uncertify ${stateAbbr} ${year} report`}
                 >
                   Yes, Uncertify
                 </button>,
@@ -141,13 +142,14 @@ const ReportItem = ({
               to={link1URL}
               target={anchorTarget}
               data-testid="report-action-button"
+              aria-label={`${link1Text} ${stateAbbr} ${year} report`}
             >
               {link1Text}
             </Link>{" "}
             <Link
               className="ds-c-button--solid ds-c-button--small"
               to={printFormUrl(year)}
-              title={`Print ${stateAbbr} ${year} form`}
+              aria-label={`Print ${stateAbbr} ${year} report`}
               target="_blank"
               data-testid="print-form"
             >
