@@ -105,6 +105,7 @@ export function createApiComponents(props: CreateApiComponentsProps) {
         resources: ["*"],
       }),
     ],
+    isDev,
   };
 
   new Lambda(scope, "getStates", {
@@ -120,7 +121,6 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     handler: "getEnrollmentCounts",
     path: "/enrollment_counts/{year}/{state}",
     method: "GET",
-    requestParameters: ["year", "state"],
     ...commonProps,
   });
 
@@ -137,7 +137,6 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     handler: "updateStateStatus",
     path: "/state_status/{year}/{state}",
     method: "POST",
-    requestParameters: ["year", "state"],
     ...commonProps,
   });
 
@@ -146,7 +145,6 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     handler: "getSections",
     path: "/section/{year}/{state}",
     method: "GET",
-    requestParameters: ["year", "state"],
     ...commonProps,
   });
 
@@ -155,7 +153,6 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     handler: "updateSections",
     path: "/save_report/{year}/{state}",
     method: "PUT",
-    requestParameters: ["year", "state"],
     ...commonProps,
   });
 
@@ -173,7 +170,6 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     handler: "psUpload",
     path: "/psUrlUpload/{year}/{state}",
     method: "POST",
-    requestParameters: ["year", "state"],
     ...commonProps,
     additionalPolicies: [
       new iam.PolicyStatement({
@@ -196,7 +192,6 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     handler: "getSignedFileUrl",
     path: "/psUrlDownload/{year}/{state}",
     method: "POST",
-    requestParameters: ["year", "state"],
     ...commonProps,
     additionalPolicies: [
       new iam.PolicyStatement({
@@ -224,7 +219,6 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     handler: "deleteUpload",
     path: "/uploads/{year}/{state}/{fileId}",
     method: "DELETE",
-    requestParameters: ["year", "state", "fileId"],
     ...commonProps,
     additionalPolicies: [
       new iam.PolicyStatement({
@@ -247,7 +241,6 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     handler: "viewUploaded",
     path: "/uploads/{year}/{state}",
     method: "POST",
-    requestParameters: ["year", "state"],
     ...commonProps,
   });
 

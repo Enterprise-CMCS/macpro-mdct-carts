@@ -1,5 +1,5 @@
 import { Construct } from "constructs";
-import { RemovalPolicy } from "aws-cdk-lib";
+import { RemovalPolicy, Tags } from "aws-cdk-lib";
 import * as dynamodb from "aws-cdk-lib/aws-dynamodb";
 
 interface DynamoDBTableProps {
@@ -50,8 +50,8 @@ export class DynamoDBTable extends Construct {
     const tableName = `${stage}-${name}`;
     this.table = new dynamodb.Table(this, "Table", {
       tableName,
-      partitionKey: partitionKey,
-      sortKey: sortKey,
+      partitionKey,
+      sortKey,
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       ...(streamable && { stream: dynamodb.StreamViewType.NEW_AND_OLD_IMAGES }),
       pointInTimeRecoverySpecification: {
@@ -59,6 +59,8 @@ export class DynamoDBTable extends Construct {
       },
       removalPolicy: isDev ? RemovalPolicy.DESTROY : RemovalPolicy.RETAIN,
     });
+
+    Tags.of(this.table).add("AWS_Backup", "d35");
 
     this.identifiers = {
       id,
