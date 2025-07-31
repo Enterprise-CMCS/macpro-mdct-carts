@@ -1,10 +1,9 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { AlertNotification } from "./AlertNotification";
-import { AlertVariation } from "@cmsgov/design-system/dist/types/Alert/Alert";
 
 jest.mock("@cmsgov/design-system", () => ({
-  Alert: ({ variation, heading, children }: any) => (
+  Alert: ({ variation, heading, children }) => (
     <div data-testid="alert" data-variation={variation}>
       <h2>{heading}</h2>
       {children}
@@ -18,7 +17,7 @@ describe("AlertNotification", () => {
       <AlertNotification
         title="Login Error"
         description="Invalid username or password."
-        variation={"error" as AlertVariation}
+        variation="error"
       />
     );
 

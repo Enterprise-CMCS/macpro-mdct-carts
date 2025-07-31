@@ -1,14 +1,14 @@
 import React, { useState } from "react";
+import { loginUser } from "../../../util/apiLib";
 //components
 import { AlertNotification } from "../../alerts/AlertNotification";
 //utils
-import { loginUser } from "../../../util/apiLib";
 import { useFormFields } from "../../../hooks/useFormFields";
 import { loginError } from "../../../verbiage/errors";
 import { useNavigate } from "react-router-dom";
 
 const LocalLogin = () => {
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(undefined);
   const navigate = useNavigate();
   const [fields, handleFieldChange] = useFormFields({
     email: "",
@@ -19,8 +19,9 @@ const LocalLogin = () => {
     try {
       await loginUser(fields.email, fields.password);
       navigate("/");
+      setError(undefined);
     } catch (error) {
-      setError(error);
+      setError(true);
     }
   }
 
