@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { loginUser } from "../../../util/apiLib";
+import { useNavigate } from "react-router-dom";
 //components
 import { AlertNotification } from "../../alerts/AlertNotification";
 //utils
-import { useFormFields } from "../../../hooks/useFormFields";
+import { loginUser } from "../../../util/apiLib";
 import { loginError } from "../../../verbiage/errors";
-import { useNavigate } from "react-router-dom";
+import { useFormFields } from "../../../hooks/useFormFields";
 
 const LocalLogin = () => {
   const [error, setError] = useState(undefined);
@@ -19,7 +19,7 @@ const LocalLogin = () => {
     try {
       await loginUser(fields.email, fields.password);
       navigate("/");
-      setError(undefined);
+      setError(false);
     } catch (error) {
       setError(true);
     }
