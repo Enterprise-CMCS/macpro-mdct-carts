@@ -8,11 +8,7 @@ interface Props {
   variation: AlertVariation;
 }
 
-export const AlertNotification: React.FC<Props> = ({
-  title,
-  description,
-  variation,
-}) => {
+export const AlertNotification = ({ title, description, variation }: Props) => {
   return (
     <Alert variation={variation} heading={title}>
       {description}
