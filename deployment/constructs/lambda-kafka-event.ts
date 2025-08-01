@@ -9,7 +9,6 @@ import {
 interface LambdaKafkaEventProps
   extends Partial<lambda_nodejs.NodejsFunctionProps> {
   additionalPolicies?: iam.PolicyStatement[];
-  brokerString?: string;
   kafkaBootstrapServers: string[];
   securityGroupId: string;
   subnets: string[];
