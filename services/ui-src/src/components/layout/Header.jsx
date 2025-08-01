@@ -136,7 +136,7 @@ export const Header = () => {
                         id="menu-block"
                       >
                         <li className="contact-us">
-                          <a href="mailto:mdct_help@cms.hhs.gov">Contact Us</a>
+                          <a href="/get-help">Contact Us</a>
                         </li>
                         <li className="manage-account">
                           <Link to="/user/profile">Manage Account</Link>
