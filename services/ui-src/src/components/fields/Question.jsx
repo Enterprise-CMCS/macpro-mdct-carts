@@ -3,9 +3,8 @@ import PropTypes from "prop-types";
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
 // components
 import { Checkbox } from "./Checkbox";
-import { CheckboxFlag } from "./CheckboxFlag";
 import { CMSLegend } from "./CMSLegend";
-import { DateRange } from "./DateRange";
+import { DateRangeWrapper } from "./DateRangeWrapper";
 import { Email } from "./Email";
 import { Fieldset } from "./Fieldset";
 import UploadComponent from "../layout/UploadComponent";
@@ -28,8 +27,7 @@ import { showQuestionByPath } from "../utils/helperFunctions";
 
 export const questionTypes = new Map([
   ["checkbox", Checkbox],
-  ["checkbox_flag", CheckboxFlag],
-  ["daterange", DateRange],
+  ["daterange", DateRangeWrapper],
   ["email", Email],
   ["fieldset", Fieldset],
   ["file_upload", UploadComponent],

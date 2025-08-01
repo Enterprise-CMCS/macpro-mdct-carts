@@ -32,22 +32,14 @@ mockQuestionTypes.forEach((type, index) => {
   };
 });
 
-[
-  "checkbox_flag",
-  "email",
-  "text",
-  "text_medium",
-  "text_multiline",
-  "text_small",
-].forEach((type) => {
-  mockQuestions[type] = {
-    ...mockQuestions[type],
-    answer: { entry: `Mock ${type} answer` },
-  };
-});
-mockQuestionProps["checkbox_flag"] = {
-  onChange: () => {},
-};
+["email", "text", "text_medium", "text_multiline", "text_small"].forEach(
+  (type) => {
+    mockQuestions[type] = {
+      ...mockQuestions[type],
+      answer: { entry: `Mock ${type} answer` },
+    };
+  }
+);
 
 ["integer", "money", "phone_number", "percentage"].forEach((type) => {
   mockQuestions[type] = {
