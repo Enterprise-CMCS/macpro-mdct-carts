@@ -10483,7 +10483,7 @@
                 "questions": [
                   {
                     "type": "fieldset",
-                    "label": "How many children were eligible for managed care in FFY 2025? How many do you anticipate will be eligible in FFY 2026 and 2027?",
+                    "label": "How many children were enrolled in managed care Medicaid Expansion in FFY 2025? How many do you anticipate will be eligible in FFY 2026 and 2027?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10517,27 +10517,62 @@
                     "fieldset_type": "marked"
                   },
                   {
-                    "hint": "Round to the nearest whole number.",
                     "type": "fieldset",
-                    "label": "What was your per member per month (PMPM) cost based on the number of children eligible for managed care in FFY 2025? What is your projected PMPM cost for FFY 2026 and 2027?",
+                    "label": "How many children were enrolled in for managed care Separate CHIP in FFY 2025? How many do you anticipate will be eligible in FFY 2026 and 2027?",
                     "questions": [
                       {
                         "type": "fieldset",
                         "questions": [
                           {
                             "id": "2025-05-a-03-02-a",
+                            "type": "integer",
+                            "label": "2025",
+                            "answer": { "entry": null },
+                            "mask": "lessThanEleven"
+                          },
+                          {
+                            "id": "2025-05-a-03-02-b",
+                            "type": "integer",
+                            "label": "2026",
+                            "answer": { "entry": null },
+                            "mask": "lessThanEleven"
+                          },
+                          {
+                            "id": "2025-05-a-03-02-c",
+                            "type": "integer",
+                            "label": "2027",
+                            "answer": { "entry": null },
+                            "mask": "lessThanEleven"
+                          }
+                        ],
+                        "fieldset_type": "datagrid"
+                      }
+                    ],
+                    "fieldset_info": { "id": "2025-05-a-03-02" },
+                    "fieldset_type": "marked"
+                  },
+                  {
+                    "hint": "Round to the nearest whole number.",
+                    "type": "fieldset",
+                    "label": "What was your per member per month (PMPM) cost based on the number of children enrolled in managed care Medicaid Expansion in FFY 2025? What is your projected PMPM cost for FFY 2026 and 2027?",
+                    "questions": [
+                      {
+                        "type": "fieldset",
+                        "questions": [
+                          {
+                            "id": "2025-05-a-03-03-a",
                             "type": "money",
                             "label": "2025",
                             "answer": { "entry": null }
                           },
                           {
-                            "id": "2025-05-a-03-02-b",
+                            "id": "2025-05-a-03-03-b",
                             "type": "money",
                             "label": "2026",
                             "answer": { "entry": null }
                           },
                           {
-                            "id": "2025-05-a-03-02-c",
+                            "id": "2025-05-a-03-03-c",
                             "type": "money",
                             "label": "2027",
                             "answer": { "entry": null }
@@ -10546,7 +10581,40 @@
                         "fieldset_type": "datagrid"
                       }
                     ],
-                    "fieldset_info": { "id": "2025-05-a-03-02" },
+                    "fieldset_info": { "id": "2025-05-a-03-03" },
+                    "fieldset_type": "marked"
+                  },
+                  {
+                    "hint": "Round to the nearest whole number.",
+                    "type": "fieldset",
+                    "label": "What was your per member per month (PMPM) cost based on the number of children enrolled in managed care Separate CHIP in FFY 2025? What is your projected PMPM cost for FFY 2026 and 2027?",
+                    "questions": [
+                      {
+                        "type": "fieldset",
+                        "questions": [
+                          {
+                            "id": "2025-05-a-03-04-a",
+                            "type": "money",
+                            "label": "2025",
+                            "answer": { "entry": null }
+                          },
+                          {
+                            "id": "2025-05-a-03-04-b",
+                            "type": "money",
+                            "label": "2026",
+                            "answer": { "entry": null }
+                          },
+                          {
+                            "id": "2025-05-a-03-04-c",
+                            "type": "money",
+                            "label": "2027",
+                            "answer": { "entry": null }
+                          }
+                        ],
+                        "fieldset_type": "datagrid"
+                      }
+                    ],
+                    "fieldset_info": { "id": "2025-05-a-03-04" },
                     "fieldset_type": "marked"
                   },
                   {
@@ -10557,7 +10625,7 @@
                         [
                           {
                             "mask": "lessThanEleven",
-                            "contents": "Eligible children"
+                            "contents": "Eligible - Medicaid Expansion CHIP"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -10582,29 +10650,77 @@
                           }
                         ],
                         [
-                          { "contents": "PMPM cost" },
                           {
+                            "mask": "lessThanEleven",
+                            "contents": "Eligible - Separate CHIP"
+                          },
+                          {
+                            "mask": "lessThanEleven",
                             "actions": ["identity"],
                             "targets": [
                               "$..*[?(@ && @.id=='2025-05-a-03-02-a')].answer.entry"
                             ]
                           },
                           {
+                            "mask": "lessThanEleven",
                             "actions": ["identity"],
                             "targets": [
                               "$..*[?(@ && @.id=='2025-05-a-03-02-b')].answer.entry"
                             ]
                           },
                           {
+                            "mask": "lessThanEleven",
                             "actions": ["identity"],
                             "targets": [
                               "$..*[?(@ && @.id=='2025-05-a-03-02-c')].answer.entry"
                             ]
                           }
+                        ],
+                        [
+                          { "contents": "PMPM Costs - Medicaid Expansion CHIP" },
+                          {
+                            "actions": ["identity"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-05-a-03-03-a')].answer.entry"
+                            ]
+                          },
+                          {
+                            "actions": ["identity"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-05-a-03-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "actions": ["identity"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-05-a-03-03-c')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          { "contents": "PMPM Costs - Separate CHIP" },
+                          {
+                            "actions": ["identity"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-05-a-03-04-a')].answer.entry"
+                            ]
+                          },
+                          {
+                            "actions": ["identity"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-05-a-03-04-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "actions": ["identity"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-05-a-03-04-c')].answer.entry"
+                            ]
+                          }
                         ]
                       ],
                       "headers": [
-                        { "contents": "" },
+                        { "contents": "Program" },
                         { "contents": "FFY 2025" },
                         { "contents": "FFY 2026" },
                         { "contents": "FFY 2027" }
@@ -10622,7 +10738,7 @@
                 "questions": [
                   {
                     "type": "fieldset",
-                    "label": "How many children were eligible for fee-for-service in FFY 2025? How many do you anticipate will be eligible in FFY 2026 and 2027?",
+                    "label": "How many children were enrolled in fee-for-service in FFY 2025 for Medicaid CHIP Expansion? How many do you anticipate will be eligible in FFY 2026 and 2027?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10656,27 +10772,62 @@
                     "fieldset_type": "marked"
                   },
                   {
-                    "hint": "Round to the nearest whole number.",
                     "type": "fieldset",
-                    "label": "What was your per member per month (PMPM) cost based on the number of children eligible for fee-for-service in FFY 2025? What is your projected PMPM cost for FFY 2026 and 2027?",
+                    "label": "How many children were enrolled in fee-for-service in FFY 2025 for Separate CHIP? How many do you anticipate will be eligible in FFY 2026 and 2027?",
                     "questions": [
                       {
                         "type": "fieldset",
                         "questions": [
                           {
                             "id": "2025-05-a-04-02-a",
+                            "type": "integer",
+                            "label": "2025",
+                            "answer": { "entry": null },
+                            "mask": "lessThanEleven"
+                          },
+                          {
+                            "id": "2025-05-a-04-02-b",
+                            "type": "integer",
+                            "label": "2026",
+                            "answer": { "entry": null },
+                            "mask": "lessThanEleven"
+                          },
+                          {
+                            "id": "2025-05-a-04-02-c",
+                            "type": "integer",
+                            "label": "2027",
+                            "answer": { "entry": null },
+                            "mask": "lessThanEleven"
+                          }
+                        ],
+                        "fieldset_type": "datagrid"
+                      }
+                    ],
+                    "fieldset_info": { "id": "2025-05-a-04-02" },
+                    "fieldset_type": "marked"
+                  },
+                  {
+                    "hint": "Round to the nearest whole number.",
+                    "type": "fieldset",
+                    "label": "What was your per member per month (PMPM) cost based on the number of children enrolled in fee-for-service Medicaid Expansion CHIP in FFY 2025? What is your projected PMPM cost for Medicaid Expansion CHIP in FFY 2026 and 2027?",
+                    "questions": [
+                      {
+                        "type": "fieldset",
+                        "questions": [
+                          {
+                            "id": "2025-05-a-04-03-a",
                             "type": "money",
                             "label": "2025",
                             "answer": { "entry": null }
                           },
                           {
-                            "id": "2025-05-a-04-02-b",
+                            "id": "2025-05-a-04-03-b",
                             "type": "money",
                             "label": "2026",
                             "answer": { "entry": null }
                           },
                           {
-                            "id": "2025-05-a-04-02-c",
+                            "id": "2025-05-a-04-03-c",
                             "type": "money",
                             "label": "2027",
                             "answer": { "entry": null }
@@ -10685,7 +10836,40 @@
                         "fieldset_type": "datagrid"
                       }
                     ],
-                    "fieldset_info": { "id": "2025-05-a-04-02" },
+                    "fieldset_info": { "id": "2025-05-a-04-03" },
+                    "fieldset_type": "marked"
+                  },
+                  {
+                    "hint": "Round to the nearest whole number.",
+                    "type": "fieldset",
+                    "label": "What was your per member per month (PMPM) cost based on the number of children enrolled in Separate CHIP fee-for-service in FFY 2025? What is your projected PMPM cost for Separate CHIP in FFY 2026 and 2027?",
+                    "questions": [
+                      {
+                        "type": "fieldset",
+                        "questions": [
+                          {
+                            "id": "2025-05-a-04-04-a",
+                            "type": "money",
+                            "label": "2025",
+                            "answer": { "entry": null }
+                          },
+                          {
+                            "id": "2025-05-a-04-04-b",
+                            "type": "money",
+                            "label": "2026",
+                            "answer": { "entry": null }
+                          },
+                          {
+                            "id": "2025-05-a-04-04-c",
+                            "type": "money",
+                            "label": "2027",
+                            "answer": { "entry": null }
+                          }
+                        ],
+                        "fieldset_type": "datagrid"
+                      }
+                    ],
+                    "fieldset_info": { "id": "2025-05-a-04-04" },
                     "fieldset_type": "marked"
                   },
                   {
@@ -10696,7 +10880,7 @@
                         [
                           {
                             "mask": "lessThanEleven",
-                            "contents": "Eligible children"
+                            "contents": "Eligible - Medicaid Expansion CHIP"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -10721,29 +10905,83 @@
                           }
                         ],
                         [
-                          { "contents": "PMPM cost" },
                           {
+                            "mask": "lessThanEleven",
+                            "contents": "Eligible - Separate CHIP"
+                          },
+                          {
+                            "mask": "lessThanEleven",
                             "actions": ["identity"],
                             "targets": [
                               "$..*[?(@ && @.id=='2025-05-a-04-02-a')].answer.entry"
                             ]
                           },
                           {
+                            "mask": "lessThanEleven",
                             "actions": ["identity"],
                             "targets": [
                               "$..*[?(@ && @.id=='2025-05-a-04-02-b')].answer.entry"
                             ]
                           },
                           {
+                            "mask": "lessThanEleven",
                             "actions": ["identity"],
                             "targets": [
                               "$..*[?(@ && @.id=='2025-05-a-04-02-c')].answer.entry"
                             ]
                           }
+                        ],
+                        [
+                          {
+                            "mask": "lessThanEleven",
+                            "contents": "PMPM cost - Medicaid Expansion CHIP"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["identity"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-05-a-04-03-a')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["identity"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-05-a-04-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["identity"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-05-a-04-03-c')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          { "contents": "PMPM cost - Separate CHIP" },
+                          {
+                            "actions": ["identity"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-05-a-04-04-a')].answer.entry"
+                            ]
+                          },
+                          {
+                            "actions": ["identity"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-05-a-04-04-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "actions": ["identity"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-05-a-04-04-c')].answer.entry"
+                            ]
+                          }
                         ]
                       ],
                       "headers": [
-                        { "contents": "" },
+                        { "contents": "Program" },
                         { "contents": "FFY 2025" },
                         { "contents": "FFY 2026" },
                         { "contents": "FFY 2027" }
