@@ -7,6 +7,7 @@ import {
   Duration,
   RemovalPolicy,
 } from "aws-cdk-lib";
+import { createHash } from "crypto";
 
 interface LambdaKafkaEventProps
   extends Partial<lambda_nodejs.NodejsFunctionProps> {
@@ -80,7 +81,9 @@ export class LambdaKafkaEventSource extends Construct {
       memorySize,
       role,
       bundling: {
-        forceDockerBundling: true,
+        assetHash: createHash("sha256")
+          .update(`${Date.now()}-${id}`)
+          .digest("hex"),
         minify: true,
         sourceMap: true,
         nodeModules: ["kafkajs"],
