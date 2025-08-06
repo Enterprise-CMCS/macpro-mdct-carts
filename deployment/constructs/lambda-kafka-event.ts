@@ -2,8 +2,10 @@ import { Construct } from "constructs";
 import {
   aws_iam as iam,
   aws_lambda as lambda,
+  aws_logs as logs,
   aws_lambda_nodejs as lambda_nodejs,
   Duration,
+  RemovalPolicy,
 } from "aws-cdk-lib";
 
 interface LambdaKafkaEventProps
@@ -15,6 +17,7 @@ interface LambdaKafkaEventProps
   topics: string[];
   consumerGroupId: string;
   stackName: string;
+  isDev: boolean;
 }
 
 export class LambdaKafkaEventSource extends Construct {
@@ -35,6 +38,7 @@ export class LambdaKafkaEventSource extends Construct {
       topics,
       consumerGroupId,
       stackName,
+      isDev,
       ...restProps
     } = props;
 
@@ -83,6 +87,12 @@ export class LambdaKafkaEventSource extends Construct {
       },
       environment,
       ...restProps,
+    });
+
+    new logs.LogGroup(this, `${id}LogGroup`, {
+      logGroupName: `/aws/lambda/${this.lambda.functionName}`,
+      removalPolicy: isDev ? RemovalPolicy.DESTROY : RemovalPolicy.RETAIN,
+      retention: logs.RetentionDays.THREE_YEARS, // exceeds the 30 month requirement
     });
 
     new lambda.CfnEventSourceMapping(scope, `${id}KafkaEventSourceMapping`, {
