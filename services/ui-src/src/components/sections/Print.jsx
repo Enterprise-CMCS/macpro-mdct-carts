@@ -29,7 +29,6 @@ const openPdf = (basePdf) => {
 };
 
 export const getPdfFriendlyDocument = async () => {
-  // get html element and remove noscript tag
   const html = document.querySelector("html");
   html.querySelector("noscript")?.remove();
 
