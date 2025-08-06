@@ -2,20 +2,23 @@ import { Construct } from "constructs";
 import {
   aws_iam as iam,
   aws_lambda as lambda,
+  aws_logs as logs,
   aws_lambda_nodejs as lambda_nodejs,
   Duration,
+  RemovalPolicy,
 } from "aws-cdk-lib";
+import { createHash } from "crypto";
 
 interface LambdaKafkaEventProps
   extends Partial<lambda_nodejs.NodejsFunctionProps> {
   additionalPolicies?: iam.PolicyStatement[];
-  brokerString?: string;
   kafkaBootstrapServers: string[];
   securityGroupId: string;
   subnets: string[];
   topics: string[];
   consumerGroupId: string;
   stackName: string;
+  isDev: boolean;
 }
 
 export class LambdaKafkaEventSource extends Construct {
@@ -36,6 +39,7 @@ export class LambdaKafkaEventSource extends Construct {
       topics,
       consumerGroupId,
       stackName,
+      isDev,
       ...restProps
     } = props;
 
@@ -77,13 +81,21 @@ export class LambdaKafkaEventSource extends Construct {
       memorySize,
       role,
       bundling: {
-        forceDockerBundling: true,
+        assetHash: createHash("sha256")
+          .update(`${Date.now()}-${id}`)
+          .digest("hex"),
         minify: true,
         sourceMap: true,
         nodeModules: ["kafkajs"],
       },
       environment,
       ...restProps,
+    });
+
+    new logs.LogGroup(this, `${id}LogGroup`, {
+      logGroupName: `/aws/lambda/${this.lambda.functionName}`,
+      removalPolicy: isDev ? RemovalPolicy.DESTROY : RemovalPolicy.RETAIN,
+      retention: logs.RetentionDays.THREE_YEARS, // exceeds the 30 month requirement
     });
 
     new lambda.CfnEventSourceMapping(scope, `${id}KafkaEventSourceMapping`, {
