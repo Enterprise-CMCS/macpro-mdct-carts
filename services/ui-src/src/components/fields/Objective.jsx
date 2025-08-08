@@ -5,21 +5,38 @@ import { AccordionButton, AccordionPanel } from "@reach/accordion";
 import Question from "./Question";
 
 const Objective = ({ headerRef, objective, objectiveNumber, printView }) => {
-  const first = objective.questions[0].answer.readonly === true;
-  const name = first
-    ? objective.questions[0].answer.default_entry
-    : objective.questions[0].answer.entry;
+  const firstQuestion = objective.questions[0];
+  const firstQuestionIsReadOnly = firstQuestion.answer.readonly === true;
+  const name = firstQuestionIsReadOnly
+    ? firstQuestion.answer.default_entry
+    : firstQuestion.answer.entry;
 
-  const children = first ? objective.questions.slice(1) : objective.questions;
+  const suggested = firstQuestion?.suggested;
+
+  const children = firstQuestionIsReadOnly
+    ? objective.questions.slice(1)
+    : objective.questions;
+
+  const objectiveName = () => {
+    let createdName = `Objective ${objectiveNumber}`;
+
+    if (suggested) {
+      createdName = `${createdName} (suggested)`;
+    }
+
+    if (name) {
+      createdName = `${createdName}: ${name}`;
+    }
+
+    return createdName;
+  };
+
   return (
     <>
       <div className="accordion-header" ref={headerRef}>
         <span className="span-pdf-no-bookmark">
           <AccordionButton>
-            <div className="accordion-title">
-              Objective {objectiveNumber}
-              {name ? `: ${name}` : null}
-            </div>
+            <div className="accordion-title">{objectiveName()}</div>
           </AccordionButton>
         </span>
       </div>
