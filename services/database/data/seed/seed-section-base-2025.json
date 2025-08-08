@@ -5428,7 +5428,7 @@
                   {
                     "hint": "This year, please report data about your cohort for this section.",
                     "type": "fieldset",
-                    "label": "January - March 2025 (12 months later): to be completed next year.",
+                    "label": "January - March 2025 (12 months later): to be completed this year.",
                     "questions": []
                   },
                   {
@@ -8360,7 +8360,8 @@
                             "id": "2025-04-a-01-01-02-01",
                             "hint": "You can revise the suggested objective so it matches what’s in your CHIP State Plan.",
                             "type": "text_multiline",
-                            "label": "What is the next objective listed in your CHIP State Plan?",
+                            "label": "What is your objective?",
+                            "suggested": true,
                             "answer": { "entry": "Increase access to care" }
                           },
                           {
@@ -8404,7 +8405,7 @@
                                       {
                                         "id": "2025-04-a-01-01-02-02-01-02-a",
                                         "type": "text_multiline",
-                                        "label": "Why was this goal discontinued?",
+                                        "label": "Why was your goal discontinued?",
                                         "answer": { "entry": null },
                                         "context_data": {
                                           "conditional_display": {
@@ -8556,9 +8557,10 @@
                         "questions": [
                           {
                             "id": "2025-04-a-01-01-03-01",
-                            "hint": "You can reivse the suggested objective to match what’s in your CHIP State Plan.",
+                            "hint": "You can revise the suggested objective to match what’s in your CHIP State Plan.",
                             "type": "text_multiline",
-                            "label": "What is the next objective listed in your CHIP State Plan?",
+                            "label": "What is your objective?",
+                            "suggested": true,
                             "answer": {
                               "entry": "Increase the use of preventive care"
                             }
@@ -8757,7 +8759,7 @@
                           {
                             "id": "2025-04-a-01-01-04-01",
                             "type": "text_multiline",
-                            "label": "What is the next objective listed in your CHIP State Plan?",
+                            "label": "What is your objective?",
                             "answer": { "entry": null }
                           },
                           {
@@ -8953,7 +8955,7 @@
                           {
                             "id": "2025-04-a-01-01-05-01",
                             "type": "text_multiline",
-                            "label": "What is the next objective listed in your CHIP State Plan?",
+                            "label": "What is your objective?",
                             "answer": { "entry": null }
                           },
                           {
@@ -9147,7 +9149,7 @@
                           {
                             "id": "2025-04-a-01-01-06-01",
                             "type": "text_multiline",
-                            "label": "What is the next objective listed in your CHIP State Plan?",
+                            "label": "What is your objective?",
                             "answer": { "entry": null }
                           },
                           {
