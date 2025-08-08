@@ -30,6 +30,7 @@ export function createBigmacStreamsComponents(
     brokerString,
     tables,
     sedsTopic,
+    isDev,
   } = props;
 
   const kafkaBootstrapServers = brokerString.split(",");
@@ -65,6 +66,7 @@ export function createBigmacStreamsComponents(
     stage,
     brokerString,
     stackName: `${service}-${stage}`,
+    isDev,
   };
 
   /*

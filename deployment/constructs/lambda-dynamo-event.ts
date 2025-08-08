@@ -3,16 +3,20 @@ import {
   aws_iam as iam,
   aws_lambda as lambda,
   aws_lambda_nodejs as lambda_nodejs,
+  aws_logs as logs,
   Duration,
+  RemovalPolicy,
 } from "aws-cdk-lib";
 import { DynamoDBTableIdentifiers } from "../constructs/dynamodb-table";
 import { isDefined } from "../utils/misc";
+import { createHash } from "crypto";
 
 interface LambdaDynamoEventProps
   extends Partial<lambda_nodejs.NodejsFunctionProps> {
   additionalPolicies?: iam.PolicyStatement[];
   stackName: string;
   tables: DynamoDBTableIdentifiers[];
+  isDev: boolean;
 }
 
 export class LambdaDynamoEventSource extends Construct {
@@ -24,11 +28,11 @@ export class LambdaDynamoEventSource extends Construct {
     const {
       additionalPolicies = [],
       environment = {},
-      handler,
       memorySize = 1024,
       tables,
       stackName,
       timeout = Duration.seconds(6),
+      isDev,
       ...restProps
     } = props;
 
@@ -72,19 +76,26 @@ export class LambdaDynamoEventSource extends Construct {
 
     this.lambda = new lambda_nodejs.NodejsFunction(this, id, {
       functionName: `${stackName}-${id}`,
-      handler,
       runtime: lambda.Runtime.NODEJS_20_X,
       timeout,
       memorySize,
       role,
       bundling: {
-        forceDockerBundling: true,
+        assetHash: createHash("sha256")
+          .update(`${Date.now()}-${id}`)
+          .digest("hex"),
         minify: true,
         sourceMap: true,
         nodeModules: ["kafkajs"],
       },
       environment,
       ...restProps,
+    });
+
+    new logs.LogGroup(this, `${id}LogGroup`, {
+      logGroupName: `/aws/lambda/${this.lambda.functionName}`,
+      removalPolicy: isDev ? RemovalPolicy.DESTROY : RemovalPolicy.RETAIN,
+      retention: logs.RetentionDays.THREE_YEARS, // exceeds the 30 month requirement
     });
 
     for (let table of tables) {

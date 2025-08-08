@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { AccordionButton, AccordionPanel } from "@reach/accordion";
-import { v4 as uuidv4 } from "uuid";
 
 import Question from "./Question";
 
@@ -20,8 +19,8 @@ const Repeatable = ({ headerRef, number, question, type, printView }) => {
         </span>
       </div>
       <AccordionPanel>
-        {children.map((q) => (
-          <Question key={q.id || uuidv4()} question={q} printView={printView} />
+        {children.map((q, index) => (
+          <Question key={q.id || index} question={q} printView={printView} />
         ))}
       </AccordionPanel>
     </>

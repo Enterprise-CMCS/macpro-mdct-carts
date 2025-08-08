@@ -108,4 +108,3 @@ const mapDispatchToProps = {
 const ConnectedObjectives = connect(null, mapDispatchToProps)(Objectives);
 
 export { ConnectedObjectives as Objectives };
-export default ConnectedObjectives;

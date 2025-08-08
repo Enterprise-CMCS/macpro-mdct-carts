@@ -9,6 +9,12 @@ import useModal from "../../../hooks/useModal";
 // types
 import { AppRoles } from "../../../types";
 
+const rolesThatUncertify = [
+  AppRoles.CMS_ADMIN,
+  AppRoles.CMS_USER,
+  AppRoles.CMS_APPROVER,
+];
+
 const ReportItem = ({
   link1Text = "View",
   link1URL = "#",
@@ -19,15 +25,14 @@ const ReportItem = ({
   username,
   lastChanged,
   timeZone,
+  stateAbbr,
 }) => {
   const dispatch = useDispatch();
-  const anchorTarget = "_self";
-  const stateCode = link1URL.toString().split("/")[3];
-  const stateYear = link1URL.toString().split("/")[4];
   const { isShowing, toggleModal } = useModal();
-  let lastEditedNote = "";
+
   const isStateUser = userRole === AppRoles.STATE_USER;
 
+  let lastEditedNote = "";
   if (lastChanged) {
     const date = new Date(lastChanged);
     // Using en-CA as they format the date to YYYY-MM-DD, HH:MM:SS where as en-US formats to DD/MM/YYYY, HH:MM:SS
@@ -49,88 +54,73 @@ const ReportItem = ({
   }
 
   const uncertify = async () => {
-    await dispatch(uncertifyReport(stateCode, stateYear));
+    await dispatch(uncertifyReport(stateAbbr, year));
     toggleModal();
     window.location.reload(false);
   };
 
-  const rolesThatUncertify = [
-    AppRoles.CMS_ADMIN,
-    AppRoles.CMS_USER,
-    AppRoles.CMS_APPROVER,
-  ];
+  const printFormUrl = `/print?year=${year}&state=${stateAbbr}`;
 
   return (
-    <>
-      {!isStateUser && (
-        <div className="report-item ds-l-row">
-          <div className="name ds-l-col--1">{year}</div>
-          <div className="name ds-l-col--2">{name}</div>
-          <div className="status ds-l-col--2">{statusText}</div>
-          <div className="actions ds-l-col--3">{lastEditedNote}</div>
-          <div className="actions ds-l-col--auto">
-            <Link
-              to={link1URL}
-              target={anchorTarget}
-              aria-label={`${link1Text} ${name} ${year}`}
-            >
-              {link1Text}
-            </Link>
-            {statusText === "Certified and Submitted" &&
-              rolesThatUncertify.includes(userRole) && (
-                <span>
-                  {" "}
-                  <button
-                    data-testid={"uncertifyButton"}
-                    className="link"
-                    onClick={toggleModal}
-                  >
-                    Uncertify
-                  </button>
-                </span>
-              )}
-          </div>
-
-          {isShowing && (
-            <Dialog
-              data-testid={"uncertifyModal"}
-              isShowing={isShowing}
-              onExit={toggleModal}
-              heading="Uncertify this Report?"
-              actions={[
-                <button
-                  className="ds-c-button ds-c-button--solid ds-u-margin-right--1"
-                  key="primary"
-                  onClick={uncertify}
-                  aria-label="Uncertify this Report"
-                >
-                  Yes, Uncertify
-                </button>,
-              ]}
-            >
-              Uncertifying will send this CARTS report back to the state user
-              who submitted it
-            </Dialog>
+    <div className="report-item ds-l-row">
+      {!isStateUser && <div className="name ds-l-col--1">{year}</div>}
+      <div className="name ds-l-col--2">{name}</div>
+      <div className="status ds-l-col--2">{statusText}</div>
+      <div className="actions ds-l-col--3">{lastEditedNote}</div>
+      <div className="actions ds-l-col--auto">
+        <Link
+          to={link1URL}
+          aria-label={`${link1Text} ${stateAbbr} ${year} report`}
+          data-testid="report-action-button"
+        >
+          {link1Text}
+        </Link>{" "}
+        {statusText === "Certified and Submitted" &&
+          rolesThatUncertify.includes(userRole) && (
+            <>
+              <button
+                data-testid="uncertifyButton"
+                aria-label={`Uncertify ${stateAbbr} ${year} report`}
+                className="link"
+                onClick={toggleModal}
+              >
+                Uncertify
+              </button>{" "}
+            </>
           )}
-        </div>
-      )}
-      {isStateUser && (
-        <div className="report-item ds-l-row">
-          <div className="name ds-l-col--2">{name}</div>
-          <div className="status ds-l-col--2">{statusText}</div>
-          <div className="actions ds-l-col--3">{lastEditedNote}</div>
-          <div className="actions ds-l-col--1">
-            <Link
-              to={link1URL}
-              target={anchorTarget}
-              data-testid="report-action-button"
+        <Link
+          className="ds-c-button--solid ds-c-button--small"
+          to={printFormUrl}
+          aria-label={`Print ${stateAbbr} ${year} report`}
+          target="_blank"
+          data-testid="print-form"
+        >
+          Print
+        </Link>
+      </div>
+
+      {isShowing && (
+        <Dialog
+          data-testid="uncertifyModal"
+          isShowing={isShowing}
+          onExit={toggleModal}
+          heading={`Uncertify ${stateAbbr} ${year} report?`}
+          actions={[
+            <button
+              className="ds-c-button ds-c-button--solid ds-u-margin-right--1"
+              key="primary"
+              onClick={uncertify}
+              aria-label={`Uncertify ${stateAbbr} ${year} report`}
             >
-              {link1Text}
-            </Link>
-          </div>
-        </div>
+              Yes, Uncertify
+            </button>,
+          ]}
+        >
+          Uncertifying will send this CARTS report back to the state user who
+          submitted it
+        </Dialog>
       )}
-    </>
+    </div>
   );
 };
 
@@ -144,6 +134,7 @@ ReportItem.propTypes = {
   username: PropTypes.string,
   lastChanged: PropTypes.string.isRequired,
   timeZone: PropTypes.string,
+  stateAbbr: PropTypes.string.isRequired,
 };
 
 export default ReportItem;

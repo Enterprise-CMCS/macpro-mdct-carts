@@ -56,6 +56,3 @@ Objective.propTypes = {
   objectiveNumber: PropTypes.number.isRequired,
   printView: PropTypes.bool,
 };
-
-export { Objective };
-export default Objective;

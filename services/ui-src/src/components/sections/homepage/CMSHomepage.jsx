@@ -238,6 +238,7 @@ const CMSHomepage = () => {
                                     userRole={currentUserRole}
                                     username={username}
                                     lastChanged={lastChanged}
+                                    stateAbbr={stateCode}
                                   />
                                 )}
                             </div>
