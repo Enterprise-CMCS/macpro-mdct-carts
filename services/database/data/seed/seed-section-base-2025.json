@@ -686,7 +686,7 @@
               },
               {
                 "id": "2025-01-a-03",
-                "text": "Indicate any changes you’ve made to your Medicaid expansion CHIP program policies in the past federal fiscal year.",
+                "text": "Indicate any changes you’ve made to your Medicaid expansion CHIP program and policies in the past federal fiscal year.",
                 "type": "part",
                 "title": "Medicaid Expansion CHIP Program and Policy Changes",
                 "questions": [
@@ -1025,7 +1025,7 @@
                   {
                     "id": "2025-01-a-03-14",
                     "type": "radio",
-                    "label": "Have you made any changes to eligibility for “lawfully residing” children?",
+                    "label": "Have you made any changes to eligibility for “lawfully residing children”?",
                     "answer": {
                       "entry": null,
                       "options": [
@@ -1078,7 +1078,7 @@
                       {
                         "id": "2025-01-a-03-16",
                         "type": "radio",
-                        "label": "Have you already submitted a State Plan Amendment (SPA) to reflect any changes that require a SPA?",
+                        "label": "Have you already submitted a SPA to reflect any of the changes addressed in this section that require a SPA?",
                         "answer": {
                           "entry": null,
                           "options": [
@@ -2123,7 +2123,7 @@
                       {
                         "id": "2025-02-a-02-02-a",
                         "type": "text_multiline",
-                        "label": "What are some reasons why the American Community Survey estimates might not reflect the number of uninsured children in your state?",
+                        "label": "What are some reasons why the ACS estimates might not reflect the number of uninsured children in your state?",
                         "answer": {
                           "entry": null
                         },
@@ -2326,6 +2326,13 @@
                   },
                   {
                     "id": "2025-03-a-01-02",
+                    "hint": "For example: TV, school outreach, or word of mouth.",
+                    "type": "text_multiline",
+                    "label": "What methods have been most effective in reaching low-income, uninsured children?",
+                    "answer": { "entry": null }
+                  },
+                  {
+                    "id": "2025-03-a-01-03",
                     "hint": "For example: minorities, immigrants, or children living in rural areas.",
                     "type": "radio",
                     "label": "Are you targeting specific populations in your outreach efforts?",
@@ -2338,7 +2345,7 @@
                     },
                     "questions": [
                       {
-                        "id": "2025-03-a-01-02-a",
+                        "id": "2025-03-a-01-03-a",
                         "type": "text_multiline",
                         "label": "Have these efforts been successful? How have you measured the effectiveness of your outreach efforts?",
                         "answer": { "entry": null },
@@ -2357,13 +2364,6 @@
                         }
                       }
                     ]
-                  },
-                  {
-                    "id": "2025-03-a-01-03",
-                    "hint": "For example: TV, school outreach, or word of mouth.",
-                    "type": "text_multiline",
-                    "label": "What methods have been most effective in reaching low-income, uninsured children?",
-                    "answer": { "entry": null }
                   },
                   {
                     "id": "2025-03-a-01-04",
@@ -2722,7 +2722,7 @@
                   {
                     "id": "2025-03-c-01-07",
                     "type": "text_multiline",
-                    "label": "Is there anything else you’d like to add that wasn’t already covered?",
+                    "label": "Is there anything else you’d like to add about eligibility and retention in your CHIP program?",
                     "answer": { "entry": null }
                   }
                 ]
@@ -2892,7 +2892,7 @@
                     "id": "2025-03-c-03-04",
                     "hint": "This number should be equal to the total of 4a, 4b, and 4c below.",
                     "type": "integer",
-                    "label": "How many children were disenrolled in CHIP after the redetermination process?",
+                    "label": "How many children were disenrolled in CHIP after the redetermination?",
                     "answer": { "entry": null },
                     "questions": [
                       {
@@ -2912,7 +2912,7 @@
                       },
                       {
                         "id": "2025-03-c-03-04-a",
-                        "hint": "This could be due to an incomplete application, missing documentation, or a missing enrollment fee.",
+                        "hint": "For example: They were disenrolled due to an incomplete application, missing documentation, or a missing enrollment fee.",
                         "type": "integer",
                         "label": "How many children were disenrolled for procedural reasons?",
                         "answer": { "entry": null },
@@ -2920,7 +2920,7 @@
                       },
                       {
                         "id": "2025-03-c-03-04-b",
-                        "hint": "This could be due to income that was too high or too low, eligibility in Medicaid (Title XIX) instead, or access to private coverage.",
+                        "hint": "For example: They were disenrolled because their income was too high or too low, they were eligible for Medicaid (Title XIX) instead, or they had access to private coverage.",
                         "type": "integer",
                         "label": "How many children were disenrolled for eligibility reasons?",
                         "answer": { "entry": null },
@@ -3118,7 +3118,7 @@
                   {
                     "id": "2025-03-c-04-02",
                     "type": "integer",
-                    "label": "Of the eligible children, how many were then screened for redetermination?",
+                    "label": "How many children were screened for redetermination in Medicaid?",
                     "answer": { "entry": null },
                     "mask": "lessThanEleven"
                   },
@@ -3161,7 +3161,7 @@
                       },
                       {
                         "id": "2025-03-c-04-04-b",
-                        "hint": "This could be due to an income that was too high and/or eligibility in CHIP instead.",
+                        "hint": "This could be due to having an income that’s too high and/or eligibility in CHIP instead.",
                         "type": "integer",
                         "label": "How many children were disenrolled for eligibility reasons?",
                         "answer": { "entry": null },
@@ -3345,12 +3345,12 @@
               },
               {
                 "id": "2025-03-c-05",
-                "text": "Tracking a cohort of children enrolled in CHIP (Title XXI) will indicate how long a specific group of children stays enrolled over an 18-month period. This information is required by Section 402(a) of CHIPRA. \n\nTo track your cohort, identify a group of children ages 0 to 16 years who are newly enrolled in CHIP and/or Medicaid as of January through March 2025 (the second quarter of FFY 2025). Children in this cohort must be 16 years and 0 months or younger when they enroll to ensure they don't age out of the program by the end of the 18-month tracking period. \n\nYou’ll identify a new cohort every two years. Last year, you reported on the number of children at the start of the cohort (Jan–Mar 2024) and six months later (July–Sept 2024). This year, you’ll report on the same cohort for their enrollment status at 12 months (Jan–Mar 2025) and 18 months later (July–Sept 2025). If data are unknown or unavailable, leave it blank — don’t enter a zero unless these data are known to be zero.",
+                "text": "Tracking a cohort of children enrolled in CHIP (Title XXI) will indicate how long a specific group of children stays enrolled over an 18-month period. This information is required by Section 402(a) of CHIPRA. \n\nTo track your cohort, identify a group of children ages 0 to 16 years who are newly enrolled in CHIP and/or Medicaid as of January through March 2024 (the second quarter of FFY 2024). Children in this cohort must be 16 years and 0 months or younger when they enroll to ensure they don't age out of the program by the end of the 18-month tracking period. \n\nYou’ll identify a new cohort every two years. Last year, you reported on the number of children at the start of the cohort (Jan–Mar 2024) and six months later (July–Sept 2024). This year, you’ll report on the same cohort for their enrollment status at 12 months (Jan–Mar 2025) and 18 months later (July–Sept 2025). If data are unknown or unavailable, leave it blank — don’t enter a zero unless these data are known to be zero.",
                 "type": "part",
                 "title": "Tracking a CHIP cohort over 18 months",
                 "questions": [
                   {
-                    "hint": "Children should be in age groups based on their age at the start of the cohort, when they’re identified as newly enrolled in January, February, or March of 2025. For example, if a child is four years old at the start of the cohort, they should continue to be reported in the “ages 1-5” group at 6 months, 12 months, and 18 months later as well.\n\nThe oldest children in the cohort must be no older than 16 years (and 0 months) to ensure they don’t age out of the program at the end of the 18-month tracking period. That means children in the “ages 13–16” group who are newly enrolled in January 2024 must be born after January 2008. Similarly, children who are newly enrolled in February 2024 must be born after February 2008, and children newly enrolled in March 2024 must be born after March 2008.",
+                    "hint": "Children should be in age groups based on their age at the start of the cohort, when they’re identified as newly enrolled in January, February, or March of 2024. For example, if a child is four years old at the start of the cohort, they should continue to be reported in the “ages 1-5” group at 6 months, 12 months, and 18 months later as well.\n\nThe oldest children in the cohort must be no older than 16 years (and 0 months) to ensure they don’t age out of the program at the end of the 18-month tracking period. That means children in the “ages 13–16” group who are newly enrolled in January 2024 must be born after January 2008. Similarly, children who are newly enrolled in February 2024 must be born after February 2008, and children newly enrolled in March 2024 must be born after March 2008.",
                     "type": "fieldset",
                     "label": "Helpful hints on age groups",
                     "questions": []
@@ -3363,11 +3363,11 @@
                       "entry": null,
                       "options": [
                         {
-                          "label": "Newly enrolled in CHIP: Children in this cohort weren’t enrolled in CHIP (Title XXI) during the previous month. For example: Newly enrolled children in January 2025 weren’t enrolled in CHIP in December 2024.",
+                          "label": "Newly enrolled in CHIP: Children in this cohort weren’t enrolled in CHIP (Title XXI) during the previous month. For example: Newly enrolled children in January 2024 weren’t enrolled in CHIP in December 2023.",
                           "value": "new_in_chip"
                         },
                         {
-                          "label": "Newly enrolled in CHIP and Medicaid: Children in this cohort weren’t enrolled in CHIP (Title XXI) or Medicaid (Title XIX) during the previous month. For example: Newly enrolled children in January 2025 weren’t enrolled in CHIP or Medicaid in December 2024.",
+                          "label": "Newly enrolled in CHIP and Medicaid: Children in this cohort weren’t enrolled in CHIP (Title XXI) or Medicaid (Title XIX) during the previous month. For example: Newly enrolled children in January 2024 weren’t enrolled in CHIP or Medicaid in December 2023.",
                           "value": "new_in_chip_and_medicaid"
                         }
                       ]
@@ -4838,12 +4838,12 @@
               },
               {
                 "id": "2025-03-c-06",
-                "text": "Tracking a cohort of children enrolled in Medicaid (Title XIX) will indicate how long a specific group of children stays enrolled over an 18-month period. This information is required by Section 402(a) of CHIPRA. \n\nTo track your cohort, identify a group of children ages 0 to 16 years, who are newly enrolled in Medicaid and/or CHIP as of January through March 2025 (the second quarter of FFY 2025). Children in this cohort must be 16 years and 0 months or younger when they enroll to ensure they don’t age out of the program by the end of the 18-month tracking period. \n\nYou’ll identify a new cohort every two years. Last year, you reported on the number of children at the start of the cohort (Jan–Mar 2024) and six months later (July–Sept 2024). This year, you’ll report on the same cohort for their enrollment status at 12 months (Jan–Mar 2025) and 18 months later (July–Sept 2025). If data are unknown or unavailable, leave it blank — don’t enter a zero unless these data are known to be zero.",
+                "text": "Tracking a cohort of children enrolled in Medicaid (Title XIX) will indicate how long a specific group of children stays enrolled over an 18-month period. This information is required by Section 402(a) of CHIPRA. \n\nTo track your cohort, identify a group of children ages 0 to 16 years, who are newly enrolled in Medicaid and/or CHIP as of January through March 2024 (the second quarter of FFY 2024). Children in this cohort must be 16 years and 0 months or younger when they enroll to ensure they don’t age out of the program by the end of the 18-month tracking period. \n\nYou’ll identify a new cohort every two years. Last year, you reported on the number of children at the start of the cohort (Jan–Mar 2024) and six months later (July–Sept 2024). This year, you’ll report on the same cohort for their enrollment status at 12 months (Jan–Mar 2025) and 18 months later (July–Sept 2025). If data are unknown or unavailable, leave it blank — don’t enter a zero unless these data are known to be zero.",
                 "type": "part",
                 "title": "Tracking a Medicaid Cohort over 18 months",
                 "questions": [
                   {
-                    "hint": "Children should be in age groups based on their age at the start of the cohort, when they’re identified as newly enrolled in January, February, or March of 2025. For example, if a child is four years old at the start of the cohort, they should continue to be reported in the “ages 1-5” group at 6 months, 12 months, and 18 months later.\n\nThe oldest children in the cohort must be no older than 16 years (and 0 months) to ensure they don’t age out of the program at the end of the 18-month tracking period. That means children in the “ages 13–16” group who are newly enrolled in January 2025 must be born after January 2008. Similarly, children who are newly enrolled in February 2025 must be born after February 2008, and children newly enrolled in March 2025 must be born after March 2008.",
+                    "hint": "Children should be in age groups based on their age at the start of the cohort, when they’re identified as newly enrolled in January, February, or March of 2024. For example, if a child is four years old at the start of the cohort, they should continue to be reported in the “ages 1-5” group at 6 months, 12 months, and 18 months later.\n\nThe oldest children in the cohort must be no older than 16 years (and 0 months) to ensure they don’t age out of the program at the end of the 18-month tracking period. That means children in the “ages 13–16” group who are newly enrolled in January 2024 must be born after January 2008. Similarly, children who are newly enrolled in February 2024 must be born after February 2008, and children newly enrolled in March 2024 must be born after March 2008.",
                     "type": "fieldset",
                     "label": "Helpful hints on age groups",
                     "questions": []
@@ -4860,7 +4860,7 @@
                           "value": "new_in_medicaid"
                         },
                         {
-                          "label": "Newly enrolled in CHIP and Medicaid: Children in this cohort weren’t enrolled in CHIP (Title XXI) or Medicaid (Title XIX) during the previous month. For example: Newly enrolled children in January 2024 weren’t enrolled in CHIP or Medicaid in December 2023.",
+                          "label": "Newly enrolled in CHIP and Medicaid: Children in this cohort weren’t enrolled in Medicaid (Title XIX) or CHIP (Title XXI) during the previous month. For example: Newly enrolled children in January 2024 weren’t enrolled in CHIP or Medicaid in December 2023.",
                           "value": "new_in_chip_and_medicaid"
                         }
                       ]
@@ -4886,7 +4886,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "How many children were newly enrolled in Medicaid between January and March 2025?",
+                    "label": "How many children were newly enrolled in Medicaid between January and March 2024?",
                     "questions": [
                       {
                         "id": "2025-03-c-06-03-a",
@@ -4978,7 +4978,7 @@
                     "questions": []
                   },
                   {
-                    "hint": "Only include children that didn’t have a break in coverage during the six-month period.  ",
+                    "hint": "Only include children that didn’t have a break in coverage during the six-month period.",
                     "type": "fieldset",
                     "label": "How many children were continuously enrolled in Medicaid six months later?",
                     "questions": [
@@ -6544,7 +6544,7 @@
                       {
                         "id": "2025-03-d-01-08",
                         "type": "text_multiline",
-                        "label": "Is there anything else you’d like to add that wasn’t already covered?",
+                        "label": "Is there anything else you’d like to add about cost sharing that wasn’t already covered?",
                         "answer": { "entry": null }
                       },
                       {
@@ -6845,7 +6845,7 @@
                   {
                     "id": "2025-03-e-02-17",
                     "type": "text_multiline",
-                    "label": "Is there anything else you’d like to add that wasn’t already covered?",
+                    "label": "Is there anything else you’d like to add about your premium assistance program?",
                     "answer": { "entry": null }
                   },
                   {
@@ -6941,6 +6941,7 @@
                         "id": "2025-03-f-01-05-a",
                         "type": "text_multiline",
                         "label": "What safeguards and procedures do the managed care plans have in place?",
+                        "hint": "Attach any relevant documents",
                         "answer": { "entry": null },
                         "context_data": {
                           "conditional_display": {
@@ -7109,7 +7110,7 @@
                   {
                     "id": "2025-03-f-01-17",
                     "type": "text_multiline",
-                    "label": "Is there anything else you’d like to add that wasn’t already covered?",
+                    "label": "Is there anything else you’d like to add about your state’s program integrity?",
                     "answer": { "entry": null }
                   },
                   {
@@ -8317,7 +8318,7 @@
                                   {
                                     "id": "2025-04-a-01-01-01-02-01-09",
                                     "type": "text_multiline",
-                                    "label": "How did your progress towards your goal last year compare to your previous year’s progress?",
+                                    "label": "Did you make progress on your goal?",
                                     "answer": { "entry": null }
                                   },
                                   {
@@ -8335,7 +8336,7 @@
                                   {
                                     "id": "2025-04-a-01-01-01-02-01-12",
                                     "type": "text_multiline",
-                                    "label": "Anything else you'd like to tell us about this goal?",
+                                    "label": "Is there anything else you’d like to add about this goal?",
                                     "answer": { "entry": null }
                                   },
                                   {
@@ -8516,7 +8517,7 @@
                                   {
                                     "id": "2025-04-a-01-01-02-02-01-09",
                                     "type": "text_multiline",
-                                    "label": "How did your progress towards your goal last year compare to your previous year’s progress?",
+                                    "label": "Did you make progress on your goal?",
                                     "answer": { "entry": null }
                                   },
                                   {
@@ -8534,7 +8535,7 @@
                                   {
                                     "id": "2025-04-a-01-01-02-02-01-12",
                                     "type": "text_multiline",
-                                    "label": "Anything else you'd like to tell us about this goal?",
+                                    "label": "Is there anything else you’d like to add about this goal?",
                                     "answer": { "entry": null }
                                   },
                                   {
@@ -8717,7 +8718,7 @@
                                   {
                                     "id": "2025-04-a-01-01-03-02-01-09",
                                     "type": "text_multiline",
-                                    "label": "How did your progress towards your goal last year compare to your previous year’s progress?",
+                                    "label": "Did you make progress on your goal?",
                                     "answer": { "entry": null }
                                   },
                                   {
@@ -8735,7 +8736,7 @@
                                   {
                                     "id": "2025-04-a-01-01-03-02-01-12",
                                     "type": "text_multiline",
-                                    "label": "Anything else you'd like to tell us about this goal?",
+                                    "label": "Is there anything else you’d like to add about this goal?",
                                     "answer": { "entry": null }
                                   },
                                   {
@@ -8913,7 +8914,7 @@
                                   {
                                     "id": "2025-04-a-01-01-04-02-01-09",
                                     "type": "text_multiline",
-                                    "label": "How did your progress towards your goal last year compare to your previous year’s progress?",
+                                    "label": "Did you make progress on your goal?",
                                     "answer": { "entry": null }
                                   },
                                   {
@@ -8931,7 +8932,7 @@
                                   {
                                     "id": "2025-04-a-01-01-04-02-01-12",
                                     "type": "text_multiline",
-                                    "label": "Anything else you'd like to tell us about this goal?",
+                                    "label": "Is there anything else you’d like to add about this goal?",
                                     "answer": { "entry": null }
                                   },
                                   {
@@ -9107,7 +9108,7 @@
                                   {
                                     "id": "2025-04-a-01-01-05-02-01-09",
                                     "type": "text_multiline",
-                                    "label": "How did your progress towards your goal last year compare to your previous year’s progress?",
+                                    "label": "Did you make progress on your goal?",
                                     "answer": { "entry": null }
                                   },
                                   {
@@ -9125,206 +9126,11 @@
                                   {
                                     "id": "2025-04-a-01-01-05-02-01-12",
                                     "type": "text_multiline",
-                                    "label": "Anything else you'd like to tell us about this goal?",
+                                    "label": "Is there anything else you’d like to add about this goal?",
                                     "answer": { "entry": null }
                                   },
                                   {
                                     "id": "2025-04-a-01-01-05-02-01-13",
-                                    "hint": "Optional",
-                                    "type": "file_upload",
-                                    "label": "Do you have any supporting documentation?",
-                                    "answer": { "entry": null }
-                                  }
-                                ]
-                              }
-                            ],
-                            "typeLabel": "Goal"
-                          }
-                        ]
-                      },
-                      {
-                        "id": "2025-04-a-01-01-06",
-                        "type": "objective",
-                        "questions": [
-                          {
-                            "id": "2025-04-a-01-01-06-01",
-                            "type": "text_multiline",
-                            "label": "What is your objective?",
-                            "answer": { "entry": null }
-                          },
-                          {
-                            "id": "2025-04-a-01-01-06-02",
-                            "type": "repeatables",
-                            "questions": [
-                              {
-                                "id": "2025-04-a-01-01-06-02-01",
-                                "type": "repeatable",
-                                "questions": [
-                                  {
-                                    "id": "2025-04-a-01-01-06-02-01-01",
-                                    "type": "text_multiline",
-                                    "label": "Briefly describe your goal as it relates to this objective.",
-                                    "answer": { "entry": null }
-                                  },
-                                  {
-                                    "id": "2025-04-a-01-01-06-02-01-02",
-                                    "type": "radio",
-                                    "label": "What type of goal is it?",
-                                    "answer": {
-                                      "entry": null,
-                                      "options": [
-                                        {
-                                          "label": "New goal",
-                                          "value": "goal_new"
-                                        },
-                                        {
-                                          "label": "Continuing goal",
-                                          "value": "goal_continuing"
-                                        },
-                                        {
-                                          "label": "Discontinued goal",
-                                          "value": "goal_discontinued"
-                                        }
-                                      ],
-                                      "default_entry": "goal_new"
-                                    },
-                                    "questions": [
-                                      {
-                                        "id": "2025-04-a-01-01-06-02-01-02-a",
-                                        "type": "text_multiline",
-                                        "label": "Why was this goal discontinued?",
-                                        "answer": { "entry": null },
-                                        "context_data": {
-                                          "conditional_display": {
-                                            "type": "conditional_display",
-                                            "comment": "Interactive: Hide if 2025-04-a-01-01-06-02-01-02 is null, continuing goal, or new goal; noninteractive: hide if that's continuing goal or new goal.",
-                                            "hide_if": {
-                                              "target": "$..*[?(@ && @.id=='2025-04-a-01-01-06-02-01-02')].answer.entry",
-                                              "values": {
-                                                "interactive": [
-                                                  null,
-                                                  "goal_continuing",
-                                                  "goal_new"
-                                                ],
-                                                "noninteractive": [
-                                                  "goal_continuing",
-                                                  "goal_new"
-                                                ]
-                                              }
-                                            }
-                                          }
-                                        }
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "type": "fieldset",
-                                    "label": "Define the numerator you're measuring",
-                                    "questions": [
-                                      {
-                                        "id": "2025-04-a-01-01-06-02-01-03",
-                                        "type": "text_medium",
-                                        "label": "Which population are you measuring in the numerator?",
-                                        "answer": { "entry": null }
-                                      },
-                                      {
-                                        "id": "2025-04-a-01-01-06-02-01-04",
-                                        "type": "integer",
-                                        "label": "Numerator (total number)",
-                                        "answer": { "entry": null },
-                                        "mask": "lessThanEleven"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "type": "fieldset",
-                                    "label": "Define the denominator you're measuring",
-                                    "questions": [
-                                      {
-                                        "id": "2025-04-a-01-01-06-02-01-05",
-                                        "hint": "For example: The total number of eligible children in the last federal fiscal year.",
-                                        "type": "text_medium",
-                                        "label": "Which population are you measuring in the denominator?",
-                                        "answer": { "entry": null }
-                                      },
-                                      {
-                                        "id": "2025-04-a-01-01-06-02-01-06",
-                                        "type": "integer",
-                                        "label": "Denominator (total number)",
-                                        "answer": { "entry": null },
-                                        "mask": "lessThanEleven"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "type": "fieldset",
-                                    "questions": [],
-                                    "fieldset_info": {
-                                      "actions": ["percentage"],
-                                      "targets": [
-                                        "$..*[?(@ && @.id=='2025-04-a-01-01-06-02-01-04')].answer.entry",
-                                        "$..*[?(@ && @.id=='2025-04-a-01-01-06-02-01-06')].answer.entry"
-                                      ]
-                                    },
-                                    "fieldset_type": "synthesized_value"
-                                  },
-                                  {
-                                    "id": "2025-04-a-01-01-06-02-01-07",
-                                    "type": "daterange",
-                                    "label": "What is the date range of your data?",
-                                    "answer": {
-                                      "entry": null,
-                                      "labels": ["Start", "End"]
-                                    }
-                                  },
-                                  {
-                                    "id": "2025-04-a-01-01-06-02-01-08",
-                                    "type": "radio",
-                                    "label": "Which data source did you use?",
-                                    "answer": {
-                                      "entry": null,
-                                      "options": [
-                                        {
-                                          "label": "Eligibility or enrollment data",
-                                          "value": "goal_enrollment_data"
-                                        },
-                                        {
-                                          "label": "Survey data",
-                                          "value": "goal_survey_data"
-                                        },
-                                        {
-                                          "label": "Another data source",
-                                          "value": "goal_other_data"
-                                        }
-                                      ]
-                                    }
-                                  },
-                                  {
-                                    "id": "2025-04-a-01-01-06-02-01-09",
-                                    "type": "text_multiline",
-                                    "label": "How did your progress towards your goal last year compare to your previous year’s progress?",
-                                    "answer": { "entry": null }
-                                  },
-                                  {
-                                    "id": "2025-04-a-01-01-06-02-01-10",
-                                    "type": "text_multiline",
-                                    "label": "What are you doing to continually make progress towards your goal?",
-                                    "answer": { "entry": null }
-                                  },
-                                  {
-                                    "id": "2025-04-a-01-01-06-02-01-11",
-                                    "type": "text_multiline",
-                                    "label": "Do you plan to keep this goal in future years? If so, do you plan to maintain the same goal or change it over the next three years?",
-                                    "answer": { "entry": null }
-                                  },
-                                  {
-                                    "id": "2025-04-a-01-01-06-02-01-12",
-                                    "type": "text_multiline",
-                                    "label": "Anything else you'd like to tell us about this goal?",
-                                    "answer": { "entry": null }
-                                  },
-                                  {
-                                    "id": "2025-04-a-01-01-06-02-01-13",
                                     "hint": "Optional",
                                     "type": "file_upload",
                                     "label": "Do you have any supporting documentation?",
