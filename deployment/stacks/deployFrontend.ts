@@ -48,7 +48,22 @@ export function deployFrontend(props: DeployFrontendProps) {
   const buildOutputPath = path.join(reactAppPath, "build");
   const fullPath = path.resolve(reactAppPath);
 
+  execSync("ls build/templates", {
+    cwd: fullPath,
+    stdio: "inherit",
+  });
+
+  execSync("rm -rf build", {
+    cwd: fullPath,
+    stdio: "inherit",
+  });
+
   execSync("SKIP_PREFLIGHT_CHECK=true yarn run build", {
+    cwd: fullPath,
+    stdio: "inherit",
+  });
+
+  execSync("ls build/templates", {
     cwd: fullPath,
     stdio: "inherit",
   });
