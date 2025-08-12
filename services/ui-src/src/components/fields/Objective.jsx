@@ -10,20 +10,46 @@ export const Objective = ({
   objectiveNumber,
   printView,
 }) => {
-  const first = objective.questions[0].answer.readonly === true;
-  const name = first
-    ? objective.questions[0].answer.default_entry
-    : objective.questions[0].answer.entry;
+  const firstQuestion = objective.questions?.[0];
+  let children = [];
+  let name = "";
+  let suggested = false;
 
-  const children = first ? objective.questions.slice(1) : objective.questions;
+  if (firstQuestion) {
+    const firstQuestionIsReadOnly = firstQuestion.answer.readonly === true;
+
+    name = firstQuestionIsReadOnly
+      ? firstQuestion.answer.default_entry
+      : firstQuestion.answer.entry;
+
+    suggested = firstQuestion?.suggested;
+
+    children = firstQuestionIsReadOnly
+      ? objective.questions.slice(1)
+      : objective.questions;
+  }
+
+  const objectiveName = (number, name, suggested) => {
+    let createdName = `Objective ${number}`;
+
+    if (suggested) {
+      createdName = `${createdName} (suggested)`;
+    }
+
+    if (name) {
+      createdName = `${createdName}: ${name}`;
+    }
+
+    return createdName;
+  };
+
   return (
     <>
       <div className="accordion-header" ref={headerRef}>
         <span className="span-pdf-no-bookmark">
           <AccordionButton>
             <div className="accordion-title">
-              Objective {objectiveNumber}
-              {name ? `: ${name}` : null}
+              {objectiveName(objectiveNumber, name, suggested)}
             </div>
           </AccordionButton>
         </span>
@@ -38,6 +64,7 @@ export const Objective = ({
     </>
   );
 };
+
 Objective.propTypes = {
   headerRef: PropTypes.object.isRequired,
   objective: PropTypes.object.isRequired,

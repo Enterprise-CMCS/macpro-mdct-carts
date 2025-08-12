@@ -183,6 +183,9 @@ export const sectionSchema = {
         comment: {
           type: "string",
         },
+        suggested: {
+          type: "boolean",
+        },
         questions: {
           type: "array",
           items: {
