@@ -54,7 +54,6 @@ const Integer = ({
   className,
   "data-testid": dataTestId,
   disabled = false,
-  hint,
   id,
   inputMode,
   label,
@@ -115,7 +114,7 @@ const Integer = ({
       disabled={disabled}
       errorMessage={error}
       id={id || question.id}
-      hint={hint}
+      hint={"hint" in props ? props.hint : question.hint}
       inputMode={inputMode}
       label={label ?? questionLabel}
       mask={mask}
