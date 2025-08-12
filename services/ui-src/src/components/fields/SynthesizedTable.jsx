@@ -81,11 +81,22 @@ const SynthesizedTable = ({ question, printView }) => {
                       </th>
                     );
                   } else {
-                    return (
-                      <td key={index} aria-label={`Row: ${rowLabel}, `}>
-                        {cell.contents}
-                      </td>
-                    );
+                    if (cell?.header) {
+                      return (
+                        <th
+                          key={index}
+                          aria-label={`Section Header: ${cell.header}`}
+                        >
+                          {cell.header}
+                        </th>
+                      );
+                    } else {
+                      return (
+                        <td key={index} aria-label={`Row: ${rowLabel}, `}>
+                          {cell.contents}
+                        </td>
+                      );
+                    }
                   }
                 })}
               </tr>

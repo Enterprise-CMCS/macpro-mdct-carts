@@ -400,6 +400,10 @@ const synthesizeValue = (
     return value;
   }
 
+  if (value.header) {
+    return value;
+  }
+
   if (value.lookupFmapFy) {
     return {
       contents: lookupFMAP(
