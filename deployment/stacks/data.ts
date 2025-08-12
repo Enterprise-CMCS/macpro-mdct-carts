@@ -158,7 +158,18 @@ export function createDataComponents(props: CreateDataComponentsProps) {
           `InvokeSeedDataFunction-${stage}`
         ),
       },
-      onUpdate: undefined,
+      onUpdate: {
+        service: "Lambda",
+        action: "invoke",
+        parameters: {
+          FunctionName: seedDataFunction.functionName,
+          InvocationType: "Event",
+          Payload: JSON.stringify({}),
+        },
+        physicalResourceId: cr.PhysicalResourceId.of(
+          `InvokeSeedDataFunction-${stage}`
+        ),
+      },
       onDelete: undefined,
       policy: cr.AwsCustomResourcePolicy.fromStatements([
         new iam.PolicyStatement({
