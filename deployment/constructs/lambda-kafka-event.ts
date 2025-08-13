@@ -8,6 +8,7 @@ import {
   RemovalPolicy,
 } from "aws-cdk-lib";
 import { createHash } from "crypto";
+import { LogLevel } from "aws-cdk-lib/aws-lambda-nodejs";
 
 interface LambdaKafkaEventProps
   extends Partial<lambda_nodejs.NodejsFunctionProps> {
@@ -87,6 +88,7 @@ export class LambdaKafkaEventSource extends Construct {
         minify: true,
         sourceMap: true,
         nodeModules: ["kafkajs"],
+        logLevel: LogLevel.INFO,
       },
       environment,
       ...restProps,
