@@ -1,10 +1,9 @@
 import { Construct } from "constructs";
 import {
-  LogLevel,
   NodejsFunction,
   NodejsFunctionProps,
 } from "aws-cdk-lib/aws-lambda-nodejs";
-import { Duration } from "aws-cdk-lib";
+import { Duration, RemovalPolicy } from "aws-cdk-lib";
 import { Runtime } from "aws-cdk-lib/aws-lambda";
 import {
   Effect,
@@ -16,9 +15,10 @@ import {
 } from "aws-cdk-lib/aws-iam";
 import * as apigateway from "aws-cdk-lib/aws-apigateway";
 import { isLocalStack } from "../local/util";
+import { LogGroup, RetentionDays } from "aws-cdk-lib/aws-logs";
+import { createHash } from "crypto";
 
 interface LambdaProps extends Partial<NodejsFunctionProps> {
-  handler: string;
   timeout?: Duration;
   memorySize?: number;
   path?: string;
@@ -26,8 +26,7 @@ interface LambdaProps extends Partial<NodejsFunctionProps> {
   stackName: string;
   api?: apigateway.RestApi;
   additionalPolicies?: PolicyStatement[];
-  requestParameters?: string[];
-  requestValidator?: apigateway.IRequestValidator;
+  isDev: boolean;
 }
 
 export class Lambda extends Construct {
@@ -37,7 +36,6 @@ export class Lambda extends Construct {
     super(scope, id);
 
     const {
-      handler,
       timeout = Duration.seconds(6),
       memorySize = 1024,
       environment = {},
@@ -46,8 +44,7 @@ export class Lambda extends Construct {
       method,
       additionalPolicies = [],
       stackName,
-      requestParameters,
-      requestValidator,
+      isDev,
       ...restProps
     } = props;
 
@@ -78,20 +75,26 @@ export class Lambda extends Construct {
 
     this.lambda = new NodejsFunction(this, id, {
       functionName: `${stackName}-${id}`,
-      handler,
       runtime: Runtime.NODEJS_20_X,
       timeout,
       memorySize,
       role,
       bundling: {
-        forceDockerBundling: true,
+        assetHash: createHash("sha256")
+          .update(`${Date.now()}-${id}`)
+          .digest("hex"),
         minify: true,
         sourceMap: true,
         nodeModules: ["jsdom"],
-        logLevel: LogLevel.INFO,
       },
       environment,
       ...restProps,
+    });
+
+    new LogGroup(this, `${id}LogGroup`, {
+      logGroupName: `/aws/lambda/${this.lambda.functionName}`,
+      removalPolicy: isDev ? RemovalPolicy.DESTROY : RemovalPolicy.RETAIN,
+      retention: RetentionDays.THREE_YEARS, // exceeds the 30 month requirement
     });
 
     if (api && path && method) {
@@ -103,15 +106,6 @@ export class Lambda extends Construct {
           authorizationType: isLocalStack
             ? undefined
             : apigateway.AuthorizationType.IAM,
-          requestParameters: requestParameters
-            ? Object.fromEntries(
-                requestParameters.map((item) => [
-                  `method.request.path.${item}`,
-                  true,
-                ])
-              )
-            : {},
-          requestValidator,
         }
       );
     }
