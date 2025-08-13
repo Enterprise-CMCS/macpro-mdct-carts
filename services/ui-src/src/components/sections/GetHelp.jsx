@@ -12,7 +12,7 @@ const GetHelp = () => {
             Question or feedback? Please email us and we will respond as soon as
             possible. You can also review our frequently asked questions below.
           </p>
-          <ActionCard icon={techIcon} iconAlt="Technical Contact Info Icon">
+          <ActionCard icon={techIcon} iconAlt="">
             <p> For technical support and login issues: </p>
             <p>
               <strong>

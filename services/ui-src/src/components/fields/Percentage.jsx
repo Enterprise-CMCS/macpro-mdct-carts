@@ -7,7 +7,6 @@ const Percentage = ({
   className,
   "data-testid": dataTestId,
   disabled = false,
-  hint,
   id,
   label,
   name,
@@ -81,7 +80,7 @@ const Percentage = ({
       data-testid={dataTestId}
       disabled={disabled}
       errorMessage={error}
-      hint={hint || question.hint}
+      hint={"hint" in props ? props.hint : question.hint}
       id={id || question.id}
       inputRef={setRef}
       label={label ?? questionLabel}

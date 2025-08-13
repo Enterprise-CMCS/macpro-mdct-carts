@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useFormFields } from "../../../hooks/useFormFields";
+//components
+import { AlertNotification } from "../../alerts/AlertNotification";
+//utils
 import { loginUser } from "../../../util/apiLib";
+import { loginError } from "../../../verbiage/errors";
+import { useFormFields } from "../../../hooks/useFormFields";
 
 const LocalLogin = () => {
+  const [error, setError] = useState(undefined);
   const navigate = useNavigate();
   const [fields, handleFieldChange] = useFormFields({
     email: "",
@@ -14,19 +19,22 @@ const LocalLogin = () => {
     try {
       await loginUser(fields.email, fields.password);
       navigate("/");
+      setError(false);
     } catch (error) {
-      let errorMessage = {
-        title: "Unable to login",
-        description: error.message,
-      };
-      // eslint-disable-next-line no-console
-      console.log(errorMessage);
+      setError(true);
     }
   }
 
   return (
     <div className="login-option">
       <h2>Log In with Cognito</h2>
+      {error && (
+        <AlertNotification
+          variation={loginError.variation}
+          title={loginError.title}
+          description={loginError.description}
+        />
+      )}
       <form onSubmit={(event) => handleLogin(event)}>
         <label htmlFor="email">
           <p className="ds-c-field__hint">Email:</p>

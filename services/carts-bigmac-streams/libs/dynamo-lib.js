@@ -5,7 +5,10 @@ let dynamoClient;
 
 export const buildClient = () => {
   if (dynamoClient) return dynamoClient;
-  const dynamoConfig = { region: "us-east-1" };
+  const dynamoConfig = {
+    region: "us-east-1",
+    endpoint: process.env.AWS_ENDPOINT_URL,
+  };
   const bareBonesClient = new DynamoDBClient(dynamoConfig);
   dynamoClient = DynamoDBDocumentClient.from(bareBonesClient);
   return dynamoClient;
