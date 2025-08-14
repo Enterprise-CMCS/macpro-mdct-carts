@@ -109,13 +109,11 @@ const TableOfContents = () => {
 
   const foundSelectedId = items.find((item) => item.selected)?.id;
   return (
-    <div className="toc" data-testid="toc" aria-label="Table of Contents">
-      <VerticalNav
-        selectedId={foundSelectedId}
-        ariaNavLabel="Vertical Navigation Element"
-        items={items}
-      />
-    </div>
+    <VerticalNav
+      selectedId={foundSelectedId}
+      ariaNavLabel="Vertical Navigation Element"
+      items={items}
+    />
   );
 };
 

@@ -9,17 +9,11 @@ const StateHeader = () => {
   return (
     <>
       {currentUser?.role === AppRoles.STATE_USER && (
-        <div
-          className="state-header"
-          data-testid="state-header"
-          aria-label="State Header"
-        >
+        <div className="state-header" data-testid="state-header">
           <div className="state-image">
             <img src={imageURI} alt={name} />
           </div>
-          <div className="state-name" aria-label={name}>
-            {name}
-          </div>
+          <div className="state-name">{name}</div>
         </div>
       )}
     </>
