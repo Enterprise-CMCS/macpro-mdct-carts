@@ -111,7 +111,6 @@ const TableOfContents = () => {
   return (
     <VerticalNav
       selectedId={foundSelectedId}
-      ariaNavLabel="Vertical Navigation Element"
       items={items}
     />
   );
