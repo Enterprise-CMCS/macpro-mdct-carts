@@ -1,6 +1,6 @@
 // element selectors
 const actionButton = "[data-testid='report-action-button']";
-const navigationLink = "[aria-label='Vertical Navigation Element'] a";
+const navigationLink = "[aria-label='Table of Contents'] a";
 
 describe("CARTS Report Fill Tests", () => {
   before(() => {
