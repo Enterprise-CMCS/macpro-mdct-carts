@@ -110,10 +110,7 @@ const TableOfContents = () => {
   const foundSelectedId = items.find((item) => item.selected)?.id;
   return (
     <div className="toc" data-testid="toc" aria-label="Table of Contents">
-      <VerticalNav
-        selectedId={foundSelectedId}
-        items={items}
-      />
+      <VerticalNav selectedId={foundSelectedId} items={items} />
     </div>
   );
 };
