@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 // components
+import { Main } from "./Main";
 import CMSHomepage from "../sections/homepage/CMSHomepage";
 // utils
 import ScrollToTop from "../utils/ScrollToTop";
@@ -8,7 +9,7 @@ import ScrollToTop from "../utils/ScrollToTop";
 const AdminHome = () => (
   <>
     <ScrollToTop />
-    <main className="homepage ds-l-col--12" tabindex="-1">
+    <Main className="homepage ds-l-col--12">
       <div className="ds-l-container">
         <div className="ds-l-row ds-u-padding-left--2">
           <h1 className="page-title ds-u-margin-bottom--0">
@@ -26,7 +27,7 @@ const AdminHome = () => (
           <CMSHomepage />
         </div>
       </div>
-    </main>
+    </Main>
   </>
 );
 

@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { Main } from "../layout/Main";
 
 const UserProfile = () => {
   const currentUser = useSelector((state) => state.stateUser.currentUser);
@@ -7,7 +8,7 @@ const UserProfile = () => {
     <div className="page-info ds-l-container">
       <div className="ds-l-row">
         <div className="ds-l-col--12">
-          <main className="main" tabindex="-1">
+          <Main className="main">
             <h1>User Profile</h1>
             If any information is incorrect, please contact the{" "}
             <a href="mailto:mdct_help@cms.hhs.gov">mdct_help@cms.hhs.gov</a>.
@@ -31,7 +32,7 @@ const UserProfile = () => {
                 <dd>{currentUser.role}</dd>
               </div>
             </dl>
-          </main>
+          </Main>
         </div>
       </div>
     </div>

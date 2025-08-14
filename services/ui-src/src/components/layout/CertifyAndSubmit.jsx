@@ -17,6 +17,7 @@ import useModal from "../../hooks/useModal";
 // types
 import { AppRoles } from "../../types";
 import PropTypes from "prop-types";
+import { Main } from "./Main";
 
 const Submit = ({ openCertifyConfirmation }) => (
   <>
@@ -117,7 +118,7 @@ const CertifyAndSubmit = () => {
 
   return (
     <div className="section-basic-info ds-l-col--9 content">
-      <main className="main" tabindex="-1">
+      <Main className="main">
         {isShowing && (
           <Dialog
             isShowing={isShowing}
@@ -153,7 +154,7 @@ const CertifyAndSubmit = () => {
         ) : (
           <Submit openCertifyConfirmation={toggleModal} />
         )}
-      </main>
+      </Main>
       <FormActions />
     </div>
   );

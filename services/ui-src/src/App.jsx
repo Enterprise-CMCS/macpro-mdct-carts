@@ -6,6 +6,7 @@ import AppRoutes from "./AppRoutes";
 import Header from "./components/layout/Header";
 import Timeout from "./components/layout/Timeout";
 import Footer from "./components/layout/Footer";
+import { Main } from "./components/layout/Main";
 import { fireTealiumPageView } from "./util/tealium";
 import "font-awesome/css/font-awesome.min.css";
 import "./styles/app.scss";
@@ -36,9 +37,9 @@ function App() {
         </div>
       )}
       {!user && showLocalLogins && (
-        <main tabindex="-1">
+        <Main>
           <LocalLogins loginWithIDM={loginWithIDM} />;
-        </main>
+        </Main>
       )}
     </>
   );
