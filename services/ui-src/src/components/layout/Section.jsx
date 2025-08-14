@@ -14,7 +14,7 @@ const Section = ({ subsectionId, sectionId, printView }) => {
 
   return (
     <div className="section-basic-info ds-l-col--9 content">
-      <main id="main-content" className="main">
+      <main id="main-content" className="main" tabindex="-1">
         <PageInfo />
         <h2 data-testid="section-title">{title}</h2>
         <Subsection

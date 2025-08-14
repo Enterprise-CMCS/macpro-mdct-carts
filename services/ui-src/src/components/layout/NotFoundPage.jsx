@@ -15,7 +15,7 @@ export const NotFoundPage = () => {
             Page not found
           </h1>
         </header>
-        <main className="main">
+        <main className="main" tabindex="-1">
           <h2>
             Sorry, the page you're looking for couldn't be found. It's possible
             that this page has moved, or the address may have been typed

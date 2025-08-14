@@ -4,7 +4,7 @@ import ActionCard from "../utils/ActionCard";
 
 const GetHelp = () => {
   return (
-    <main className="help-page ds-l-container">
+    <main className="help-page ds-l-container" tabindex="-1">
       <div className="ds-l-col--12">
         <div className="help-page-container ds-l-container">
           <h1 className="help-page-title">How can we help you?</h1>

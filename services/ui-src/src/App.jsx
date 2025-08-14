@@ -36,7 +36,7 @@ function App() {
         </div>
       )}
       {!user && showLocalLogins && (
-        <main>
+        <main tabindex="-1">
           <LocalLogins loginWithIDM={loginWithIDM} />;
         </main>
       )}

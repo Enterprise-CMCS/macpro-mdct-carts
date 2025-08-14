@@ -33,7 +33,7 @@ const Homepage = ({ reportStatus }) => {
   };
 
   return (
-    <main className="homepage">
+    <main className="homepage" tabindex="-1">
       <div className="ds-l-container">
         <div className="ds-l-row ds-u-padding-left--2">
           <h1 className="page-title ds-u-margin-bottom--0">

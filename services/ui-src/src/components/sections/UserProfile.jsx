@@ -7,7 +7,7 @@ const UserProfile = () => {
     <div className="page-info ds-l-container">
       <div className="ds-l-row">
         <div className="ds-l-col--12">
-          <main className="main">
+          <main className="main" tabindex="-1">
             <h1>User Profile</h1>
             If any information is incorrect, please contact the{" "}
             <a href="mailto:mdct_help@cms.hhs.gov">mdct_help@cms.hhs.gov</a>.

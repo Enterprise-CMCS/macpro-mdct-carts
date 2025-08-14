@@ -117,7 +117,7 @@ const CertifyAndSubmit = () => {
 
   return (
     <div className="section-basic-info ds-l-col--9 content">
-      <main className="main">
+      <main className="main" tabindex="-1">
         {isShowing && (
           <Dialog
             isShowing={isShowing}
