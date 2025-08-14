@@ -108,12 +108,7 @@ const TableOfContents = () => {
   }
 
   const foundSelectedId = items.find((item) => item.selected)?.id;
-  return (
-    <VerticalNav
-      selectedId={foundSelectedId}
-      items={items}
-    />
-  );
+  return <VerticalNav selectedId={foundSelectedId} items={items} />;
 };
 
 export default TableOfContents;
