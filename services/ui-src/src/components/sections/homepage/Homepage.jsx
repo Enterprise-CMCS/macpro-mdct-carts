@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import ReportItem from "./ReportItem";
 import TemplateDownload from "./TemplateDownload";
+import { Main } from "../../layout/Main";
 import { REPORT_STATUS, STATUS_MAPPING, AppRoles } from "../../../types";
 
 function formatStateStatus(item) {
@@ -33,7 +34,7 @@ const Homepage = ({ reportStatus }) => {
   };
 
   return (
-    <main className="homepage">
+    <Main className="homepage">
       <div className="ds-l-container">
         <div className="ds-l-row ds-u-padding-left--2">
           <h1 className="page-title ds-u-margin-bottom--0">
@@ -70,7 +71,7 @@ const Homepage = ({ reportStatus }) => {
           </div>
         </div>
       </div>
-    </main>
+    </Main>
   );
 };
 Homepage.propTypes = {
