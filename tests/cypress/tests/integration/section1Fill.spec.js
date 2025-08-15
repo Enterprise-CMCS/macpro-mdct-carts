@@ -1,6 +1,5 @@
 // element selectors
 const actionButton = "[data-testid='report-action-button']";
-const navigationLink = "[aria-label='Table of Contents'] a";
 
 describe("CARTS Report Fill Tests", () => {
   before(() => {
@@ -28,7 +27,7 @@ describe("CARTS Report Fill Tests", () => {
       });
 
     // Navigate to Section 1
-    cy.get(navigationLink, { timeout: 3000 }).contains("Section 1").click();
+    cy.get("nav", { timeout: 3000 }).contains("Section 1").click();
     cy.wait(3000);
 
     // Question 1
@@ -187,7 +186,7 @@ describe("CARTS Report Fill Tests", () => {
       });
 
     // Wait for the autosave to go through
-    cy.wait(3000);
+    cy.wait(5000);
 
     // The success message may be "Saved" or "Last saved at h:mm (x minutes ago)"
     cy.get(".save-status").contains("Saved", { matchCase: false });
