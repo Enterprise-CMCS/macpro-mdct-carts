@@ -5,7 +5,6 @@ import { MultiSelect } from "react-multi-select-component";
 // components
 import ReportItem from "./ReportItem";
 import { DropdownOption } from "../../fields/DropdownOption";
-import { Main } from "../../layout/Main";
 // utils
 import { getAllStateStatuses } from "../../../actions/initial";
 import { selectFormStatuses, selectYears } from "../../../store/selectors";
@@ -120,7 +119,7 @@ const CMSHomepage = () => {
   return (
     <div className="ds-l-container">
       <div className="ds-l-row">
-        <Main className="homepage ds-l-col--12">
+        <div className="homepage ds-l-col--12">
           <div className="ds-l-container-large">
             {currentUserRole !== AppRoles.CMS_ADMIN ? (
               <div className="ds-l-row ds-u-padding-left--2">
@@ -251,7 +250,7 @@ const CMSHomepage = () => {
               </div>
             </div>
           </div>
-        </Main>
+        </div>
       </div>
     </div>
   );
