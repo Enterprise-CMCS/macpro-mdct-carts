@@ -145,7 +145,6 @@ const CMSHomepage = () => {
                           options={stateList}
                           value={currentlySelectedStates}
                           onChange={onSelectState}
-                          labelledBy={"State"}
                           hasSelectAll={false}
                           overrideStrings={{ selectSomeItems: "State" }}
                           ItemRenderer={DropdownOption}
@@ -159,7 +158,6 @@ const CMSHomepage = () => {
                           options={yearList}
                           value={currentlySelectedYears}
                           onChange={onSelectYear}
-                          labelledBy={"Year"}
                           hasSelectAll={false}
                           overrideStrings={{ selectSomeItems: "Year" }}
                           ItemRenderer={DropdownOption}
@@ -173,7 +171,6 @@ const CMSHomepage = () => {
                           options={statusList}
                           value={currentlySelectedStatuses}
                           onChange={onSelectStatus}
-                          labelledBy="Status"
                           hasSelectAll={false}
                           overrideStrings={{ selectSomeItems: "Status" }}
                           ItemRenderer={DropdownOption}
