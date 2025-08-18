@@ -71,6 +71,18 @@ const percent = ([numerator, denominator], precision = 2) => {
   return "";
 };
 
+const numberAndPercentage = ([numerator, denominator], precision = 2) => {
+  if (+denominator !== 0 && numerator !== "" && numerator !== null) {
+    const division = round((100 * +numerator) / +denominator, precision);
+    if (!Number.isNaN(division)) {
+      return `${numerator} (${division}%)`;
+    }
+  }
+
+  // Denominator is NaN or 0, or the division operation results in ""
+  return "";
+};
+
 const rpn = (values, rpnString, precision) => {
   if (rpnString) {
     const operands = [];
@@ -468,6 +480,8 @@ const synthesizeValue = (
           return { contents: identity(targets) };
         case "percentage":
           return { contents: percent(targets, value.precision) };
+        case "numberAndPercentage":
+          return { contents: numberAndPercentage(targets, value.precision) };
         case "rpn":
           return { contents: rpn(targets, value.rpn, value.precision) };
         case "sum":
