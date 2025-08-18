@@ -113,6 +113,7 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
         memorySize: 3072,
         timeout: Duration.seconds(300),
         layers: [clamAvLayer],
+        isDev,
         ...commonLambdaProps,
       }
     ).lambda;
@@ -133,6 +134,7 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
     memorySize: 3008,
     timeout: Duration.seconds(300),
     layers: isLocalStack ? [] : [clamAvLayer!],
+    isDev,
     ...commonLambdaProps,
   }).lambda;
 

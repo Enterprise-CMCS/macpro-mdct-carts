@@ -32,6 +32,7 @@ const HomepageStateUserInProgProps = {
   userRole: "STATE_USER",
   year: 2021,
   timeZone: "America/New_York",
+  stateAbbr: "AL",
 };
 
 const HomepageStateUserCertProps = {
@@ -43,6 +44,7 @@ const HomepageStateUserCertProps = {
   userRole: "STATE_USER",
   year: 2020,
   timeZone: "America/New_York",
+  stateAbbr: "AL",
 };
 
 describe("<ReportItem />", () => {
@@ -68,7 +70,12 @@ describe("<ReportItem />", () => {
       expect(screen.getByText("2021")).toBeVisible();
       expect(screen.getByText("In Progress")).toBeVisible();
       expect(screen.getByText("2021-01-04 at 1:28:18 p.m.")).toBeVisible();
-      expect(screen.getByRole("link", { name: "Edit" })).toBeVisible();
+      expect(
+        screen.getByRole("link", { name: "Edit AL 2021 report" })
+      ).toBeVisible();
+      expect(
+        screen.getByRole("link", { name: "Print AL 2021 report" })
+      ).toBeVisible();
     });
 
     test("should render other reports statuses and time stamps properly", () => {
@@ -76,7 +83,12 @@ describe("<ReportItem />", () => {
       expect(screen.getByText("2020")).toBeVisible();
       expect(screen.getByText("Certified and Submitted")).toBeVisible();
       expect(screen.getByText("2022-06-27 at 2:43:08 p.m.")).toBeVisible();
-      expect(screen.getByRole("link", { name: "View" })).toBeVisible();
+      expect(
+        screen.getByRole("link", { name: "View AL 2020 report" })
+      ).toBeVisible();
+      expect(
+        screen.getByRole("link", { name: "Print AL 2020 report" })
+      ).toBeVisible();
     });
 
     test("In Progress report items should not have basic accessibility issues", async () => {
@@ -108,6 +120,7 @@ describe("<ReportItem />", () => {
     username: "Frank States",
     lastChanged: "Mon Jun 27 2022 14:43:08 GMT-0400 (Eastern Daylight Time)",
     timeZone: "America/New_York",
+    stateAbbr: "AL",
   };
 
   const CMSHomepageCMSUserAL2021Props = {
@@ -119,6 +132,7 @@ describe("<ReportItem />", () => {
     username: "al@test.com",
     lastChanged: "2021-01-04 18:28:18.524133+00",
     timeZone: "America/New_York",
+    stateAbbr: "AL",
   };
 
   describe("ReportItem viewed by a CMS User", () => {
@@ -146,7 +160,12 @@ describe("<ReportItem />", () => {
       expect(
         screen.getByText("2021-01-04 at 1:28:18 p.m. by al@test.com")
       ).toBeVisible();
-      expect(screen.getByRole("link", { name: /View/ })).toBeVisible();
+      expect(
+        screen.getByRole("link", { name: "View AL 2021 report" })
+      ).toBeVisible();
+      expect(
+        screen.getByRole("link", { name: "Print AL 2021 report" })
+      ).toBeVisible();
     });
 
     test("should render other reports statuses and time stamps properly", () => {
@@ -157,8 +176,12 @@ describe("<ReportItem />", () => {
       expect(
         screen.getByText("2022-06-27 at 2:43:08 p.m. by Frank States")
       ).toBeVisible();
-      expect(screen.getByRole("link", { name: /View/ })).toBeVisible();
-      expect(screen.getByRole("button", { name: "Uncertify" })).toBeVisible();
+      expect(
+        screen.getByRole("link", { name: "View AL 2020 report" })
+      ).toBeVisible();
+      expect(
+        screen.getByRole("button", { name: "Uncertify AL 2020 report" })
+      ).toBeVisible();
     });
 
     test("should handle uncertify being clicked and show new modal", () => {
@@ -198,6 +221,7 @@ describe("<ReportItem />", () => {
     username: "Frank States",
     lastChanged: "Mon Jun 27 2022 14:43:08 GMT-0400 (Eastern Daylight Time)",
     timeZone: "America/New_York",
+    stateAbbr: "AL",
   };
 
   const CMSHomepageAdminAL2021Props = {
@@ -209,6 +233,7 @@ describe("<ReportItem />", () => {
     username: "al@test.com",
     lastChanged: "2021-01-04 18:28:18.524133+00",
     timeZone: "America/New_York",
+    stateAbbr: "AL",
   };
 
   describe("ReportItem viewed by an Admin User", () => {
@@ -236,7 +261,12 @@ describe("<ReportItem />", () => {
       expect(
         screen.getByText("2021-01-04 at 1:28:18 p.m. by al@test.com")
       ).toBeVisible();
-      expect(screen.getByRole("link", { name: /View/ })).toBeVisible();
+      expect(
+        screen.getByRole("link", { name: "View AL 2021 report" })
+      ).toBeVisible();
+      expect(
+        screen.getByRole("link", { name: "Print AL 2021 report" })
+      ).toBeVisible();
     });
 
     test("should render other reports statuses and time stamps properly", () => {
@@ -247,8 +277,12 @@ describe("<ReportItem />", () => {
       expect(
         screen.getByText("2022-06-27 at 2:43:08 p.m. by Frank States")
       ).toBeVisible();
-      expect(screen.getByRole("link", { name: /View/ })).toBeVisible();
-      expect(screen.getByRole("button", { name: "Uncertify" })).toBeVisible();
+      expect(
+        screen.getByRole("link", { name: "View AL 2020 report" })
+      ).toBeVisible();
+      expect(
+        screen.getByRole("button", { name: "Uncertify AL 2020 report" })
+      ).toBeVisible();
     });
 
     test("In Progress report items should not have basic accessibility issues", async () => {
@@ -280,6 +314,7 @@ describe("<ReportItem />", () => {
     username: "Frank States",
     lastChanged: "Mon Jun 27 2022 14:43:08 GMT-0400 (Eastern Daylight Time)",
     timeZone: "America/New_York",
+    stateAbbr: "AL",
   };
 
   const CMSHomepageHelpdeskAL2021Props = {
@@ -291,6 +326,7 @@ describe("<ReportItem />", () => {
     username: "al@test.com",
     lastChanged: "2021-01-04 18:28:18.524133+00",
     timeZone: "America/New_York",
+    stateAbbr: "AL",
   };
 
   describe("ReportItem viewed by an Help Desk User", () => {
@@ -318,7 +354,12 @@ describe("<ReportItem />", () => {
       expect(
         screen.getByText("2021-01-04 at 1:28:18 p.m. by al@test.com")
       ).toBeVisible();
-      expect(screen.getByRole("link", { name: /View/ })).toBeVisible();
+      expect(
+        screen.getByRole("link", { name: "View AL 2021 report" })
+      ).toBeVisible();
+      expect(
+        screen.getByRole("link", { name: "Print AL 2021 report" })
+      ).toBeVisible();
     });
 
     test("should render other reports statuses and time stamps properly", () => {
@@ -329,7 +370,15 @@ describe("<ReportItem />", () => {
       expect(
         screen.getByText("2022-06-27 at 2:43:08 p.m. by Frank States")
       ).toBeVisible();
-      expect(screen.getByRole("link", { name: /View/ })).toBeVisible();
+      expect(
+        screen.getByRole("link", { name: "View AL 2020 report" })
+      ).toBeVisible();
+      expect(
+        screen.getByRole("link", { name: "Print AL 2020 report" })
+      ).toBeVisible();
+      expect(
+        screen.queryByRole("button", { name: /Uncertify/ })
+      ).not.toBeInTheDocument();
     });
 
     test("In Progress report items should not have basic accessibility issues", async () => {
@@ -361,6 +410,7 @@ describe("<ReportItem />", () => {
     username: "Frank States",
     lastChanged: "Mon Jun 27 2022 14:43:08 GMT-0400 (Eastern Daylight Time)",
     timeZone: "America/New_York",
+    stateAbbr: "AL",
   };
 
   const CMSHomepageApproverAL2021Props = {
@@ -372,6 +422,7 @@ describe("<ReportItem />", () => {
     username: "al@test.com",
     lastChanged: "2021-01-04 18:28:18.524133+00",
     timeZone: "America/New_York",
+    stateAbbr: "AL",
   };
 
   describe("ReportItem viewed by an Admin User", () => {
@@ -399,7 +450,12 @@ describe("<ReportItem />", () => {
       expect(
         screen.getByText("2021-01-04 at 1:28:18 p.m. by al@test.com")
       ).toBeVisible();
-      expect(screen.getByRole("link", { name: /View/ })).toBeVisible();
+      expect(
+        screen.getByRole("link", { name: "View AL 2021 report" })
+      ).toBeVisible();
+      expect(
+        screen.getByRole("link", { name: "Print AL 2021 report" })
+      ).toBeVisible();
     });
 
     test("should render other reports statuses and time stamps properly", () => {
@@ -410,7 +466,15 @@ describe("<ReportItem />", () => {
       expect(
         screen.getByText("2022-06-27 at 2:43:08 p.m. by Frank States")
       ).toBeVisible();
-      expect(screen.getByRole("link", { name: /View/ })).toBeVisible();
+      expect(
+        screen.getByRole("link", { name: "View AL 2020 report" })
+      ).toBeVisible();
+      expect(
+        screen.getByRole("link", { name: "Print AL 2020 report" })
+      ).toBeVisible();
+      expect(
+        screen.getByRole("button", { name: "Uncertify AL 2020 report" })
+      ).toBeVisible();
     });
 
     test("In Progress report items should not have basic accessibility issues", async () => {

@@ -71,6 +71,7 @@ const buildSeedRunner = () => {
       warn: console.warn, // eslint-disable-line no-console
       error: console.error, // eslint-disable-line no-console
     },
+    endpoint: process.env.AWS_ENDPOINT_URL,
   };
   dynamoPrefix = process.env.dynamoPrefix;
 

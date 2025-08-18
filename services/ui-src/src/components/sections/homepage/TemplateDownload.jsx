@@ -1,4 +1,5 @@
 import React from "react";
+import { useFlags } from "launchdarkly-react-client-sdk";
 //icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -10,7 +11,7 @@ import {
 import PropTypes from "prop-types";
 
 const TemplateDownload = ({ getTemplate }) => {
-  const currentYear = "2024";
+  const currentYear = useFlags().release2025 ? "2025" : "2024";
 
   const handleDownload = () => {
     window.location.href = getTemplate(currentYear);
@@ -41,7 +42,9 @@ const TemplateDownload = ({ getTemplate }) => {
             </a>
           </p>
         </div>
-        <div className="update-date">Oct 2024</div>
+        <div className="update-date">
+          {useFlags().release2025 ? "Oct 2025" : "Oct 2024"}
+        </div>
         <div className="update ds-l-row">
           <div className="icon ds-l-col--2">
             <div className="icon-inner">
