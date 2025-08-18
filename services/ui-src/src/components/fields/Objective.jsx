@@ -10,20 +10,27 @@ export const Objective = ({
   objectiveNumber,
   printView,
 }) => {
-  const firstQuestion = objective.questions[0];
-  const firstQuestionIsReadOnly = firstQuestion.answer.readonly === true;
-  const name = firstQuestionIsReadOnly
-    ? firstQuestion.answer.default_entry
-    : firstQuestion.answer.entry;
+  const firstQuestion = objective.questions?.[0];
+  let children = [];
+  let name = "";
+  let suggested = false;
 
-  const suggested = firstQuestion?.suggested;
+  if (firstQuestion) {
+    const firstQuestionIsReadOnly = firstQuestion.answer.readonly === true;
 
-  const children = firstQuestionIsReadOnly
-    ? objective.questions.slice(1)
-    : objective.questions;
+    name = firstQuestionIsReadOnly
+      ? firstQuestion.answer.default_entry
+      : firstQuestion.answer.entry;
 
-  const objectiveName = () => {
-    let createdName = `Objective ${objectiveNumber}`;
+    suggested = firstQuestion?.suggested;
+
+    children = firstQuestionIsReadOnly
+      ? objective.questions.slice(1)
+      : objective.questions;
+  }
+
+  const objectiveName = (number, name, suggested) => {
+    let createdName = `Objective ${number}`;
 
     if (suggested) {
       createdName = `${createdName} (suggested)`;
@@ -41,7 +48,9 @@ export const Objective = ({
       <div className="accordion-header" ref={headerRef}>
         <span className="span-pdf-no-bookmark">
           <AccordionButton>
-            <div className="accordion-title">{objectiveName()}</div>
+            <div className="accordion-title">
+              {objectiveName(objectiveNumber, name, suggested)}
+            </div>
           </AccordionButton>
         </span>
       </div>
