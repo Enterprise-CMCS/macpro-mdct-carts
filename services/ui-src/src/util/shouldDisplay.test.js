@@ -1,13 +1,20 @@
-import { shouldDisplay } from "./shouldDisplay";
+import * as synthesize from "./synthesize";
+import { hideIfTableValue, shouldDisplay } from "./shouldDisplay";
 import { selectFragmentById } from "../store/formData";
 
 const mockFragmentResult = {
   answer: { entry: "test program" },
 };
-
 jest.mock("../store/formData", () => ({
   ...jest.requireActual("../store/formData"),
   selectFragmentById: jest.fn(),
+}));
+
+jest.mock("./synthesize", () => ({
+  ...jest.requireActual("./synthesize"),
+  compareACS: jest.fn(),
+  lookupChipEnrollments: jest.fn(),
+  compareChipEnrollements: jest.fn(),
 }));
 
 describe("shouldDisplay()", () => {
@@ -473,5 +480,241 @@ describe("shouldDisplay()", () => {
       context
     );
     expect(result).toBe(true);
+  });
+  describe("hideIfTableValue", () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    const makeContext = (variations, variation_operator = "and") => ({
+      conditional_display: {
+        hide_if_table_value: {
+          target: "$",
+          variations,
+          variation_operator,
+        },
+      },
+    });
+
+    describe.each([
+      {
+        description: "all conditions satisfied with 'and'",
+        formData: [[10, 20]],
+        variations: [
+          { operator: ">", row: "*", row_key: 0, threshold: 5 },
+          { operator: ">", row: "*", row_key: 1, threshold: 15 },
+        ],
+        expected: true,
+        operator: "and",
+      },
+      {
+        description: "any condition fails with 'and'",
+        formData: [[2, 20]],
+        variations: [
+          { operator: ">", row: "*", row_key: 0, threshold: 5 },
+          { operator: ">", row: "*", row_key: 1, threshold: 15 },
+        ],
+        expected: false,
+        operator: "and",
+      },
+      {
+        description: "multiple rows satisfied with 'and'",
+        formData: [
+          [10, 20],
+          [30, 5],
+        ],
+        variations: [
+          { operator: ">", row: 0, row_key: 0, threshold: 5 },
+          { operator: "<", row: 1, row_key: 1, threshold: 10 },
+        ],
+        expected: true,
+        operator: "and",
+      },
+      {
+        description: "any row fails with 'and'",
+        formData: [
+          [2, 20],
+          [30, 15],
+        ],
+        variations: [
+          { operator: ">", row: 0, row_key: 0, threshold: 5 },
+          { operator: "<", row: 1, row_key: 1, threshold: 10 },
+        ],
+        expected: false,
+        operator: "and",
+      },
+      {
+        description: "comparisonValue !== threshold with 'or'",
+        formData: [[5]],
+        variations: [{ operator: "=", row: 0, row_key: 0, threshold: 10 }],
+        expected: false,
+        operator: "or",
+      },
+      {
+        description: "comparisonValue !== threshold with 'and'",
+        formData: [[5]],
+        variations: [{ operator: "=", row: 0, row_key: 0, threshold: 10 }],
+        expected: false,
+        operator: "and",
+      },
+    ])("$description", ({ formData, variations, expected, operator }) => {
+      test(`returns ${expected}`, () => {
+        const context = makeContext(variations, operator);
+        const result = hideIfTableValue(
+          formData,
+          [],
+          null,
+          [],
+          context.conditional_display.hide_if_table_value
+        );
+        expect(result).toBe(expected);
+      });
+    });
+  });
+  describe("hideIfTableValue - computed branch", () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    function testComputeField(
+      fn,
+      fieldName,
+      returnValue,
+      formData,
+      options = {}
+    ) {
+      fn.mockReturnValue(returnValue);
+
+      let args;
+      switch (fieldName) {
+        case "compareACS":
+          args = [
+            options.allStatesData || [{ state: "NY" }],
+            "NY",
+            formData[0][0][fieldName],
+          ];
+          break;
+        case "lookupChipEnrollments":
+        case "compareChipEnrollements":
+          args = [
+            options.chipEnrollments || [{ enrollment: "data" }],
+            formData[0][0][fieldName],
+          ];
+          break;
+        default:
+          throw new Error(`Unknown compute field: ${fieldName}`);
+      }
+
+      const result = hideIfTableValue(
+        formData,
+        options.allStatesData || [{ state: "NY" }],
+        "NY",
+        options.chipEnrollments || [{ enrollment: "data" }],
+        {
+          computed: true,
+          target: "$",
+          variations: [
+            { operator: "=", row: 0, row_key: 0, threshold: returnValue },
+          ],
+          variation_operator: "or",
+        }
+      );
+
+      expect(fn).toHaveBeenCalledWith(...args);
+      expect(result).toBe(true);
+    }
+
+    test("uses compareACS when item.compareACS exists", () => {
+      testComputeField(synthesize.compareACS, "compareACS", 42, [
+        [{ compareACS: "someACS" }],
+      ]);
+    });
+
+    test("uses lookupChipEnrollments when item.lookupChipEnrollments exists", () => {
+      testComputeField(
+        synthesize.lookupChipEnrollments,
+        "lookupChipEnrollments",
+        99,
+        [[{ lookupChipEnrollments: "someKey" }]],
+        { chipEnrollments: [{ enrollment: "data" }] }
+      );
+    });
+
+    test("uses compareChipEnrollements when item.compareChipEnrollements exists", () => {
+      testComputeField(
+        synthesize.compareChipEnrollements,
+        "compareChipEnrollements",
+        5,
+        [[{ compareChipEnrollements: "key" }]],
+        { chipEnrollments: [{ enrollment: "data" }] }
+      );
+    });
+
+    test("passes through item if no compute fields exist", () => {
+      const formData = [[10]];
+
+      const result = hideIfTableValue(formData, [], "NY", [], {
+        computed: true,
+        target: "$",
+        variations: [{ operator: "=", row: 0, row_key: 0, threshold: 10 }],
+        variation_operator: "or",
+      });
+
+      expect(result).toBe(true);
+    });
+
+    test("should hide element if any != condition passes ('or')", () => {
+      const formData = [[5, 10]];
+      const result = hideIfTableValue(formData, [], "NY", [], {
+        computed: false,
+        target: "$",
+        variations: [
+          { operator: "!=", row: 0, row_key: 0, threshold: 5 },
+          { operator: "!=", row: 0, row_key: 1, threshold: 99 },
+        ],
+        variation_operator: "or",
+      });
+
+      expect(result).toBe(true);
+    });
+
+    test("should hide element only if all != conditions pass ('and')", () => {
+      const formData = [[5, 10]];
+      const result = hideIfTableValue(formData, [], "NY", [], {
+        computed: false,
+        target: "$",
+        variations: [
+          { operator: "!=", row: 0, row_key: 0, threshold: 0 },
+          { operator: "!=", row: 0, row_key: 1, threshold: 10 },
+        ],
+        variation_operator: "and",
+      });
+
+      expect(result).toBe(false);
+    });
+
+    test("unknown operator returns false ('or')", () => {
+      const formData = [[5]];
+      const result = hideIfTableValue(formData, [], "NY", [], {
+        computed: false,
+        target: "$",
+        variations: [{ operator: "??", row: 0, row_key: 0, threshold: 5 }],
+        variation_operator: "or",
+      });
+
+      expect(result).toBe(false);
+    });
+
+    test("unknown operator returns false ('and')", () => {
+      const formData = [[5]];
+      const result = hideIfTableValue(formData, [], "NY", [], {
+        computed: false,
+        target: "$",
+        variations: [{ operator: "??", row: 0, row_key: 0, threshold: 5 }],
+        variation_operator: "and",
+      });
+
+      expect(result).toBe(false);
+    });
   });
 });
