@@ -624,13 +624,13 @@ describe("shouldDisplay()", () => {
       expect(result).toBe(true);
     }
 
-    test("uses compareACS when item.compareACS exists", () => {
+    test("uses compareACS when compareACS exists", () => {
       testComputeField(synthesize.compareACS, "compareACS", 42, [
         [{ compareACS: "someACS" }],
       ]);
     });
 
-    test("uses lookupChipEnrollments when item.lookupChipEnrollments exists", () => {
+    test("uses lookupChipEnrollments when lookupChipEnrollments exists", () => {
       testComputeField(
         synthesize.lookupChipEnrollments,
         "lookupChipEnrollments",
@@ -640,7 +640,7 @@ describe("shouldDisplay()", () => {
       );
     });
 
-    test("uses compareChipEnrollements when item.compareChipEnrollements exists", () => {
+    test("uses compareChipEnrollements when compareChipEnrollements exists", () => {
       testComputeField(
         synthesize.compareChipEnrollements,
         "compareChipEnrollements",
