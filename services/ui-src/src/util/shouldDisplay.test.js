@@ -6,12 +6,10 @@ const mockFragmentResult = {
   answer: { entry: "test program" },
 };
 jest.mock("../store/formData", () => ({
-  ...jest.requireActual("../store/formData"),
   selectFragmentById: jest.fn(),
 }));
 
 jest.mock("./synthesize", () => ({
-  ...jest.requireActual("./synthesize"),
   compareACS: jest.fn(),
   lookupChipEnrollments: jest.fn(),
   compareChipEnrollements: jest.fn(),
