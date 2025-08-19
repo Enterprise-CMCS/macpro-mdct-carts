@@ -13,7 +13,6 @@ import {
 import { add } from "date-fns";
 
 const calculateRemainingSeconds = (expiresAt) => {
-  if (!expiresAt) return 0;
   return (new Date(expiresAt).valueOf() - Date.now()) / 1000;
 };
 
