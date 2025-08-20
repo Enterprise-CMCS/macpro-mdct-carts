@@ -12,7 +12,6 @@ import Section from "../layout/Section";
 import statesArray from "../utils/statesArray";
 import { loadEnrollmentCounts, loadSections } from "../../actions/initial";
 import { apiLib } from "../../util/apiLib";
-import { v4 as uuidv4 } from "uuid";
 import { Buffer } from "buffer";
 
 const openPdf = (basePdf) => {
@@ -133,12 +132,13 @@ export const Print = () => {
 
   // Check if formData has values
   if (formData !== undefined && formData.length !== 0) {
-    sections.push(<Title urlStateName={stateName} />);
+    sections.push(<Title key={"sectitle-1"} urlStateName={stateName} />);
 
     if (sectionId) {
       // Add section to sections array
       sections.push(
         <Section
+          key={"sec-1"}
           data-testid="print-section"
           sectionId={sectionId}
           subsectionId={subsectionId}
@@ -148,12 +148,10 @@ export const Print = () => {
       );
     } else {
       // Loop through each section to get sectionId
-      /* eslint-disable no-plusplus */
       for (let i = 0; i < formData.length; i++) {
         const sectionId = formData[i].contents.section.id;
 
         // Loop through subsections to get subsectionId
-        /* eslint-disable no-plusplus */
         for (
           let j = 0;
           j < formData[i].contents.section.subsections.length;
@@ -164,6 +162,7 @@ export const Print = () => {
           // Add section to sections array
           sections.push(
             <Section
+              key={`sec-${i}-${j}`}
               data-testid="print-section"
               sectionId={sectionId}
               subsectionId={subsectionId}
@@ -178,7 +177,7 @@ export const Print = () => {
 
   // Return sections with wrapper div and print dialogue box
   return (
-    <div key={uuidv4()} className="print-all">
+    <div className="print-all">
       <div className="print-directions">
         <p>Click below to print full CARTS report shown here</p>
         <Button
