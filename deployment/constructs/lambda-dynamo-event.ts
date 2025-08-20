@@ -61,7 +61,6 @@ export class LambdaDynamoEventSource extends Construct {
                 "dynamodb:DescribeStream",
                 "dynamodb:GetRecords",
                 "dynamodb:GetShardIterator",
-                // "dynamodb:ListShards",
                 "dynamodb:ListStreams",
               ],
               resources: tables
@@ -107,6 +106,7 @@ export class LambdaDynamoEventSource extends Construct {
           functionName: this.lambda.functionArn,
           startingPosition: "TRIM_HORIZON",
           maximumRetryAttempts: 2,
+          batchSize: 10,
           enabled: true,
         }
       );
