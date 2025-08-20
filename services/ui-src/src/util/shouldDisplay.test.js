@@ -1,5 +1,5 @@
 import * as synthesize from "./synthesize";
-import { hideIfTableValue, shouldDisplay } from "./shouldDisplay";
+import { shouldDisplay } from "./shouldDisplay";
 import { selectFragmentById } from "../store/formData";
 
 const mockFragmentResult = {
@@ -479,7 +479,7 @@ describe("shouldDisplay()", () => {
     );
     expect(result).toBe(true);
   });
-  describe("hideIfTableValue", () => {
+  describe("shouldDisplay - hideIfTableValue", () => {
     beforeEach(() => {
       jest.clearAllMocks();
     });
@@ -558,18 +558,21 @@ describe("shouldDisplay()", () => {
     ])("$description", ({ formData, variations, expected, operator }) => {
       test(`returns ${expected}`, () => {
         const context = makeContext(variations, operator);
-        const result = hideIfTableValue(
+        const result = shouldDisplay(
+          null,
           formData,
+          null,
           [],
           null,
           [],
-          context.conditional_display.hide_if_table_value
+          context
         );
         expect(result).toBe(expected);
       });
     });
   });
-  describe("hideIfTableValue - computed branch", () => {
+
+  describe("shouldDisplay - hideIfTableValue - computed branch", () => {
     beforeEach(() => {
       jest.clearAllMocks();
     });
@@ -603,19 +606,27 @@ describe("shouldDisplay()", () => {
           throw new Error(`Unknown compute field: ${fieldName}`);
       }
 
-      const result = hideIfTableValue(
+      const context = {
+        conditional_display: {
+          hide_if_table_value: {
+            computed: true,
+            target: "$",
+            variations: [
+              { operator: "=", row: 0, row_key: 0, threshold: returnValue },
+            ],
+            variation_operator: "or",
+          },
+        },
+      };
+
+      const result = shouldDisplay(
+        null,
         formData,
+        null,
         options.allStatesData || [{ state: "NY" }],
         "NY",
         options.chipEnrollments || [{ enrollment: "data" }],
-        {
-          computed: true,
-          target: "$",
-          variations: [
-            { operator: "=", row: 0, row_key: 0, threshold: returnValue },
-          ],
-          variation_operator: "or",
-        }
+        context
       );
 
       expect(fn).toHaveBeenCalledWith(...args);
@@ -650,68 +661,92 @@ describe("shouldDisplay()", () => {
 
     test("passes through item if no compute fields exist", () => {
       const formData = [[10]];
+      const context = {
+        conditional_display: {
+          hide_if_table_value: {
+            computed: true,
+            target: "$",
+            variations: [{ operator: "=", row: 0, row_key: 0, threshold: 10 }],
+            variation_operator: "or",
+          },
+        },
+      };
 
-      const result = hideIfTableValue(formData, [], "NY", [], {
-        computed: true,
-        target: "$",
-        variations: [{ operator: "=", row: 0, row_key: 0, threshold: 10 }],
-        variation_operator: "or",
-      });
-
+      const result = shouldDisplay(null, formData, null, [], null, [], context);
       expect(result).toBe(true);
     });
 
     test("should hide element if any != condition passes ('or')", () => {
       const formData = [[5, 10]];
-      const result = hideIfTableValue(formData, [], "NY", [], {
-        computed: false,
-        target: "$",
-        variations: [
-          { operator: "!=", row: 0, row_key: 0, threshold: 5 },
-          { operator: "!=", row: 0, row_key: 1, threshold: 99 },
-        ],
-        variation_operator: "or",
-      });
+      const context = {
+        conditional_display: {
+          hide_if_table_value: {
+            computed: false,
+            target: "$",
+            variations: [
+              { operator: "!=", row: 0, row_key: 0, threshold: 5 },
+              { operator: "!=", row: 0, row_key: 1, threshold: 99 },
+            ],
+            variation_operator: "or",
+          },
+        },
+      };
 
+      const result = shouldDisplay(null, formData, null, [], "NY", [], context);
       expect(result).toBe(true);
     });
 
     test("should hide element only if all != conditions pass ('and')", () => {
       const formData = [[5, 10]];
-      const result = hideIfTableValue(formData, [], "NY", [], {
-        computed: false,
-        target: "$",
-        variations: [
-          { operator: "!=", row: 0, row_key: 0, threshold: 0 },
-          { operator: "!=", row: 0, row_key: 1, threshold: 10 },
-        ],
-        variation_operator: "and",
-      });
+      const context = {
+        conditional_display: {
+          hide_if_table_value: {
+            computed: false,
+            target: "$",
+            variations: [
+              { operator: "!=", row: 0, row_key: 0, threshold: 0 },
+              { operator: "!=", row: 0, row_key: 1, threshold: 10 },
+            ],
+            variation_operator: "and",
+          },
+        },
+      };
 
+      const result = shouldDisplay(null, formData, null, [], "NY", [], context);
       expect(result).toBe(false);
     });
 
     test("unknown operator returns false ('or')", () => {
       const formData = [[5]];
-      const result = hideIfTableValue(formData, [], "NY", [], {
-        computed: false,
-        target: "$",
-        variations: [{ operator: "??", row: 0, row_key: 0, threshold: 5 }],
-        variation_operator: "or",
-      });
+      const context = {
+        conditional_display: {
+          hide_if_table_value: {
+            computed: false,
+            target: "$",
+            variations: [{ operator: "??", row: 0, row_key: 0, threshold: 5 }],
+            variation_operator: "or",
+          },
+        },
+      };
 
+      const result = shouldDisplay(null, formData, null, [], "NY", [], context);
       expect(result).toBe(false);
     });
 
     test("unknown operator returns false ('and')", () => {
       const formData = [[5]];
-      const result = hideIfTableValue(formData, [], "NY", [], {
-        computed: false,
-        target: "$",
-        variations: [{ operator: "??", row: 0, row_key: 0, threshold: 5 }],
-        variation_operator: "and",
-      });
+      const context = {
+        conditional_display: {
+          hide_if_table_value: {
+            computed: false,
+            target: "$",
+            variations: [{ operator: "??", row: 0, row_key: 0, threshold: 5 }],
+            variation_operator: "and",
+          },
+        },
+      };
 
+      const result = shouldDisplay(null, formData, null, [], "NY", [], context);
       expect(result).toBe(false);
     });
   });
