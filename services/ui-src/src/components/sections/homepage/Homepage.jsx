@@ -42,16 +42,24 @@ const Homepage = ({ reportStatus }) => {
           </h1>
         </div>
         <TemplateDownload getTemplate={getFiscalYearTemplateLink} />
+        {/*Table Heading */}
+        <div className="ds-l-row">
+          <h2 id="reports-heading" className="ds-h3 ds-u-padding--2">
+            All Reports
+          </h2>
+        </div>
         <div className="ds-l-row">
           <div className="reports ds-l-col--12">
-            <table className="carts-report preview__grid">
-              <caption className="ds-u-padding--2 ds-h3">All Reports</caption>
+            <table
+              className="carts-report preview__grid"
+              aria-labelledby="reports-heading"
+            >
               <thead>
                 <tr className="report-header ds-l-row">
                   <th className="name ds-l-col--2">Year</th>
-                  <th className="status ds-l-col--2">Status</th>
+                  <th className="ds-l-col--2">Status</th>
                   <th className="name ds-l-col--3">Last Edited</th>
-                  <th className="actions ds-l-col--4">Actions</th>
+                  <th className="ds-l-col--4">Actions</th>
                 </tr>
               </thead>
               <tbody>

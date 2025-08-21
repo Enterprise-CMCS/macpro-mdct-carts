@@ -65,9 +65,9 @@ const ReportItem = ({
     <tr className="report-item ds-l-row">
       {!isStateUser && <td className="name ds-l-col--1">{year}</td>}
       <td className="name ds-l-col--2">{name}</td>
-      <td className="status ds-l-col--2">{statusText}</td>
-      <td className="actions ds-l-col--3">{lastEditedNote}</td>
-      <td className="actions ds-l-col--auto">
+      <td className="ds-l-col--2">{statusText}</td>
+      <td className="ds-l-col--3">{lastEditedNote}</td>
+      <td className="ds-l-col--auto">
         <Link
           to={link1URL}
           aria-label={`${link1Text} ${stateAbbr} ${year} report`}
