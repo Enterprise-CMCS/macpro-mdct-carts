@@ -119,7 +119,7 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
       }
     ).lambda;
 
-    new triggers.Trigger(scope, 'AvDownloadDefinitionsTrigger', {
+    new triggers.Trigger(scope, "AvDownloadDefinitionsTrigger", {
       handler: avDownloadDefinitionsLambda,
     });
 
