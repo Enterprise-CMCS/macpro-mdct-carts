@@ -196,7 +196,6 @@ const CMSHomepage = () => {
                       </div>
                     </div>
                   </div>
-                  {/*Table Heading */}
                   <div className="ds-l-row">
                     <h2 id="reports-heading" className="ds-h3 ds-u-padding--2">
                       All Reports
