@@ -52,7 +52,7 @@ const hideIfNot = (formData, hideIfNotInfo) => {
   return includedBoolean;
 };
 
-export const hideIfTableValue = (
+const hideIfTableValue = (
   formData,
   allStatesData,
   stateUserAbbr,
