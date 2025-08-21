@@ -121,7 +121,7 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
 
     new triggers.Trigger(scope, "AvDownloadDefinitionsTrigger", {
       handler: avDownloadDefinitionsLambda,
-      invocationType: triggers.InvocationType.EVENT
+      invocationType: triggers.InvocationType.EVENT,
     });
 
     new events.Rule(scope, `schedule-av-download-definitions`, {
