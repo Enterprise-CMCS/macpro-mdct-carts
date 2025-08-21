@@ -28,7 +28,7 @@ const UploadComponent = ({ question }) => {
     (state) => [
       state.stateUser.currentUser,
       state.formData[0].contents.section.year,
-      state.formData[0].contents.section.state,
+      state.formData[0].stateId,
       state.reportStatus,
     ],
     shallowEqual
