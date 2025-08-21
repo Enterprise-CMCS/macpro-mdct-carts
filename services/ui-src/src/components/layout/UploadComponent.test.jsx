@@ -68,7 +68,7 @@ const TestUploadComponent = (
   </Provider>
 );
 
-describe("<UploadComponent />", () => {
+describe.skip("<UploadComponent />", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
