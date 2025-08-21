@@ -29,7 +29,6 @@ export class LambdaKafkaEventSource extends Construct {
 
     const {
       additionalPolicies = [],
-      environment = {},
       handler,
       memorySize = 1024,
       timeout = Duration.seconds(6),
@@ -88,7 +87,6 @@ export class LambdaKafkaEventSource extends Construct {
         sourceMap: true,
         nodeModules: ["kafkajs"],
       },
-      environment,
       ...restProps,
     });
 
