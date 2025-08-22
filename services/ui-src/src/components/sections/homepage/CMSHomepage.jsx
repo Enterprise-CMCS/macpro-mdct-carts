@@ -209,10 +209,10 @@ const CMSHomepage = () => {
                       >
                         <thead>
                           <tr className="report-header ds-l-row">
-                            <th className="name ds-l-col--1">Year</th>
-                            <th className="name ds-l-col--2">Report</th>
+                            <th className="ds-l-col--1">Year</th>
+                            <th className="ds-l-col--2">Report</th>
                             <th className="ds-l-col--2">Status</th>
-                            <th className="name ds-l-col--3">Last Edited</th>
+                            <th className="ds-l-col--3">Last Edited</th>
                             <th className="ds-l-col--4">Actions</th>
                           </tr>
                         </thead>
