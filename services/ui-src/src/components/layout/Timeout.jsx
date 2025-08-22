@@ -13,7 +13,6 @@ import {
 import { add } from "date-fns";
 
 const calculateRemainingSeconds = (expiresAt) => {
-  if (!expiresAt) return 0;
   return (new Date(expiresAt).valueOf() - Date.now()) / 1000;
 };
 
@@ -84,40 +83,33 @@ const Timeout = () => {
   };
 
   return (
-    <>
-      {showTimeout && (
-        <Dialog
-          isShowing={showTimeout}
-          onExit={refreshAuth}
-          data-testid="timeout-dialog"
-          heading="You are about to be logged out."
-          actions={[
-            <button
-              className="ds-c-button ds-u-margin-right--1"
-              disabled={expired}
-              key="Stay Logged In"
-              aria-label="Stay Logged In"
-              onClick={refreshAuth}
-              data-testid="timeout-stay-logged-in"
-            >
-              Stay Logged In
-            </button>,
-            <button
-              className="ds-c-button ds-c-button--solid ds-u-margin-right--1"
-              key="Log Out"
-              onClick={logoutClick}
-              data-testid="timeout-log-out"
-            >
-              Log out
-            </button>,
-          ]}
-        >
-          Due to inactivity, you will be logged out in {formatTime(timeLeft)}.
-          Choose to stay logged in or log out. Otherwise, you will be logged out
-          automatically.
-        </Dialog>
-      )}
-    </>
+    showTimeout && (
+      <Dialog
+        onExit={refreshAuth}
+        heading="You are about to be logged out."
+        actions={[
+          <button
+            className="ds-c-button ds-u-margin-right--1"
+            disabled={expired}
+            key="Stay Logged In"
+            onClick={refreshAuth}
+          >
+            Stay Logged In
+          </button>,
+          <button
+            className="ds-c-button ds-c-button--solid ds-u-margin-right--1"
+            key="Log Out"
+            onClick={logoutClick}
+          >
+            Log out
+          </button>,
+        ]}
+      >
+        Due to inactivity, you will be logged out in {formatTime(timeLeft)}.
+        Choose to stay logged in or log out. Otherwise, you will be logged out
+        automatically.
+      </Dialog>
+    )
   );
 };
 

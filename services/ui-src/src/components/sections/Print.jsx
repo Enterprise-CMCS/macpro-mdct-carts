@@ -12,7 +12,61 @@ import Section from "../layout/Section";
 import statesArray from "../utils/statesArray";
 import { loadEnrollmentCounts, loadSections } from "../../actions/initial";
 import { apiLib } from "../../util/apiLib";
-import { v4 as uuidv4 } from "uuid";
+import { Buffer } from "buffer";
+
+const openPdf = (basePdf) => {
+  const byteCharacters = Buffer.from(basePdf, "base64").toString("utf8");
+  // const byteCharacters = atob(basePdf);
+  let byteNumbers = new Array(byteCharacters.length);
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+  }
+  const byteArray = new Uint8Array(byteNumbers);
+  const file = new Blob([byteArray], { type: "application/pdf;base64" });
+  const fileURL = URL.createObjectURL(file);
+  window.open(fileURL);
+};
+
+export const getPdfFriendlyDocument = async () => {
+  const html = document.querySelector("html");
+  html.querySelector("noscript")?.remove();
+
+  document.querySelectorAll("input").forEach((element) => {
+    if (element.type === "text") {
+      element.style.height = "50px";
+    }
+  });
+  document.querySelectorAll("button").forEach((element) => {
+    if (element.title !== "Print") {
+      element.remove();
+    }
+  });
+
+  if (!document.querySelector("base")) {
+    const base = document.createElement("base");
+    base.href = `https://${window.location.host}`;
+    document.querySelector("head").prepend(base);
+  }
+
+  const htmlString = document
+    .querySelector("html")
+    .outerHTML.replaceAll(`’`, `'`)
+    .replaceAll(`‘`, `'`)
+    .replaceAll(`”`, `"`)
+    .replaceAll(`“`, `"`)
+    .replaceAll("\u2013", "-")
+    .replaceAll("\u2014", "-");
+
+  const base64String = Buffer.from(htmlString, "base64").toString("utf8");
+  const opts = {
+    body: {
+      encodedHtml: base64String,
+    },
+  };
+
+  const res = await apiLib.post("/print_pdf", opts);
+  openPdf(res.data);
+};
 
 /**
  * Generate data and load entire form based on user information
@@ -20,7 +74,7 @@ import { v4 as uuidv4 } from "uuid";
  * @returns {JSX.Element}
  * @constructor
  */
-const Print = () => {
+export const Print = () => {
   const dispatch = useDispatch();
   const [formData, currentUser, name] = useSelector(
     (state) => [
@@ -39,59 +93,6 @@ const Print = () => {
   const sectionId = searchParams.get("sectionId");
   const subsectionId = searchParams.get("subsectionId");
 
-  const openPdf = (basePdf) => {
-    const byteCharacters = atob(basePdf);
-    let byteNumbers = new Array(byteCharacters.length);
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteNumbers[i] = byteCharacters.charCodeAt(i);
-    }
-    const byteArray = new Uint8Array(byteNumbers);
-    const file = new Blob([byteArray], { type: "application/pdf;base64" });
-    const fileURL = URL.createObjectURL(file);
-    window.open(fileURL);
-  };
-
-  const getPdfFriendlyDocument = async () => {
-    // get html element and remove noscript tag
-    const html = document.querySelector("html");
-    html.querySelector("noscript")?.remove();
-
-    document.querySelectorAll("input").forEach((element) => {
-      if (element.type === "text") {
-        element.style.height = "50px";
-      }
-    });
-    document.querySelectorAll("button").forEach((element) => {
-      if (element.title !== "Print") {
-        element.remove();
-      }
-    });
-
-    if (!document.querySelector("base")) {
-      const base = document.createElement("base");
-      base.href = `https://${window.location.host}`;
-      document.querySelector("head").prepend(base);
-    }
-
-    const htmlString = document
-      .querySelector("html")
-      .outerHTML.replaceAll(`’`, `'`)
-      .replaceAll(`‘`, `'`)
-      .replaceAll(`”`, `"`)
-      .replaceAll(`“`, `"`)
-      .replaceAll("\u2013", "-")
-      .replaceAll("\u2014", "-");
-
-    const base64String = btoa(unescape(encodeURIComponent(htmlString)));
-    const opts = {
-      body: {
-        encodedHtml: base64String,
-      },
-    };
-
-    const res = await apiLib.post("/print_pdf", opts);
-    openPdf(res.data);
-  };
   // Load formData via side effect
   useEffect(() => {
     // Create function to call data to prevent return data from useEffect
@@ -131,12 +132,13 @@ const Print = () => {
 
   // Check if formData has values
   if (formData !== undefined && formData.length !== 0) {
-    sections.push(<Title urlStateName={stateName} />);
+    sections.push(<Title key={"sectitle-1"} urlStateName={stateName} />);
 
     if (sectionId) {
       // Add section to sections array
       sections.push(
         <Section
+          key={"sec-1"}
           data-testid="print-section"
           sectionId={sectionId}
           subsectionId={subsectionId}
@@ -146,12 +148,10 @@ const Print = () => {
       );
     } else {
       // Loop through each section to get sectionId
-      /* eslint-disable no-plusplus */
       for (let i = 0; i < formData.length; i++) {
         const sectionId = formData[i].contents.section.id;
 
         // Loop through subsections to get subsectionId
-        /* eslint-disable no-plusplus */
         for (
           let j = 0;
           j < formData[i].contents.section.subsections.length;
@@ -162,6 +162,7 @@ const Print = () => {
           // Add section to sections array
           sections.push(
             <Section
+              key={`sec-${i}-${j}`}
               data-testid="print-section"
               sectionId={sectionId}
               subsectionId={subsectionId}
@@ -176,7 +177,7 @@ const Print = () => {
 
   // Return sections with wrapper div and print dialogue box
   return (
-    <div key={uuidv4()} className="print-all">
+    <div className="print-all">
       <div className="print-directions">
         <p>Click below to print full CARTS report shown here</p>
         <Button
@@ -205,5 +206,3 @@ const Print = () => {
     </div>
   );
 };
-
-export default Print;

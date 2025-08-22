@@ -62,12 +62,12 @@ const ReportItem = ({
   const printFormUrl = `/print?year=${year}&state=${stateAbbr}`;
 
   return (
-    <div className="report-item ds-l-row">
-      {!isStateUser && <div className="name ds-l-col--1">{year}</div>}
-      <div className="name ds-l-col--2">{name}</div>
-      <div className="status ds-l-col--2">{statusText}</div>
-      <div className="actions ds-l-col--3">{lastEditedNote}</div>
-      <div className="actions ds-l-col--auto">
+    <tr className="report-item ds-l-row">
+      {!isStateUser && <td className="name ds-l-col--1">{year}</td>}
+      <td className="name ds-l-col--2">{name}</td>
+      <td className="ds-l-col--2">{statusText}</td>
+      <td className="ds-l-col--3">{lastEditedNote}</td>
+      <td className="ds-l-col--auto">
         <Link
           to={link1URL}
           aria-label={`${link1Text} ${stateAbbr} ${year} report`}
@@ -97,30 +97,29 @@ const ReportItem = ({
         >
           Print
         </Link>
-      </div>
-
-      {isShowing && (
-        <Dialog
-          data-testid="uncertifyModal"
-          isShowing={isShowing}
-          onExit={toggleModal}
-          heading={`Uncertify ${stateAbbr} ${year} report?`}
-          actions={[
-            <button
-              className="ds-c-button ds-c-button--solid ds-u-margin-right--1"
-              key="primary"
-              onClick={uncertify}
-              aria-label={`Uncertify ${stateAbbr} ${year} report`}
-            >
-              Yes, Uncertify
-            </button>,
-          ]}
-        >
-          Uncertifying will send this CARTS report back to the state user who
-          submitted it
-        </Dialog>
-      )}
-    </div>
+        {isShowing && (
+          <Dialog
+            data-testid="uncertifyModal"
+            isShowing={isShowing}
+            onExit={toggleModal}
+            heading={`Uncertify ${stateAbbr} ${year} report?`}
+            actions={[
+              <button
+                className="ds-c-button ds-c-button--solid ds-u-margin-right--1"
+                key="primary"
+                onClick={uncertify}
+                aria-label={`Uncertify ${stateAbbr} ${year} report`}
+              >
+                Yes, Uncertify
+              </button>,
+            ]}
+          >
+            Uncertifying will send this CARTS report back to the state user who
+            submitted it
+          </Dialog>
+        )}
+      </td>
+    </tr>
   );
 };
 
