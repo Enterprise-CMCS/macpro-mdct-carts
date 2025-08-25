@@ -74,7 +74,7 @@ const Part = ({ partId, partNumber, nestedSubsectionTitle, printView }) => {
     } else {
       if (contextData) {
         return (
-          <Alert>
+          <Alert role="">
             <div className="ds-c-alert__text" data-testid="part-alert">
               {contextData.skip_text && <p>{contextData.skip_text}</p>}
             </div>
