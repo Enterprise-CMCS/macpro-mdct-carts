@@ -65,6 +65,7 @@ export function createUiComponents(props: CreateUiComponentsProps) {
 
   logBucket.addLifecycleRule({
     id: "ExpiredLogs",
+    enabled: true,
     expiration: Duration.days(1),
     noncurrentVersionExpiration: Duration.days(1),
     abortIncompleteMultipartUploadAfter: Duration.days(1),
@@ -72,8 +73,8 @@ export function createUiComponents(props: CreateUiComponentsProps) {
 
   logBucket.addLifecycleRule({
     id: "CleanUpDeleteMarkers",
+    enabled: true,
     noncurrentVersionExpiration: Duration.days(1),
-    expiredObjectDeleteMarker: false,
   });
 
   logBucket.addToResourcePolicy(
