@@ -33,6 +33,7 @@ const LocalLogin = () => {
           variation={loginError.variation}
           title={loginError.title}
           description={loginError.description}
+          role=""
         />
       )}
       <form onSubmit={(event) => handleLogin(event)}>
