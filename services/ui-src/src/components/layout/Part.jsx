@@ -102,20 +102,20 @@ const Part = ({
           );
           if (existingSectionTitle && nestedSubsectionTitle) {
             return (
-              <h4 className="h4-pdf-bookmark" data-testid="part-sub-header">
+              <h4 className="h4-pdf-bookmark" data-testid="part-h4-header">
                 {content}
               </h4>
             );
           }
           if (existingSectionTitle) {
             return (
-              <h3 className="h3-pdf-bookmark" data-testid="part-header">
+              <h3 className="h3-pdf-bookmark" data-testid="part-h3-header">
                 {content}
               </h3>
             );
           }
           return (
-            <h2 className="h2-pdf-bookmark" data-testid="part-header">
+            <h2 className="h2-pdf-bookmark" data-testid="part-h2-header">
               {content}
             </h2>
           );

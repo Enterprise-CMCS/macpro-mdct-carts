@@ -112,13 +112,13 @@ describe("<Part />", () => {
 
   test("conditionally renders a title", () => {
     render(buildPart("2020-00-a"));
-    const title = screen.getByTestId("part-header");
+    const title = screen.getByTestId("part-h2-header");
     expect(title).toHaveTextContent("my title");
   });
 
   test("subtitles rendered if appropriate as a nested subsection", () => {
     render(buildPart("2020-00-a-01", true));
-    const title = screen.getByTestId("part-sub-header");
+    const title = screen.getByTestId("part-h2-header");
     expect(title).toHaveTextContent("Welcome!");
   });
 
