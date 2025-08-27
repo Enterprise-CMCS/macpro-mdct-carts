@@ -8,7 +8,7 @@ import { selectSubsectionTitleAndPartIDs } from "../../store/selectors";
 //types
 import PropTypes from "prop-types";
 
-const Subsection = ({ subsectionId, printView }) => {
+const Subsection = ({ subsectionId, printView, existingSectionTitle }) => {
   const formData = useSelector((state) => state.formData);
 
   const subsection = selectSubsectionTitleAndPartIDs(formData, subsectionId);
@@ -19,7 +19,7 @@ const Subsection = ({ subsectionId, printView }) => {
 
   return (
     <div id={subsectionId}>
-      {title && <h3 className="h3-pdf-bookmark">{title}</h3>}
+      {title && <h2 className="h2-pdf-bookmark">{title}</h2>}
       {text ? (
         <div className="helper-text">
           <Text>{text}</Text>
@@ -32,6 +32,7 @@ const Subsection = ({ subsectionId, printView }) => {
           partNumber={partIds.length > 1 ? index + 1 : null}
           nestedSubsectionTitle={!!title}
           printView={printView}
+          existingSectionTitle={existingSectionTitle}
         />
       ))}
     </div>
@@ -40,6 +41,7 @@ const Subsection = ({ subsectionId, printView }) => {
 Subsection.propTypes = {
   subsectionId: PropTypes.string.isRequired,
   printView: PropTypes.bool,
+  existingSectionTitle: PropTypes.bool,
 };
 Subsection.defaultProps = {
   text: null,

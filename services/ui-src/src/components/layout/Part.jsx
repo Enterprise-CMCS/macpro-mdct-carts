@@ -9,7 +9,13 @@ import { selectFragment } from "../../store/formData";
 import { selectQuestionsForPart } from "../../store/selectors";
 import { shouldDisplay } from "../../util/shouldDisplay";
 
-const Part = ({ partId, partNumber, nestedSubsectionTitle, printView }) => {
+const Part = ({
+  partId,
+  partNumber,
+  nestedSubsectionTitle,
+  printView,
+  existingSectionTitle,
+}) => {
   const [, section] = partId.split("-");
 
   const [
@@ -87,17 +93,33 @@ const Part = ({ partId, partNumber, nestedSubsectionTitle, printView }) => {
   return (
     <div id={partId} data-testid="part">
       {title &&
-        (nestedSubsectionTitle ? (
-          <h4 className="h4-pdf-bookmark" data-testid="part-sub-header">
-            {+section !== 0 && partNumber && `Part ${partNumber}: `}
-            {title}
-          </h4>
-        ) : (
-          <h3 className="h3-pdf-bookmark" data-testid="part-header">
-            {+section !== 0 && partNumber && `Part ${partNumber}: `}
-            {title}
-          </h3>
-        ))}
+        (() => {
+          const content = (
+            <>
+              {+section !== 0 && partNumber && `Part ${partNumber}: `}
+              {title}
+            </>
+          );
+          if (existingSectionTitle && nestedSubsectionTitle) {
+            return (
+              <h4 className="h4-pdf-bookmark" data-testid="part-sub-header">
+                {content}
+              </h4>
+            );
+          }
+          if (existingSectionTitle) {
+            return (
+              <h3 className="h3-pdf-bookmark" data-testid="part-header">
+                {content}
+              </h3>
+            );
+          }
+          return (
+            <h2 className="h2-pdf-bookmark" data-testid="part-header">
+              {content}
+            </h2>
+          );
+        })()}
       {getPartContent()}
     </div>
   );

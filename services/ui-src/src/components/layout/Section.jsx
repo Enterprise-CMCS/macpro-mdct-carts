@@ -17,8 +17,9 @@ const Section = ({ subsectionId, sectionId, printView }) => {
     <div className="section-basic-info ds-l-col--9 content">
       <Main id="main-content" className="main">
         <PageInfo />
-        <h2 data-testid="section-title">{title}</h2>
+        {!!title && <h2 data-testid="section-title">{title}</h2>}
         <Subsection
+          existingSectionTitle={!!title}
           key={subsectionId}
           subsectionId={subsectionId}
           printView={printView}
