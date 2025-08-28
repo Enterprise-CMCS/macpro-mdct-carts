@@ -59,19 +59,11 @@ const round = (number, precision) => {
   return NaN;
 };
 
-const percent = (
-  [numerator, denominator],
-  precision = 2,
-  mask = false,
-  printView = false
-) => {
+const percent = ([numerator, denominator], precision = 2) => {
   if (+denominator !== 0 && numerator !== "" && numerator !== null) {
     const division = round((100 * +numerator) / +denominator, precision);
     if (!Number.isNaN(division)) {
-      if (mask && numerator > 0 && numerator < 11 && printView) {
-        return `<11`;
-      }
-      return `${numerator} (${division}%)`;
+      return `${division}%`;
     }
   }
 
@@ -87,7 +79,14 @@ const numberAndPercentage = (
 ) => {
   const denominator = values.pop();
   const numerator = sum(values);
-  return percent([numerator, denominator], precision, mask, printView);
+  if (mask && numerator > 0 && numerator < 11 && printView) {
+    return `<11`;
+  }
+  const percentage = percent([numerator, denominator], precision);
+  if (percentage === "") {
+    return "";
+  }
+  return `${numerator} (${percentage})`;
 };
 
 const sumAndPercentage = (
@@ -98,8 +97,16 @@ const sumAndPercentage = (
   printView = false
 ) => {
   const numerator = sum(values);
+  if (mask && numerator > 0 && numerator < 11 && printView) {
+    return `<11`;
+  }
+
   const denominator = sum(additionalTargets);
-  return percent([numerator, denominator], precision, mask, printView);
+  const percentage = percent([numerator, denominator], precision);
+  if (percentage === "") {
+    return "";
+  }
+  return `${numerator} (${percentage})`;
 };
 
 const rpn = (values, rpnString, precision) => {
