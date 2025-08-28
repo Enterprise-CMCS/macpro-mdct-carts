@@ -4845,13 +4845,13 @@
                   {
                     "hint": "",
                     "type": "fieldset",
-                    "label": "Table 3a. Duration Measure, Title XIX, New Enrollment",
+                    "label": "Table 3a. Duration Measure, CHIP, New Enrollment",
                     "questions": [],
                     "fieldset_info": {
                       "rows": [
                         [
                           {
-                            "contents": "3. Total number of children newly enrolled in title XIX between January and March 2024"
+                            "contents": "3. Total number of children newly enrolled in CHIP between January and March 2024"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -4885,13 +4885,13 @@
                   {
                     "hint": "",
                     "type": "fieldset",
-                    "label": "Table 3a. Duration Measure, Title XIX, New Enrollment",
+                    "label": "Table 3a. Duration Measure, CHIP, New Enrollment",
                     "questions": [],
                     "fieldset_info": {
                       "rows": [
                         [
                           {
-                            "contents": "3. Total number of children newly enrolled in title XIX between January and March 2024"
+                            "contents": "3. Total number of children newly enrolled in CHIP between January and March 2024"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -4969,13 +4969,13 @@
                   {
                     "hint": "",
                     "type": "fieldset",
-                    "label": "Table 3b. Duration Measure, Title XIX, Enrollment 6 Months Later",
+                    "label": "Table 3b. Duration Measure, CHIP, Enrollment 6 Months Later",
                     "questions": [],
                     "fieldset_info": {
                       "rows": [
                         [
                           {
-                            "contents": "4. Total number of children continuously enrolled in title XIX"
+                            "contents": "4. Total number of children continuously enrolled in CHIP"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -4988,7 +4988,7 @@
                         ],
                         [
                           {
-                            "contents": "5. Total number of children with a break in title XIX coverage but re-enrolled in title XIX"
+                            "contents": "5. Total number of children with a break in CHIP coverage but re-enrolled in CHIP"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -5001,7 +5001,7 @@
                         ],
                         [
                           {
-                            "contents": "6. Total number of children enrolled in CHIP (title XXI) during title XIX coverage break"
+                            "contents": "6. Total number of children enrolled in Medicaid during CHIP coverage break"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -5014,7 +5014,7 @@
                         ],
                         [
                           {
-                            "contents": "7. Total number of children disenrolled from title XIX"
+                            "contents": "7. Total number of children disenrolled from CHIP"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -5027,7 +5027,7 @@
                         ],
                         [
                           {
-                            "contents": "8. Total number of children enrolled in CHIP (title XXI) after being disenrolled from title XIX"
+                            "contents": "8. Total number of children enrolled in Medicaid after being disenrolled from CHIP"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -5061,13 +5061,13 @@
                   {
                     "hint": "",
                     "type": "fieldset",
-                    "label": "Table 3b. Duration Measure, Title XIX, Enrollment 6 months later",
+                    "label": "Table 3b. Duration Measure, CHIP, Enrollment 6 months later",
                     "questions": [],
                     "fieldset_info": {
                       "rows": [
                         [
                           {
-                            "contents": "4. Total number of children continuously enrolled in title XIX"
+                            "contents": "4. Total number of children continuously enrolled in CHIP"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -5120,7 +5120,7 @@
                         ],
                         [
                           {
-                            "contents": "5. Total number of children with a break in title XIX coverage but re-enrolled in title XIX"
+                            "contents": "5. Total number of children with a break in CHIP coverage but re-enrolled in CHIP"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -5173,7 +5173,7 @@
                         ],
                         [
                           {
-                            "contents": "6. Total number of children enrolled in CHIP (title XXI) during title XIX coverage break"
+                            "contents": "6. Total number of children enrolled in Medicaid during CHIP coverage break"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -5226,7 +5226,7 @@
                         ],
                         [
                           {
-                            "contents": "7. Total number of children disenrolled from title XIX"
+                            "contents": "7. Total number of children disenrolled from CHIP"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -5279,7 +5279,7 @@
                         ],
                         [
                           {
-                            "contents": "8. Total number of children enrolled in CHIP (title XXI) after being disenrolled from title XIX"
+                            "contents": "8. Total number of children enrolled in Medicaid after being disenrolled from CHIP"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -5357,13 +5357,13 @@
                   {
                     "hint": "",
                     "type": "fieldset",
-                    "label": "Table 3c. Duration Measure, Title XIX, Enrollment 12 Months Later",
+                    "label": "Table 3c. Duration Measure, CHIP, Enrollment 12 Months Later",
                     "questions": [],
                     "fieldset_info": {
                       "rows": [
                         [
                           {
-                            "contents": "10. Total number of children continuously enrolled in title XIX"
+                            "contents": "10. Total number of children continuously enrolled in CHIP"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -5376,7 +5376,7 @@
                         ],
                         [
                           {
-                            "contents": "11. Total number of children with a break in title XIX coverage but re-enrolled in title XIX"
+                            "contents": "11. Total number of children with a break in CHIP coverage but re-enrolled in CHIP"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -5389,7 +5389,7 @@
                         ],
                         [
                           {
-                            "contents": "12. Total number of children enrolled in CHIP (title XXI) during title XIX coverage break"
+                            "contents": "12. Total number of children enrolled in Medicaid during CHIP coverage break"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -5402,7 +5402,7 @@
                         ],
                         [
                           {
-                            "contents": "13. Total number of children disenrolled from title XIX"
+                            "contents": "13. Total number of children disenrolled from CHIP"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -5415,7 +5415,7 @@
                         ],
                         [
                           {
-                            "contents": "14. Total number of children enrolled in CHIP (title XXI) after being disenrolled from title XIX"
+                            "contents": "14. Total number of children enrolled in Medicaid after being disenrolled from CHIP"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -5449,13 +5449,13 @@
                   {
                     "hint": "",
                     "type": "fieldset",
-                    "label": "Table 3c. Duration Measure, Title XIX, Enrollment 12 months later",
+                    "label": "Table 3c. Duration Measure, CHIP, Enrollment 12 months later",
                     "questions": [],
                     "fieldset_info": {
                       "rows": [
                         [
                           {
-                            "contents": "10. Total number of children continuously enrolled in title XIX"
+                            "contents": "10. Total number of children continuously enrolled in CHIP"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -5508,7 +5508,7 @@
                         ],
                         [
                           {
-                            "contents": "11. Total number of children with a break in title XIX coverage but re-enrolled in title XIX"
+                            "contents": "11. Total number of children with a break in CHIP coverage but re-enrolled in CHIP"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -5561,7 +5561,7 @@
                         ],
                         [
                           {
-                            "contents": "12. Total number of children enrolled in CHIP (title XXI) during title XIX coverage break"
+                            "contents": "12. Total number of children enrolled in Medicaid during CHIP coverage break"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -5614,7 +5614,7 @@
                         ],
                         [
                           {
-                            "contents": "13. Total number of children disenrolled from title XIX"
+                            "contents": "13. Total number of children disenrolled from CHIP"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -5667,7 +5667,7 @@
                         ],
                         [
                           {
-                            "contents": "14. Total number of children enrolled in CHIP (title XXI) after being disenrolled from title XIX"
+                            "contents": "14. Total number of children enrolled in Medicaid after being disenrolled from CHIP"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -5745,13 +5745,13 @@
                   {
                     "hint": "",
                     "type": "fieldset",
-                    "label": "Table 3d. Duration Measure, Title XIX, Enrollment 18 Months Later",
+                    "label": "Table 3d. Duration Measure, CHIP, Enrollment 18 Months Later",
                     "questions": [],
                     "fieldset_info": {
                       "rows": [
                         [
                           {
-                            "contents": "15. Total number of children continuously enrolled in title XIX"
+                            "contents": "15. Total number of children continuously enrolled in CHIP"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -5764,7 +5764,7 @@
                         ],
                         [
                           {
-                            "contents": "16. Total number of children with a break in title XIX coverage but re-enrolled in title XIX"
+                            "contents": "16. Total number of children with a break in CHIP coverage but re-enrolled in CHIP"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -5777,7 +5777,7 @@
                         ],
                         [
                           {
-                            "contents": "17. Total number of children enrolled in CHIP (title XXI) during title XIX coverage break"
+                            "contents": "17. Total number of children enrolled in Medicaid during CHIP coverage break"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -5790,7 +5790,7 @@
                         ],
                         [
                           {
-                            "contents": "18. Total number of children disenrolled from title XIX"
+                            "contents": "18. Total number of children disenrolled from CHIP"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -5803,7 +5803,7 @@
                         ],
                         [
                           {
-                            "contents": "19. Total number of children enrolled in CHIP (title XXI) after being disenrolled from title XIX"
+                            "contents": "19. Total number of children enrolled in Medicaid after being disenrolled from CHIP"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -5837,13 +5837,13 @@
                   {
                     "hint": "",
                     "type": "fieldset",
-                    "label": "Table 3d. Duration Measure, Title XIX, Enrollment 18 months later",
+                    "label": "Table 3d. Duration Measure, CHIP, Enrollment 18 months later",
                     "questions": [],
                     "fieldset_info": {
                       "rows": [
                         [
                           {
-                            "contents": "15. Total number of children continuously enrolled in title XIX"
+                            "contents": "15. Total number of children continuously enrolled in CHIP"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -5896,7 +5896,7 @@
                         ],
                         [
                           {
-                            "contents": "16. Total number of children with a break in title XIX coverage but re-enrolled in title XIX"
+                            "contents": "16. Total number of children with a break in CHIP coverage but re-enrolled in CHIP"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -5949,7 +5949,7 @@
                         ],
                         [
                           {
-                            "contents": "17. Total number of children enrolled in CHIP (title XXI) during title XIX coverage break"
+                            "contents": "17. Total number of children enrolled in Medicaid during CHIP coverage break"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -6002,7 +6002,7 @@
                         ],
                         [
                           {
-                            "contents": "18. Total number of children disenrolled from title XIX"
+                            "contents": "18. Total number of children disenrolled from CHIP"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -6055,7 +6055,7 @@
                         ],
                         [
                           {
-                            "contents": "19. Total number of children enrolled in CHIP (title XXI) after being disenrolled from title XIX"
+                            "contents": "19. Total number of children enrolled in Medicaid after being disenrolled from CHIP"
                           },
                           {
                             "mask": "lessThanEleven",
