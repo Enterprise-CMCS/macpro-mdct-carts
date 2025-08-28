@@ -71,6 +71,44 @@ const percent = ([numerator, denominator], precision = 2) => {
   return "";
 };
 
+const numberAndPercentage = (
+  values,
+  precision = 2,
+  mask = false,
+  printView = false
+) => {
+  const denominator = values.pop();
+  const numerator = sum(values);
+  if (mask && numerator > 0 && numerator < 11 && printView) {
+    return `<11`;
+  }
+  const percentage = percent([numerator, denominator], precision);
+  if (percentage === "") {
+    return "";
+  }
+  return `${numerator} (${percentage})`;
+};
+
+const sumAndPercentage = (
+  values,
+  additionalTargets,
+  precision = 2,
+  mask = false,
+  printView = false
+) => {
+  const numerator = sum(values);
+  if (mask && numerator > 0 && numerator < 11 && printView) {
+    return `<11`;
+  }
+
+  const denominator = sum(additionalTargets);
+  const percentage = percent([numerator, denominator], precision);
+  if (percentage === "") {
+    return "";
+  }
+  return `${numerator} (${percentage})`;
+};
+
 const rpn = (values, rpnString, precision) => {
   if (rpnString) {
     const operands = [];
@@ -394,7 +432,8 @@ const synthesizeValue = (
   stateName,
   stateUserAbbr,
   chipEnrollments,
-  formData
+  formData,
+  printView = false
 ) => {
   if (value.contents) {
     return value;
@@ -452,6 +491,10 @@ const synthesizeValue = (
       return jsonpath.query(formData, target)[0];
     });
 
+    const additionalTargets = value.additional_targets?.map(
+      (target) => jsonpath.query(formData, target)[0]
+    );
+
     if (value.actions) {
       /*
        * For now, per the documentation, we only handle a single action, but
@@ -464,6 +507,25 @@ const synthesizeValue = (
           return { contents: identity(targets) };
         case "percentage":
           return { contents: percent(targets, value.precision) };
+        case "numberAndPercentage":
+          return {
+            contents: numberAndPercentage(
+              targets,
+              value.precision,
+              value?.mask,
+              printView
+            ),
+          };
+        case "sumAndPercentage":
+          return {
+            contents: sumAndPercentage(
+              targets,
+              additionalTargets,
+              value.precision,
+              value?.mask,
+              printView
+            ),
+          };
         case "rpn":
           return { contents: rpn(targets, value.rpn, value.precision) };
         case "sum":
