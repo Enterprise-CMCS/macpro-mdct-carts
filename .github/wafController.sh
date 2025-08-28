@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# #!/usr/bin/env bash
 
 # CIRCUIT_BREAKER=10
 # AWS_RETRY_ERROR=254
@@ -83,7 +83,7 @@
 
 #     #Add runner CIDR to array
 #     IP_ADDRESSES+=("$RUNNER_CIDRS")
-#   else 
+#   else
 #     ##If this is used to hard set the IP set, just clobber it
 #     IP_ADDRESSES=("$RUNNER_CIDRS")
 #   fi

@@ -29,7 +29,6 @@ export class LambdaKafkaEventSource extends Construct {
 
     const {
       additionalPolicies = [],
-      environment = {},
       handler,
       memorySize = 1024,
       timeout = Duration.seconds(6),
@@ -73,6 +72,12 @@ export class LambdaKafkaEventSource extends Construct {
       },
     });
 
+    const logGroup = new logs.LogGroup(this, `${id}LogGroup`, {
+      logGroupName: `/aws/lambda/${stackName}-${id}`,
+      removalPolicy: isDev ? RemovalPolicy.DESTROY : RemovalPolicy.RETAIN,
+      retention: logs.RetentionDays.THREE_YEARS, // exceeds the 30 month requirement
+    });
+
     this.lambda = new lambda_nodejs.NodejsFunction(this, id, {
       functionName: `${stackName}-${id}`,
       handler,
@@ -88,14 +93,8 @@ export class LambdaKafkaEventSource extends Construct {
         sourceMap: true,
         nodeModules: ["kafkajs"],
       },
-      environment,
+      logGroup,
       ...restProps,
-    });
-
-    new logs.LogGroup(this, `${id}LogGroup`, {
-      logGroupName: `/aws/lambda/${this.lambda.functionName}`,
-      removalPolicy: isDev ? RemovalPolicy.DESTROY : RemovalPolicy.RETAIN,
-      retention: logs.RetentionDays.THREE_YEARS, // exceeds the 30 month requirement
     });
 
     new lambda.CfnEventSourceMapping(scope, `${id}KafkaEventSourceMapping`, {

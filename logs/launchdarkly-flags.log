@@ -3,7 +3,7 @@
 # LaunchDarkly flags in components
 ./services/ui-src/src/components/layout/FormTemplates.jsx:28:useFlags().release2025;
 ./services/ui-src/src/components/sections/homepage/TemplateDownload.jsx:14:useFlags().release2025 ? "2025" : "2024";
-./services/ui-src/src/components/sections/homepage/TemplateDownload.jsx:46:useFlags().release2025 ? "Oct 2025" : "Oct 2024"}
+./services/ui-src/src/components/sections/homepage/TemplateDownload.jsx:47:useFlags().release2025 ? "Oct 2025" : "Oct 2024"}
 
 # LaunchDarkly flags in tests
 # N/A

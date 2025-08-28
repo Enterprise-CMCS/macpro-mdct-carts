@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate, Routes, Route } from "react-router-dom";
-import Print from "./components/sections/Print";
+import { Print } from "./components/sections/Print";
 import Spinner from "./components/utils/Spinner";
 import UserProfile from "./components/sections/UserProfile";
 import { useUser } from "./hooks/authHooks";
