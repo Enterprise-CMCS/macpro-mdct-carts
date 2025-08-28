@@ -16,10 +16,17 @@ const Subsection = ({ subsectionId, printView, existingSectionTitle }) => {
   const partIds = subsection ? subsection.parts : [];
   const title = subsection ? subsection.title : null;
   const text = subsection ? subsection.text : null;
+  const renderTitle = (title, existingSectionTitle) => {
+    if (!title) return null;
+    if (existingSectionTitle) {
+      return <h3 className="h3-pdf-bookmark">{title}</h3>;
+    }
+    return <h2 className="h2-pdf-bookmark">{title}</h2>;
+  };
 
   return (
     <div id={subsectionId}>
-      {title && <h2 className="h2-pdf-bookmark">{title}</h2>}
+      {renderTitle(title, existingSectionTitle)}
       {text ? (
         <div className="helper-text">
           <Text>{text}</Text>
