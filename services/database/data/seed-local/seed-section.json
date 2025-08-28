@@ -6358,7 +6358,7 @@
                       ],
                       "headers": [
                         { "contents": "Measure" },
-                        { "mask": "lessThanEleven", "contents": "All Children Ages 0-16" }
+                        { "contents": "All Children Ages 0-16" }
                       ]
                     },
                     "fieldset_type": "synthesized_table",
@@ -6385,6 +6385,22 @@
                         [
                           {
                             "contents": "3. Total number of children newly enrolled in title XIX between January and March 2024"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
                           },
                           {
                             "mask": "lessThanEleven",
@@ -6422,10 +6438,11 @@
                       ],
                       "headers": [
                         { "contents": "Measure" },
-                        { "mask": "lessThanEleven", "contents": "Age <12 Months" },
-                        { "mask": "lessThanEleven", "contents": "Ages 1-5" },
-                        { "mask": "lessThanEleven", "contents": "Ages 6-12" },
-                        { "mask": "lessThanEleven", "contents": "Ages 13-16" }
+                        { "contents": "All Children Ages 0-16" },
+                        { "contents": "Age <12 Months" },
+                        { "contents": "Ages 1-5" },
+                        { "contents": "Ages 6-12" },
+                        { "contents": "Ages 13-16" }
                       ]
                     },
                     "fieldset_type": "synthesized_table",
@@ -6517,7 +6534,7 @@
                       ],
                       "headers": [
                         { "contents": "Measure" },
-                        { "mask": "lessThanEleven", "contents": "All Children Ages 0-16" }
+                        { "contents": "All Children Ages 0-16" }
                       ]
                     },
                     "fieldset_type": "synthesized_table",
@@ -6544,6 +6561,22 @@
                         [
                           {
                             "contents": "4. Total number of children continuously enrolled in title XIX"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-04-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-04-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-04-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-04-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
                           },
                           {
                             "mask": "lessThanEleven",
@@ -6584,6 +6617,22 @@
                           },
                           {
                             "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-05-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-05-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-05-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-05-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
                             "actions": ["numberAndPercentage"],
                             "targets": [
                               "$..*[?(@ && @.id=='2025-03-c-06-05-b')].answer.entry",
@@ -6618,6 +6667,22 @@
                         [
                           {
                             "contents": "6. Total number of children enrolled in CHIP (title XXI) during title XIX coverage break"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-06-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-06-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-06-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-06-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
                           },
                           {
                             "mask": "lessThanEleven",
@@ -6658,6 +6723,22 @@
                           },
                           {
                             "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-07-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-07-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-07-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-07-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
                             "actions": ["numberAndPercentage"],
                             "targets": [
                               "$..*[?(@ && @.id=='2025-03-c-06-07-b')].answer.entry",
@@ -6695,6 +6776,22 @@
                           },
                           {
                             "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-08-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-08-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-08-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-08-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
                             "actions": ["numberAndPercentage"],
                             "targets": [
                               "$..*[?(@ && @.id=='2025-03-c-06-08-b')].answer.entry",
@@ -6729,10 +6826,11 @@
                       ],
                       "headers": [
                         { "contents": "Measure" },
-                        { "mask": "lessThanEleven", "contents": "Age <12 Months" },
-                        { "mask": "lessThanEleven", "contents": "Ages 1-5" },
-                        { "mask": "lessThanEleven", "contents": "Ages 6-12" },
-                        { "mask": "lessThanEleven", "contents": "Ages 13-16" }
+                        { "contents": "All Children Ages 0-16" },
+                        { "contents": "Age <12 Months" },
+                        { "contents": "Ages 1-5" },
+                        { "contents": "Ages 6-12" },
+                        { "contents": "Ages 13-16" }
                       ]
                     },
                     "fieldset_type": "synthesized_table",
@@ -6824,7 +6922,7 @@
                       ],
                       "headers": [
                         { "contents": "Measure" },
-                        { "mask": "lessThanEleven", "contents": "All Children Ages 0-16" }
+                        { "contents": "All Children Ages 0-16" }
                       ]
                     },
                     "fieldset_type": "synthesized_table",
@@ -6851,6 +6949,22 @@
                         [
                           {
                             "contents": "10. Total number of children continuously enrolled in title XIX"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-10-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-10-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-10-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-10-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
                           },
                           {
                             "mask": "lessThanEleven",
@@ -6891,6 +7005,22 @@
                           },
                           {
                             "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-11-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-11-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-11-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-11-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
                             "actions": ["numberAndPercentage"],
                             "targets": [
                               "$..*[?(@ && @.id=='2025-03-c-06-11-b')].answer.entry",
@@ -6925,6 +7055,22 @@
                         [
                           {
                             "contents": "12. Total number of children enrolled in CHIP (title XXI) during title XIX coverage break"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-12-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-12-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-12-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-12-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
                           },
                           {
                             "mask": "lessThanEleven",
@@ -6965,6 +7111,22 @@
                           },
                           {
                             "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-13-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-13-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-13-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-13-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
                             "actions": ["numberAndPercentage"],
                             "targets": [
                               "$..*[?(@ && @.id=='2025-03-c-06-13-b')].answer.entry",
@@ -7002,6 +7164,22 @@
                           },
                           {
                             "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-14-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-14-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-14-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-14-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
                             "actions": ["numberAndPercentage"],
                             "targets": [
                               "$..*[?(@ && @.id=='2025-03-c-06-14-b')].answer.entry",
@@ -7036,10 +7214,11 @@
                       ],
                       "headers": [
                         { "contents": "Measure" },
-                        { "mask": "lessThanEleven", "contents": "Age <12 Months" },
-                        { "mask": "lessThanEleven", "contents": "Ages 1-5" },
-                        { "mask": "lessThanEleven", "contents": "Ages 6-12" },
-                        { "mask": "lessThanEleven", "contents": "Ages 13-16" }
+                        { "contents": "All Children Ages 0-16" },
+                        { "contents": "Age <12 Months" },
+                        { "contents": "Ages 1-5" },
+                        { "contents": "Ages 6-12" },
+                        { "contents": "Ages 13-16" }
                       ]
                     },
                     "fieldset_type": "synthesized_table",
@@ -7131,7 +7310,7 @@
                       ],
                       "headers": [
                         { "contents": "Measure" },
-                        { "mask": "lessThanEleven", "contents": "All Children Ages 0-16" }
+                        { "contents": "All Children Ages 0-16" }
                       ]
                     },
                     "fieldset_type": "synthesized_table",
@@ -7158,6 +7337,22 @@
                         [
                           {
                             "contents": "15. Total number of children continuously enrolled in title XIX"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-15-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-15-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-15-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-15-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
                           },
                           {
                             "mask": "lessThanEleven",
@@ -7198,6 +7393,22 @@
                           },
                           {
                             "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-16-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-16-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-16-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-16-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
                             "actions": ["numberAndPercentage"],
                             "targets": [
                               "$..*[?(@ && @.id=='2025-03-c-06-16-b')].answer.entry",
@@ -7232,6 +7443,22 @@
                         [
                           {
                             "contents": "17. Total number of children enrolled in CHIP (title XXI) during title XIX coverage break"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-17-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-17-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-17-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-17-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
                           },
                           {
                             "mask": "lessThanEleven",
@@ -7272,6 +7499,22 @@
                           },
                           {
                             "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-18-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-18-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-18-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-18-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
                             "actions": ["numberAndPercentage"],
                             "targets": [
                               "$..*[?(@ && @.id=='2025-03-c-06-18-b')].answer.entry",
@@ -7309,6 +7552,22 @@
                           },
                           {
                             "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-19-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-19-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-19-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-19-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
                             "actions": ["numberAndPercentage"],
                             "targets": [
                               "$..*[?(@ && @.id=='2025-03-c-06-19-b')].answer.entry",
@@ -7343,10 +7602,11 @@
                       ],
                       "headers": [
                         { "contents": "Measure" },
-                        { "mask": "lessThanEleven", "contents": "Age <12 Months" },
-                        { "mask": "lessThanEleven", "contents": "Ages 1-5" },
-                        { "mask": "lessThanEleven", "contents": "Ages 6-12" },
-                        { "mask": "lessThanEleven", "contents": "Ages 13-16" }
+                        { "contents": "All Children Ages 0-16" },
+                        { "contents": "Age <12 Months" },
+                        { "contents": "Ages 1-5" },
+                        { "contents": "Ages 6-12" },
+                        { "contents": "Ages 13-16" }
                       ]
                     },
                     "fieldset_type": "synthesized_table",

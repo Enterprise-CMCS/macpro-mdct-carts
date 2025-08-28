@@ -65,6 +65,10 @@
   color: #262626;
 }
 
+.synthesized-table {
+  overflow-x: auto;
+}
+
 .synthesized-table,
 .non-interactive-table {
   table {
@@ -73,6 +77,7 @@
         background: #ddd;
       }
     }
+
     tbody {
       td {
         background: #efefef;
@@ -223,8 +228,8 @@
     }
   }
 
-  .date-range fieldset > div div:nth-of-type(2),
-  .date-range fieldset > div span:first-of-type {
+  .date-range fieldset>div div:nth-of-type(2),
+  .date-range fieldset>div span:first-of-type {
     display: none;
   }
 
@@ -249,13 +254,16 @@
   padding-bottom: 0;
   margin-top: (variables.$margin * 2);
 }
+
 .sub-questions {
   margin-left: 16px;
 }
+
 /* Conditionals */
 .hide {
   display: none;
 }
+
 .conditional {
   border-left: variables.$border-width solid variables.$brand-primary;
   margin-left: (variables.$margin * 2);
@@ -278,10 +286,12 @@
       margin-bottom: 2.2rem;
     }
   }
+
   .cmsranges-btn {
     margin: 2.2rem 1.2rem 0 0;
     min-height: 3rem;
   }
+
   .ds-c-button {
     margin: 1.2rem 0 0 1rem;
   }
@@ -343,6 +353,7 @@
     @media only screen and (min-width: 767px) {
       text-align: right;
     }
+
     .form-button {
       margin: variables.$margin 0;
 
@@ -378,8 +389,10 @@
       position: absolute;
       top: 2px;
       right: 0;
+
       svg {
         color: variables.$color-gray-light;
+
         &:hover {
           color: variables.$color-gray;
         }
@@ -387,7 +400,7 @@
     }
 
     .print-options {
-      & > div {
+      &>div {
         display: inline-block;
         padding: 0 1.2rem;
         width: auto;
@@ -433,9 +446,10 @@
 }
 
 .date-range {
+
   .date-range-start-wrapper,
   .date-range-end-wrapper {
-    & > div {
+    &>div {
       display: inline-block;
       width: auto;
     }
@@ -456,10 +470,12 @@
   h4 {
     color: variables.$black;
   }
-  .ds-c-choice:disabled + label:before {
+
+  .ds-c-choice:disabled+label:before {
     background: variables.$white;
   }
-  .ds-c-choice:checked + label:before {
+
+  .ds-c-choice:checked+label:before {
     background-color: variables.$white;
     background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22gray%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M20.285%202l-11.285%2011.567-5.286-5.011-3.714%203.716%209%208.728%2015-15.285z%22%2F%3E%3C%2Fsvg%3E');
     background-position: 50%;
@@ -467,9 +483,11 @@
     background-size: 24px;
     border-color: variables.$color-gray-light;
   }
+
   .ds-c-field:disabled {
     background: variables.$white;
   }
+
   .ds-c-alert {
     background: variables.$color-gray-lightest;
     border-left: 8px solid variables.$color-gray-light;
@@ -488,10 +506,12 @@
     h4 {
       color: variables.$black;
     }
-    .ds-c-choice:disabled + label:before {
+
+    .ds-c-choice:disabled+label:before {
       background: variables.$white;
     }
-    .ds-c-choice:checked + label:before {
+
+    .ds-c-choice:checked+label:before {
       background-color: variables.$white;
       background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22gray%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M20.285%202l-11.285%2011.567-5.286-5.011-3.714%203.716%209%208.728%2015-15.285z%22%2F%3E%3C%2Fsvg%3E');
       background-position: 50%;
@@ -499,9 +519,11 @@
       background-size: 24px;
       border-color: variables.$color-gray-light;
     }
+
     .ds-c-field:disabled {
       background: variables.$white;
     }
+
     .ds-c-alert {
       background: variables.$color-gray-lightest;
       border-left: 8px solid variables.$color-gray-light;
@@ -511,10 +533,12 @@
     .action-buttons {
       display: none;
     }
+
     .unanswered-text {
       margin-bottom: 70px;
     }
   }
+
   .accordion-header h3 button {
     background: variables.$white;
     border-top: 6px solid variables.$color-gray;

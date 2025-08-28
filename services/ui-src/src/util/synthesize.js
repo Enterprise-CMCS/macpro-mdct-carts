@@ -59,11 +59,19 @@ const round = (number, precision) => {
   return NaN;
 };
 
-const percent = ([numerator, denominator], precision = 2) => {
+const percent = (
+  [numerator, denominator],
+  precision = 2,
+  mask = false,
+  printView = false
+) => {
   if (+denominator !== 0 && numerator !== "" && numerator !== null) {
     const division = round((100 * +numerator) / +denominator, precision);
     if (!Number.isNaN(division)) {
-      return `${division}%`;
+      if (mask && numerator > 0 && numerator < 11 && printView) {
+        return `<11`;
+      }
+      return `${numerator} (${division}%)`;
     }
   }
 
@@ -71,16 +79,27 @@ const percent = ([numerator, denominator], precision = 2) => {
   return "";
 };
 
-const numberAndPercentage = ([numerator, denominator], precision = 2) => {
-  if (+denominator !== 0 && numerator !== "" && numerator !== null) {
-    const division = round((100 * +numerator) / +denominator, precision);
-    if (!Number.isNaN(division)) {
-      return `${numerator} (${division}%)`;
-    }
-  }
+const numberAndPercentage = (
+  values,
+  precision = 2,
+  mask = false,
+  printView = false
+) => {
+  const denominator = values.pop();
+  const numerator = sum(values);
+  return percent([numerator, denominator], precision, mask, printView);
+};
 
-  // Denominator is NaN or 0, or the division operation results in ""
-  return "";
+const sumAndPercentage = (
+  values,
+  additionalTargets,
+  precision = 2,
+  mask = false,
+  printView = false
+) => {
+  const numerator = sum(values);
+  const denominator = sum(additionalTargets);
+  return percent([numerator, denominator], precision, mask, printView);
 };
 
 const rpn = (values, rpnString, precision) => {
@@ -406,7 +425,8 @@ const synthesizeValue = (
   stateName,
   stateUserAbbr,
   chipEnrollments,
-  formData
+  formData,
+  printView = false
 ) => {
   if (value.contents) {
     return value;
@@ -464,6 +484,10 @@ const synthesizeValue = (
       return jsonpath.query(formData, target)[0];
     });
 
+    const additionalTargets = value.additional_targets?.map(
+      (target) => jsonpath.query(formData, target)[0]
+    );
+
     if (value.actions) {
       /*
        * For now, per the documentation, we only handle a single action, but
@@ -477,7 +501,24 @@ const synthesizeValue = (
         case "percentage":
           return { contents: percent(targets, value.precision) };
         case "numberAndPercentage":
-          return { contents: numberAndPercentage(targets, value.precision) };
+          return {
+            contents: numberAndPercentage(
+              targets,
+              value.precision,
+              value?.mask,
+              printView
+            ),
+          };
+        case "sumAndPercentage":
+          return {
+            contents: sumAndPercentage(
+              targets,
+              additionalTargets,
+              value.precision,
+              value?.mask,
+              printView
+            ),
+          };
         case "rpn":
           return { contents: rpn(targets, value.rpn, value.precision) };
         case "sum":
