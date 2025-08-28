@@ -113,7 +113,6 @@ export function createUiAuthComponents(props: CreateUiAuthComponentsProps) {
     oAuth: {
       flows: {
         authorizationCodeGrant: true,
-        implicitCodeGrant: true,
       },
       scopes: [
         cognito.OAuthScope.EMAIL,

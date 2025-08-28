@@ -5,7 +5,6 @@ import { MultiSelect } from "react-multi-select-component";
 // components
 import ReportItem from "./ReportItem";
 import { DropdownOption } from "../../fields/DropdownOption";
-import { Main } from "../../layout/Main";
 // utils
 import { getAllStateStatuses } from "../../../actions/initial";
 import { selectFormStatuses, selectYears } from "../../../store/selectors";
@@ -120,7 +119,7 @@ const CMSHomepage = () => {
   return (
     <div className="ds-l-container">
       <div className="ds-l-row">
-        <Main className="homepage ds-l-col--12">
+        <div className="homepage ds-l-col--12">
           <div className="ds-l-container-large">
             {currentUserRole !== AppRoles.CMS_ADMIN ? (
               <div className="ds-l-row ds-u-padding-left--2">
@@ -146,7 +145,6 @@ const CMSHomepage = () => {
                           options={stateList}
                           value={currentlySelectedStates}
                           onChange={onSelectState}
-                          labelledBy={"State"}
                           hasSelectAll={false}
                           overrideStrings={{ selectSomeItems: "State" }}
                           ItemRenderer={DropdownOption}
@@ -160,7 +158,6 @@ const CMSHomepage = () => {
                           options={yearList}
                           value={currentlySelectedYears}
                           onChange={onSelectYear}
-                          labelledBy={"Year"}
                           hasSelectAll={false}
                           overrideStrings={{ selectSomeItems: "Year" }}
                           ItemRenderer={DropdownOption}
@@ -174,7 +171,6 @@ const CMSHomepage = () => {
                           options={statusList}
                           value={currentlySelectedStatuses}
                           onChange={onSelectStatus}
-                          labelledBy="Status"
                           hasSelectAll={false}
                           overrideStrings={{ selectSomeItems: "Status" }}
                           ItemRenderer={DropdownOption}
@@ -201,57 +197,70 @@ const CMSHomepage = () => {
                     </div>
                   </div>
                   <div className="ds-l-row">
-                    <legend className="ds-u-padding--2 ds-h3">
+                    <h2 id="reports-heading" className="ds-h3 ds-u-padding--2">
                       All Reports
-                    </legend>
+                    </h2>
                   </div>
-                  <div className="report-header ds-l-row">
-                    <div className="name ds-l-col--1">Year</div>
-                    <div className="name ds-l-col--2">Report</div>
-                    <div className="status ds-l-col--2">Status</div>
-                    <div className="name ds-l-col--3">Last Edited</div>
-                    <div className="actions ds-l-col--4">Actions</div>
-                  </div>
-                  <div data-cy="cms-homepage-reports" className="report-status">
-                    {stateStatuses
-                      ?.sort((a, b) => (a.lastChanged > b.lastChanged ? -1 : 1))
-                      .map(
-                        ({
-                          state,
-                          stateCode,
-                          status,
-                          year,
-                          username,
-                          lastChanged,
-                        }) => {
-                          return (
-                            <div>
-                              {stateCode !== "status" &&
-                                stateCode !== "lastChanged" &&
-                                stateCode !== "username" &&
-                                stateCode !== undefined && (
-                                  <ReportItem
-                                    key={`${stateCode} - ${year}`}
-                                    link1URL={`/views/sections/${stateCode}/${year}/00/a`}
-                                    name={state}
-                                    year={year}
-                                    statusText={STATUS_MAPPING[status]}
-                                    userRole={currentUserRole}
-                                    username={username}
-                                    lastChanged={lastChanged}
-                                    stateAbbr={stateCode}
-                                  />
-                                )}
-                            </div>
-                          );
-                        }
-                      )}
+                  <div className="ds-l-row">
+                    <div className="reports ds-l-col--12">
+                      <table
+                        className="carts-report preview__grid"
+                        aria-labelledby="reports-heading"
+                      >
+                        <thead>
+                          <tr className="report-header ds-l-row">
+                            <th className="ds-l-col--1">Year</th>
+                            <th className="ds-l-col--2">Report</th>
+                            <th className="ds-l-col--2">Status</th>
+                            <th className="ds-l-col--3">Last Edited</th>
+                            <th className="ds-l-col--4">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {stateStatuses
+                            ?.sort((a, b) =>
+                              a.lastChanged > b.lastChanged ? -1 : 1
+                            )
+                            .map(
+                              ({
+                                state,
+                                stateCode,
+                                status,
+                                year,
+                                username,
+                                lastChanged,
+                              }) => {
+                                return (
+                                  <div>
+                                    {stateCode !== "status" &&
+                                      stateCode !== "lastChanged" &&
+                                      stateCode !== "username" &&
+                                      stateCode !== undefined && (
+                                        <ReportItem
+                                          key={`${stateCode} - ${year}`}
+                                          link1URL={`/views/sections/${stateCode}/${year}/00/a`}
+                                          name={state}
+                                          year={year}
+                                          statusText={STATUS_MAPPING[status]}
+                                          userRole={currentUserRole}
+                                          username={username}
+                                          lastChanged={lastChanged}
+                                          stateAbbr={stateCode}
+                                        />
+                                      )}
+                                  </div>
+                                );
+                              }
+                            )}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </Main>
+        </div>
       </div>
     </div>
   );
