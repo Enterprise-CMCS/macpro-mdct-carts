@@ -13,13 +13,6 @@ const store = mockStore({
     imageURI: "kentucky.png",
   },
 });
-jest.mock("../../store/selectors", () => ({
-  selectSectionTitle: () => "Section Title",
-}));
-jest.mock("./Autosave", () => () => {
-  const MockName = "default-autosave";
-  return <MockName />;
-});
 jest.mock("./FormActions", () => () => {
   const MockName = "default-form-nav";
   return <MockName />;
@@ -51,11 +44,5 @@ describe("<Section />", () => {
         subsectionId: testSubSectionId,
       })
     );
-  });
-  test("displays the title in screen and print view", () => {
-    const { getByTestId } = render(section);
-    const headerComponent = getByTestId("section-title");
-    expect(headerComponent).toHaveTextContent("Section Title");
-    expect(headerComponent).not.toHaveTextContent("2020-123");
   });
 });

@@ -9,13 +9,7 @@ import { selectFragment } from "../../store/formData";
 import { selectQuestionsForPart } from "../../store/selectors";
 import { shouldDisplay } from "../../util/shouldDisplay";
 
-const Part = ({
-  partId,
-  partNumber,
-  nestedSubsectionTitle,
-  printView,
-  existingSectionTitle,
-}) => {
+const Part = ({ partId, partNumber, printView }) => {
   const [, section] = partId.split("-");
 
   const [
@@ -92,34 +86,12 @@ const Part = ({
 
   return (
     <div id={partId} data-testid="part">
-      {title &&
-        (() => {
-          const content = (
-            <>
-              {+section !== 0 && partNumber && `Part ${partNumber}: `}
-              {title}
-            </>
-          );
-          if (existingSectionTitle && nestedSubsectionTitle) {
-            return (
-              <h4 className="h4-pdf-bookmark" data-testid="part-h4-header">
-                {content}
-              </h4>
-            );
-          }
-          if (existingSectionTitle) {
-            return (
-              <h3 className="h3-pdf-bookmark" data-testid="part-h3-header">
-                {content}
-              </h3>
-            );
-          }
-          return (
-            <h2 className="h2-pdf-bookmark" data-testid="part-h2-header">
-              {content}
-            </h2>
-          );
-        })()}
+      {title && (
+        <h2 className="h2-pdf-bookmark" data-testid="part-h2-header">
+          {+section !== 0 && partNumber && `Part ${partNumber}: `}
+          {title}
+        </h2>
+      )}
       {getPartContent()}
     </div>
   );
