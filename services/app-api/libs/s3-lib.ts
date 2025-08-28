@@ -15,6 +15,7 @@ export const getConfig = () => {
     region: "us-east-1",
     logger,
     endpoint: process.env.AWS_ENDPOINT_URL,
+    forcePathStyle: true,
   };
 };
 
