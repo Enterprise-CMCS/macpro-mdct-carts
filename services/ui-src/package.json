@@ -9,8 +9,8 @@
     "@fortawesome/react-fontawesome": "^0.2.6",
     "@reach/accordion": "^0.18.0",
     "@redux-devtools/extension": "^3.3.0",
-    "@testing-library/dom": "^10.4.0",
-    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.8.0",
     "@testing-library/react": "^12.1.5",
     "@testing-library/user-event": "^14.6.1",
     "@vitejs/plugin-react": "^4.5.1",
@@ -108,7 +108,7 @@
     }
   },
   "resolutions": {
-    "react-error-overlay": "6.0.9",
+    "react-error-overlay": "6.1.0",
     "loader-utils": "^2.0.4"
   }
 }
