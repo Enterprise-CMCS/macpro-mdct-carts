@@ -93,10 +93,10 @@ const store = mockStore({
     isFetching: false,
   },
 });
-const buildPart = (partId, nestedSubsectionTitle = false) => {
+const buildPart = (partId) => {
   return (
     <Provider store={store}>
-      <Part partId={partId} nestedSubsectionTitle={nestedSubsectionTitle} />
+      <Part partId={partId} />
     </Provider>
   );
 };
@@ -112,17 +112,11 @@ describe("<Part />", () => {
 
   test("conditionally renders a title", () => {
     render(buildPart("2020-00-a"));
-    const title = screen.getByTestId("part-header");
+    const title = screen.getByTestId("part-h2-header");
     expect(title).toHaveTextContent("my title");
   });
 
-  test("subtitles rendered if appropriate as a nested subsection", () => {
-    render(buildPart("2020-00-a-01", true));
-    const title = screen.getByTestId("part-sub-header");
-    expect(title).toHaveTextContent("Welcome!");
-  });
-
-  test("When no title is provided, no header is renderd", () => {
+  test("When no title is provided, no header is rendered", () => {
     render(buildPart("2020-00-a-02"));
     const title = screen.queryByTestId("part-header");
     screen.conta;
