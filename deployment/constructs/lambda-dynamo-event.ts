@@ -27,7 +27,6 @@ export class LambdaDynamoEventSource extends Construct {
 
     const {
       additionalPolicies = [],
-      environment = {},
       memorySize = 1024,
       tables,
       stackName,
@@ -61,7 +60,6 @@ export class LambdaDynamoEventSource extends Construct {
                 "dynamodb:DescribeStream",
                 "dynamodb:GetRecords",
                 "dynamodb:GetShardIterator",
-                // "dynamodb:ListShards",
                 "dynamodb:ListStreams",
               ],
               resources: tables
@@ -72,6 +70,12 @@ export class LambdaDynamoEventSource extends Construct {
           ],
         }),
       },
+    });
+
+    const logGroup = new logs.LogGroup(this, `${id}LogGroup`, {
+      logGroupName: `/aws/lambda/${stackName}-${id}`,
+      removalPolicy: isDev ? RemovalPolicy.DESTROY : RemovalPolicy.RETAIN,
+      retention: logs.RetentionDays.THREE_YEARS, // exceeds the 30 month requirement
     });
 
     this.lambda = new lambda_nodejs.NodejsFunction(this, id, {
@@ -88,14 +92,8 @@ export class LambdaDynamoEventSource extends Construct {
         sourceMap: true,
         nodeModules: ["kafkajs"],
       },
-      environment,
+      logGroup,
       ...restProps,
-    });
-
-    new logs.LogGroup(this, `${id}LogGroup`, {
-      logGroupName: `/aws/lambda/${this.lambda.functionName}`,
-      removalPolicy: isDev ? RemovalPolicy.DESTROY : RemovalPolicy.RETAIN,
-      retention: logs.RetentionDays.THREE_YEARS, // exceeds the 30 month requirement
     });
 
     for (let table of tables) {
@@ -107,6 +105,7 @@ export class LambdaDynamoEventSource extends Construct {
           functionName: this.lambda.functionArn,
           startingPosition: "TRIM_HORIZON",
           maximumRetryAttempts: 2,
+          batchSize: 10,
           enabled: true,
         }
       );

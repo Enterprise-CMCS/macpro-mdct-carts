@@ -276,14 +276,14 @@ img {
     margin-bottom: 2rem;
   }
 
-  .update-date {
+  .update-date{
     color: variables.$color-hint-dark;
     font-size:1.1rem;
     font-weight: bold;
   }
 
   .updates {
-    h2 {
+    h2:not(.update-date) {
       color: variables.$black;
       font-weight: variables.$font-weight-normal;
       font-size: 1.4rem;
@@ -336,7 +336,9 @@ img {
         padding-right: (variables.$padding) - 2; // offset for icons shifted right 2
       }
 
-      .title {
+      .title {     
+        font-weight: bold;
+        font-size: 1.4rem; 
         margin-top: (variables.$margin * 2);
         text-align: center;
 
