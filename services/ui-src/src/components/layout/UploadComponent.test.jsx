@@ -32,12 +32,8 @@ const store = mockStore({
   },
   formData: [
     {
-      contents: {
-        section: {
-          year: "2023",
-          state: "AL",
-        },
-      },
+      year: "2023",
+      stateId: "AL",
     },
   ],
   reportStatus: {
