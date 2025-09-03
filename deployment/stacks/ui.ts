@@ -69,20 +69,6 @@ export function createUiComponents(props: CreateUiComponentsProps) {
       ],
     });
 
-    logBucket.addLifecycleRule({
-      id: "ExpiredLogs",
-      enabled: true,
-      expiration: Duration.days(1095),
-      noncurrentVersionExpiration: Duration.days(1095),
-      abortIncompleteMultipartUploadAfter: Duration.days(1095),
-    });
-
-    logBucket.addLifecycleRule({
-      id: "CleanUpDeleteMarkers",
-      enabled: true,
-      noncurrentVersionExpiration: Duration.days(1095),
-    });
-
     logBucket.addToResourcePolicy(
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
