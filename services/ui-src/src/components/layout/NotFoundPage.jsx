@@ -1,6 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { Main } from "./Main";
 
 export const NotFoundPage = () => {
   return (
@@ -15,7 +16,7 @@ export const NotFoundPage = () => {
             Page not found
           </h1>
         </header>
-        <main className="main">
+        <Main className="main">
           <h2>
             Sorry, the page you're looking for couldn't be found. It's possible
             that this page has moved, or the address may have been typed
@@ -30,7 +31,7 @@ export const NotFoundPage = () => {
             Note: If you were using a bookmark, please reset it once you find
             the correct page.
           </p>
-        </main>
+        </Main>
       </div>
     </div>
   );

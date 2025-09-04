@@ -22,11 +22,7 @@ const CMSLegend = ({ hideNumber, hint, id, label, questionType }) => {
           {legend.join(" ")}
         </legend>
         {hint && (
-          <div
-            className="ds-c-field__hint"
-            data-testid="legend-hint"
-            aria-label={`${label} hint`}
-          >
+          <div className="ds-c-field__hint" data-testid="legend-hint">
             <Text>{hint}</Text>
           </div>
         )}

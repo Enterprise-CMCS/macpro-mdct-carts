@@ -183,9 +183,6 @@ export const sectionSchema = {
         comment: {
           type: "string",
         },
-        suggested: {
-          type: "boolean",
-        },
         questions: {
           type: "array",
           items: {
@@ -331,6 +328,9 @@ export const sectionSchema = {
           },
           comment: {
             type: "string",
+          },
+          suggested: {
+            type: "boolean",
           },
           answer: {
             $ref: "#/definitions/answer",
