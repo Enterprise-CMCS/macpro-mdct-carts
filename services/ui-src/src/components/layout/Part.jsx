@@ -9,7 +9,7 @@ import { selectFragment } from "../../store/formData";
 import { selectQuestionsForPart } from "../../store/selectors";
 import { shouldDisplay } from "../../util/shouldDisplay";
 
-const Part = ({ partId, partNumber, nestedSubsectionTitle, printView }) => {
+const Part = ({ partId, partNumber, printView }) => {
   const [, section] = partId.split("-");
 
   const [
@@ -74,7 +74,7 @@ const Part = ({ partId, partNumber, nestedSubsectionTitle, printView }) => {
     } else {
       if (contextData) {
         return (
-          <Alert>
+          <Alert role="">
             <div className="ds-c-alert__text" data-testid="part-alert">
               {contextData.skip_text && <p>{contextData.skip_text}</p>}
             </div>
@@ -86,18 +86,12 @@ const Part = ({ partId, partNumber, nestedSubsectionTitle, printView }) => {
 
   return (
     <div id={partId} data-testid="part">
-      {title &&
-        (nestedSubsectionTitle ? (
-          <h4 className="h4-pdf-bookmark" data-testid="part-sub-header">
-            {+section !== 0 && partNumber && `Part ${partNumber}: `}
-            {title}
-          </h4>
-        ) : (
-          <h3 className="h3-pdf-bookmark" data-testid="part-header">
-            {+section !== 0 && partNumber && `Part ${partNumber}: `}
-            {title}
-          </h3>
-        ))}
+      {title && (
+        <h2 className="h2-pdf-bookmark" data-testid="part-h2-header">
+          {+section !== 0 && partNumber && `Part ${partNumber}: `}
+          {title}
+        </h2>
+      )}
       {getPartContent()}
     </div>
   );

@@ -408,6 +408,239 @@ describe("synthesize()", () => {
     });
   });
 
+  describe("handles numberAndPercentage", () => {
+    test("returns <11 when mask is true, numerator < 11, and printView is true", () => {
+      const out = synthesize(
+        {
+          targets: [
+            "$..*[?(@ && @.id==='item1')].answer.entry", // 1
+            "$..*[?(@ && @.id==='item3')].answer.entry", // 3
+            "$..*[?(@ && @.id==='item0')].answer.entry", // 0 (denominator)
+          ],
+          actions: ["numberAndPercentage"],
+          mask: true,
+        },
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData,
+        true // printView
+      );
+      expect(out).toEqual({ contents: "<11" });
+    });
+
+    test("returns empty string when denominator is zero", () => {
+      const out = synthesize(
+        {
+          targets: [
+            "$..*[?(@ && @.id==='item1')].answer.entry", // 1
+            "$..*[?(@ && @.id==='item3')].answer.entry", // 3
+            "$..*[?(@ && @.id==='item0')].answer.entry", // 0 (denominator)
+          ],
+          actions: ["numberAndPercentage"],
+        },
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
+      );
+      expect(out).toEqual({ contents: "" });
+    });
+
+    test("returns correct number and percentage with valid values", () => {
+      const out = synthesize(
+        {
+          targets: [
+            "$..*[?(@ && @.id==='item1')].answer.entry", // 1
+            "$..*[?(@ && @.id==='item3')].answer.entry", // 3
+            "$..*[?(@ && @.id==='item4')].answer.entry", // 4 (denominator)
+          ],
+          actions: ["numberAndPercentage"],
+        },
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
+      );
+      // numerator = 1 + 3 = 4, denominator = 4, percent = 100%
+      expect(out).toEqual({ contents: "4 (100%)" });
+    });
+
+    test("returns correct number and percentage with precision", () => {
+      const out = synthesize(
+        {
+          targets: [
+            "$..*[?(@ && @.id==='item1')].answer.entry", // 1
+            "$..*[?(@ && @.id==='item3')].answer.entry", // 3
+            "$..*[?(@ && @.id==='item5')].answer.entry", // 5 (denominator)
+          ],
+          actions: ["numberAndPercentage"],
+          precision: 1,
+        },
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
+      );
+      // numerator = 1 + 3 = 4, denominator = 5, percent = 80.0%
+      expect(out).toEqual({ contents: "4 (80%)" });
+    });
+
+    describe("handles sumAndPercentage", () => {
+      test("returns <11 when mask is true, numerator < 11, and printView is true", () => {
+        const out = synthesize(
+          {
+            targets: [
+              "$..*[?(@ && @.id==='item1')].answer.entry", // 1
+              "$..*[?(@ && @.id==='item3')].answer.entry", // 3
+            ],
+            additional_targets: [
+              "$..*[?(@ && @.id==='item4')].answer.entry", // 4 (denominator)
+            ],
+            actions: ["sumAndPercentage"],
+            mask: true,
+          },
+          state.allStatesData,
+          state.global.stateName,
+          state.stateUser.abbr,
+          state.enrollmentCounts.chipEnrollments,
+          state.formData,
+          true // printView
+        );
+        expect(out).toEqual({ contents: "<11" });
+      });
+
+      test("returns empty string when denominator is zero", () => {
+        const out = synthesize(
+          {
+            targets: [
+              "$..*[?(@ && @.id==='item1')].answer.entry", // 1
+              "$..*[?(@ && @.id==='item3')].answer.entry", // 3
+            ],
+            additional_targets: [
+              "$..*[?(@ && @.id==='item0')].answer.entry", // 0 (denominator)
+            ],
+            actions: ["sumAndPercentage"],
+          },
+          state.allStatesData,
+          state.global.stateName,
+          state.stateUser.abbr,
+          state.enrollmentCounts.chipEnrollments,
+          state.formData
+        );
+        expect(out).toEqual({ contents: "" });
+      });
+
+      test("returns correct sum and percentage with valid values", () => {
+        const out = synthesize(
+          {
+            targets: [
+              "$..*[?(@ && @.id==='item1')].answer.entry", // 1
+              "$..*[?(@ && @.id==='item3')].answer.entry", // 3
+            ],
+            additional_targets: [
+              "$..*[?(@ && @.id==='item4')].answer.entry", // 4 (denominator)
+            ],
+            actions: ["sumAndPercentage"],
+          },
+          state.allStatesData,
+          state.global.stateName,
+          state.stateUser.abbr,
+          state.enrollmentCounts.chipEnrollments,
+          state.formData
+        );
+        // numerator = 1 + 3 = 4, denominator = 4, percent = 100%
+        expect(out).toEqual({ contents: "4 (100%)" });
+      });
+
+      test("returns correct sum and percentage with precision", () => {
+        const out = synthesize(
+          {
+            targets: [
+              "$..*[?(@ && @.id==='item1')].answer.entry", // 1
+              "$..*[?(@ && @.id==='item3')].answer.entry", // 3
+            ],
+            additional_targets: [
+              "$..*[?(@ && @.id==='item5')].answer.entry", // 5 (denominator)
+            ],
+            actions: ["sumAndPercentage"],
+            precision: 1,
+          },
+          state.allStatesData,
+          state.global.stateName,
+          state.stateUser.abbr,
+          state.enrollmentCounts.chipEnrollments,
+          state.formData
+        );
+        // numerator = 1 + 3 = 4, denominator = 5, percent = 80.0%
+        expect(out).toEqual({ contents: "4 (80%)" });
+      });
+
+      test("returns empty string when numerator is blank", () => {
+        const out = synthesize(
+          {
+            targets: [
+              "$..*[?(@ && @.id==='item6')].answer.entry", // null
+            ],
+            additional_targets: [
+              "$..*[?(@ && @.id==='item0')].answer.entry", // 0 (denominator)
+            ],
+            actions: ["sumAndPercentage"],
+          },
+          state.allStatesData,
+          state.global.stateName,
+          state.stateUser.abbr,
+          state.enrollmentCounts.chipEnrollments,
+          state.formData
+        );
+        expect(out).toEqual({ contents: "" });
+      });
+
+      test("returns empty string when denominator is blank", () => {
+        const out = synthesize(
+          {
+            targets: [
+              "$..*[?(@ && @.id==='item1')].answer.entry", // 1
+              "$..*[?(@ && @.id==='item3')].answer.entry", // 3
+            ],
+            additional_targets: [
+              "$..*[?(@ && @.id==='item6')].answer.entry", // null (denominator)
+            ],
+            actions: ["sumAndPercentage"],
+          },
+          state.allStatesData,
+          state.global.stateName,
+          state.stateUser.abbr,
+          state.enrollmentCounts.chipEnrollments,
+          state.formData
+        );
+        expect(out).toEqual({ contents: "" });
+      });
+    });
+
+    test("returns empty string when numerator is blank", () => {
+      const out = synthesize(
+        {
+          targets: [
+            "$..*[?(@ && @.id==='item6')].answer.entry", // null
+            "$..*[?(@ && @.id==='item0')].answer.entry", // 0 (denominator)
+          ],
+          actions: ["numberAndPercentage"],
+        },
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
+      );
+      expect(out).toEqual({ contents: "" });
+    });
+  });
+
   describe("handles RPNs", () => {
     test("with too few operands", () => {
       /*

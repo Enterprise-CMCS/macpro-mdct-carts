@@ -1,3 +1,4 @@
+# This file is managed by macpro-mdct-core so if you'd like to change it let's do it there
 name: "CodeQL"
 
 on:
@@ -12,6 +13,7 @@ on:
       - val
       - production
   schedule:
+    # run every Monday against main
     - cron: "00 4 * * 1"
 
 jobs:
