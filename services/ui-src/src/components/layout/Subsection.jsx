@@ -19,7 +19,7 @@ const Subsection = ({ subsectionId, printView }) => {
 
   return (
     <div id={subsectionId}>
-      {title && <h3 className="h3-pdf-bookmark">{title}</h3>}
+      {title && <h2 className="h2-pdf-bookmark">{title}</h2>}
       {text ? (
         <div className="helper-text">
           <Text>{text}</Text>
@@ -30,7 +30,6 @@ const Subsection = ({ subsectionId, printView }) => {
           key={partId}
           partId={partId}
           partNumber={partIds.length > 1 ? index + 1 : null}
-          nestedSubsectionTitle={!!title}
           printView={printView}
         />
       ))}
