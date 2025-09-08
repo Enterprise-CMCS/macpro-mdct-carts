@@ -1,9 +1,13 @@
 import React from "react";
 import techIcon from "../../assets/images/noun-technical-support-1873885-D5DEE4.png";
 import ActionCard from "../utils/ActionCard";
+import FaqAccordion from "../layout/FaqAccordion";
 import { Main } from "../layout/Main";
+// verbiage
+import verbiage from "../../verbiage/faq.ts";
 
 const GetHelp = () => {
+  const { accordionItems } = verbiage;
   return (
     <Main className="help-page ds-l-container">
       <div className="ds-l-col--12">
@@ -22,6 +26,9 @@ const GetHelp = () => {
               </strong>
             </p>
           </ActionCard>
+          {accordionItems.length > 0 && (
+            <FaqAccordion accordionItems={accordionItems} />
+          )}
         </div>
       </div>
     </Main>

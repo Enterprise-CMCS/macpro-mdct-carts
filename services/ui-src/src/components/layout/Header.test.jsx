@@ -123,7 +123,7 @@ describe("<Header />", () => {
     const headerDropDownLinks = screen.getByTestId("headerDropDownLinks");
     expect(headerDropDownMenuButton).toContainElement(chevUp);
     expect(headerDropDownMenu).toContainElement(headerDropDownLinks);
-    expect(screen.getByRole("link", { name: "Contact Us" })).toBeVisible();
+    expect(screen.getByRole("link", { name: "FAQ" })).toBeVisible();
   });
 
   test("should open and close the dropdown menu on click", () => {
