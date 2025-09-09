@@ -12,6 +12,7 @@ const FaqAccordion = () => {
         heading={
           "What types of questions should I contact MCDT Help Desk for assistance?"
         }
+        headingLevel={"3"}
       >
         <p>
           For any technical issues such as CARTS access, CARTS functionality, or
@@ -24,6 +25,7 @@ const FaqAccordion = () => {
       <AccordionItem
         key={`faqquestion-2`}
         heading={"How can I “uncertify” a report to make edits?"}
+        headingLevel={"3"}
       >
         <p>
           Please contact your CHIP Project Officer to change a report’s status
@@ -35,6 +37,7 @@ const FaqAccordion = () => {
       <AccordionItem
         key={`faqquestion-3`}
         heading={"Can more than one person at the state have access to CARTS?"}
+        headingLevel={"3"}
       >
         <p>
           Yes. There is no limitation on the number CARTS users each state may
@@ -44,6 +47,7 @@ const FaqAccordion = () => {
       <AccordionItem
         key={`faqquestion-4`}
         heading={"What is the reporting timeframe for CARTS?"}
+        headingLevel={"3"}
       >
         <p>
           In the CHIP Annual Report, states assess the operation of their child
@@ -56,6 +60,7 @@ const FaqAccordion = () => {
       <AccordionItem
         key={`faqquestion-5`}
         heading={"When is the completed report due in CARTS?"}
+        headingLevel={"3"}
       >
         <p>
           States are statutorily required at section 2108(a) of the Social
@@ -70,6 +75,7 @@ const FaqAccordion = () => {
         heading={
           "When I print my report, some data fields are auto-filled with “<11”.  Why does this happen?"
         }
+        headingLevel={"3"}
       >
         <p>
           In compliance with{" "}
@@ -101,6 +107,7 @@ const FaqAccordion = () => {
         heading={
           "Which sections of the report are pre-filled and where does that information come from?"
         }
+        headingLevel={"3"}
       >
         <p>The following sections include pre-filled cells in CARTS:</p>
         <ul>

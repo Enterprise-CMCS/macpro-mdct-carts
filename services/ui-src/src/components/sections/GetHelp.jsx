@@ -23,6 +23,7 @@ const GetHelp = () => {
               </strong>
             </p>
           </ActionCard>
+          <h2 className="help-page-faq">Frequently Asked Questions</h2>
           <FaqAccordion />
         </div>
       </div>
