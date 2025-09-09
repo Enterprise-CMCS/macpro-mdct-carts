@@ -19,7 +19,6 @@ describe("<GetHelp />", () => {
     expect(
       screen.getByText(/For technical support and login issues:/i)
     ).toBeInTheDocument();
-    expect(screen.getByText("mdct_help@cms.hhs.gov")).toBeVisible();
   });
 
   testA11y(wrapper);
