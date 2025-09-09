@@ -1,6 +1,8 @@
 import React from "react";
 // components
 import { Accordion, AccordionItem } from "@cmsgov/design-system";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 
 const FaqAccordion = () => {
   return (
@@ -71,8 +73,19 @@ const FaqAccordion = () => {
       >
         <p>
           In compliance with{" "}
-          <a href="https://resdac.org/articles/cms-cell-size-suppression-policy">
+          <a
+            className="ds-c-external-link"
+            href="https://resdac.org/articles/cms-cell-size-suppression-policy"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="CMS’ cell size suppression policy (opens in a new tab)"
+          >
             CMS’ cell size suppression policy
+            <FontAwesomeIcon
+              className="ds-c-icon ds-c-icon--external-link ds-c-external-link__icon"
+              icon={faArrowUpRightFromSquare}
+              transform="up-2 right-2"
+            />
           </a>
           , reports that reference individual beneficiaries with values of 1 to
           10 are automatically adjusted to “&lt;11” when the print feature is
