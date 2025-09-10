@@ -13199,7 +13199,7 @@
                   {
                     "hint": "Round to the nearest whole number.",
                     "type": "fieldset",
-                    "label": "What was your per member per month (PMPM) cost based on the number of children enrolled in fee-for-service for Medicaid Expansion CHIP in FFY 2025? What is your projected PMPM cost for Medicaid Expansion CHIP in FFY 2026 and 2027?",
+                    "label": "What was your per member per month (PMPM) cost based on the number of children enrolled in fee-for-service for Medicaid expansion CHIP in FFY 2025? What is your projected PMPM cost for Medicaid expansion CHIP in FFY 2026 and 2027?",
                     "questions": [
                       {
                         "type": "fieldset",
