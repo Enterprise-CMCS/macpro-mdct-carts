@@ -21,8 +21,26 @@ const SynthesizedTable = ({ question, printView }) => {
 
   const rows = question.fieldset_info.rows.map((row) => {
     let contents = row;
+
+    /*
+     * The below if statement is logic surrounding the <11 data suppression policy.
+     * Specific fields related to the collection of data surrounding children are
+     * not allowed to be displayed in tables if their value is 1 <= val <= 10. In
+     * these instances we remove that cell all together. However, a specific caveat
+     * is made for the number/sumAndPercentage masks. They need to show their cell
+     * but be replaced with '<11'.
+     */
     if (printView) {
-      contents = row.filter((cell) => cell?.mask !== lteMask);
+      contents = row.filter((cell) => {
+        const specialMasks = ["numberAndPercentage", "sumAndPercentage"];
+        if (
+          cell?.mask === lteMask &&
+          specialMasks.includes(cell?.actions?.[0])
+        ) {
+          return cell;
+        }
+        return cell?.mask !== lteMask;
+      });
     }
     return contents.map((cell) => {
       const value = synthesizeValue(
@@ -31,7 +49,8 @@ const SynthesizedTable = ({ question, printView }) => {
         stateName,
         stateUserAbbr,
         chipEnrollments,
-        formData
+        formData,
+        printView
       );
 
       return typeof value.contents === "number" && Number.isNaN(value.contents)

@@ -2,13 +2,12 @@ import { Construct } from "constructs";
 import {
   aws_dynamodb as dynamodb,
   aws_iam as iam,
-  aws_lambda as lambda,
-  aws_lambda_nodejs as lambda_nodejs,
   custom_resources as cr,
   CfnOutput,
   Duration,
 } from "aws-cdk-lib";
 import { DynamoDBTable } from "../constructs/dynamodb-table";
+import { Lambda } from "../constructs/lambda";
 
 interface CreateDataComponentsProps {
   scope: Construct;
@@ -87,43 +86,28 @@ export function createDataComponents(props: CreateDataComponentsProps) {
       sortKey: { name: "fileId", type: dynamodb.AttributeType.STRING },
     }).identifiers,
   ];
+  const seedDataFunction = new Lambda(scope, "seedData", {
+    stackName: `data-${stage}`,
 
-  const lambdaApiRole = new iam.Role(scope, "SeedDataLambdaApiRole", {
-    assumedBy: new iam.ServicePrincipal("lambda.amazonaws.com"),
-    managedPolicies: [
-      iam.ManagedPolicy.fromAwsManagedPolicyName(
-        "service-role/AWSLambdaVPCAccessExecutionRole"
-      ),
-    ],
-    inlinePolicies: {
-      DynamoPolicy: new iam.PolicyDocument({
-        statements: [
-          new iam.PolicyStatement({
-            effect: iam.Effect.ALLOW,
-            actions: [
-              "dynamodb:DescribeTable",
-              "dynamodb:Query",
-              "dynamodb:Scan",
-              "dynamodb:GetItem",
-              "dynamodb:PutItem",
-              "dynamodb:UpdateItem",
-              "dynamodb:DeleteItem",
-              // TODO: previous had dynamodb:BatchWriteItem
-            ],
-            resources: ["*"],
-          }),
-        ],
-      }),
-    },
-  });
-
-  const seedDataFunction = new lambda_nodejs.NodejsFunction(scope, "seedData", {
     entry: "services/database/handlers/seed/seed.js",
     handler: "handler",
-    runtime: lambda.Runtime.NODEJS_20_X,
     timeout: Duration.seconds(900),
+    additionalPolicies: [
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        actions: [
+          "dynamodb:DescribeTable",
+          "dynamodb:Query",
+          "dynamodb:Scan",
+          "dynamodb:GetItem",
+          "dynamodb:PutItem",
+          "dynamodb:UpdateItem",
+          "dynamodb:DeleteItem",
+        ],
+        resources: ["*"],
+      }),
+    ],
     memorySize: 1024,
-    role: lambdaApiRole,
     environment: {
       dynamoPrefix: stage,
       seedTestData: isDev.toString(),
@@ -140,7 +124,8 @@ export function createDataComponents(props: CreateDataComponentsProps) {
         beforeInstall: () => [],
       },
     },
-  });
+    isDev,
+  }).lambda;
 
   const seedDataInvoke = new cr.AwsCustomResource(
     scope,

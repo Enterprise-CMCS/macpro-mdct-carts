@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import ReportItem from "./ReportItem";
 import TemplateDownload from "./TemplateDownload";
+import { Main } from "../../layout/Main";
 import { REPORT_STATUS, STATUS_MAPPING, AppRoles } from "../../../types";
 
 function formatStateStatus(item) {
@@ -33,7 +34,7 @@ const Homepage = ({ reportStatus }) => {
   };
 
   return (
-    <main className="homepage">
+    <Main className="homepage">
       <div className="ds-l-container">
         <div className="ds-l-row ds-u-padding-left--2">
           <h1 className="page-title ds-u-margin-bottom--0">
@@ -41,21 +42,30 @@ const Homepage = ({ reportStatus }) => {
           </h1>
         </div>
         <TemplateDownload getTemplate={getFiscalYearTemplateLink} />
+        {/*Table Heading */}
+        <div className="ds-l-row">
+          <h2 id="reports-heading" className="ds-h3 ds-u-padding--2">
+            All Reports
+          </h2>
+        </div>
         <div className="ds-l-row">
           <div className="reports ds-l-col--12">
-            <div className="carts-report preview__grid">
-              <div className="ds-l-row">
-                <legend className="ds-u-padding--2 ds-h3">All Reports</legend>
-              </div>
-              <div className="report-header ds-l-row">
-                <div className="name ds-l-col--2">Year</div>
-                <div className="status ds-l-col--2">Status</div>
-                <div className="name ds-l-col--3">Last Edited</div>
-                <div className="actions ds-l-col--4">Actions</div>
-              </div>
-
-              {Object.values(reportStatus).map(formatStateStatus)}
-            </div>
+            <table
+              className="carts-report preview__grid"
+              aria-labelledby="reports-heading"
+            >
+              <thead>
+                <tr className="report-header ds-l-row">
+                  <th className="ds-l-col--2">Year</th>
+                  <th className="ds-l-col--2">Status</th>
+                  <th className="ds-l-col--3">Last Edited</th>
+                  <th className="ds-l-col--4">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.values(reportStatus).map(formatStateStatus)}
+              </tbody>
+            </table>
           </div>
         </div>
         <div className="ds-l-row">
@@ -70,7 +80,7 @@ const Homepage = ({ reportStatus }) => {
           </div>
         </div>
       </div>
-    </main>
+    </Main>
   );
 };
 Homepage.propTypes = {
