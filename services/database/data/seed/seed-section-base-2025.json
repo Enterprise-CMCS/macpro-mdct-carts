@@ -12944,7 +12944,7 @@
                   {
                     "hint": "Round to the nearest whole number.",
                     "type": "fieldset",
-                    "label": "What was your per member per month (PMPM) cost based on the number of children enrolled in managed care for Medicaid Expansion in FFY 2025? What is your projected PMPM cost for FFY 2026 and 2027?",
+                    "label": "What was your per member per month (PMPM) cost based on the number of children enrolled in managed care for Medicaid expansion CHIP in FFY 2025? What is your projected PMPM cost for FFY 2026 and 2027?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -12977,7 +12977,7 @@
                   {
                     "hint": "Round to the nearest whole number.",
                     "type": "fieldset",
-                    "label": "What was your per member per month (PMPM) cost based on the number of children enrolled in managed care for Separate CHIP in FFY 2025? What is your projected PMPM cost for FFY 2026 and 2027?",
+                    "label": "What was your per member per month (PMPM) cost based on the number of children enrolled in managed care for separate CHIP in FFY 2025? What is your projected PMPM cost for FFY 2026 and 2027?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -13128,7 +13128,7 @@
                 "questions": [
                   {
                     "type": "fieldset",
-                    "label": "How many children were enrolled in fee-for-service in FFY 2025 for Medicaid CHIP Expansion? How many do you anticipate will be eligible in FFY 2026 and 2027?",
+                    "label": "How many children were enrolled in fee-for-service in FFY 2025 for Medicaid expansion CHIP? How many do you anticipate will be eligible in FFY 2026 and 2027?",
                     "questions": [
                       {
                         "type": "fieldset",
