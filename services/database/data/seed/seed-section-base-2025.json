@@ -2352,9 +2352,9 @@
                         "context_data": {
                           "conditional_display": {
                             "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2025-03-a-01-02 is no or unanswered; noninteractive: hide if that's no.",
+                            "comment": "Interactive: Hide if 2025-03-a-01-03 is no or unanswered; noninteractive: hide if that's no.",
                             "hide_if": {
-                              "target": "$..*[?(@ && @.id=='2025-03-a-01-02')].answer.entry",
+                              "target": "$..*[?(@ && @.id=='2025-03-a-01-03')].answer.entry",
                               "values": {
                                 "interactive": [null, "no"],
                                 "noninteractive": ["no"]
@@ -9497,7 +9497,8 @@
                   {
                     "id": "2025-03-f-01-04",
                     "type": "text_multiline",
-                    "label": "What safeguards and procedures are in place for the prevention, investigation, and referral of fraud and abuse cases?",
+                    "label": "What safeguards and procedures do you have in place for the prevention, investigation, and referral of fraud and abuse cases?",
+                    "hint": "Attach any relevant documents.",
                     "answer": { "entry": null }
                   },
                   {
@@ -10308,7 +10309,6 @@
                         "id": "2025-03-h-01-01-a",
                         "type": "radio",
                         "label": "Did you submit your raw CAHPS data to the AHRQ CAHPS database? Please note this is a requirement for CAHPS reporting.",
-                        "hint": "If you did not complete the CAHPS survey, please complete Part 2.",
                         "answer": {
                           "entry": null,
                           "options": [
@@ -10331,6 +10331,12 @@
                         }
                       }
                     ]
+                  },
+                  {
+                    "hint": "",
+                    "type": "fieldset",
+                    "label": "If you did not complete the CAHPS survey, please complete Part 2.",
+                    "questions": []
                   }
                 ]
               },
@@ -12861,13 +12867,13 @@
               },
               {
                 "id": "2025-05-a-03",
-                "text": "Complete this section only if you have a managed care delivery system.  To the extent feasible, states with both a Medicaid expansion CHIP and a separate CHIP should report the following metrics for the two programs separately.",
+                "text": "Complete this section only if you have a managed care delivery system. To the extent feasible, states with both a Medicaid expansion CHIP and a separate CHIP should report the following metrics for the two programs separately.",
                 "type": "part",
                 "title": "Managed Care Costs",
                 "questions": [
                   {
                     "type": "fieldset",
-                    "label": "How many children were enrolled in managed care Medicaid Expansion in FFY 2025? How many do you anticipate will be eligible in FFY 2026 and 2027?",
+                    "label": "How many children were enrolled in managed care in FFY 2025 for Medicaid expansion CHIP? How many do you anticipate will be eligible in FFY 2026 and 2027?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -12902,7 +12908,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "How many children were enrolled in for managed care Separate CHIP in FFY 2025? How many do you anticipate will be eligible in FFY 2026 and 2027?",
+                    "label": "How many children were enrolled in for managed care in FFY 2025 for separate CHIP? How many do you anticipate will be eligible in FFY 2026 and 2027?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -12938,7 +12944,7 @@
                   {
                     "hint": "Round to the nearest whole number.",
                     "type": "fieldset",
-                    "label": "What was your per member per month (PMPM) cost based on the number of children enrolled in managed care Medicaid Expansion in FFY 2025? What is your projected PMPM cost for FFY 2026 and 2027?",
+                    "label": "What was your per member per month (PMPM) cost based on the number of children enrolled in managed care for Medicaid expansion CHIP in FFY 2025? What is your projected PMPM cost for FFY 2026 and 2027?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -12971,7 +12977,7 @@
                   {
                     "hint": "Round to the nearest whole number.",
                     "type": "fieldset",
-                    "label": "What was your per member per month (PMPM) cost based on the number of children enrolled in managed care Separate CHIP in FFY 2025? What is your projected PMPM cost for FFY 2026 and 2027?",
+                    "label": "What was your per member per month (PMPM) cost based on the number of children enrolled in managed care for separate CHIP in FFY 2025? What is your projected PMPM cost for FFY 2026 and 2027?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -13118,11 +13124,11 @@
                 "id": "2025-05-a-04",
                 "text": "Complete this section only if you have a fee-for-service delivery system. To the extent feasible, states with both a Medicaid expansion CHIP and a separate CHIP should report the following metrics for the two programs separately.",
                 "type": "part",
-                "title": "Fee for Service Costs",
+                "title": "Fee-for-Service Costs",
                 "questions": [
                   {
                     "type": "fieldset",
-                    "label": "How many children were enrolled in fee-for-service in FFY 2025 for Medicaid CHIP Expansion? How many do you anticipate will be eligible in FFY 2026 and 2027?",
+                    "label": "How many children were enrolled in fee-for-service in FFY 2025 for Medicaid expansion CHIP? How many do you anticipate will be eligible in FFY 2026 and 2027?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -13157,7 +13163,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "How many children were enrolled in fee-for-service in FFY 2025 for Separate CHIP? How many do you anticipate will be eligible in FFY 2026 and 2027?",
+                    "label": "How many children were enrolled in fee-for-service in FFY 2025 for separate CHIP? How many do you anticipate will be eligible in FFY 2026 and 2027?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -13193,7 +13199,7 @@
                   {
                     "hint": "Round to the nearest whole number.",
                     "type": "fieldset",
-                    "label": "What was your per member per month (PMPM) cost based on the number of children enrolled in fee-for-service Medicaid Expansion CHIP in FFY 2025? What is your projected PMPM cost for Medicaid Expansion CHIP in FFY 2026 and 2027?",
+                    "label": "What was your per member per month (PMPM) cost based on the number of children enrolled in fee-for-service for Medicaid expansion CHIP in FFY 2025? What is your projected PMPM cost for Medicaid expansion CHIP in FFY 2026 and 2027?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -13226,7 +13232,7 @@
                   {
                     "hint": "Round to the nearest whole number.",
                     "type": "fieldset",
-                    "label": "What was your per member per month (PMPM) cost based on the number of children enrolled in Separate CHIP fee-for-service in FFY 2025? What is your projected PMPM cost for Separate CHIP in FFY 2026 and 2027?",
+                    "label": "What was your per member per month (PMPM) cost based on the number of children enrolled in fee-for-service for separate CHIP in FFY 2025? What is your projected PMPM cost for FFY 2026 and 2027?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -13378,6 +13384,7 @@
               {
                 "id": "2025-05-a-05",
                 "type": "part",
+                "title": "Additional Information",
                 "questions": [
                   {
                     "id": "2025-05-a-05-01",
