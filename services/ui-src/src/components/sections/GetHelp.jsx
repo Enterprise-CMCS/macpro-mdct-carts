@@ -1,6 +1,7 @@
 import React from "react";
 import techIcon from "../../assets/images/noun-technical-support-1873885-D5DEE4.png";
 import ActionCard from "../utils/ActionCard";
+import FaqAccordion from "../layout/FaqAccordion";
 import { Main } from "../layout/Main";
 
 const GetHelp = () => {
@@ -22,6 +23,8 @@ const GetHelp = () => {
               </strong>
             </p>
           </ActionCard>
+          <h2 className="help-page-faq">Frequently Asked Questions</h2>
+          <FaqAccordion />
         </div>
       </div>
     </Main>

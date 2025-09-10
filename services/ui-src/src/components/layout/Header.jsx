@@ -136,7 +136,7 @@ export const Header = () => {
                         id="menu-block"
                       >
                         <li className="contact-us">
-                          <a href="/get-help">Contact Us</a>
+                          <a href="/get-help">FAQ</a>
                         </li>
                         <li className="manage-account">
                           <Link to="/user/profile">Manage Account</Link>
