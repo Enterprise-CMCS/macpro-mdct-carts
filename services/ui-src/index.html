@@ -31,13 +31,19 @@
   </script>
   <!-- Tealium Analytics Tag Manager -->
   <script>
+    window.utag_cfg_ovrd = { noview: true };
     var tealiumEnvMap = {
       "mdctcarts.cms.gov": "prod",
       "mdctcartsval.cms.gov": "qa",
     };
     var tealiumEnv = tealiumEnvMap[window.location.hostname] || "dev";
-    var tealiumUrl = `https://tags.tiqcdn.com/utag/cmsgov/cms-general/${tealiumEnv}/utag.sync.js`;
-    document.write(`<script src="${tealiumUrl}" async><\/script>`);
+    // Load utag.sync.js
+      (function () {
+        const script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = `https://tealium-tags.cms.gov/cms-general/${tealiumEnv}/utag.sync.js`;
+        document.head.appendChild(script);
+      })();
   </script>
 </head>
 
@@ -45,23 +51,18 @@
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <!-- Tealium Analytics Tag Manager -->
   <script>
-    window.utag_cfg_ovrd = { noview: true };
-  </script>
-  <script>
-    (function (t, e, a, l, i, u, m) {
-      t = "cmsgov/cms-general";
-      e = tealiumEnv;
-      a = "/" + t + "/" + e + "/utag.js";
-      l = "//tags.tiqcdn.com/utag" + a;
-      i = document;
-      u = "script";
-      m = i.createElement(u);
-      m.src = l;
-      m.type = "text/java" + u;
-      m.async = true;
-      l = i.getElementsByTagName(u)[0];
-      l.parentNode.insertBefore(m, l);
-    })();
+     // Load utag.js
+      (function (a, b, c, d) {
+        a = `https://tealium-tags.cms.gov/cms-general/${tealiumEnv}/utag.js`;
+        b = document;
+        c = "script";
+        d = b.createElement(c);
+        d.src = a;
+        d.type = "text/javascript";
+        d.async = true;
+        a = b.getElementsByTagName(c)[0];
+        a.parentNode.insertBefore(d, a);
+      })();
   </script>
   <div id="root"></div>
   <!--
