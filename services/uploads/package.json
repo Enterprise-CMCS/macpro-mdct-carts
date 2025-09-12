@@ -10,9 +10,9 @@
   "author": "",
   "license": "CC0-1.0",
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.149",
+    "@types/aws-lambda": "^8.10.152",
     "aws-lambda": "^1.0.7",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.2"
   },
   "dependencies": {}
 }
