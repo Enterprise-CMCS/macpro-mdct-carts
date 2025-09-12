@@ -5,9 +5,9 @@
   "type": "module",
   "description": "",
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.823.0",
-    "@aws-sdk/lib-dynamodb": "^3.823.0",
-    "@aws-sdk/util-dynamodb": "^3.823.0",
+    "@aws-sdk/client-dynamodb": "^3.887.0",
+    "@aws-sdk/lib-dynamodb": "^3.887.0",
+    "@aws-sdk/util-dynamodb": "^3.887.0",
     "kafkajs": "^2.2.4"
   }
 }
