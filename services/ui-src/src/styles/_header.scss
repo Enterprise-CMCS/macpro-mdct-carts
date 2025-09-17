@@ -150,7 +150,7 @@
       transition: all 2s;
 
       &.open {
-        background: variables.$brand-tertiary;
+        background: variables.$primary-darkest;
         display: flex;
         flex-direction: column;
         align-items: baseline;
