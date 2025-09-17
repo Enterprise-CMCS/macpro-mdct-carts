@@ -1,5 +1,5 @@
 import React from "react";
-import { MemoryRouter } from "react-router";
+import { MemoryRouter } from "../../util/testing/mockRouter";
 import { act } from "react-dom/test-utils";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
