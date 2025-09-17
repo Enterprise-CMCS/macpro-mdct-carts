@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { act, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import configureMockStore from "redux-mock-store";
 import { Provider } from "react-redux";
@@ -26,90 +26,135 @@ const CmsHomepageComponent = (
 );
 
 describe("<CMSHomepage />", () => {
-  test("should render", () => {
+  test("renders all rows", () => {
     render(CmsHomepageComponent);
-    expect(screen.queryAllByText("Alabama").length).toBeGreaterThan(0);
-    expect(screen.queryAllByText("Alaska").length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("cell", { name: "Alabama" }).length).toBe(2);
+    expect(screen.getAllByRole("cell", { name: "Alaska" }).length).toBe(1);
     expect(
-      screen.queryAllByText("Certified and Submitted").length
-    ).toBeGreaterThan(0);
+      screen.getAllByRole("cell", { name: "Certified and Submitted" }).length
+    ).toBe(1);
   });
 
   test("can be filtered by state", async () => {
     const user = userEvent.setup();
     render(CmsHomepageComponent);
-    expect(screen.queryAllByText("Alabama").length).toBeGreaterThan(0);
-    expect(screen.queryAllByText("Alaska").length).toBeGreaterThan(0);
-    expect(screen.queryByText("California")).not.toBeInTheDocument();
+    expect(screen.getAllByRole("row").length).toBe(4);
+    expect(screen.getAllByRole("cell", { name: "Alabama" }).length).toBe(2);
+    expect(screen.getAllByRole("cell", { name: "Alaska" }).length).toBe(1);
+    expect(
+      screen.queryByRole("cell", { name: "California" })
+    ).not.toBeInTheDocument();
 
     const stateFilterDropdown = screen.getByText("State", {
       selector: "span",
     });
     await user.click(stateFilterDropdown);
-    const alabamaDropdownOption = screen.queryByText("Alabama", {
-      selector: "span",
-    });
-    await user.click(alabamaDropdownOption);
-    await user.click(screen.getByText("Filter", { selector: "button" }));
 
-    expect(screen.queryAllByText("Alabama").length).toBeGreaterThan(0);
-    expect(screen.queryByText("Alaska")).not.toBeInTheDocument();
+    const filterContainer = document.querySelector("div.filter-container");
+    const alabamaDropdownOption = within(filterContainer).queryByText(
+      "Alabama",
+      {
+        selector: "span",
+      }
+    );
+
+    // Wait for SortableTable to update
+    await act(async () => {
+      await user.click(alabamaDropdownOption);
+      await user.click(screen.getByText("Filter", { selector: "button" }));
+    });
+    expect(screen.getAllByRole("row").length).toBe(3);
+    expect(screen.getAllByRole("cell", { name: "Alabama" }).length).toBe(2);
+    expect(
+      screen.queryByRole("cell", { name: "Alaska" })
+    ).not.toBeInTheDocument();
   });
 
   test("can be filtered by year", async () => {
     const user = userEvent.setup();
     render(CmsHomepageComponent);
-    expect(screen.queryAllByText("2021").length).toBeGreaterThan(0);
-    expect(screen.queryAllByText("2020").length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("row").length).toBe(4);
+    expect(screen.getAllByRole("cell", { name: "2021" }).length).toBe(2);
+    expect(screen.getAllByRole("cell", { name: "2020" }).length).toBe(1);
 
-    const yearFilterDropdown = screen.getByText("Year", {
+    let filterContainer = document.querySelector("div.filter-container");
+    const yearFilterDropdown = within(filterContainer).getByText("Year", {
       selector: "span",
     });
     await user.click(yearFilterDropdown);
-    const year2021DropdownOption = screen.queryByText("2021", {
+
+    filterContainer = document.querySelector("div.filter-container");
+    const year2021DropdownOption = within(filterContainer).queryByText("2021", {
       selector: "span",
     });
-    await user.click(year2021DropdownOption);
-    await user.click(screen.getByText("Filter", { selector: "button" }));
 
-    expect(screen.queryAllByText("2021").length).toBeGreaterThan(0);
-    expect(screen.queryByText("2020")).not.toBeInTheDocument();
+    // Wait for SortableTable to update
+    await act(async () => {
+      await user.click(year2021DropdownOption);
+      await user.click(screen.getByText("Filter", { selector: "button" }));
+    });
+    expect(screen.getAllByRole("row").length).toBe(3);
+    expect(screen.getAllByRole("cell", { name: "2021" }).length).toBe(2);
+    expect(
+      screen.queryByRole("cell", { name: "2020" })
+    ).not.toBeInTheDocument();
   });
 
   test("can be filtered by status", async () => {
     const user = userEvent.setup();
     render(CmsHomepageComponent);
+    expect(screen.getAllByRole("row").length).toBe(4);
     expect(screen.queryByText("Not Started")).not.toBeInTheDocument();
-    expect(screen.queryAllByText("In Progress").length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("cell", { name: "In Progress" }).length).toBe(2);
 
-    const yearFilterDropdown = screen.getByText("Status", {
+    const filterContainer = document.querySelector("div.filter-container");
+    const yearFilterDropdown = within(filterContainer).getByText("Status", {
       selector: "span",
     });
-    await user.click(yearFilterDropdown);
-    await user.click(screen.queryByText("Not Started"));
-    await user.click(screen.getByText("Filter", { selector: "button" }));
-
-    expect(screen.queryByText("In Progress")).not.toBeInTheDocument();
+    // Wait for SortableTable to update
+    await act(async () => {
+      await user.click(yearFilterDropdown);
+      await user.click(screen.queryByText("Not Started"));
+      await user.click(screen.getByText("Filter", { selector: "button" }));
+    });
+    expect(screen.getAllByRole("row").length).toBe(1);
+    expect(
+      screen.queryByRole("cell", { name: "In Progress" })
+    ).not.toBeInTheDocument();
   });
 
   test("can clear filters", async () => {
     const user = userEvent.setup();
     render(CmsHomepageComponent);
-    expect(screen.queryByText("Not Started")).not.toBeInTheDocument();
-    expect(screen.queryAllByText("In Progress").length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("row").length).toBe(4);
+    expect(screen.getAllByRole("cell", { name: "In Progress" }).length).toBe(2);
+    expect(
+      screen.queryByRole("cell", { name: "Not Started" })
+    ).not.toBeInTheDocument();
 
-    const yearFilterDropdown = screen.getByText("Status", {
+    const filterContainer = document.querySelector("div.filter-container");
+    const yearFilterDropdown = within(filterContainer).getByText("Status", {
       selector: "span",
     });
-    await user.click(yearFilterDropdown);
-    await user.click(screen.queryByText("Not Started"));
-    await user.click(screen.getByText("Filter", { selector: "button" }));
+    // Wait for SortableTable to update
+    await act(async () => {
+      await user.click(yearFilterDropdown);
+      await user.click(screen.queryByText("Not Started"));
+      await user.click(screen.getByText("Filter", { selector: "button" }));
+    });
+    expect(screen.getAllByRole("row").length).toBe(1);
+    expect(
+      screen.queryByRole("cell", { name: "In Progress" })
+    ).not.toBeInTheDocument();
 
-    expect(screen.queryByText("In Progress")).not.toBeInTheDocument();
-
-    await user.click(screen.getByText("Clear", { selector: "button" }));
-
-    expect(screen.queryByText("Not Started")).not.toBeInTheDocument();
-    expect(screen.queryAllByText("In Progress").length).toBeGreaterThan(0);
+    // Wait for SortableTable to update
+    await act(async () => {
+      await user.click(screen.getByText("Clear", { selector: "button" }));
+    });
+    expect(screen.getAllByRole("row").length).toBe(4);
+    expect(screen.getAllByRole("cell", { name: "In Progress" }).length).toBe(2);
+    expect(
+      screen.queryByRole("cell", { name: "Not Started" })
+    ).not.toBeInTheDocument();
   });
 });

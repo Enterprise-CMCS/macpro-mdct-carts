@@ -1,9 +1,13 @@
 import React from "react";
 import { MemoryRouter } from "../../../util/testing/mockRouter";
-import { screen, render, fireEvent } from "@testing-library/react";
+import { screen, render, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import configureMockStore from "redux-mock-store";
-import ReportItem from "./ReportItem";
-import { Provider } from "react-redux";
+import { useDispatch, Provider } from "react-redux";
+import { axe } from "jest-axe";
+// components
+import ReportItemLinks from "./ReportItemLinks";
+// mocks
 import {
   adminUserWithMultipleReports,
   approverUserWithMultipleReports,
@@ -11,48 +15,58 @@ import {
   helpdeskUserWithMultipleReports,
   stateUserWithMultipleReports,
 } from "../../../store/fakeStoreExamples";
-import { axe } from "jest-axe";
+// utils
+import { uncertifyReport } from "../../../actions/uncertify";
+
+jest.mock("react-redux", () => ({
+  ...jest.requireActual("react-redux"),
+  useDispatch: jest.fn(),
+}));
+
+jest.mock("../../../actions/uncertify", () => ({
+  uncertifyReport: jest.fn(),
+}));
 
 const mockStore = configureMockStore();
 
 /**
  *********************
- *State User (stateuser2@test.com)
+ * State User (stateuser2@test.com)
  *********************
  */
 
 // As of 2022-06-27, only State users can access the homepage view
 const stateUser = mockStore(stateUserWithMultipleReports);
 const HomepageStateUserInProgProps = {
-  name: 2021,
-  lastChanged: "2021-01-04 18:28:18.524133+00",
-  link1URL: "/sections/2021/00",
-  link1Text: "Edit",
-  statusText: "In Progress",
+  actionLinkURL: "/sections/2021/00",
+  actionLinkText: "Edit",
+  stateCode: "AL",
+  status: "in_progress",
+  timeZone: "America/New_York",
   userRole: "STATE_USER",
   year: 2021,
-  timeZone: "America/New_York",
-  stateAbbr: "AL",
 };
 
 const HomepageStateUserCertProps = {
-  name: 2020,
-  lastChanged: "Mon Jun 27 2022 14:43:08 GMT-0400 (Eastern Daylight Time)",
-  link1URL: "/sections/2020/00",
-  link1Text: "View",
-  statusText: "Certified and Submitted",
+  actionLinkURL: "/sections/2020/00",
+  actionLinkText: "View",
+  stateCode: "AL",
+  status: "certified",
+  timeZone: "America/New_York",
   userRole: "STATE_USER",
   year: 2020,
-  timeZone: "America/New_York",
-  stateAbbr: "AL",
 };
 
-describe("<ReportItem />", () => {
-  describe("ReportItem viewed by a State User", () => {
+describe("<ReportItemLinks />", () => {
+  describe("ReportItemLinks viewed by a State User", () => {
+    beforeAll(() => {
+      window.scrollTo = jest.fn();
+    });
+
     const stateUserInProgWrapper = (
       <Provider store={stateUser}>
         <MemoryRouter initialEntries={["/"]}>
-          <ReportItem {...HomepageStateUserInProgProps} />
+          <ReportItemLinks {...HomepageStateUserInProgProps} />
         </MemoryRouter>
       </Provider>
     );
@@ -60,16 +74,13 @@ describe("<ReportItem />", () => {
     const stateUserCertWrapper = (
       <Provider store={stateUser}>
         <MemoryRouter initialEntries={["/"]}>
-          <ReportItem {...HomepageStateUserCertProps} />
+          <ReportItemLinks {...HomepageStateUserCertProps} />
         </MemoryRouter>
       </Provider>
     );
 
-    test("should render an In Progress report with passed props", () => {
+    test("should render an In_Progress report with passed props", () => {
       render(stateUserInProgWrapper);
-      expect(screen.getByText("2021")).toBeVisible();
-      expect(screen.getByText("In Progress")).toBeVisible();
-      expect(screen.getByText("2021-01-04 at 1:28:18 p.m.")).toBeVisible();
       expect(
         screen.getByRole("link", { name: "Edit AL 2021 report" })
       ).toBeVisible();
@@ -80,9 +91,6 @@ describe("<ReportItem />", () => {
 
     test("should render other reports statuses and time stamps properly", () => {
       render(stateUserCertWrapper);
-      expect(screen.getByText("2020")).toBeVisible();
-      expect(screen.getByText("Certified and Submitted")).toBeVisible();
-      expect(screen.getByText("2022-06-27 at 2:43:08 p.m.")).toBeVisible();
       expect(
         screen.getByRole("link", { name: "View AL 2020 report" })
       ).toBeVisible();
@@ -91,7 +99,7 @@ describe("<ReportItem />", () => {
       ).toBeVisible();
     });
 
-    test("In Progress report items should not have basic accessibility issues", async () => {
+    test("In_Progress report items should not have basic accessibility issues", async () => {
       const { container } = render(stateUserInProgWrapper);
       const stateInProgResults = await axe(container);
       expect(stateInProgResults).toHaveNoViolations();
@@ -106,40 +114,34 @@ describe("<ReportItem />", () => {
 
   /**
    *********************
-   *CMS User (cms.user@test.com)
+   * CMS User (cms.user@test.com)
    *********************
    */
 
   const cmsUser = mockStore(cmsUserWithMultipleReports);
-  const CMSHomepageCMSUserAl2020Props = {
-    link1URL: "/views/sections/AL/2020/00/a",
-    name: "Alabama",
-    year: 2020,
-    statusText: "Certified and Submitted",
-    userRole: "CMS_USER",
-    username: "Frank States",
-    lastChanged: "Mon Jun 27 2022 14:43:08 GMT-0400 (Eastern Daylight Time)",
+  const CMSHomepageCMSUserAL2020Props = {
+    actionLinkURL: "/views/sections/AL/2020/00/a",
+    stateCode: "AL",
+    status: "certified",
     timeZone: "America/New_York",
-    stateAbbr: "AL",
+    userRole: "CMS_USER",
+    year: 2020,
   };
 
   const CMSHomepageCMSUserAL2021Props = {
-    link1URL: "/views/sections/AL/2021/00/a",
-    name: "Alabama",
-    year: 2021,
-    statusText: "In Progress",
-    userRole: "CMS_USER",
-    username: "al@test.com",
-    lastChanged: "2021-01-04 18:28:18.524133+00",
+    actionLinkURL: "/views/sections/AL/2021/00/a",
+    stateCode: "AL",
+    status: "in_progress",
     timeZone: "America/New_York",
-    stateAbbr: "AL",
+    userRole: "CMS_USER",
+    year: 2021,
   };
 
-  describe("ReportItem viewed by a CMS User", () => {
+  describe("ReportItemLinks viewed by a CMS User", () => {
     const cmsUserInProgWrapper = (
       <Provider store={cmsUser}>
         <MemoryRouter initialEntries={["/"]}>
-          <ReportItem {...CMSHomepageCMSUserAL2021Props} />
+          <ReportItemLinks {...CMSHomepageCMSUserAL2021Props} />
         </MemoryRouter>
       </Provider>
     );
@@ -147,19 +149,13 @@ describe("<ReportItem />", () => {
     const cmsUserCertWrapper = (
       <Provider store={cmsUser}>
         <MemoryRouter initialEntries={["/"]}>
-          <ReportItem {...CMSHomepageCMSUserAl2020Props} />
+          <ReportItemLinks {...CMSHomepageCMSUserAL2020Props} />
         </MemoryRouter>
       </Provider>
     );
 
-    test("should render an In Progress report with passed props", () => {
+    test("should render an In_Progress report with passed props", () => {
       render(cmsUserInProgWrapper);
-      expect(screen.getByText("2021")).toBeVisible();
-      expect(screen.getByText("Alabama")).toBeVisible();
-      expect(screen.getByText("In Progress")).toBeVisible();
-      expect(
-        screen.getByText("2021-01-04 at 1:28:18 p.m. by al@test.com")
-      ).toBeVisible();
       expect(
         screen.getByRole("link", { name: "View AL 2021 report" })
       ).toBeVisible();
@@ -170,12 +166,6 @@ describe("<ReportItem />", () => {
 
     test("should render other reports statuses and time stamps properly", () => {
       render(cmsUserCertWrapper);
-      expect(screen.getByText("2020")).toBeVisible();
-      expect(screen.getByText("Alabama")).toBeVisible();
-      expect(screen.getByText("Certified and Submitted")).toBeVisible();
-      expect(
-        screen.getByText("2022-06-27 at 2:43:08 p.m. by Frank States")
-      ).toBeVisible();
       expect(
         screen.getByRole("link", { name: "View AL 2020 report" })
       ).toBeVisible();
@@ -184,15 +174,23 @@ describe("<ReportItem />", () => {
       ).toBeVisible();
     });
 
-    test("should handle uncertify being clicked and show new modal", () => {
+    test("should handle uncertify being clicked and show new modal", async () => {
+      useDispatch.mockReturnValue(jest.fn());
       render(cmsUserCertWrapper);
-      const uncertifyButton = screen.getByTestId("uncertifyButton");
-      fireEvent.click(uncertifyButton);
-      const uncertifyModal = screen.getByTestId("uncertifyModal");
-      expect(uncertifyModal).toHaveTextContent("Yes, Uncertify");
+      const uncertifyButton = screen.getByRole("button", {
+        name: "Uncertify AL 2020 report",
+      });
+      await userEvent.click(uncertifyButton);
+
+      const uncertifyModal = screen.getByRole("dialog");
+      const modalUncertifyButton = within(uncertifyModal).getByRole("button", {
+        name: "Uncertify AL 2020 report",
+      });
+      await userEvent.click(modalUncertifyButton);
+      expect(uncertifyReport).toHaveBeenCalledWith("AL", 2020);
     });
 
-    test("In Progress report items should not have basic accessibility issues", async () => {
+    test("In_Progress report items should not have basic accessibility issues", async () => {
       const { container } = render(cmsUserCertWrapper);
       const stateInProgResults = await axe(container);
       expect(stateInProgResults).toHaveNoViolations();
@@ -207,40 +205,34 @@ describe("<ReportItem />", () => {
 
   /**
    *********************
-   *Admin User (adminuser@test.com)
+   * Admin User (adminuser@test.com)
    *********************
    */
 
   const adminUser = mockStore(adminUserWithMultipleReports);
-  const CMSHomepageAdminAl2020Props = {
-    link1URL: "/views/sections/AL/2020/00/a",
-    name: "Alabama",
-    year: 2020,
-    statusText: "Certified and Submitted",
-    userRole: "CMS_ADMIN",
-    username: "Frank States",
-    lastChanged: "Mon Jun 27 2022 14:43:08 GMT-0400 (Eastern Daylight Time)",
+  const CMSHomepageAdminAL2020Props = {
+    actionLinkURL: "/views/sections/AL/2020/00/a",
+    stateCode: "AL",
+    status: "certified",
     timeZone: "America/New_York",
-    stateAbbr: "AL",
+    userRole: "CMS_ADMIN",
+    year: 2020,
   };
 
   const CMSHomepageAdminAL2021Props = {
-    link1URL: "/views/sections/AL/2021/00/a",
-    name: "Alabama",
-    year: 2021,
-    statusText: "In Progress",
-    userRole: "CMS_ADMIN",
-    username: "al@test.com",
-    lastChanged: "2021-01-04 18:28:18.524133+00",
+    actionLinkURL: "/views/sections/AL/2021/00/a",
+    stateCode: "AL",
+    status: "in_progress",
     timeZone: "America/New_York",
-    stateAbbr: "AL",
+    userRole: "CMS_ADMIN",
+    year: 2021,
   };
 
-  describe("ReportItem viewed by an Admin User", () => {
+  describe("ReportItemLinks viewed by an Admin User", () => {
     const adminUserInProgWrapper = (
       <Provider store={adminUser}>
         <MemoryRouter initialEntries={["/"]}>
-          <ReportItem {...CMSHomepageAdminAL2021Props} />
+          <ReportItemLinks {...CMSHomepageAdminAL2021Props} />
         </MemoryRouter>
       </Provider>
     );
@@ -248,19 +240,13 @@ describe("<ReportItem />", () => {
     const adminUserCertWrapper = (
       <Provider store={adminUser}>
         <MemoryRouter initialEntries={["/"]}>
-          <ReportItem {...CMSHomepageAdminAl2020Props} />
+          <ReportItemLinks {...CMSHomepageAdminAL2020Props} />
         </MemoryRouter>
       </Provider>
     );
 
-    test("should render an In Progress report with passed props", () => {
+    test("should render an In_Progress report with passed props", () => {
       render(adminUserInProgWrapper);
-      expect(screen.getByText("2021")).toBeVisible();
-      expect(screen.getByText("Alabama")).toBeVisible();
-      expect(screen.getByText("In Progress")).toBeVisible();
-      expect(
-        screen.getByText("2021-01-04 at 1:28:18 p.m. by al@test.com")
-      ).toBeVisible();
       expect(
         screen.getByRole("link", { name: "View AL 2021 report" })
       ).toBeVisible();
@@ -271,12 +257,6 @@ describe("<ReportItem />", () => {
 
     test("should render other reports statuses and time stamps properly", () => {
       render(adminUserCertWrapper);
-      expect(screen.getByText("2020")).toBeVisible();
-      expect(screen.getByText("Alabama")).toBeVisible();
-      expect(screen.getByText("Certified and Submitted")).toBeVisible();
-      expect(
-        screen.getByText("2022-06-27 at 2:43:08 p.m. by Frank States")
-      ).toBeVisible();
       expect(
         screen.getByRole("link", { name: "View AL 2020 report" })
       ).toBeVisible();
@@ -285,7 +265,7 @@ describe("<ReportItem />", () => {
       ).toBeVisible();
     });
 
-    test("In Progress report items should not have basic accessibility issues", async () => {
+    test("In_Progress report items should not have basic accessibility issues", async () => {
       const { container } = render(adminUserInProgWrapper);
       const stateInProgResults = await axe(container);
       expect(stateInProgResults).toHaveNoViolations();
@@ -300,40 +280,34 @@ describe("<ReportItem />", () => {
 
   /**
    *********************
-   *Help Desk User (help.desk@test.com)
+   * Help Desk User (help.desk@test.com)
    *********************
    */
 
   const helpdeskUser = mockStore(helpdeskUserWithMultipleReports);
   const CMSHomepageHelpdeskAl2020Props = {
-    link1URL: "/views/sections/AL/2020/00/a",
-    name: "Alabama",
-    year: 2020,
-    statusText: "Certified and Submitted",
-    userRole: "HELP_DESK",
-    username: "Frank States",
-    lastChanged: "Mon Jun 27 2022 14:43:08 GMT-0400 (Eastern Daylight Time)",
+    actionLinkURL: "/views/sections/AL/2020/00/a",
+    stateCode: "AL",
+    status: "certified",
     timeZone: "America/New_York",
-    stateAbbr: "AL",
+    userRole: "HELP_DESK",
+    year: 2020,
   };
 
   const CMSHomepageHelpdeskAL2021Props = {
-    link1URL: "/views/sections/AL/2021/00/a",
-    name: "Alabama",
-    year: 2021,
-    statusText: "In Progress",
-    userRole: "HELP_DESK",
-    username: "al@test.com",
-    lastChanged: "2021-01-04 18:28:18.524133+00",
+    actionLinkURL: "/views/sections/AL/2021/00/a",
+    stateCode: "AL",
+    status: "in_progress",
     timeZone: "America/New_York",
-    stateAbbr: "AL",
+    userRole: "HELP_DESK",
+    year: 2021,
   };
 
-  describe("ReportItem viewed by an Help Desk User", () => {
+  describe("ReportItemLinks viewed by an Help Desk User", () => {
     const helpdeskUserInProgWrapper = (
       <Provider store={helpdeskUser}>
         <MemoryRouter initialEntries={["/"]}>
-          <ReportItem {...CMSHomepageHelpdeskAL2021Props} />
+          <ReportItemLinks {...CMSHomepageHelpdeskAL2021Props} />
         </MemoryRouter>
       </Provider>
     );
@@ -341,19 +315,13 @@ describe("<ReportItem />", () => {
     const helpdeskUserCertWrapper = (
       <Provider store={helpdeskUser}>
         <MemoryRouter initialEntries={["/"]}>
-          <ReportItem {...CMSHomepageHelpdeskAl2020Props} />
+          <ReportItemLinks {...CMSHomepageHelpdeskAl2020Props} />
         </MemoryRouter>
       </Provider>
     );
 
-    test("should render an In Progress report with passed props", () => {
+    test("should render an In_Progress report with passed props", () => {
       render(helpdeskUserInProgWrapper);
-      expect(screen.getByText("2021")).toBeVisible();
-      expect(screen.getByText("Alabama")).toBeVisible();
-      expect(screen.getByText("In Progress")).toBeVisible();
-      expect(
-        screen.getByText("2021-01-04 at 1:28:18 p.m. by al@test.com")
-      ).toBeVisible();
       expect(
         screen.getByRole("link", { name: "View AL 2021 report" })
       ).toBeVisible();
@@ -364,12 +332,6 @@ describe("<ReportItem />", () => {
 
     test("should render other reports statuses and time stamps properly", () => {
       render(helpdeskUserCertWrapper);
-      expect(screen.getByText("2020")).toBeVisible();
-      expect(screen.getByText("Alabama")).toBeVisible();
-      expect(screen.getByText("Certified and Submitted")).toBeVisible();
-      expect(
-        screen.getByText("2022-06-27 at 2:43:08 p.m. by Frank States")
-      ).toBeVisible();
       expect(
         screen.getByRole("link", { name: "View AL 2020 report" })
       ).toBeVisible();
@@ -381,7 +343,7 @@ describe("<ReportItem />", () => {
       ).not.toBeInTheDocument();
     });
 
-    test("In Progress report items should not have basic accessibility issues", async () => {
+    test("In_Progress report items should not have basic accessibility issues", async () => {
       const { container } = render(helpdeskUserInProgWrapper);
       const stateInProgResults = await axe(container);
       expect(stateInProgResults).toHaveNoViolations();
@@ -396,40 +358,34 @@ describe("<ReportItem />", () => {
 
   /**
    *********************
-   *Approver User (help.approver@test.com)
+   * Approver User (help.approver@test.com)
    *********************
    */
 
   const approverUser = mockStore(approverUserWithMultipleReports);
-  const CMSHomepageApproverAl2020Props = {
-    link1URL: "/views/sections/AL/2020/00/a",
-    name: "Alabama",
-    year: 2020,
-    statusText: "Certified and Submitted",
-    userRole: "CMS_APPROVER",
-    username: "Frank States",
-    lastChanged: "Mon Jun 27 2022 14:43:08 GMT-0400 (Eastern Daylight Time)",
+  const CMSHomepageApproverAL2020Props = {
+    actionLinkURL: "/views/sections/AL/2020/00/a",
+    stateCode: "AL",
+    status: "certified",
     timeZone: "America/New_York",
-    stateAbbr: "AL",
+    userRole: "CMS_APPROVER",
+    year: 2020,
   };
 
   const CMSHomepageApproverAL2021Props = {
-    link1URL: "/views/sections/AL/2021/00/a",
-    name: "Alabama",
-    year: 2021,
-    statusText: "In Progress",
-    userRole: "CMS_APPROVER",
-    username: "al@test.com",
-    lastChanged: "2021-01-04 18:28:18.524133+00",
+    actionLinkURL: "/views/sections/AL/2021/00/a",
+    stateCode: "AL",
+    status: "in_progress",
     timeZone: "America/New_York",
-    stateAbbr: "AL",
+    userRole: "CMS_APPROVER",
+    year: 2021,
   };
 
-  describe("ReportItem viewed by an Admin User", () => {
+  describe("ReportItemLinks viewed by an Admin User", () => {
     const approverUserInProgWrapper = (
       <Provider store={approverUser}>
         <MemoryRouter initialEntries={["/"]}>
-          <ReportItem {...CMSHomepageApproverAL2021Props} />
+          <ReportItemLinks {...CMSHomepageApproverAL2021Props} />
         </MemoryRouter>
       </Provider>
     );
@@ -437,19 +393,13 @@ describe("<ReportItem />", () => {
     const approverUserCertWrapper = (
       <Provider store={approverUser}>
         <MemoryRouter initialEntries={["/"]}>
-          <ReportItem {...CMSHomepageApproverAl2020Props} />
+          <ReportItemLinks {...CMSHomepageApproverAL2020Props} />
         </MemoryRouter>
       </Provider>
     );
 
-    test("should render an In Progress report with passed props", () => {
+    test("should render an In_Progress report with passed props", () => {
       render(approverUserInProgWrapper);
-      expect(screen.getByText("2021")).toBeVisible();
-      expect(screen.getByText("Alabama")).toBeVisible();
-      expect(screen.getByText("In Progress")).toBeVisible();
-      expect(
-        screen.getByText("2021-01-04 at 1:28:18 p.m. by al@test.com")
-      ).toBeVisible();
       expect(
         screen.getByRole("link", { name: "View AL 2021 report" })
       ).toBeVisible();
@@ -460,12 +410,6 @@ describe("<ReportItem />", () => {
 
     test("should render other reports statuses and time stamps properly", () => {
       render(approverUserCertWrapper);
-      expect(screen.getByText("2020")).toBeVisible();
-      expect(screen.getByText("Alabama")).toBeVisible();
-      expect(screen.getByText("Certified and Submitted")).toBeVisible();
-      expect(
-        screen.getByText("2022-06-27 at 2:43:08 p.m. by Frank States")
-      ).toBeVisible();
       expect(
         screen.getByRole("link", { name: "View AL 2020 report" })
       ).toBeVisible();
@@ -477,7 +421,7 @@ describe("<ReportItem />", () => {
       ).toBeVisible();
     });
 
-    test("In Progress report items should not have basic accessibility issues", async () => {
+    test("In_Progress report items should not have basic accessibility issues", async () => {
       const { container } = render(approverUserCertWrapper);
       const stateInProgResults = await axe(container);
       expect(stateInProgResults).toHaveNoViolations();

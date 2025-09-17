@@ -145,25 +145,30 @@ img {
       color: variables.$black;
       font-weight: variables.$font-weight-bold;
     }
+  }
 
-    .link {
-      background: none !important;
-      border: none;
-      padding: 0 !important;
-      font-family: inherit;
-      font-size: inherit;
+  .report-item-link {
+    background: none !important;
+    border: none;
+    margin-left: 10px;
+    padding: 0 !important;
+    font-family: inherit;
+    font-size: inherit;
+    color: #0071bc;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    cursor: pointer;
+
+    &:focus {
+      color: #4c2c92;
+    }
+
+    &:hover {
       color: #0071bc;
-      text-decoration: underline;
-      text-decoration-thickness: 1px;
-      cursor: pointer;
+    }
 
-      &:focus {
-        color: #4c2c92;
-      }
-
-      &:hover {
-        color: #0071bc;
-      }
+    &:first-child {
+      margin-left: 0;
     }
   }
 
