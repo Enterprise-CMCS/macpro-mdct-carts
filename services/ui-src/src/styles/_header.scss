@@ -16,7 +16,7 @@
 }
 
 .header {
-  background: variables.$brand-tertiary;
+  background: variables.$primary-darkest;
   color: variables.$white;
 
   @media only screen and (max-width: 767px) {
@@ -250,7 +250,7 @@
 **********************/
 .save {
   &-container {
-    background: variables.$lily-white;
+    background: variables.$secondary-lightest;
     box-shadow: rgba(0, 0, 0, 0.45) 0px 0px 10px;
 
     @media print {
