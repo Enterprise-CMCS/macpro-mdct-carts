@@ -92,7 +92,6 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     stackName: `${service}-${stage}`,
     api,
     environment,
-    additionalPolicies: [],
     isDev,
     tables,
     buckets: [attachmentsBucket],
