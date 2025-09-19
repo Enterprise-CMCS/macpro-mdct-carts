@@ -1,5 +1,5 @@
 import React from "react";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter } from "../../../util/testing/mockRouter";
 import { screen, render, fireEvent } from "@testing-library/react";
 import configureMockStore from "redux-mock-store";
 import ReportItem from "./ReportItem";

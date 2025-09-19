@@ -4,7 +4,12 @@ import { TextField } from "@cmsgov/design-system";
 //types
 import PropTypes from "prop-types";
 
-const DateRange = ({ onChange, question, year, ...props }) => {
+const DateRange = ({
+  onChange,
+  question,
+  year = new Date().getFullYear().toString(), // Returns the current year as a default,
+  ...props
+}) => {
   const [endRangeErr, setEndRangeErr] = useState(false);
   const [monthStart, setMonthStart] = useState("");
   const [monthEnd, setMonthEnd] = useState("");
@@ -281,10 +286,6 @@ DateRange.propTypes = {
   question: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
   year: PropTypes.string,
-};
-
-DateRange.defaultProps = {
-  year: new Date().getFullYear().toString(), // Returns the current year as a default
 };
 
 export default DateRange;

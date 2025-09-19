@@ -1,7 +1,6 @@
 import React from "react";
-import { MemoryRouter } from "react-router-dom";
-import { render, screen } from "@testing-library/react";
-import { act } from "react-dom/test-utils";
+import { MemoryRouter } from "../../util/testing/mockRouter";
+import { act, render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 // components

@@ -4,7 +4,13 @@ import { AccordionButton, AccordionPanel } from "@reach/accordion";
 
 import Question from "./Question";
 
-const Repeatable = ({ headerRef, number, question, type, printView }) => {
+const Repeatable = ({
+  headerRef,
+  number,
+  question,
+  type = null,
+  printView,
+}) => {
   const children = question.questions ? question.questions : [];
 
   const title = type ? `${type} ${number}` : `${number}`;
@@ -32,10 +38,6 @@ Repeatable.propTypes = {
   question: PropTypes.object.isRequired,
   type: PropTypes.string,
   printView: PropTypes.bool,
-};
-
-Repeatable.defaultProps = {
-  type: null,
 };
 
 export { Repeatable };

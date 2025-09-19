@@ -2,8 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import Integer from "./Integer";
 
-const Money = ({ ...props }) => {
-  return <Integer {...props} inputMode="currency" mask="currency" />;
+const Money = ({ disabled = false, printView = false, ...props }) => {
+  return (
+    <Integer
+      {...props}
+      disabled={disabled}
+      printView={printView}
+      inputMode="currency"
+      mask="currency"
+    />
+  );
 };
 Money.propTypes = {
   className: PropTypes.string,
@@ -21,9 +29,6 @@ Money.propTypes = {
   question: PropTypes.object.isRequired,
   value: PropTypes.string,
 };
-Money.defaultProps = {
-  disabled: false,
-  printView: false,
-};
+
 export { Money };
 export default Money;

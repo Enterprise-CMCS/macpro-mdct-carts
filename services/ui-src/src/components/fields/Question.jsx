@@ -214,10 +214,5 @@ Question.propTypes = {
   printView: PropTypes.bool,
   setAnswer: PropTypes.func,
 };
-Question.defaultProps = {
-  disabled: false,
-  hideNumber: false,
-  printView: false,
-};
 
 export default Question;

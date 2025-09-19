@@ -64,7 +64,7 @@ const Integer = ({
   onClick,
   question,
   prevYear,
-  printView,
+  printView = false,
   value,
   ...props
 }) => {
@@ -145,10 +145,6 @@ Integer.propTypes = {
   printView: PropTypes.bool,
   question: PropTypes.object.isRequired,
   value: PropTypes.string,
-};
-Integer.defaultProps = {
-  disabled: false,
-  printView: false,
 };
 
 export default Integer;
