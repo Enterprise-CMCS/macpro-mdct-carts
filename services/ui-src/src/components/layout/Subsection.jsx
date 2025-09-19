@@ -40,8 +40,5 @@ Subsection.propTypes = {
   subsectionId: PropTypes.string.isRequired,
   printView: PropTypes.bool,
 };
-Subsection.defaultProps = {
-  text: null,
-};
 
 export default Subsection;

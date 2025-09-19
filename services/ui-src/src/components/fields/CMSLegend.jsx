@@ -3,7 +3,13 @@ import PropTypes from "prop-types";
 import Text from "../layout/Text";
 import { generateQuestionNumber } from "../utils/helperFunctions";
 
-const CMSLegend = ({ hideNumber, hint, id, label, questionType }) => {
+const CMSLegend = ({
+  hideNumber = false,
+  hint = "",
+  id,
+  label,
+  questionType,
+}) => {
   let labelBits = generateQuestionNumber(id);
 
   if (
@@ -38,10 +44,6 @@ CMSLegend.propTypes = {
   id: PropTypes.string,
   label: PropTypes.string.isRequired,
   questionType: PropTypes.string.isRequired,
-};
-CMSLegend.defaultProps = {
-  hideNumber: false,
-  hint: "",
 };
 
 export { CMSLegend };
