@@ -14,6 +14,7 @@ const dateString = new Date().toLocaleDateString("en-GB", {
   day: "numeric",
   month: "long",
   year: "numeric",
+  timeZone: "America/New_York",
 });
 
 async function run() {
