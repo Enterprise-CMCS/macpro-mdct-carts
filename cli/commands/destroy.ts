@@ -12,20 +12,12 @@ const confirmDestroyCommand = async (stack: string) => {
   const orange = "\x1b[38;5;208m";
   const reset = "\x1b[0m";
 
-  const rl = readline.createInterface({
+  const readline = createInterface({
     input: process.stdin,
     output: process.stdout,
   });
-  const question = async (message: string) => {
-    return new Promise((resolve) => {
-      rl.question(message, (answer) => {
-        resolve(answer);
-        rl.close();
-      });
-    });
-  };
 
-  const confirmation = await question(`
+  const confirmation = await readline.question(`
 ${orange}********************************* STOP *******************************
 You've requested a destroy for:
 
