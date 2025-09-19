@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { Button } from "@cmsgov/design-system";
 import { MultiSelect } from "react-multi-select-component";
 // components
-import ReportItem from "./ReportItem";
+import ReportItemLinks from "./ReportItemLinks";
+import SortableTable, { generateColumns } from "./SortableTable";
 import { DropdownOption } from "../../fields/DropdownOption";
+// types
+import { AppRoles } from "../../../types";
 // utils
 import { getAllStateStatuses } from "../../../actions/initial";
 import { selectFormStatuses, selectYears } from "../../../store/selectors";
-// types
-import { STATUS_MAPPING, AppRoles } from "../../../types";
+import mapStatesData from "../../utils/mapStatesData";
 
 const CMSHomepage = () => {
   const statusList = [
@@ -71,21 +73,21 @@ const CMSHomepage = () => {
   };
 
   const filterReports = () => {
-    let yearFilter = () => {};
-    let stateFilter = () => {};
-    let statusFilter = () => {};
+    let yearFilter = () => true;
+    let stateFilter = () => true;
+    let statusFilter = () => true;
 
-    yearIds.length > 0
-      ? (yearFilter = (record) => yearIds.includes(record.year))
-      : (yearFilter = () => true);
+    if (yearIds.length > 0) {
+      yearFilter = (record) => yearIds.includes(record.year);
+    }
 
-    stateIds.length > 0
-      ? (stateFilter = (record) => stateIds.includes(record.stateCode))
-      : (stateFilter = () => true);
+    if (stateIds.length > 0) {
+      stateFilter = (record) => stateIds.includes(record.stateCode);
+    }
 
-    statusIds.length > 0
-      ? (statusFilter = (record) => statusIds.includes(record.status))
-      : (statusFilter = () => true);
+    if (statusIds.length > 0) {
+      statusFilter = (record) => statusIds.includes(record.status);
+    }
 
     const withFilters = allStateStatuses
       .filter(yearFilter)
@@ -115,6 +117,58 @@ const CMSHomepage = () => {
   } else {
     stateStatuses = filteredStatuses;
   }
+
+  stateStatuses = stateStatuses
+    .filter(
+      (state) =>
+        state &&
+        !["status", "lastChanged", "username", undefined].includes(
+          state.stateCode
+        )
+    )
+    .sort((a, b) => new Date(b.lastChanged) - new Date(a.lastChanged));
+
+  // Sortable table settings
+  const data = useMemo(
+    () => mapStatesData(stateStatuses, false),
+    [stateStatuses]
+  );
+
+  const customCells = (headKey, value, originalRowData) => {
+    const { entity } = originalRowData;
+    const { stateCode, status, year } = entity;
+    const actionLinkURL = `/views/sections/${stateCode}/${year}/00/a`;
+
+    switch (headKey) {
+      case "stateName":
+      case "year": {
+        return <span className="name">{value}</span>;
+      }
+      case "actions": {
+        return (
+          <ReportItemLinks
+            actionLinkURL={actionLinkURL}
+            stateCode={stateCode}
+            status={status}
+            userRole={currentUserRole}
+            year={year}
+          />
+        );
+      }
+      default:
+        return value;
+    }
+  };
+
+  const sortableHeadRow = {
+    year: { header: "Year" },
+    stateName: { header: "Report" },
+    statusText: { header: "Status" },
+    lastEdited: { header: "Last Edited" },
+    actions: { header: "Actions", sort: false },
+  };
+
+  const columns = generateColumns(sortableHeadRow, true, customCells);
 
   return (
     <div className="ds-l-container">
@@ -202,58 +256,8 @@ const CMSHomepage = () => {
                     </h2>
                   </div>
                   <div className="ds-l-row">
-                    <div className="reports ds-l-col--12">
-                      <table
-                        className="carts-report preview__grid"
-                        aria-labelledby="reports-heading"
-                      >
-                        <thead>
-                          <tr className="report-header ds-l-row">
-                            <th className="ds-l-col--1">Year</th>
-                            <th className="ds-l-col--2">Report</th>
-                            <th className="ds-l-col--2">Status</th>
-                            <th className="ds-l-col--3">Last Edited</th>
-                            <th className="ds-l-col--4">Actions</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {stateStatuses
-                            ?.sort((a, b) =>
-                              a.lastChanged > b.lastChanged ? -1 : 1
-                            )
-                            .map(
-                              ({
-                                state,
-                                stateCode,
-                                status,
-                                year,
-                                username,
-                                lastChanged,
-                              }) => {
-                                return (
-                                  <div>
-                                    {stateCode !== "status" &&
-                                      stateCode !== "lastChanged" &&
-                                      stateCode !== "username" &&
-                                      stateCode !== undefined && (
-                                        <ReportItem
-                                          key={`${stateCode} - ${year}`}
-                                          link1URL={`/views/sections/${stateCode}/${year}/00/a`}
-                                          name={state}
-                                          year={year}
-                                          statusText={STATUS_MAPPING[status]}
-                                          userRole={currentUserRole}
-                                          username={username}
-                                          lastChanged={lastChanged}
-                                          stateAbbr={stateCode}
-                                        />
-                                      )}
-                                  </div>
-                                );
-                              }
-                            )}
-                        </tbody>
-                      </table>
+                    <div className="reports">
+                      <SortableTable columns={columns} data={data} />
                     </div>
                   </div>
                 </div>
