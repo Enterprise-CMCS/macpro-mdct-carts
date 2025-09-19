@@ -13,11 +13,10 @@ interface CreateDataComponentsProps {
   scope: Construct;
   stage: string;
   isDev: boolean;
-  customResourceRole: iam.Role;
 }
 
 export function createDataComponents(props: CreateDataComponentsProps) {
-  const { scope, stage, isDev, customResourceRole } = props;
+  const { scope, stage, isDev } = props;
 
   const tables = [
     new DynamoDBTable(scope, "Acs", {
@@ -26,7 +25,7 @@ export function createDataComponents(props: CreateDataComponentsProps) {
       name: "acs",
       partitionKey: { name: "stateId", type: dynamodb.AttributeType.STRING },
       sortKey: { name: "year", type: dynamodb.AttributeType.NUMBER },
-    }).identifiers,
+    }),
 
     new DynamoDBTable(scope, "Fmap", {
       stage,
@@ -34,14 +33,14 @@ export function createDataComponents(props: CreateDataComponentsProps) {
       name: "fmap",
       partitionKey: { name: "fiscalYear", type: dynamodb.AttributeType.NUMBER },
       sortKey: { name: "stateId", type: dynamodb.AttributeType.STRING },
-    }).identifiers,
+    }),
 
     new DynamoDBTable(scope, "State", {
       stage,
       isDev,
       name: "state",
       partitionKey: { name: "code", type: dynamodb.AttributeType.STRING },
-    }).identifiers,
+    }),
 
     new DynamoDBTable(scope, "StateStatus", {
       stage,
@@ -49,7 +48,7 @@ export function createDataComponents(props: CreateDataComponentsProps) {
       name: "state-status",
       partitionKey: { name: "stateId", type: dynamodb.AttributeType.STRING },
       sortKey: { name: "year", type: dynamodb.AttributeType.NUMBER },
-    }).identifiers,
+    }),
 
     new DynamoDBTable(scope, "Section", {
       stage,
@@ -57,7 +56,7 @@ export function createDataComponents(props: CreateDataComponentsProps) {
       name: "section",
       partitionKey: { name: "pk", type: dynamodb.AttributeType.STRING },
       sortKey: { name: "sectionId", type: dynamodb.AttributeType.NUMBER },
-    }).identifiers,
+    }),
 
     new DynamoDBTable(scope, "SectionBase", {
       stage,
@@ -65,7 +64,7 @@ export function createDataComponents(props: CreateDataComponentsProps) {
       name: "section-base",
       partitionKey: { name: "year", type: dynamodb.AttributeType.NUMBER },
       sortKey: { name: "sectionId", type: dynamodb.AttributeType.NUMBER },
-    }).identifiers,
+    }),
 
     new DynamoDBTable(scope, "StageEnrollmentCounts", {
       stage,
@@ -73,7 +72,7 @@ export function createDataComponents(props: CreateDataComponentsProps) {
       name: "stg-enrollment-counts",
       partitionKey: { name: "pk", type: dynamodb.AttributeType.STRING },
       sortKey: { name: "entryKey", type: dynamodb.AttributeType.STRING },
-    }).identifiers,
+    }),
 
     new DynamoDBTable(scope, "Uploads", {
       stage,
@@ -84,7 +83,7 @@ export function createDataComponents(props: CreateDataComponentsProps) {
         type: dynamodb.AttributeType.STRING,
       },
       sortKey: { name: "fileId", type: dynamodb.AttributeType.STRING },
-    }).identifiers,
+    }),
   ];
   const seedDataFunction = new Lambda(scope, "seedData", {
     stackName: `data-${stage}`,
@@ -92,21 +91,6 @@ export function createDataComponents(props: CreateDataComponentsProps) {
     entry: "services/database/handlers/seed/seed.js",
     handler: "handler",
     timeout: Duration.seconds(900),
-    additionalPolicies: [
-      new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        actions: [
-          "dynamodb:DescribeTable",
-          "dynamodb:Query",
-          "dynamodb:Scan",
-          "dynamodb:GetItem",
-          "dynamodb:PutItem",
-          "dynamodb:UpdateItem",
-          "dynamodb:DeleteItem",
-        ],
-        resources: ["*"],
-      }),
-    ],
     memorySize: 1024,
     environment: {
       dynamoPrefix: stage,
@@ -126,6 +110,10 @@ export function createDataComponents(props: CreateDataComponentsProps) {
     },
     isDev,
   }).lambda;
+
+  for (const ddbTable of tables) {
+    ddbTable.table.grantReadWriteData(seedDataFunction);
+  }
 
   const seedDataInvoke = new cr.AwsCustomResource(
     scope,
@@ -162,7 +150,6 @@ export function createDataComponents(props: CreateDataComponentsProps) {
           resources: [seedDataFunction.functionArn],
         }),
       ]),
-      role: customResourceRole,
       resourceType: "Custom::InvokeSeedDataFunction",
     }
   );
