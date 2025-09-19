@@ -29,6 +29,7 @@ export const watch = {
     });
     await lambdaClient.send(lambdaCommand);
 
+    await downloadClamAvLayer();
     await Promise.all([
       await runCommand(
         "CDK watch",
