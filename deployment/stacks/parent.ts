@@ -6,7 +6,6 @@ import { createUiAuthComponents } from "./ui-auth";
 import { createUiComponents } from "./ui";
 import { createApiComponents } from "./api";
 import { deployFrontend } from "./deployFrontend";
-import { createCustomResourceRole } from "./customResourceRole";
 import { isLocalStack } from "../local/util";
 import { createUploadsComponents } from "./uploads";
 import { createBigmacStreamsComponents } from "./bigmac-streams";
@@ -31,8 +30,6 @@ export class ParentStack extends Stack {
 
     const attachmentsBucketName = `uploads-${stage}-attachments-${Aws.ACCOUNT_ID}`;
 
-    const customResourceRole = createCustomResourceRole({ ...commonProps });
-
     const loggingBucket = s3.Bucket.fromBucketName(
       this,
       "LoggingBucket",
@@ -41,19 +38,18 @@ export class ParentStack extends Stack {
 
     const { tables } = createDataComponents({
       ...commonProps,
-      customResourceRole,
+    });
+
+    const { attachmentsBucket } = createUploadsComponents({
+      ...commonProps,
+      loggingBucket,
+      attachmentsBucketName: attachmentsBucketName!,
     });
 
     const { apiGatewayRestApiUrl, restApiId } = createApiComponents({
       ...commonProps,
       tables,
-      attachmentsBucketName: attachmentsBucketName!,
-    });
-
-    createUploadsComponents({
-      ...commonProps,
-      loggingBucket,
-      attachmentsBucketName: attachmentsBucketName!,
+      attachmentsBucket,
     });
 
     if (isLocalStack) {
@@ -76,7 +72,6 @@ export class ParentStack extends Stack {
       createUiAuthComponents({
         ...commonProps,
         applicationEndpointUrl,
-        customResourceRole,
         restApiId,
       });
 
@@ -91,7 +86,6 @@ export class ParentStack extends Stack {
       userPoolId,
       userPoolClientId,
       userPoolClientDomain: `${userPoolDomainName}.auth.${Aws.REGION}.amazoncognito.com`,
-      customResourceRole,
       attachmentsBucketName: attachmentsBucketName!,
     });
 

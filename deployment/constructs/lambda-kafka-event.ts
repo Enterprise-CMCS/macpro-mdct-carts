@@ -3,11 +3,13 @@ import {
   aws_iam as iam,
   aws_lambda as lambda,
   aws_logs as logs,
+  aws_s3 as s3,
   aws_lambda_nodejs as lambda_nodejs,
   Duration,
   RemovalPolicy,
 } from "aws-cdk-lib";
 import { createHash } from "crypto";
+import { DynamoDBTable } from "./dynamodb-table";
 
 interface LambdaKafkaEventProps
   extends Partial<lambda_nodejs.NodejsFunctionProps> {
@@ -19,6 +21,8 @@ interface LambdaKafkaEventProps
   consumerGroupId: string;
   stackName: string;
   isDev: boolean;
+  tables?: DynamoDBTable[];
+  buckets?: s3.IBucket[];
 }
 
 export class LambdaKafkaEventSource extends Construct {
@@ -39,38 +43,10 @@ export class LambdaKafkaEventSource extends Construct {
       consumerGroupId,
       stackName,
       isDev,
+      tables = [],
+      buckets = [],
       ...restProps
     } = props;
-
-    const role = new iam.Role(this, `${id}LambdaExecutionRole`, {
-      assumedBy: new iam.ServicePrincipal("lambda.amazonaws.com"),
-      managedPolicies: [
-        iam.ManagedPolicy.fromAwsManagedPolicyName(
-          "service-role/AWSLambdaVPCAccessExecutionRole"
-        ),
-      ],
-      inlinePolicies: {
-        LambdaPolicy: new iam.PolicyDocument({
-          statements: [
-            new iam.PolicyStatement({
-              effect: iam.Effect.ALLOW,
-              actions: [
-                "logs:CreateLogGroup",
-                "logs:CreateLogStream",
-                "logs:PutLogEvents",
-              ],
-              resources: ["arn:aws:logs:*:*:*"],
-            }),
-            new iam.PolicyStatement({
-              effect: iam.Effect.ALLOW,
-              actions: ["ec2:DescribeSecurityGroups", "ec2:DescribeVpcs"],
-              resources: ["*"],
-            }),
-            ...additionalPolicies,
-          ],
-        }),
-      },
-    });
 
     const logGroup = new logs.LogGroup(this, `${id}LogGroup`, {
       logGroupName: `/aws/lambda/${stackName}-${id}`,
@@ -84,7 +60,6 @@ export class LambdaKafkaEventSource extends Construct {
       runtime: lambda.Runtime.NODEJS_20_X,
       timeout,
       memorySize,
-      role,
       bundling: {
         assetHash: createHash("sha256")
           .update(`${Date.now()}-${id}`)
@@ -96,6 +71,10 @@ export class LambdaKafkaEventSource extends Construct {
       logGroup,
       ...restProps,
     });
+
+    for (const stmt of additionalPolicies) {
+      this.lambda.addToRolePolicy(stmt);
+    }
 
     new lambda.CfnEventSourceMapping(scope, `${id}KafkaEventSourceMapping`, {
       functionName: this.lambda.functionArn,
@@ -116,5 +95,16 @@ export class LambdaKafkaEventSource extends Construct {
       ],
       maximumBatchingWindowInSeconds: 30,
     });
+
+    for (const ddbTable of tables) {
+      ddbTable.table.grantReadWriteData(this.lambda);
+      if (ddbTable.table.tableStreamArn) {
+        ddbTable.table.grantStreamRead(this.lambda);
+      }
+    }
+
+    for (const bucket of buckets) {
+      bucket.grantReadWrite(this.lambda);
+    }
   }
 }
