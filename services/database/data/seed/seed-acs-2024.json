@@ -1,0 +1,418 @@
+[
+  {
+    "stateId": "US",
+    "year": 2024,
+    "numberUninsured": 2246000,
+    "numberUninsuredMoe": 47000,
+    "percentUninsured": 3.0,
+    "percentUninsuredMoe": 0.1
+  },
+  {
+    "stateId": "AL",
+    "year": 2024,
+    "numberUninsured": 22000,
+    "numberUninsuredMoe": 4000,
+    "percentUninsured": 1.9,
+    "percentUninsuredMoe": 0.4
+  },
+  {
+    "stateId": "AK",
+    "year": 2024,
+    "numberUninsured": 5000,
+    "numberUninsuredMoe": 2000,
+    "percentUninsured": 2.6,
+    "percentUninsuredMoe": 0.9
+  },
+  {
+    "stateId": "AZ",
+    "year": 2024,
+    "numberUninsured": 79000,
+    "numberUninsuredMoe": 10000,
+    "percentUninsured": 4.8,
+    "percentUninsuredMoe": 0.6
+  },
+  {
+    "stateId": "AR",
+    "year": 2024,
+    "numberUninsured": 31000,
+    "numberUninsuredMoe": 5000,
+    "percentUninsured": 4.3,
+    "percentUninsuredMoe": 0.7
+  },
+  {
+    "stateId": "CA",
+    "year": 2024,
+    "numberUninsured": 120000,
+    "numberUninsuredMoe": 9000,
+    "percentUninsured": 1.4,
+    "percentUninsuredMoe": 0.1
+  },
+  {
+    "stateId": "CO",
+    "year": 2024,
+    "numberUninsured": 32000,
+    "numberUninsuredMoe": 6000,
+    "percentUninsured": 2.5,
+    "percentUninsuredMoe": 0.5
+  },
+  {
+    "stateId": "CT",
+    "year": 2024,
+    "numberUninsured": 6000,
+    "numberUninsuredMoe": 2000,
+    "percentUninsured": 0.8,
+    "percentUninsuredMoe": 0.2
+  },
+  {
+    "stateId": "DE",
+    "year": 2024,
+    "numberUninsured": 5000,
+    "numberUninsuredMoe": 3000,
+    "percentUninsured": 2.1,
+    "percentUninsuredMoe": 1.2
+  },
+  {
+    "stateId": "DC",
+    "year": 2024,
+    "numberUninsured": 3000,
+    "numberUninsuredMoe": 2000,
+    "percentUninsured": 2.1,
+    "percentUninsuredMoe": 1.3
+  },
+  {
+    "stateId": "FL",
+    "year": 2024,
+    "numberUninsured": 185000,
+    "numberUninsuredMoe": 13000,
+    "percentUninsured": 4.0,
+    "percentUninsuredMoe": 0.3
+  },
+  {
+    "stateId": "GA",
+    "year": 2024,
+    "numberUninsured": 108000,
+    "numberUninsuredMoe": 11000,
+    "percentUninsured": 4.1,
+    "percentUninsuredMoe": 0.4
+  },
+  {
+    "stateId": "HI",
+    "year": 2024,
+    "numberUninsured": 4000,
+    "numberUninsuredMoe": 1000,
+    "percentUninsured": 1.3,
+    "percentUninsuredMoe": 0.5
+  },
+  {
+    "stateId": "ID",
+    "year": 2024,
+    "numberUninsured": 17000,
+    "numberUninsuredMoe": 4000,
+    "percentUninsured": 3.5,
+    "percentUninsuredMoe": 0.8
+  },
+  {
+    "stateId": "IL",
+    "year": 2024,
+    "numberUninsured": 49000,
+    "numberUninsuredMoe": 8000,
+    "percentUninsured": 1.7,
+    "percentUninsuredMoe": 0.3
+  },
+  {
+    "stateId": "IN",
+    "year": 2024,
+    "numberUninsured": 48000,
+    "numberUninsuredMoe": 7000,
+    "percentUninsured": 3.0,
+    "percentUninsuredMoe": 0.4
+  },
+  {
+    "stateId": "IA",
+    "year": 2024,
+    "numberUninsured": 15000,
+    "numberUninsuredMoe": 3000,
+    "percentUninsured": 2.0,
+    "percentUninsuredMoe": 0.4
+  },
+  {
+    "stateId": "KS",
+    "year": 2024,
+    "numberUninsured": 25000,
+    "numberUninsuredMoe": 3000,
+    "percentUninsured": 3.5,
+    "percentUninsuredMoe": 0.5
+  },
+  {
+    "stateId": "KY",
+    "year": 2024,
+    "numberUninsured": 30000,
+    "numberUninsuredMoe": 5000,
+    "percentUninsured": 2.9,
+    "percentUninsuredMoe": 0.5
+  },
+  {
+    "stateId": "LA",
+    "year": 2024,
+    "numberUninsured": 25000,
+    "numberUninsuredMoe": 4000,
+    "percentUninsured": 2.2,
+    "percentUninsuredMoe": 0.4
+  },
+  {
+    "stateId": "ME",
+    "year": 2024,
+    "numberUninsured": 5000,
+    "numberUninsuredMoe": 1000,
+    "percentUninsured": 1.9,
+    "percentUninsuredMoe": 0.4
+  },
+  {
+    "stateId": "MD",
+    "year": 2024,
+    "numberUninsured": 28000,
+    "numberUninsuredMoe": 6000,
+    "percentUninsured": 2.0,
+    "percentUninsuredMoe": 0.5
+  },
+  {
+    "stateId": "MA",
+    "year": 2024,
+    "numberUninsured": 8000,
+    "numberUninsuredMoe": 3000,
+    "percentUninsured": 0.5,
+    "percentUninsuredMoe": 0.2
+  },
+  {
+    "stateId": "MI",
+    "year": 2024,
+    "numberUninsured": 38000,
+    "numberUninsuredMoe": 6000,
+    "percentUninsured": 1.7,
+    "percentUninsuredMoe": 0.3
+  },
+  {
+    "stateId": "MN",
+    "year": 2024,
+    "numberUninsured": 22000,
+    "numberUninsuredMoe": 4000,
+    "percentUninsured": 1.6,
+    "percentUninsuredMoe": 0.3
+  },
+  {
+    "stateId": "MS",
+    "year": 2024,
+    "numberUninsured": 22000,
+    "numberUninsuredMoe": 4000,
+    "percentUninsured": 3.1,
+    "percentUninsuredMoe": 0.5
+  },
+  {
+    "stateId": "MO",
+    "year": 2024,
+    "numberUninsured": 52000,
+    "numberUninsuredMoe": 7000,
+    "percentUninsured": 3.7,
+    "percentUninsuredMoe": 0.5
+  },
+  {
+    "stateId": "MT",
+    "year": 2024,
+    "numberUninsured": 9000,
+    "numberUninsuredMoe": 3000,
+    "percentUninsured": 3.6,
+    "percentUninsuredMoe": 1.1
+  },
+  {
+    "stateId": "NE",
+    "year": 2024,
+    "numberUninsured": 14000,
+    "numberUninsuredMoe": 3000,
+    "percentUninsured": 2.8,
+    "percentUninsuredMoe": 0.7
+  },
+  {
+    "stateId": "NV",
+    "year": 2024,
+    "numberUninsured": 28000,
+    "numberUninsuredMoe": 6000,
+    "percentUninsured": 3.9,
+    "percentUninsuredMoe": 0.8
+  },
+  {
+    "stateId": "NH",
+    "year": 2024,
+    "numberUninsured": 2000,
+    "numberUninsuredMoe": 1000,
+    "percentUninsured": 0.6,
+    "percentUninsuredMoe": 0.3
+  },
+  {
+    "stateId": "NJ",
+    "year": 2024,
+    "numberUninsured": 50000,
+    "numberUninsuredMoe": 7000,
+    "percentUninsured": 2.3,
+    "percentUninsuredMoe": 0.3
+  },
+  {
+    "stateId": "NM",
+    "year": 2024,
+    "numberUninsured": 12000,
+    "numberUninsuredMoe": 3000,
+    "percentUninsured": 2.6,
+    "percentUninsuredMoe": 0.7
+  },
+  {
+    "stateId": "NY",
+    "year": 2024,
+    "numberUninsured": 48000,
+    "numberUninsuredMoe": 7000,
+    "percentUninsured": 1.2,
+    "percentUninsuredMoe": 0.2
+  },
+  {
+    "stateId": "NC",
+    "year": 2024,
+    "numberUninsured": 72000,
+    "numberUninsuredMoe": 8000,
+    "percentUninsured": 3.0,
+    "percentUninsuredMoe": 0.3
+  },
+  {
+    "stateId": "ND",
+    "year": 2024,
+    "numberUninsured": 6000,
+    "numberUninsuredMoe": 2000,
+    "percentUninsured": 3.5,
+    "percentUninsuredMoe": 1.3
+  },
+  {
+    "stateId": "OH",
+    "year": 2024,
+    "numberUninsured": 74000,
+    "numberUninsuredMoe": 8000,
+    "percentUninsured": 2.8,
+    "percentUninsuredMoe": 0.3
+  },
+  {
+    "stateId": "OK",
+    "year": 2024,
+    "numberUninsured": 42000,
+    "numberUninsuredMoe": 4000,
+    "percentUninsured": 4.2,
+    "percentUninsuredMoe": 0.4
+  },
+  {
+    "stateId": "OR",
+    "year": 2024,
+    "numberUninsured": 8000,
+    "numberUninsuredMoe": 2000,
+    "percentUninsured": 1.0,
+    "percentUninsuredMoe": 0.3
+  },
+  {
+    "stateId": "PA",
+    "year": 2024,
+    "numberUninsured": 76000,
+    "numberUninsuredMoe": 8000,
+    "percentUninsured": 2.8,
+    "percentUninsuredMoe": 0.3
+  },
+  {
+    "stateId": "RI",
+    "year": 2024,
+    "numberUninsured": 5000,
+    "numberUninsuredMoe": 4000,
+    "percentUninsured": 2.4,
+    "percentUninsuredMoe": 1.7
+  },
+  {
+    "stateId": "SC",
+    "year": 2024,
+    "numberUninsured": 35000,
+    "numberUninsuredMoe": 5000,
+    "percentUninsured": 2.9,
+    "percentUninsuredMoe": 0.4
+  },
+  {
+    "stateId": "SD",
+    "year": 2024,
+    "numberUninsured": 7000,
+    "numberUninsuredMoe": 2000,
+    "percentUninsured": 3.2,
+    "percentUninsuredMoe": 1.0
+  },
+  {
+    "stateId": "TN",
+    "year": 2024,
+    "numberUninsured": 64000,
+    "numberUninsuredMoe": 8000,
+    "percentUninsured": 4.0,
+    "percentUninsuredMoe": 0.5
+  },
+  {
+    "stateId": "TX",
+    "year": 2024,
+    "numberUninsured": 580000,
+    "numberUninsuredMoe": 30000,
+    "percentUninsured": 7.3,
+    "percentUninsuredMoe": 0.4
+  },
+  {
+    "stateId": "UT",
+    "year": 2024,
+    "numberUninsured": 27000,
+    "numberUninsuredMoe": 5000,
+    "percentUninsured": 2.7,
+    "percentUninsuredMoe": 0.5
+  },
+  {
+    "stateId": "VT",
+    "year": 2024,
+    "numberUninsured": 1,
+    "numberUninsuredMoe": 1,
+    "percentUninsured": 1.3,
+    "percentUninsuredMoe": 0.8
+  },
+  {
+    "stateId": "VA",
+    "year": 2024,
+    "numberUninsured": 47000,
+    "numberUninsuredMoe": 7000,
+    "percentUninsured": 2.4,
+    "percentUninsuredMoe": 0.4
+  },
+  {
+    "stateId": "WA",
+    "year": 2024,
+    "numberUninsured": 23000,
+    "numberUninsuredMoe": 5000,
+    "percentUninsured": 1.3,
+    "percentUninsuredMoe": 0.3
+  },
+  {
+    "stateId": "WV",
+    "year": 2024,
+    "numberUninsured": 4000,
+    "numberUninsuredMoe": 1000,
+    "percentUninsured": 1.1,
+    "percentUninsuredMoe": 0.4
+  },
+  {
+    "stateId": "WI",
+    "year": 2024,
+    "numberUninsured": 26000,
+    "numberUninsuredMoe": 4000,
+    "percentUninsured": 2.0,
+    "percentUninsuredMoe": 0.3
+  },
+  {
+    "stateId": "WY",
+    "year": 2024,
+    "numberUninsured": 5000,
+    "numberUninsuredMoe": 2000,
+    "percentUninsured": 4.2,
+    "percentUninsuredMoe": 1.3
+  }
+]
