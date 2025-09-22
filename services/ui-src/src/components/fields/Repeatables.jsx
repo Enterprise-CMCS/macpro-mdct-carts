@@ -16,7 +16,7 @@ const Repeatables = ({
   disabled,
   question,
   removeRepeatableFrom,
-  type,
+  type = null,
   printView,
 }) => {
   const ref = useRef();
@@ -110,9 +110,6 @@ Repeatables.propTypes = {
   removeRepeatableFrom: PropTypes.func.isRequired,
   type: PropTypes.string,
   printView: PropTypes.bool,
-};
-Repeatables.defaultProps = {
-  type: null,
 };
 
 const mapDispatchToProps = {

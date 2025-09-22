@@ -2,9 +2,9 @@ import { Construct } from "constructs";
 import {
   aws_dynamodb as dynamodb,
   aws_iam as iam,
-  custom_resources as cr,
   CfnOutput,
   Duration,
+  triggers,
 } from "aws-cdk-lib";
 import { DynamoDBTable } from "../constructs/dynamodb-table";
 import { Lambda } from "../constructs/lambda";
@@ -13,11 +13,10 @@ interface CreateDataComponentsProps {
   scope: Construct;
   stage: string;
   isDev: boolean;
-  customResourceRole: iam.Role;
 }
 
 export function createDataComponents(props: CreateDataComponentsProps) {
-  const { scope, stage, isDev, customResourceRole } = props;
+  const { scope, stage, isDev } = props;
 
   const tables = [
     new DynamoDBTable(scope, "Acs", {
@@ -127,47 +126,10 @@ export function createDataComponents(props: CreateDataComponentsProps) {
     isDev,
   }).lambda;
 
-  const seedDataInvoke = new cr.AwsCustomResource(
-    scope,
-    "InvokeSeedDataFunction",
-    {
-      onCreate: {
-        service: "Lambda",
-        action: "invoke",
-        parameters: {
-          FunctionName: seedDataFunction.functionName,
-          InvocationType: "Event",
-          Payload: JSON.stringify({}),
-        },
-        physicalResourceId: cr.PhysicalResourceId.of(
-          `InvokeSeedDataFunction-${stage}`
-        ),
-      },
-      onUpdate: {
-        service: "Lambda",
-        action: "invoke",
-        parameters: {
-          FunctionName: seedDataFunction.functionName,
-          InvocationType: "Event",
-          Payload: JSON.stringify({}),
-        },
-        physicalResourceId: cr.PhysicalResourceId.of(
-          `InvokeSeedDataFunction-${stage}`
-        ),
-      },
-      onDelete: undefined,
-      policy: cr.AwsCustomResourcePolicy.fromStatements([
-        new iam.PolicyStatement({
-          actions: ["lambda:InvokeFunction"],
-          resources: [seedDataFunction.functionArn],
-        }),
-      ]),
-      role: customResourceRole,
-      resourceType: "Custom::InvokeSeedDataFunction",
-    }
-  );
-
-  seedDataInvoke.node.addDependency(seedDataFunction);
+  new triggers.Trigger(scope, "InvokeSeedDataFunction", {
+    handler: seedDataFunction,
+    invocationType: triggers.InvocationType.EVENT,
+  });
 
   new CfnOutput(scope, "SeedDataFunctionName", {
     value: seedDataFunction.functionName,

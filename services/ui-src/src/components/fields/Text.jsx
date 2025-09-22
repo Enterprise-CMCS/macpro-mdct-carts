@@ -128,8 +128,5 @@ Text.propTypes = {
   question: PropTypes.object.isRequired,
   rows: PropTypes.number,
 };
-Text.defaultProps = {
-  disabled: false,
-  multiline: false,
-};
+
 export default Text;
