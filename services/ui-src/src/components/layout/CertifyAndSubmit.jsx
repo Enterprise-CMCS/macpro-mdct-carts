@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { Button, Dialog } from "@cmsgov/design-system";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 // components
 import PageInfo from "./PageInfo";
 import FormActions from "./FormActions";

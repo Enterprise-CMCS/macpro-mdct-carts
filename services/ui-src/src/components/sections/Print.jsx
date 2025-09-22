@@ -3,7 +3,7 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@cmsgov/design-system";
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router";
 import { Helmet } from "react-helmet";
 // components
 import Title from "../layout/Title";
