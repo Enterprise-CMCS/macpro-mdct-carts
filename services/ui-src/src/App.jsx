@@ -20,7 +20,7 @@ function App() {
   useEffect(() => {
      if (!user) return;
     fireTealiumPageView(user, window.location.href, pathname);
-  }, [user]);
+  }, [user, pathname]);
 
   const authenticatedRoutes = (
     <>
