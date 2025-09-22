@@ -24,6 +24,8 @@ jobs:
         with:
           path: "**/node_modules"
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock', 'plugins/**') }}
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
       - name: Create a PR
         run: |
           node .github/create-pr.ts
