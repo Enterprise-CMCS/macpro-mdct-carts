@@ -1,7 +1,6 @@
 import { Construct } from "constructs";
 import {
   aws_apigateway as apigateway,
-  aws_iam as iam,
   aws_logs as logs,
   aws_s3 as s3,
   aws_wafv2 as wafv2,
