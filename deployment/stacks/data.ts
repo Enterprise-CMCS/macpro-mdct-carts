@@ -129,7 +129,6 @@ export function createDataComponents(props: CreateDataComponentsProps) {
   }).lambda;
 
 
-  seedDataInvoke.node.addDependency(seedDataFunction);
   new triggers.Trigger(scope, "InvokeSeedDataFunction", {
     handler: seedDataFunction,
     invocationType: triggers.InvocationType.EVENT,
