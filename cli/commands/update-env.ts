@@ -1,6 +1,6 @@
 import { execSync } from "child_process";
 
-const updateEnvFiles = async () => {
+const updateEnvFiles = () => {
   execSync("op inject --in-file .env.tpl --out-file .env --force", {
     stdio: "inherit",
   });
