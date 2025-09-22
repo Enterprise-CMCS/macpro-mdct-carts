@@ -5,7 +5,7 @@ const [owner, repo] = process.env.GITHUB_REPO!.split("/");
 const targetBranch = process.env.TARGET_BRANCH!;
 const sourceBranch = targetBranch === "production" ? "val" : "main";
 const prLabel = targetBranch === "production" ? "prod release" : "val release";
-const appName = process.env.APP_NAME_UPPER;
+const appName = process.env.APP_NAME_UPPER!;
 const prTitle =
   targetBranch === "production"
     ? `${appName} production release`
@@ -48,8 +48,10 @@ async function run() {
   });
 
   const filteredWorkDone = workDone.filter(
-    // filter out release commits
-    (msg) => !(msg.includes(appName) && msg.includes("release"))
+    // filter out release commits and merge commits
+    (msg) =>
+      !(msg.includes(appName) && msg.includes("release")) &&
+      !msg.startsWith("Merge branch")
   );
 
   let body = `## ${prLabel}\n\n`;
