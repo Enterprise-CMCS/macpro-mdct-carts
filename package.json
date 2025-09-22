@@ -45,7 +45,6 @@
     "@types/yargs": "^17.0.33",
     "@typescript-eslint/eslint-plugin": "5.18.0",
     "@typescript-eslint/parser": "5.18.0",
-    "@yarnpkg/lockfile": "^1.1.0",
     "aws-cdk": "^2.1028.0",
     "aws-cdk-local": "^2.19.2",
     "chromedriver": ">=135.0.1",
