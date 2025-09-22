@@ -18,7 +18,7 @@ function App() {
 
   // fire tealium page view on route change
   useEffect(() => {
-     if (!user) return;
+    if (!user) return;
     fireTealiumPageView(user, window.location.href, pathname);
   }, [user, pathname]);
 
