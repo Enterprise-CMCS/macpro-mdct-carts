@@ -13,14 +13,13 @@ import "./styles/app.scss";
 import { LocalLogins } from "./components/sections/login/LocalLogins";
 
 function App() {
-  const { pathname } = useLocation();
+  const { pathname, key } = useLocation();
   const { user, showLocalLogins, loginWithIDM } = useUser();
 
   // fire tealium page view on route change
   useEffect(() => {
-    if (!user) return;
     fireTealiumPageView(user, window.location.href, pathname);
-  }, [pathname]);
+  }, [key]);
 
   const authenticatedRoutes = (
     <>
