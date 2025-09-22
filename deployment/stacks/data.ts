@@ -2,7 +2,6 @@ import { Construct } from "constructs";
 import {
   aws_dynamodb as dynamodb,
   aws_iam as iam,
-  custom_resources as cr,
   CfnOutput,
   Duration,
   triggers,
@@ -14,11 +13,10 @@ interface CreateDataComponentsProps {
   scope: Construct;
   stage: string;
   isDev: boolean;
-  customResourceRole: iam.Role;
 }
 
 export function createDataComponents(props: CreateDataComponentsProps) {
-  const { scope, stage, isDev, customResourceRole } = props;
+  const { scope, stage, isDev } = props;
 
   const tables = [
     new DynamoDBTable(scope, "Acs", {
@@ -127,7 +125,6 @@ export function createDataComponents(props: CreateDataComponentsProps) {
     },
     isDev,
   }).lambda;
-
 
   new triggers.Trigger(scope, "InvokeSeedDataFunction", {
     handler: seedDataFunction,
