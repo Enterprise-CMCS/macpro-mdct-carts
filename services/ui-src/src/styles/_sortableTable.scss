@@ -21,7 +21,8 @@
     font-family: inherit;
     font-size: 0.8rem;
     font-weight: bold;
-    text-transform: uppercase;    
+    text-transform: uppercase;
+    white-space: nowrap;
   }
   .sortable-arrows {
     display: inline-block;
