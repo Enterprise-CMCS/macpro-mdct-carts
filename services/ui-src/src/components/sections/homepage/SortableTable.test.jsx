@@ -1,5 +1,5 @@
 import React from "react";
-import { act, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 // components
 import SortableTable, { generateColumns } from "./SortableTable";
@@ -50,9 +50,7 @@ describe("<SortableTable />", () => {
     expect(screen.getByRole("table")).toBeVisible();
 
     // Click once to sort ascending
-    await act(async () => {
-      await userEvent.click(screen.getByRole("button", { name: "ID" }));
-    });
+    await userEvent.click(screen.getByRole("button", { name: "ID" }));
 
     const cells = container.querySelectorAll("td");
     const columnHeader = screen.getByRole("columnheader", { name: "ID" });
@@ -65,10 +63,8 @@ describe("<SortableTable />", () => {
     const { container } = render(sortableTableComponent);
 
     // Click twice to sort descending
-    await act(async () => {
-      await userEvent.click(screen.getByRole("button", { name: "ID" }));
-      await userEvent.click(screen.getByRole("button", { name: "ID" }));
-    });
+    await userEvent.click(screen.getByRole("button", { name: "ID" }));
+    await userEvent.click(screen.getByRole("button", { name: "ID" }));
 
     const cells = container.querySelectorAll("td");
     const columnHeader = screen.getByRole("columnheader", { name: "ID" });
