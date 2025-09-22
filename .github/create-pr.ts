@@ -47,9 +47,14 @@ async function run() {
     return c.commit.message.split("\n")[0].replace(/\s*\(#\d+\)/, "");
   });
 
-  const body = `## ${prLabel}\n\n ### In this deployment:\n - ${workDone
-    .reverse()
-    .join("\n- ")}`;
+  const filteredWorkDone = workDone.filter(
+    // filter out release commits
+    (msg) => !(msg.includes(appName) && msg.includes("release"))
+  );
+
+  let body = `## ${prLabel}\n\n`;
+  body += "### In this deployment:\n";
+  body += `- ${filteredWorkDone.reverse().join("\n- ")}`;
 
   octokit.rest.pulls.update({
     owner,
