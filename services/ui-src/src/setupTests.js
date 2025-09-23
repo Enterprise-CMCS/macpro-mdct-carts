@@ -6,6 +6,9 @@
  */
 import "@testing-library/jest-dom";
 import "jest-axe/extend-expect";
+import { TextEncoder } from "util";
+
+global.TextEncoder = TextEncoder;
 
 global.window.env = {
   API_POSTGRES_URL: "fakeurl",

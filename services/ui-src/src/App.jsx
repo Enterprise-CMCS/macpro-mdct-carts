@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router";
 import { useUser } from "./hooks/authHooks";
 import { PostLogoutRedirect } from "./components/layout/PostLogoutRedirect";
 import AppRoutes from "./AppRoutes";
