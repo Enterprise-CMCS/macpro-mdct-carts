@@ -41,7 +41,7 @@ const HomepageStateUserInProgProps = {
   actionLinkURL: "/sections/2021/00",
   actionLinkText: "Edit",
   stateCode: "AL",
-  status: "in_progress",
+  status: "in progress",
   timeZone: "America/New_York",
   userRole: "STATE_USER",
   year: 2021,
@@ -79,7 +79,7 @@ describe("<ReportItemLinks />", () => {
       </Provider>
     );
 
-    test("should render an In_Progress report with passed props", () => {
+    test("should render an In Progress report with passed props", () => {
       render(stateUserInProgWrapper);
       expect(
         screen.getByRole("link", { name: "Edit AL 2021 report" })
@@ -99,7 +99,7 @@ describe("<ReportItemLinks />", () => {
       ).toBeVisible();
     });
 
-    test("In_Progress report items should not have basic accessibility issues", async () => {
+    test("In Progress report items should not have basic accessibility issues", async () => {
       const { container } = render(stateUserInProgWrapper);
       const stateInProgResults = await axe(container);
       expect(stateInProgResults).toHaveNoViolations();
@@ -131,7 +131,7 @@ describe("<ReportItemLinks />", () => {
   const CMSHomepageCMSUserAL2021Props = {
     actionLinkURL: "/views/sections/AL/2021/00/a",
     stateCode: "AL",
-    status: "in_progress",
+    status: "in progress",
     timeZone: "America/New_York",
     userRole: "CMS_USER",
     year: 2021,
@@ -154,7 +154,7 @@ describe("<ReportItemLinks />", () => {
       </Provider>
     );
 
-    test("should render an In_Progress report with passed props", () => {
+    test("should render an In Progress report with passed props", () => {
       render(cmsUserInProgWrapper);
       expect(
         screen.getByRole("link", { name: "View AL 2021 report" })
@@ -190,7 +190,7 @@ describe("<ReportItemLinks />", () => {
       expect(uncertifyReport).toHaveBeenCalledWith("AL", 2020);
     });
 
-    test("In_Progress report items should not have basic accessibility issues", async () => {
+    test("In Progress report items should not have basic accessibility issues", async () => {
       const { container } = render(cmsUserCertWrapper);
       const stateInProgResults = await axe(container);
       expect(stateInProgResults).toHaveNoViolations();
@@ -222,7 +222,7 @@ describe("<ReportItemLinks />", () => {
   const CMSHomepageAdminAL2021Props = {
     actionLinkURL: "/views/sections/AL/2021/00/a",
     stateCode: "AL",
-    status: "in_progress",
+    status: "in progress",
     timeZone: "America/New_York",
     userRole: "CMS_ADMIN",
     year: 2021,
@@ -245,7 +245,7 @@ describe("<ReportItemLinks />", () => {
       </Provider>
     );
 
-    test("should render an In_Progress report with passed props", () => {
+    test("should render an In Progress report with passed props", () => {
       render(adminUserInProgWrapper);
       expect(
         screen.getByRole("link", { name: "View AL 2021 report" })
@@ -265,7 +265,7 @@ describe("<ReportItemLinks />", () => {
       ).toBeVisible();
     });
 
-    test("In_Progress report items should not have basic accessibility issues", async () => {
+    test("In Progress report items should not have basic accessibility issues", async () => {
       const { container } = render(adminUserInProgWrapper);
       const stateInProgResults = await axe(container);
       expect(stateInProgResults).toHaveNoViolations();
@@ -297,7 +297,7 @@ describe("<ReportItemLinks />", () => {
   const CMSHomepageHelpdeskAL2021Props = {
     actionLinkURL: "/views/sections/AL/2021/00/a",
     stateCode: "AL",
-    status: "in_progress",
+    status: "in progress",
     timeZone: "America/New_York",
     userRole: "HELP_DESK",
     year: 2021,
@@ -320,7 +320,7 @@ describe("<ReportItemLinks />", () => {
       </Provider>
     );
 
-    test("should render an In_Progress report with passed props", () => {
+    test("should render an In Progress report with passed props", () => {
       render(helpdeskUserInProgWrapper);
       expect(
         screen.getByRole("link", { name: "View AL 2021 report" })
@@ -343,7 +343,7 @@ describe("<ReportItemLinks />", () => {
       ).not.toBeInTheDocument();
     });
 
-    test("In_Progress report items should not have basic accessibility issues", async () => {
+    test("In Progress report items should not have basic accessibility issues", async () => {
       const { container } = render(helpdeskUserInProgWrapper);
       const stateInProgResults = await axe(container);
       expect(stateInProgResults).toHaveNoViolations();
@@ -375,7 +375,7 @@ describe("<ReportItemLinks />", () => {
   const CMSHomepageApproverAL2021Props = {
     actionLinkURL: "/views/sections/AL/2021/00/a",
     stateCode: "AL",
-    status: "in_progress",
+    status: "in progress",
     timeZone: "America/New_York",
     userRole: "CMS_APPROVER",
     year: 2021,
@@ -398,7 +398,7 @@ describe("<ReportItemLinks />", () => {
       </Provider>
     );
 
-    test("should render an In_Progress report with passed props", () => {
+    test("should render an In Progress report with passed props", () => {
       render(approverUserInProgWrapper);
       expect(
         screen.getByRole("link", { name: "View AL 2021 report" })
@@ -421,7 +421,7 @@ describe("<ReportItemLinks />", () => {
       ).toBeVisible();
     });
 
-    test("In_Progress report items should not have basic accessibility issues", async () => {
+    test("In Progress report items should not have basic accessibility issues", async () => {
       const { container } = render(approverUserCertWrapper);
       const stateInProgResults = await axe(container);
       expect(stateInProgResults).toHaveNoViolations();

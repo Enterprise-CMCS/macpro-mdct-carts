@@ -150,14 +150,14 @@ img {
   .report-item-link {
     background: none !important;
     border: none;
-    margin-left: 10px;
-    padding: 0 !important;
+    color: #0071bc;
+    cursor: pointer;
     font-family: inherit;
     font-size: inherit;
-    color: #0071bc;
+    margin-left: 0.75rem;
+    padding: 0 !important;
     text-decoration: underline;
     text-decoration-thickness: 1px;
-    cursor: pointer;
 
     &:focus {
       color: #4c2c92;

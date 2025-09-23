@@ -87,7 +87,7 @@ describe("<SortableTable />", () => {
     render(sortableTableCustomComponent);
 
     const columnHeader = screen.getByRole("columnheader", { name: "Actions" });
-    const innerSpan = columnHeader.querySelector("span.sortable-hidden");
+    const innerSpan = columnHeader.querySelector("span.sortable-table-hidden");
     expect(innerSpan).toHaveTextContent("Actions");
   });
 

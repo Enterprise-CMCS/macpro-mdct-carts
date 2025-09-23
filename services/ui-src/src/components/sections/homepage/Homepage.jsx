@@ -84,7 +84,11 @@ const Homepage = ({ reportStatus }) => {
         </div>
         <div className="ds-l-row">
           <div className="reports">
-            <SortableTable columns={columns} data={data} />
+            <SortableTable
+              aria-labelledBy={"reports-heading"}
+              columns={columns}
+              data={data}
+            />
           </div>
         </div>
         <div className="ds-l-row">

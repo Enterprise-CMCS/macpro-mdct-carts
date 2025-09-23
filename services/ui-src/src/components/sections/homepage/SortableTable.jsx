@@ -24,7 +24,12 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-const SortableTable = ({ columns, data, initialSorting = [] }) => {
+const SortableTable = ({
+  "aria-labelledby": ariaLabelledBy,
+  columns,
+  data,
+  initialSorting = [],
+}) => {
   const headerRefs = useRef({});
   const [sorting, setSorting] = useState(initialSorting);
   const [columnFilters, setColumnFilters] = useState([]);
@@ -53,7 +58,7 @@ const SortableTable = ({ columns, data, initialSorting = [] }) => {
   }, [headerRefs.current]);
 
   return (
-    <TableRoot className="sortable-table" aria-labelledby="reports-heading">
+    <TableRoot className="sortable-table" aria-labelledby={ariaLabelledBy}>
       <Thead>
         {table.getHeaderGroups().map((headerGroup) => (
           <Tr className="report-header" key={headerGroup.id}>
@@ -71,7 +76,7 @@ const SortableTable = ({ columns, data, initialSorting = [] }) => {
                 <Th key={header.id} scope="col" {...ariaSort}>
                   {header.column.getCanSort() && (
                     <button
-                      className="sortable-button sortable-table-header"
+                      className="sortable-table-button sortable-table-header"
                       onClick={header.column.getToggleSortingHandler()}
                       aria-label={headerLabels[header.id]}
                       type="button"
@@ -82,7 +87,10 @@ const SortableTable = ({ columns, data, initialSorting = [] }) => {
                           header.getContext()
                         )}
                       </span>
-                      <span className="sortable-arrows" aria-hidden="true">
+                      <span
+                        className="sortable-table-arrows"
+                        aria-hidden="true"
+                      >
                         {!header.column.getIsSorted() && (
                           <FontAwesomeIcon icon={faArrowsUpDown} />
                         )}
@@ -163,7 +171,11 @@ export function generateColumns(headRow, isAdmin, customCellsCallback) {
       return columnHelper.accessor((row) => row[headKey], {
         id: headKey,
         header: () =>
-          hidden ? <span className="sortable-hidden">{header}</span> : header,
+          hidden ? (
+            <span className="sortable-table-hidden">{header}</span>
+          ) : (
+            header
+          ),
         cell: (info) => getCell(headKey, info),
         enableColumnFilter: hidden ? false : filter,
         enableSorting: hidden ? false : sort,
@@ -172,6 +184,7 @@ export function generateColumns(headRow, isAdmin, customCellsCallback) {
 }
 
 SortableTable.propTypes = {
+  "aria-labelledby": PropTypes.string,
   columns: PropTypes.array.isRequired,
   data: PropTypes.array.isRequired,
   initialSorting: PropTypes.array,

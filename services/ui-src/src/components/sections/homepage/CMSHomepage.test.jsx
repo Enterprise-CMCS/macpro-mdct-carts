@@ -57,10 +57,9 @@ describe("<CMSHomepage />", () => {
         selector: "span",
       }
     );
-
-    // Wait for SortableTable to update
     await user.click(alabamaDropdownOption);
     await user.click(screen.getByText("Filter", { selector: "button" }));
+
     expect(screen.getAllByRole("row").length).toBe(3);
     expect(screen.getAllByRole("cell", { name: "Alabama" }).length).toBe(2);
     expect(
@@ -85,10 +84,9 @@ describe("<CMSHomepage />", () => {
     const year2021DropdownOption = within(filterContainer).queryByText("2021", {
       selector: "span",
     });
-
-    // Wait for SortableTable to update
     await user.click(year2021DropdownOption);
     await user.click(screen.getByText("Filter", { selector: "button" }));
+
     expect(screen.getAllByRole("row").length).toBe(3);
     expect(screen.getAllByRole("cell", { name: "2021" }).length).toBe(2);
     expect(
@@ -108,10 +106,9 @@ describe("<CMSHomepage />", () => {
       selector: "span",
     });
     await user.click(yearFilterDropdown);
-
-    // Wait for SortableTable to update
     await user.click(screen.queryByText("Not Started"));
     await user.click(screen.getByText("Filter", { selector: "button" }));
+
     expect(screen.getAllByRole("row").length).toBe(1);
     expect(
       screen.queryByRole("cell", { name: "In Progress" })
@@ -132,17 +129,16 @@ describe("<CMSHomepage />", () => {
       selector: "span",
     });
     await user.click(yearFilterDropdown);
-
-    // Wait for SortableTable to update
     await user.click(screen.queryByText("Not Started"));
     await user.click(screen.getByText("Filter", { selector: "button" }));
+
     expect(screen.getAllByRole("row").length).toBe(1);
     expect(
       screen.queryByRole("cell", { name: "In Progress" })
     ).not.toBeInTheDocument();
 
-    // Wait for SortableTable to update
     await user.click(screen.getByText("Clear", { selector: "button" }));
+
     expect(screen.getAllByRole("row").length).toBe(4);
     expect(screen.getAllByRole("cell", { name: "In Progress" }).length).toBe(2);
     expect(

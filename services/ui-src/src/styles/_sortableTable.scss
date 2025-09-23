@@ -9,7 +9,7 @@
   font-family: "Open Sans", sans-serif;
   margin-top: 0;
 
-  .sortable-button {
+  .sortable-table-button {
     background-color: transparent;
     border: 0;
     cursor: pointer;
@@ -24,13 +24,13 @@
     text-transform: uppercase;
     white-space: nowrap;
   }
-  .sortable-arrows {
+  .sortable-table-arrows {
     display: inline-block;
     margin-left: 0.75rem;
     width: 10px;
   }
 
-  .sortable-hidden {
+  .sortable-table-hidden {
     border: 0;
     clip: rect(0, 0, 0, 0);
     margin: -1px;
