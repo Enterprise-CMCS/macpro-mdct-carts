@@ -179,9 +179,9 @@ const Question = ({
         />
 
         {/* If there are subquestions, wrap them so they are indented with the
-             blue line. But don't do it for the subquestions of a fieldset. If
-             the fieldset is a subchild, it will already be indented; if it's
-             not, then its children shouldn't be indented either. */}
+            blue line. But don't do it for the subquestions of a fieldset. If
+            the fieldset is a subchild, it will already be indented; if it's
+            not, then its children shouldn't be indented either. */}
         {shouldRenderChildren && (
           <div className="ds-c-choice__checkedChild">
             {question.questions.map((q, index) => (
@@ -213,11 +213,6 @@ Question.propTypes = {
   prevYear: PropTypes.object,
   printView: PropTypes.bool,
   setAnswer: PropTypes.func,
-};
-Question.defaultProps = {
-  disabled: false,
-  hideNumber: false,
-  printView: false,
 };
 
 export default Question;

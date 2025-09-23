@@ -2352,9 +2352,9 @@
                         "context_data": {
                           "conditional_display": {
                             "type": "conditional_display",
-                            "comment": "Interactive: Hide if 2025-03-a-01-02 is no or unanswered; noninteractive: hide if that's no.",
+                            "comment": "Interactive: Hide if 2025-03-a-01-03 is no or unanswered; noninteractive: hide if that's no.",
                             "hide_if": {
-                              "target": "$..*[?(@ && @.id=='2025-03-a-01-02')].answer.entry",
+                              "target": "$..*[?(@ && @.id=='2025-03-a-01-03')].answer.entry",
                               "values": {
                                 "interactive": [null, "no"],
                                 "noninteractive": ["no"]
@@ -4833,6 +4833,1294 @@
                     "type": "text_multiline",
                     "label": "Is there anything else you’d like to add about your data?",
                     "answer": { "entry": null }
+                  },
+                  {
+                    "hint": "",
+                    "type": "fieldset",
+                    "label": "Table 3a. Duration Measure, CHIP, New Enrollment",
+                    "questions": [],
+                    "fieldset_info": {
+                      "rows": [
+                        [
+                          {
+                            "contents": "3. Total number of children newly enrolled in CHIP between January and March 2024"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-a')].answer.entry"
+                            ]
+                          }
+                        ]
+                      ],
+                      "headers": [
+                        { "contents": "Measure" },
+                        { "contents": "All Children Ages 0-16" }
+                      ]
+                    },
+                    "fieldset_type": "synthesized_table",
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "hide_if": {
+                          "target": "$..[?(@ && @.id=='2025-03-c-05-02')].answer.entry",
+                          "values": {
+                            "interactive": ["yes", null],
+                            "noninteractive": ["yes", null]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "hint": "",
+                    "type": "fieldset",
+                    "label": "Table 3a. Duration Measure, CHIP, New Enrollment",
+                    "questions": [],
+                    "fieldset_info": {
+                      "rows": [
+                        [
+                          {
+                            "contents": "3. Total number of children newly enrolled in CHIP between January and March 2024"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          }
+                        ]
+                      ],
+                      "headers": [
+                        { "contents": "Measure" },
+                        { "contents": "All Children Ages 0-16" },
+                        { "contents": "Age <12 Months" },
+                        { "contents": "Ages 1-5" },
+                        { "contents": "Ages 6-12" },
+                        { "contents": "Ages 13-16" }
+                      ]
+                    },
+                    "fieldset_type": "synthesized_table",
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "hide_if": {
+                          "target": "$..[?(@ && @.id=='2025-03-c-05-02')].answer.entry",
+                          "values": {
+                            "interactive": ["no", null],
+                            "noninteractive": ["no", null]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "hint": "",
+                    "type": "fieldset",
+                    "label": "Table 3b. Duration Measure, CHIP, Enrollment 6 Months Later",
+                    "questions": [],
+                    "fieldset_info": {
+                      "rows": [
+                        [
+                          {
+                            "contents": "4. Total number of children continuously enrolled in CHIP"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-04-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-a')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "5. Total number of children with a break in CHIP coverage but re-enrolled in CHIP"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-05-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-a')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "6. Total number of children enrolled in Medicaid during CHIP coverage break"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-06-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-a')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "7. Total number of children disenrolled from CHIP"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-07-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-a')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "8. Total number of children enrolled in Medicaid after being disenrolled from CHIP"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-08-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-a')].answer.entry"
+                            ]
+                          }
+                        ]
+                      ],
+                      "headers": [
+                        { "contents": "Measure" },
+                        { "contents": "All Children Ages 0-16" }
+                      ]
+                    },
+                    "fieldset_type": "synthesized_table",
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "hide_if": {
+                          "target": "$..[?(@ && @.id=='2025-03-c-05-02')].answer.entry",
+                          "values": {
+                            "interactive": ["yes", null],
+                            "noninteractive": ["yes", null]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "hint": "",
+                    "type": "fieldset",
+                    "label": "Table 3b. Duration Measure, CHIP, Enrollment 6 months later",
+                    "questions": [],
+                    "fieldset_info": {
+                      "rows": [
+                        [
+                          {
+                            "contents": "4. Total number of children continuously enrolled in CHIP"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-04-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-04-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-04-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-04-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-04-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-04-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-04-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-04-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "5. Total number of children with a break in CHIP coverage but re-enrolled in CHIP"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-05-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-05-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-05-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-05-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-05-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-05-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-05-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-05-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "6. Total number of children enrolled in Medicaid during CHIP coverage break"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-06-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-06-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-06-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-06-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-06-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-06-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-06-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-06-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "7. Total number of children disenrolled from CHIP"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-07-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-07-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-07-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-07-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-07-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-07-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-07-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-07-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "8. Total number of children enrolled in Medicaid after being disenrolled from CHIP"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-08-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-08-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-08-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-08-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-08-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-08-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-08-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-08-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          }
+                        ]
+                      ],
+                      "headers": [
+                        { "contents": "Measure" },
+                        { "contents": "All Children Ages 0-16" },
+                        { "contents": "Age <12 Months" },
+                        { "contents": "Ages 1-5" },
+                        { "contents": "Ages 6-12" },
+                        { "contents": "Ages 13-16" }
+                      ]
+                    },
+                    "fieldset_type": "synthesized_table",
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "hide_if": {
+                          "target": "$..[?(@ && @.id=='2025-03-c-05-02')].answer.entry",
+                          "values": {
+                            "interactive": ["no", null],
+                            "noninteractive": ["no", null]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "hint": "",
+                    "type": "fieldset",
+                    "label": "Table 3c. Duration Measure, CHIP, Enrollment 12 Months Later",
+                    "questions": [],
+                    "fieldset_info": {
+                      "rows": [
+                        [
+                          {
+                            "contents": "10. Total number of children continuously enrolled in CHIP"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-10-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-a')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "11. Total number of children with a break in CHIP coverage but re-enrolled in CHIP"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-11-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-a')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "12. Total number of children enrolled in Medicaid during CHIP coverage break"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-12-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-a')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "13. Total number of children disenrolled from CHIP"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-13-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-a')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "14. Total number of children enrolled in Medicaid after being disenrolled from CHIP"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-14-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-a')].answer.entry"
+                            ]
+                          }
+                        ]
+                      ],
+                      "headers": [
+                        { "contents": "Measure" },
+                        { "contents": "All Children Ages 0-16" }
+                      ]
+                    },
+                    "fieldset_type": "synthesized_table",
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "hide_if": {
+                          "target": "$..[?(@ && @.id=='2025-03-c-05-02')].answer.entry",
+                          "values": {
+                            "interactive": ["yes", null],
+                            "noninteractive": ["yes", null]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "hint": "",
+                    "type": "fieldset",
+                    "label": "Table 3c. Duration Measure, CHIP, Enrollment 12 months later",
+                    "questions": [],
+                    "fieldset_info": {
+                      "rows": [
+                        [
+                          {
+                            "contents": "10. Total number of children continuously enrolled in CHIP"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-10-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-10-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-10-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-10-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-10-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-10-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-10-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-10-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "11. Total number of children with a break in CHIP coverage but re-enrolled in CHIP"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-11-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-11-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-11-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-11-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-11-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-11-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-11-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-11-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "12. Total number of children enrolled in Medicaid during CHIP coverage break"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-12-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-12-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-12-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-12-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-12-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-12-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-12-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-12-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "13. Total number of children disenrolled from CHIP"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-13-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-13-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-13-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-13-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-13-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-13-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-13-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-13-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "14. Total number of children enrolled in Medicaid after being disenrolled from CHIP"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-14-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-14-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-14-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-14-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-14-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-14-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-14-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-14-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          }
+                        ]
+                      ],
+                      "headers": [
+                        { "contents": "Measure" },
+                        { "contents": "All Children Ages 0-16" },
+                        { "contents": "Age <12 Months" },
+                        { "contents": "Ages 1-5" },
+                        { "contents": "Ages 6-12" },
+                        { "contents": "Ages 13-16" }
+                      ]
+                    },
+                    "fieldset_type": "synthesized_table",
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "hide_if": {
+                          "target": "$..[?(@ && @.id=='2025-03-c-05-02')].answer.entry",
+                          "values": {
+                            "interactive": ["no", null],
+                            "noninteractive": ["no", null]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "hint": "",
+                    "type": "fieldset",
+                    "label": "Table 3d. Duration Measure, CHIP, Enrollment 18 Months Later",
+                    "questions": [],
+                    "fieldset_info": {
+                      "rows": [
+                        [
+                          {
+                            "contents": "15. Total number of children continuously enrolled in CHIP"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-15-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-a')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "16. Total number of children with a break in CHIP coverage but re-enrolled in CHIP"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-16-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-a')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "17. Total number of children enrolled in Medicaid during CHIP coverage break"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-17-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-a')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "18. Total number of children disenrolled from CHIP"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-18-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-a')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "19. Total number of children enrolled in Medicaid after being disenrolled from CHIP"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-19-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-a')].answer.entry"
+                            ]
+                          }
+                        ]
+                      ],
+                      "headers": [
+                        { "contents": "Measure" },
+                        { "contents": "All Children Ages 0-16" }
+                      ]
+                    },
+                    "fieldset_type": "synthesized_table",
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "hide_if": {
+                          "target": "$..[?(@ && @.id=='2025-03-c-05-02')].answer.entry",
+                          "values": {
+                            "interactive": ["yes", null],
+                            "noninteractive": ["yes", null]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "hint": "",
+                    "type": "fieldset",
+                    "label": "Table 3d. Duration Measure, CHIP, Enrollment 18 months later",
+                    "questions": [],
+                    "fieldset_info": {
+                      "rows": [
+                        [
+                          {
+                            "contents": "15. Total number of children continuously enrolled in CHIP"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-15-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-15-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-15-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-15-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-15-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-15-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-15-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-15-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "16. Total number of children with a break in CHIP coverage but re-enrolled in CHIP"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-16-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-16-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-16-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-16-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-16-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-16-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-16-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-16-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "17. Total number of children enrolled in Medicaid during CHIP coverage break"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-17-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-17-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-17-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-17-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-17-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-17-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-17-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-17-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "18. Total number of children disenrolled from CHIP"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-18-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-18-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-18-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-18-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-18-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-18-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-18-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-18-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "19. Total number of children enrolled in Medicaid after being disenrolled from CHIP"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-19-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-19-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-19-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-19-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-19-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-19-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-19-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-05-19-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-05-03-e')].answer.entry"
+                            ]
+                          }
+                        ]
+                      ],
+                      "headers": [
+                        { "contents": "Measure" },
+                        { "contents": "All Children Ages 0-16" },
+                        { "contents": "Age <12 Months" },
+                        { "contents": "Ages 1-5" },
+                        { "contents": "Ages 6-12" },
+                        { "contents": "Ages 13-16" }
+                      ]
+                    },
+                    "fieldset_type": "synthesized_table",
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "hide_if": {
+                          "target": "$..[?(@ && @.id=='2025-03-c-05-02')].answer.entry",
+                          "values": {
+                            "interactive": ["no", null],
+                            "noninteractive": ["no", null]
+                          }
+                        }
+                      }
+                    }
                   }
                 ]
               },
@@ -6326,6 +7614,1294 @@
                     "type": "text_multiline",
                     "label": "Is there anything else you’d like to add about your data?",
                     "answer": { "entry": null }
+                  },
+                  {
+                    "hint": "",
+                    "type": "fieldset",
+                    "label": "Table 3a. Duration Measure, Title XIX, New Enrollment",
+                    "questions": [],
+                    "fieldset_info": {
+                      "rows": [
+                        [
+                          {
+                            "contents": "3. Total number of children newly enrolled in title XIX between January and March 2024"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-a')].answer.entry"
+                            ]
+                          }
+                        ]
+                      ],
+                      "headers": [
+                        { "contents": "Measure" },
+                        { "contents": "All Children Ages 0-16" }
+                      ]
+                    },
+                    "fieldset_type": "synthesized_table",
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "hide_if": {
+                          "target": "$..[?(@ && @.id=='2025-03-c-06-02')].answer.entry",
+                          "values": {
+                            "interactive": ["yes", null],
+                            "noninteractive": ["yes", null]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "hint": "",
+                    "type": "fieldset",
+                    "label": "Table 3a. Duration Measure, Title XIX, New Enrollment",
+                    "questions": [],
+                    "fieldset_info": {
+                      "rows": [
+                        [
+                          {
+                            "contents": "3. Total number of children newly enrolled in title XIX between January and March 2024"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          }
+                        ]
+                      ],
+                      "headers": [
+                        { "contents": "Measure" },
+                        { "contents": "All Children Ages 0-16" },
+                        { "contents": "Age <12 Months" },
+                        { "contents": "Ages 1-5" },
+                        { "contents": "Ages 6-12" },
+                        { "contents": "Ages 13-16" }
+                      ]
+                    },
+                    "fieldset_type": "synthesized_table",
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "hide_if": {
+                          "target": "$..[?(@ && @.id=='2025-03-c-06-02')].answer.entry",
+                          "values": {
+                            "interactive": ["no", null],
+                            "noninteractive": ["no", null]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "hint": "",
+                    "type": "fieldset",
+                    "label": "Table 3b. Duration Measure, Title XIX, Enrollment 6 Months Later",
+                    "questions": [],
+                    "fieldset_info": {
+                      "rows": [
+                        [
+                          {
+                            "contents": "4. Total number of children continuously enrolled in title XIX"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-04-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-a')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "5. Total number of children with a break in title XIX coverage but re-enrolled in title XIX"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-05-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-a')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "6. Total number of children enrolled in CHIP (title XXI) during title XIX coverage break"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-06-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-a')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "7. Total number of children disenrolled from title XIX"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-07-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-a')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "8. Total number of children enrolled in CHIP (title XXI) after being disenrolled from title XIX"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-08-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-a')].answer.entry"
+                            ]
+                          }
+                        ]
+                      ],
+                      "headers": [
+                        { "contents": "Measure" },
+                        { "contents": "All Children Ages 0-16" }
+                      ]
+                    },
+                    "fieldset_type": "synthesized_table",
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "hide_if": {
+                          "target": "$..[?(@ && @.id=='2025-03-c-06-02')].answer.entry",
+                          "values": {
+                            "interactive": ["yes", null],
+                            "noninteractive": ["yes", null]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "hint": "",
+                    "type": "fieldset",
+                    "label": "Table 3b. Duration Measure, Title XIX, Enrollment 6 months later",
+                    "questions": [],
+                    "fieldset_info": {
+                      "rows": [
+                        [
+                          {
+                            "contents": "4. Total number of children continuously enrolled in title XIX"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-04-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-04-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-04-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-04-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-04-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-04-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-04-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-04-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "5. Total number of children with a break in title XIX coverage but re-enrolled in title XIX"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-05-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-05-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-05-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-05-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-05-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-05-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-05-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-05-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "6. Total number of children enrolled in CHIP (title XXI) during title XIX coverage break"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-06-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-06-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-06-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-06-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-06-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-06-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-06-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-06-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "7. Total number of children disenrolled from title XIX"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-07-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-07-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-07-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-07-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-07-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-07-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-07-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-07-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "8. Total number of children enrolled in CHIP (title XXI) after being disenrolled from title XIX"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-08-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-08-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-08-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-08-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-08-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-08-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-08-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-08-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          }
+                        ]
+                      ],
+                      "headers": [
+                        { "contents": "Measure" },
+                        { "contents": "All Children Ages 0-16" },
+                        { "contents": "Age <12 Months" },
+                        { "contents": "Ages 1-5" },
+                        { "contents": "Ages 6-12" },
+                        { "contents": "Ages 13-16" }
+                      ]
+                    },
+                    "fieldset_type": "synthesized_table",
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "hide_if": {
+                          "target": "$..[?(@ && @.id=='2025-03-c-06-02')].answer.entry",
+                          "values": {
+                            "interactive": ["no", null],
+                            "noninteractive": ["no", null]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "hint": "",
+                    "type": "fieldset",
+                    "label": "Table 3c. Duration Measure, Title XIX, Enrollment 12 Months Later",
+                    "questions": [],
+                    "fieldset_info": {
+                      "rows": [
+                        [
+                          {
+                            "contents": "10. Total number of children continuously enrolled in title XIX"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-10-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-a')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "11. Total number of children with a break in title XIX coverage but re-enrolled in title XIX"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-11-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-a')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "12. Total number of children enrolled in CHIP (title XXI) during title XIX coverage break"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-12-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-a')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "13. Total number of children disenrolled from title XIX"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-13-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-a')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "14. Total number of children enrolled in CHIP (title XXI) after being disenrolled from title XIX"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-14-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-a')].answer.entry"
+                            ]
+                          }
+                        ]
+                      ],
+                      "headers": [
+                        { "contents": "Measure" },
+                        { "contents": "All Children Ages 0-16" }
+                      ]
+                    },
+                    "fieldset_type": "synthesized_table",
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "hide_if": {
+                          "target": "$..[?(@ && @.id=='2025-03-c-06-02')].answer.entry",
+                          "values": {
+                            "interactive": ["yes", null],
+                            "noninteractive": ["yes", null]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "hint": "",
+                    "type": "fieldset",
+                    "label": "Table 3c. Duration Measure, Title XIX, Enrollment 12 months later",
+                    "questions": [],
+                    "fieldset_info": {
+                      "rows": [
+                        [
+                          {
+                            "contents": "10. Total number of children continuously enrolled in title XIX"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-10-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-10-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-10-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-10-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-10-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-10-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-10-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-10-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "11. Total number of children with a break in title XIX coverage but re-enrolled in title XIX"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-11-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-11-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-11-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-11-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-11-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-11-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-11-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-11-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "12. Total number of children enrolled in CHIP (title XXI) during title XIX coverage break"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-12-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-12-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-12-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-12-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-12-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-12-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-12-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-12-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "13. Total number of children disenrolled from title XIX"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-13-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-13-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-13-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-13-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-13-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-13-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-13-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-13-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "14. Total number of children enrolled in CHIP (title XXI) after being disenrolled from title XIX"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-14-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-14-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-14-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-14-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-14-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-14-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-14-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-14-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          }
+                        ]
+                      ],
+                      "headers": [
+                        { "contents": "Measure" },
+                        { "contents": "All Children Ages 0-16" },
+                        { "contents": "Age <12 Months" },
+                        { "contents": "Ages 1-5" },
+                        { "contents": "Ages 6-12" },
+                        { "contents": "Ages 13-16" }
+                      ]
+                    },
+                    "fieldset_type": "synthesized_table",
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "hide_if": {
+                          "target": "$..[?(@ && @.id=='2025-03-c-06-02')].answer.entry",
+                          "values": {
+                            "interactive": ["no", null],
+                            "noninteractive": ["no", null]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "hint": "",
+                    "type": "fieldset",
+                    "label": "Table 3d. Duration Measure, Title XIX, Enrollment 18 Months Later",
+                    "questions": [],
+                    "fieldset_info": {
+                      "rows": [
+                        [
+                          {
+                            "contents": "15. Total number of children continuously enrolled in title XIX"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-15-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-a')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "16. Total number of children with a break in title XIX coverage but re-enrolled in title XIX"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-16-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-a')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "17. Total number of children enrolled in CHIP (title XXI) during title XIX coverage break"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-17-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-a')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "18. Total number of children disenrolled from title XIX"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-18-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-a')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "19. Total number of children enrolled in CHIP (title XXI) after being disenrolled from title XIX"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-19-a')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-a')].answer.entry"
+                            ]
+                          }
+                        ]
+                      ],
+                      "headers": [
+                        { "contents": "Measure" },
+                        { "contents": "All Children Ages 0-16" }
+                      ]
+                    },
+                    "fieldset_type": "synthesized_table",
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "hide_if": {
+                          "target": "$..[?(@ && @.id=='2025-03-c-06-02')].answer.entry",
+                          "values": {
+                            "interactive": ["yes", null],
+                            "noninteractive": ["yes", null]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "hint": "",
+                    "type": "fieldset",
+                    "label": "Table 3d. Duration Measure, Title XIX, Enrollment 18 months later",
+                    "questions": [],
+                    "fieldset_info": {
+                      "rows": [
+                        [
+                          {
+                            "contents": "15. Total number of children continuously enrolled in title XIX"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-15-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-15-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-15-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-15-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-15-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-15-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-15-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-15-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "16. Total number of children with a break in title XIX coverage but re-enrolled in title XIX"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-16-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-16-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-16-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-16-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-16-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-16-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-16-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-16-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "17. Total number of children enrolled in CHIP (title XXI) during title XIX coverage break"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-17-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-17-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-17-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-17-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-17-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-17-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-17-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-17-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "18. Total number of children disenrolled from title XIX"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-18-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-18-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-18-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-18-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-18-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-18-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-18-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-18-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          }
+                        ],
+                        [
+                          {
+                            "contents": "19. Total number of children enrolled in CHIP (title XXI) after being disenrolled from title XIX"
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["sumAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-19-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-19-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-19-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-19-e')].answer.entry"
+                            ],
+                            "additional_targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-19-b')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-b')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-19-c')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-c')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-19-d')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-d')].answer.entry"
+                            ]
+                          },
+                          {
+                            "mask": "lessThanEleven",
+                            "actions": ["numberAndPercentage"],
+                            "targets": [
+                              "$..*[?(@ && @.id=='2025-03-c-06-19-e')].answer.entry",
+                              "$..*[?(@ && @.id=='2025-03-c-06-03-e')].answer.entry"
+                            ]
+                          }
+                        ]
+                      ],
+                      "headers": [
+                        { "contents": "Measure" },
+                        { "contents": "All Children Ages 0-16" },
+                        { "contents": "Age <12 Months" },
+                        { "contents": "Ages 1-5" },
+                        { "contents": "Ages 6-12" },
+                        { "contents": "Ages 13-16" }
+                      ]
+                    },
+                    "fieldset_type": "synthesized_table",
+                    "context_data": {
+                      "conditional_display": {
+                        "type": "conditional_display",
+                        "hide_if": {
+                          "target": "$..[?(@ && @.id=='2025-03-c-06-02')].answer.entry",
+                          "values": {
+                            "interactive": ["no", null],
+                            "noninteractive": ["no", null]
+                          }
+                        }
+                      }
+                    }
                   }
                 ]
               }
@@ -6921,7 +9497,8 @@
                   {
                     "id": "2025-03-f-01-04",
                     "type": "text_multiline",
-                    "label": "What safeguards and procedures are in place for the prevention, investigation, and referral of fraud and abuse cases?",
+                    "label": "What safeguards and procedures do you have in place for the prevention, investigation, and referral of fraud and abuse cases?",
+                    "hint": "Attach any relevant documents.",
                     "answer": { "entry": null }
                   },
                   {
@@ -7732,7 +10309,6 @@
                         "id": "2025-03-h-01-01-a",
                         "type": "radio",
                         "label": "Did you submit your raw CAHPS data to the AHRQ CAHPS database? Please note this is a requirement for CAHPS reporting.",
-                        "hint": "If you did not complete the CAHPS survey, please complete Part 2.",
                         "answer": {
                           "entry": null,
                           "options": [
@@ -7755,6 +10331,12 @@
                         }
                       }
                     ]
+                  },
+                  {
+                    "hint": "",
+                    "type": "fieldset",
+                    "label": "If you did not complete the CAHPS survey, please complete Part 2.",
+                    "questions": []
                   }
                 ]
               },
@@ -10285,13 +12867,13 @@
               },
               {
                 "id": "2025-05-a-03",
-                "text": "Complete this section only if you have a managed care delivery system.  To the extent feasible, states with both a Medicaid expansion CHIP and a separate CHIP should report the following metrics for the two programs separately.",
+                "text": "Complete this section only if you have a managed care delivery system. To the extent feasible, states with both a Medicaid expansion CHIP and a separate CHIP should report the following metrics for the two programs separately.",
                 "type": "part",
                 "title": "Managed Care Costs",
                 "questions": [
                   {
                     "type": "fieldset",
-                    "label": "How many children were enrolled in managed care Medicaid Expansion in FFY 2025? How many do you anticipate will be eligible in FFY 2026 and 2027?",
+                    "label": "How many children were enrolled in managed care in FFY 2025 for Medicaid expansion CHIP? How many do you anticipate will be eligible in FFY 2026 and 2027?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10326,7 +12908,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "How many children were enrolled in for managed care Separate CHIP in FFY 2025? How many do you anticipate will be eligible in FFY 2026 and 2027?",
+                    "label": "How many children were enrolled in for managed care in FFY 2025 for separate CHIP? How many do you anticipate will be eligible in FFY 2026 and 2027?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10362,7 +12944,7 @@
                   {
                     "hint": "Round to the nearest whole number.",
                     "type": "fieldset",
-                    "label": "What was your per member per month (PMPM) cost based on the number of children enrolled in managed care Medicaid Expansion in FFY 2025? What is your projected PMPM cost for FFY 2026 and 2027?",
+                    "label": "What was your per member per month (PMPM) cost based on the number of children enrolled in managed care for Medicaid expansion CHIP in FFY 2025? What is your projected PMPM cost for FFY 2026 and 2027?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10395,7 +12977,7 @@
                   {
                     "hint": "Round to the nearest whole number.",
                     "type": "fieldset",
-                    "label": "What was your per member per month (PMPM) cost based on the number of children enrolled in managed care Separate CHIP in FFY 2025? What is your projected PMPM cost for FFY 2026 and 2027?",
+                    "label": "What was your per member per month (PMPM) cost based on the number of children enrolled in managed care for separate CHIP in FFY 2025? What is your projected PMPM cost for FFY 2026 and 2027?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10542,11 +13124,11 @@
                 "id": "2025-05-a-04",
                 "text": "Complete this section only if you have a fee-for-service delivery system. To the extent feasible, states with both a Medicaid expansion CHIP and a separate CHIP should report the following metrics for the two programs separately.",
                 "type": "part",
-                "title": "Fee for Service Costs",
+                "title": "Fee-for-Service Costs",
                 "questions": [
                   {
                     "type": "fieldset",
-                    "label": "How many children were enrolled in fee-for-service in FFY 2025 for Medicaid CHIP Expansion? How many do you anticipate will be eligible in FFY 2026 and 2027?",
+                    "label": "How many children were enrolled in fee-for-service in FFY 2025 for Medicaid expansion CHIP? How many do you anticipate will be eligible in FFY 2026 and 2027?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10581,7 +13163,7 @@
                   },
                   {
                     "type": "fieldset",
-                    "label": "How many children were enrolled in fee-for-service in FFY 2025 for Separate CHIP? How many do you anticipate will be eligible in FFY 2026 and 2027?",
+                    "label": "How many children were enrolled in fee-for-service in FFY 2025 for separate CHIP? How many do you anticipate will be eligible in FFY 2026 and 2027?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10617,7 +13199,7 @@
                   {
                     "hint": "Round to the nearest whole number.",
                     "type": "fieldset",
-                    "label": "What was your per member per month (PMPM) cost based on the number of children enrolled in fee-for-service Medicaid Expansion CHIP in FFY 2025? What is your projected PMPM cost for Medicaid Expansion CHIP in FFY 2026 and 2027?",
+                    "label": "What was your per member per month (PMPM) cost based on the number of children enrolled in fee-for-service for Medicaid expansion CHIP in FFY 2025? What is your projected PMPM cost for Medicaid expansion CHIP in FFY 2026 and 2027?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10650,7 +13232,7 @@
                   {
                     "hint": "Round to the nearest whole number.",
                     "type": "fieldset",
-                    "label": "What was your per member per month (PMPM) cost based on the number of children enrolled in Separate CHIP fee-for-service in FFY 2025? What is your projected PMPM cost for Separate CHIP in FFY 2026 and 2027?",
+                    "label": "What was your per member per month (PMPM) cost based on the number of children enrolled in fee-for-service for separate CHIP in FFY 2025? What is your projected PMPM cost for FFY 2026 and 2027?",
                     "questions": [
                       {
                         "type": "fieldset",
@@ -10802,6 +13384,7 @@
               {
                 "id": "2025-05-a-05",
                 "type": "part",
+                "title": "Additional Information",
                 "questions": [
                   {
                     "id": "2025-05-a-05-01",

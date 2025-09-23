@@ -3,7 +3,13 @@ import PropTypes from "prop-types";
 import Text from "../layout/Text";
 import { generateQuestionNumber } from "../utils/helperFunctions";
 
-const CMSLegend = ({ hideNumber, hint, id, label, questionType }) => {
+const CMSLegend = ({
+  hideNumber = false,
+  hint = "",
+  id,
+  label,
+  questionType,
+}) => {
   let labelBits = generateQuestionNumber(id);
 
   if (
@@ -22,11 +28,7 @@ const CMSLegend = ({ hideNumber, hint, id, label, questionType }) => {
           {legend.join(" ")}
         </legend>
         {hint && (
-          <div
-            className="ds-c-field__hint"
-            data-testid="legend-hint"
-            aria-label={`${label} hint`}
-          >
+          <div className="ds-c-field__hint" data-testid="legend-hint">
             <Text>{hint}</Text>
           </div>
         )}
@@ -42,10 +44,6 @@ CMSLegend.propTypes = {
   id: PropTypes.string,
   label: PropTypes.string.isRequired,
   questionType: PropTypes.string.isRequired,
-};
-CMSLegend.defaultProps = {
-  hideNumber: false,
-  hint: "",
 };
 
 export { CMSLegend };

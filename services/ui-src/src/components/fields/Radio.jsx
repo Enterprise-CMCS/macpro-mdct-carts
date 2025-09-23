@@ -36,7 +36,8 @@ const Radio = ({ onChange, onClick, question, ...props }) => {
           checked={isChecked}
           type="radio"
           value={value}
-          {...props}
+          name={props.name}
+          disabled={props.disabled}
           onChange={onCheck}
           onClick={unCheck}
           id={props.name + "-" + value}

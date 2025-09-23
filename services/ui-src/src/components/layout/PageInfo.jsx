@@ -1,6 +1,5 @@
 import React from "react";
 import { shallowEqual, useSelector } from "react-redux";
-import Autosave from "../fields/Autosave";
 import Title from "./Title";
 
 const PageInfo = () => {
@@ -15,7 +14,6 @@ const PageInfo = () => {
         {lastSaved && ` | Last Edit: ${lastSaved.toLocaleDateString()}`}
       </div>
       <Title />
-      <Autosave />
     </div>
   );
 };

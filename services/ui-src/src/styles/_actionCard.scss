@@ -11,14 +11,14 @@
   flex-direction: column;
   padding: variables.$padding * 3 variables.$padding * 4;
   margin-top: variables.$margin * 4;
-  margin-bottom: variables.$margin * 8;
+  margin-bottom: variables.$margin * 4;
 
   box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px,
-  rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
-  
+    rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
+
   @media screen and (min-width: 768px) {
     box-shadow: rgba(14, 30, 37, 0.08) 0px 2px 4px 0px,
-    rgba(14, 30, 37, 0.18) 0px 2px 8px 0px;
+      rgba(14, 30, 37, 0.18) 0px 2px 8px 0px;
   }
 
   @media only screen and (min-width: 768px) {
@@ -30,6 +30,7 @@
 
     &-container {
       text-align: center;
+
       @media only screen and (min-width: 768px) {
         margin-right: variables.$margin * 2;
         text-align: left;

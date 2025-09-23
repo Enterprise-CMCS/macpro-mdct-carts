@@ -27,8 +27,8 @@ const UploadComponent = ({ question }) => {
   const [user, year, stateCode, reportStatus] = useSelector(
     (state) => [
       state.stateUser.currentUser,
-      state.formData[0].contents.section.year,
-      state.formData[0].contents.section.state,
+      state.formData[0].year,
+      state.formData[0].stateId,
       state.reportStatus,
     ],
     shallowEqual

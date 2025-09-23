@@ -47,6 +47,22 @@
     "percentUninsured": 1.9,
     "percentUninsuredMoe": 0.3
   },
+    {
+    "stateId": "AL",
+    "year": 2023,
+    "numberUninsured": 24000,
+    "numberUninsuredMoe": 4000,
+    "percentUninsured": 2.0,
+    "percentUninsuredMoe": 0.4
+  },
+  {
+    "stateId": "AL",
+    "year": 2024,
+    "numberUninsured": 22000,
+    "numberUninsuredMoe": 4000,
+    "percentUninsured": 1.9,
+    "percentUninsuredMoe": 0.4
+  },
   {
     "stateId": "AK",
     "year": 2015,

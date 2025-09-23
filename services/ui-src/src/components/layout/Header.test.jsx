@@ -1,6 +1,6 @@
 import React from "react";
 import { screen, render, fireEvent } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter } from "../../util/testing/mockRouter";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import Header from "./Header";
@@ -123,7 +123,7 @@ describe("<Header />", () => {
     const headerDropDownLinks = screen.getByTestId("headerDropDownLinks");
     expect(headerDropDownMenuButton).toContainElement(chevUp);
     expect(headerDropDownMenu).toContainElement(headerDropDownLinks);
-    expect(screen.getByRole("link", { name: "Contact Us" })).toBeVisible();
+    expect(screen.getByRole("link", { name: "Manage Account" })).toBeVisible();
   });
 
   test("should open and close the dropdown menu on click", () => {

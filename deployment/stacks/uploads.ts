@@ -6,6 +6,7 @@ import {
   aws_iam as iam,
   aws_events as events,
   aws_events_targets as eventstargets,
+  triggers,
   Duration,
   RemovalPolicy,
   Aws,
@@ -117,6 +118,11 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
         ...commonLambdaProps,
       }
     ).lambda;
+
+    new triggers.Trigger(scope, "AvDownloadDefinitionsTrigger", {
+      handler: avDownloadDefinitionsLambda,
+      invocationType: triggers.InvocationType.EVENT,
+    });
 
     new events.Rule(scope, `schedule-av-download-definitions`, {
       schedule: events.Schedule.cron({ minute: "15", hour: "1" }),

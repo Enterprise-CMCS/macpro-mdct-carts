@@ -42,8 +42,10 @@ const TemplateDownload = ({ getTemplate }) => {
             </a>
           </p>
         </div>
-        <div className="update-date">
-          {useFlags().release2025 ? "Oct 2025" : "Oct 2024"}
+        <div>
+          <h2 className="update-date">
+            {useFlags().release2025 ? "Oct 2025" : "Oct 2024"}
+          </h2>
         </div>
         <div className="update ds-l-row">
           <div className="icon ds-l-col--2">
@@ -53,9 +55,7 @@ const TemplateDownload = ({ getTemplate }) => {
           </div>
           <div className="update-contents ds-l-col--10">
             <div className="title">
-              <h2>
-                Your fiscal year {currentYear} template is ready for download
-              </h2>
+              Your fiscal year {currentYear} template is ready for download
             </div>
             <p>
               Download your template for the current reporting period below.

@@ -32,7 +32,6 @@ describe("Subsection component", () => {
     expect(screen.getByText("Mock part hint")).toBeVisible();
     expect(mockPart).toHaveBeenCalledWith(
       expect.objectContaining({
-        nestedSubsectionTitle: true,
         partId: "mock-partId",
         partNumber: null,
         printView: undefined,

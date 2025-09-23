@@ -2,23 +2,21 @@ import { Construct } from "constructs";
 import {
   aws_dynamodb as dynamodb,
   aws_iam as iam,
-  aws_lambda as lambda,
-  aws_lambda_nodejs as lambda_nodejs,
-  custom_resources as cr,
   CfnOutput,
   Duration,
+  triggers,
 } from "aws-cdk-lib";
 import { DynamoDBTable } from "../constructs/dynamodb-table";
+import { Lambda } from "../constructs/lambda";
 
 interface CreateDataComponentsProps {
   scope: Construct;
   stage: string;
   isDev: boolean;
-  customResourceRole: iam.Role;
 }
 
 export function createDataComponents(props: CreateDataComponentsProps) {
-  const { scope, stage, isDev, customResourceRole } = props;
+  const { scope, stage, isDev } = props;
 
   const tables = [
     new DynamoDBTable(scope, "Acs", {
@@ -87,43 +85,28 @@ export function createDataComponents(props: CreateDataComponentsProps) {
       sortKey: { name: "fileId", type: dynamodb.AttributeType.STRING },
     }).identifiers,
   ];
+  const seedDataFunction = new Lambda(scope, "seedData", {
+    stackName: `data-${stage}`,
 
-  const lambdaApiRole = new iam.Role(scope, "SeedDataLambdaApiRole", {
-    assumedBy: new iam.ServicePrincipal("lambda.amazonaws.com"),
-    managedPolicies: [
-      iam.ManagedPolicy.fromAwsManagedPolicyName(
-        "service-role/AWSLambdaVPCAccessExecutionRole"
-      ),
-    ],
-    inlinePolicies: {
-      DynamoPolicy: new iam.PolicyDocument({
-        statements: [
-          new iam.PolicyStatement({
-            effect: iam.Effect.ALLOW,
-            actions: [
-              "dynamodb:DescribeTable",
-              "dynamodb:Query",
-              "dynamodb:Scan",
-              "dynamodb:GetItem",
-              "dynamodb:PutItem",
-              "dynamodb:UpdateItem",
-              "dynamodb:DeleteItem",
-              // TODO: previous had dynamodb:BatchWriteItem
-            ],
-            resources: ["*"],
-          }),
-        ],
-      }),
-    },
-  });
-
-  const seedDataFunction = new lambda_nodejs.NodejsFunction(scope, "seedData", {
     entry: "services/database/handlers/seed/seed.js",
     handler: "handler",
-    runtime: lambda.Runtime.NODEJS_20_X,
     timeout: Duration.seconds(900),
+    additionalPolicies: [
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        actions: [
+          "dynamodb:DescribeTable",
+          "dynamodb:Query",
+          "dynamodb:Scan",
+          "dynamodb:GetItem",
+          "dynamodb:PutItem",
+          "dynamodb:UpdateItem",
+          "dynamodb:DeleteItem",
+        ],
+        resources: ["*"],
+      }),
+    ],
     memorySize: 1024,
-    role: lambdaApiRole,
     environment: {
       dynamoPrefix: stage,
       seedTestData: isDev.toString(),
@@ -140,49 +123,13 @@ export function createDataComponents(props: CreateDataComponentsProps) {
         beforeInstall: () => [],
       },
     },
+    isDev,
+  }).lambda;
+
+  new triggers.Trigger(scope, "InvokeSeedDataFunction", {
+    handler: seedDataFunction,
+    invocationType: triggers.InvocationType.EVENT,
   });
-
-  const seedDataInvoke = new cr.AwsCustomResource(
-    scope,
-    "InvokeSeedDataFunction",
-    {
-      onCreate: {
-        service: "Lambda",
-        action: "invoke",
-        parameters: {
-          FunctionName: seedDataFunction.functionName,
-          InvocationType: "Event",
-          Payload: JSON.stringify({}),
-        },
-        physicalResourceId: cr.PhysicalResourceId.of(
-          `InvokeSeedDataFunction-${stage}`
-        ),
-      },
-      onUpdate: {
-        service: "Lambda",
-        action: "invoke",
-        parameters: {
-          FunctionName: seedDataFunction.functionName,
-          InvocationType: "Event",
-          Payload: JSON.stringify({}),
-        },
-        physicalResourceId: cr.PhysicalResourceId.of(
-          `InvokeSeedDataFunction-${stage}`
-        ),
-      },
-      onDelete: undefined,
-      policy: cr.AwsCustomResourcePolicy.fromStatements([
-        new iam.PolicyStatement({
-          actions: ["lambda:InvokeFunction"],
-          resources: [seedDataFunction.functionArn],
-        }),
-      ]),
-      role: customResourceRole,
-      resourceType: "Custom::InvokeSeedDataFunction",
-    }
-  );
-
-  seedDataInvoke.node.addDependency(seedDataFunction);
 
   new CfnOutput(scope, "SeedDataFunctionName", {
     value: seedDataFunction.functionName,

@@ -1,7 +1,7 @@
 import React from "react";
 import { screen, render, fireEvent } from "@testing-library/react";
 import { Provider } from "react-redux";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter } from "../../util/testing/mockRouter";
 import configureMockStore from "redux-mock-store";
 import TableOfContents from "./TableOfContents";
 import {
@@ -141,34 +141,30 @@ describe("<TableOfContents />", () => {
   });
   test("should render cmsgov vertical nav and pass sections and certify and submit", async () => {
     render(tableOfContents);
-    const toc = screen.getByTestId("toc");
-    expect(toc.outerHTML).toMatch(/Section 1/);
-    expect(toc.outerHTML).toMatch(/Section 2/);
-    expect(toc.outerHTML).toMatch(/Certify and Submit/);
+    expect(screen.getByText("Section 1: my section")).toBeVisible();
+    expect(screen.getByText("Section 2: my section")).toBeVisible();
+    expect(screen.getByText("Certify and Submit")).toBeVisible();
   });
 
   test("should not include certify and submit when a non state user views the ToC", async () => {
     render(adminToc);
-    const toc = screen.getByTestId("toc");
-    expect(toc.outerHTML).toMatch(/Section 1/);
-    expect(toc.outerHTML).toMatch(/Section 2/);
-    expect(toc.outerHTML).not.toMatch(/Certify and Submit/);
+    expect(screen.getByText("Section 1: my section")).toBeVisible();
+    expect(screen.getByText("Section 2: my section")).toBeVisible();
+    expect(screen.queryByText("Certify and Submit")).not.toBeInTheDocument();
   });
   test("should handle an active path with /views/sections", async () => {
     setLocation("/views/sections/");
     render(adminToc);
-    const toc = screen.getByTestId("toc");
-    expect(toc.outerHTML).toMatch(/Section 1/);
-    expect(toc.outerHTML).toMatch(/Section 2/);
-    expect(toc.outerHTML).not.toMatch(/Certify and Submit/);
+    expect(screen.getByText("Section 1: my section")).toBeVisible();
+    expect(screen.getByText("Section 2: my section")).toBeVisible();
+    expect(screen.queryByText("Certify and Submit")).not.toBeInTheDocument();
   });
   test("should not crash without any form data", async () => {
     setLocation("/views/sections/");
     render(noFormsToC);
-    const toc = screen.getByTestId("toc");
-    expect(toc.outerHTML).not.toMatch(/Section 1/);
-    expect(toc.outerHTML).not.toMatch(/Section 2/);
-    expect(toc.outerHTML).not.toMatch(/Certify and Submit/);
+    expect(screen.queryByText("Section 1: my section")).not.toBeInTheDocument();
+    expect(screen.queryByText("Section 2: my section")).not.toBeInTheDocument();
+    expect(screen.queryByText("Certify and Submit")).not.toBeInTheDocument();
   });
   test("should navigate on click", async () => {
     render(tableOfContents);
