@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { Dialog } from "@cmsgov/design-system";
 // utils
 import { uncertifyReport } from "../../../actions/uncertify";
