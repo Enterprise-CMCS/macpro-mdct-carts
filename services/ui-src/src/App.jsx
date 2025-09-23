@@ -19,7 +19,7 @@ function App() {
   // fire tealium page view on route change
   useEffect(() => {
     fireTealiumPageView(user, window.location.href, pathname);
-  }, [key, pathname, user]);
+  }, [key]);
 
   const authenticatedRoutes = (
     <>
