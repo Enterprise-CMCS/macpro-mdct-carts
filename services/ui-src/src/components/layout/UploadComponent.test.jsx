@@ -284,7 +284,9 @@ describe("<UploadComponent />", () => {
     await userEvent.click(uploadButton);
 
     // Only those files made it to the database
-    expect(fileApi.recordFileInDatabaseAndGetUploadUrl).toHaveBeenCalledTimes(2);
+    expect(fileApi.recordFileInDatabaseAndGetUploadUrl).toHaveBeenCalledTimes(
+      2
+    );
     expect(fileApi.recordFileInDatabaseAndGetUploadUrl).toHaveBeenCalledWith(
       "2023",
       "AL",
