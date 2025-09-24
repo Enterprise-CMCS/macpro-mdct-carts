@@ -84,9 +84,9 @@ export function createDataComponents(props: CreateDataComponentsProps) {
       sortKey: { name: "fileId", type: dynamodb.AttributeType.STRING },
     }),
   ];
+
   const seedDataFunction = new Lambda(scope, "seedData", {
     stackName: `data-${stage}`,
-
     entry: "services/database/handlers/seed/seed.js",
     handler: "handler",
     timeout: Duration.seconds(900),
@@ -109,6 +109,10 @@ export function createDataComponents(props: CreateDataComponentsProps) {
     },
     isDev,
   }).lambda;
+
+  for (const ddbTable of tables) {
+    ddbTable.table.grantReadWriteData(seedDataFunction);
+  }
 
   new triggers.Trigger(scope, "InvokeSeedDataFunction", {
     handler: seedDataFunction,
