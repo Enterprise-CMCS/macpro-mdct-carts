@@ -1,8 +1,8 @@
 import { Construct } from "constructs";
 import {
   aws_apigateway as apigateway,
-  aws_iam as iam,
   aws_logs as logs,
+  aws_s3 as s3,
   aws_wafv2 as wafv2,
   CfnOutput,
   Duration,
@@ -11,7 +11,7 @@ import {
 import { Lambda } from "../constructs/lambda";
 import { WafConstruct } from "../constructs/waf";
 import { isLocalStack } from "../local/util";
-import { DynamoDBTableIdentifiers } from "../constructs/dynamodb-table";
+import { DynamoDBTable } from "../constructs/dynamodb-table";
 
 interface CreateApiComponentsProps {
   docraptorApiKey: string;
@@ -19,8 +19,8 @@ interface CreateApiComponentsProps {
   project: string;
   scope: Construct;
   stage: string;
-  tables: DynamoDBTableIdentifiers[];
-  attachmentsBucketName: string;
+  tables: DynamoDBTable[];
+  attachmentsBucket: s3.IBucket;
 }
 
 export function createApiComponents(props: CreateApiComponentsProps) {
@@ -31,7 +31,7 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     scope,
     stage,
     tables,
-    attachmentsBucketName,
+    attachmentsBucket,
   } = props;
 
   const service = "app-api";
@@ -77,36 +77,23 @@ export function createApiComponents(props: CreateApiComponentsProps) {
   const environment = {
     stage,
     docraptorApiKey,
-    attachmentsBucketName,
+    attachmentsBucketName: attachmentsBucket.bucketName,
     NODE_OPTIONS: "--enable-source-maps",
     ...Object.fromEntries(
-      tables.map((table) => [`${table.id}TableName`, table.name])
+      tables.map((table) => [
+        `${table.node.id}TableName`,
+        table.table.tableName,
+      ])
     ),
   };
-  if (isLocalStack)
-    environment["AWS_ENDPOINT_URL"] = process.env.AWS_ENDPOINT_URL;
 
   const commonProps = {
     stackName: `${service}-${stage}`,
     api,
     environment,
-    additionalPolicies: [
-      new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        actions: [
-          "dynamodb:DescribeTable",
-          "dynamodb:Query",
-          "dynamodb:Scan",
-          "dynamodb:GetItem",
-          "dynamodb:PutItem",
-          "dynamodb:UpdateItem",
-          "dynamodb:DeleteItem",
-          "dynamodb:BatchWriteItem",
-        ],
-        resources: ["*"],
-      }),
-    ],
     isDev,
+    tables,
+    buckets: [attachmentsBucket],
   };
 
   new Lambda(scope, "getStates", {
@@ -172,20 +159,6 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     path: "/psUrlUpload/{year}/{state}",
     method: "POST",
     ...commonProps,
-    additionalPolicies: [
-      new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        actions: ["s3:PutObject"],
-        resources: [`arn:aws:s3:::${attachmentsBucketName}/*`],
-      }),
-      new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        actions: ["dynamodb:UpdateItem"],
-        resources: tables
-          .filter((table) => ["Uploads"].includes(table.id))
-          .map((table) => table.arn),
-      }),
-    ],
   });
 
   new Lambda(scope, "postDownload", {
@@ -194,25 +167,6 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     path: "/psUrlDownload/{year}/{state}",
     method: "POST",
     ...commonProps,
-    additionalPolicies: [
-      new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        actions: ["s3:ListBucket"],
-        resources: [`arn:aws:s3:::${attachmentsBucketName}`],
-      }),
-      new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        actions: ["s3:GetObject"],
-        resources: [`arn:aws:s3:::${attachmentsBucketName}/*`],
-      }),
-      new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        actions: ["dynamodb:Query"],
-        resources: tables
-          .filter((table) => ["Uploads"].includes(table.id))
-          .map((table) => table.arn),
-      }),
-    ],
   });
 
   new Lambda(scope, "deleteUpload", {
@@ -221,20 +175,6 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     path: "/uploads/{year}/{state}/{fileId}",
     method: "DELETE",
     ...commonProps,
-    additionalPolicies: [
-      new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        actions: ["s3:DeleteObject"],
-        resources: [`arn:aws:s3:::${attachmentsBucketName}/*`],
-      }),
-      new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        actions: ["dynamodb:Query", "dynamodb:DeleteItem"],
-        resources: tables
-          .filter((table) => ["Uploads"].includes(table.id))
-          .map((table) => table.arn),
-      }),
-    ],
   });
 
   new Lambda(scope, "viewUploads", {
