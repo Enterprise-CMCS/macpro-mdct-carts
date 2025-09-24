@@ -1,7 +1,6 @@
 import { Construct } from "constructs";
 import {
   aws_dynamodb as dynamodb,
-  aws_iam as iam,
   CfnOutput,
   Duration,
   triggers,
