@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 // components
 import { Main } from "./Main";
 import CMSHomepage from "../sections/homepage/CMSHomepage";

@@ -2,9 +2,9 @@ import { Construct } from "constructs";
 import {
   aws_dynamodb as dynamodb,
   aws_iam as iam,
-  custom_resources as cr,
   CfnOutput,
   Duration,
+  triggers,
 } from "aws-cdk-lib";
 import { DynamoDBTable } from "../constructs/dynamodb-table";
 import { Lambda } from "../constructs/lambda";
@@ -111,50 +111,10 @@ export function createDataComponents(props: CreateDataComponentsProps) {
     isDev,
   }).lambda;
 
-  for (const ddbTable of tables) {
-    ddbTable.table.grantReadWriteData(seedDataFunction);
-  }
-
-  const seedDataInvoke = new cr.AwsCustomResource(
-    scope,
-    "InvokeSeedDataFunction",
-    {
-      onCreate: {
-        service: "Lambda",
-        action: "invoke",
-        parameters: {
-          FunctionName: seedDataFunction.functionName,
-          InvocationType: "Event",
-          Payload: JSON.stringify({}),
-        },
-        physicalResourceId: cr.PhysicalResourceId.of(
-          `InvokeSeedDataFunction-${stage}`
-        ),
-      },
-      onUpdate: {
-        service: "Lambda",
-        action: "invoke",
-        parameters: {
-          FunctionName: seedDataFunction.functionName,
-          InvocationType: "Event",
-          Payload: JSON.stringify({}),
-        },
-        physicalResourceId: cr.PhysicalResourceId.of(
-          `InvokeSeedDataFunction-${stage}`
-        ),
-      },
-      onDelete: undefined,
-      policy: cr.AwsCustomResourcePolicy.fromStatements([
-        new iam.PolicyStatement({
-          actions: ["lambda:InvokeFunction"],
-          resources: [seedDataFunction.functionArn],
-        }),
-      ]),
-      resourceType: "Custom::InvokeSeedDataFunction",
-    }
-  );
-
-  seedDataInvoke.node.addDependency(seedDataFunction);
+  new triggers.Trigger(scope, "InvokeSeedDataFunction", {
+    handler: seedDataFunction,
+    invocationType: triggers.InvocationType.EVENT,
+  });
 
   new CfnOutput(scope, "SeedDataFunctionName", {
     value: seedDataFunction.functionName,

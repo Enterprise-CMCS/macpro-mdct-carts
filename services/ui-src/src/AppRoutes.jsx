@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate, Routes, Route } from "react-router-dom";
+import { Navigate, Routes, Route } from "react-router";
 import { Print } from "./components/sections/Print";
 import Spinner from "./components/utils/Spinner";
 import UserProfile from "./components/sections/UserProfile";

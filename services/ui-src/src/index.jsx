@@ -1,6 +1,6 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import { BrowserRouter as Router } from "react-router-dom";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter as Router } from "react-router";
 import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
 import { UserProvider } from "./hooks/authHooks";
@@ -64,7 +64,9 @@ const ldClientId = config.REACT_APP_LD_SDK_CLIENT;
     deferInitialization: false,
   });
 
-  ReactDOM.render(
+  const container = document.getElementById("root");
+  const root = createRoot(container);
+  root.render(
     <React.StrictMode>
       <Router>
         <Provider store={store}>
@@ -75,8 +77,7 @@ const ldClientId = config.REACT_APP_LD_SDK_CLIENT;
           </UserProvider>
         </Provider>
       </Router>
-    </React.StrictMode>,
-    document.getElementById("root")
+    </React.StrictMode>
   );
 })().catch((e) => {
   throw e;

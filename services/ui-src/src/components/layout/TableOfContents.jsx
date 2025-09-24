@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 import { useSelector, shallowEqual } from "react-redux";
 //components
 import { VerticalNav } from "@cmsgov/design-system";

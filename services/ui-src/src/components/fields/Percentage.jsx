@@ -108,9 +108,6 @@ Percentage.propTypes = {
   question: PropTypes.object.isRequired,
   value: PropTypes.string,
 };
-Percentage.defaultProps = {
-  disabled: false,
-};
 
 export { Percentage };
 export default Percentage;

@@ -178,9 +178,6 @@ Range.propTypes = {
   type: PropTypes.string.isRequired,
   values: PropTypes.array.isRequired,
 };
-Range.defaultProps = {
-  disabled: false,
-};
 
 const Ranges = ({
   "data-testid": dataTestId,
@@ -295,9 +292,6 @@ Ranges.propTypes = {
   onChange: PropTypes.func.isRequired,
   onClick: PropTypes.func,
   question: PropTypes.object.isRequired,
-};
-Ranges.defaultProps = {
-  disabled: false,
 };
 
 export { Range, Ranges };
