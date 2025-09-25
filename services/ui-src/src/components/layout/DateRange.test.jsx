@@ -245,7 +245,7 @@ describe("<DateRange />", () => {
      */
     await new Promise((r) => setTimeout(r, 400));
 
-    expect(mockPropsExistingAnswer.onChange).toBeCalledWith([
+    expect(mockPropsExistingAnswer.onChange).toHaveBeenCalledWith([
       "mock-question-1",
       ["2022-10-01", "2023-09-01"],
     ]);
