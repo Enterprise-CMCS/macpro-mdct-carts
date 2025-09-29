@@ -16,7 +16,6 @@
     "@testing-library/user-event": "^14.6.1",
     "@vitejs/plugin-react": "4.7.0",
     "aws-amplify": "^6.15.6",
-    "buffer": "^6.0.3",
     "date-fns": "^4.1.0",
     "font-awesome": "^4.7.0",
     "jsonpath": "^1.1.1",
