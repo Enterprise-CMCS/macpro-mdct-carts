@@ -12,11 +12,9 @@ import Section from "../layout/Section";
 import statesArray from "../utils/statesArray";
 import { loadEnrollmentCounts, loadSections } from "../../actions/initial";
 import { apiLib } from "../../util/apiLib";
-import { Buffer } from "buffer";
 
 const openPdf = (basePdf) => {
-  const byteCharacters = Buffer.from(basePdf, "base64").toString("utf8");
-  // const byteCharacters = atob(basePdf);
+  const byteCharacters = atob(basePdf);
   let byteNumbers = new Array(byteCharacters.length);
   for (let i = 0; i < byteCharacters.length; i++) {
     byteNumbers[i] = byteCharacters.charCodeAt(i);
@@ -57,7 +55,7 @@ export const getPdfFriendlyDocument = async () => {
     .replaceAll("\u2013", "-")
     .replaceAll("\u2014", "-");
 
-  const base64String = Buffer.from(htmlString, "base64").toString("utf8");
+  const base64String = btoa(unescape(encodeURIComponent(htmlString)));
   const opts = {
     body: {
       encodedHtml: base64String,
