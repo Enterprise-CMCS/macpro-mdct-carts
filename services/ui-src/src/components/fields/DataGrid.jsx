@@ -21,6 +21,13 @@ const DataGrid = ({ question, printView }) => {
       return;
     }
 
+    const questionIsAlreadySet = questionsToSet.some(
+      (obj) => obj.question.id === item.id
+    );
+    if (questionIsAlreadySet) {
+      return;
+    }
+
     // Split and create array from id
     const splitID = item.id.split("-");
 
