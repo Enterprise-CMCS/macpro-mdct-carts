@@ -1,5 +1,5 @@
 import React from "react";
-import { Accordion, AccordionItem } from "@reach/accordion";
+import { Accordion } from "@cmsgov/design-system";
 import { render, screen } from "@testing-library/react";
 import Repeatable from "./Repeatable";
 
@@ -23,13 +23,11 @@ describe("Repeatable component", () => {
     };
     render(
       <Accordion>
-        <AccordionItem key={"mock-item-1"}>
-          <Repeatable {...props} />
-        </AccordionItem>
+        <Repeatable {...props} />
       </Accordion>
     );
     expect(
-      screen.getByRole("button", { name: "mock repeatable 1" })
+      screen.getByRole("button", { name: /mock repeatable 1/ })
     ).toBeVisible();
     expect(mockQuestion).toHaveBeenCalledWith(
       expect.objectContaining({
