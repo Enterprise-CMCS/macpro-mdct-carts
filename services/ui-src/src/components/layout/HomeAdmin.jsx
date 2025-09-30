@@ -17,11 +17,9 @@ const AdminHome = () => (
           </h1>
         </div>
         <div className="ds-l-row">
-          <ul>
-            <li>
-              <Link to="/templates">Generate Form Base Templates</Link>
-            </li>
-          </ul>
+          <div className="ds-l-col--12 ds-u-margin-top--2">
+            <Link to="/templates">Generate Form Base Templates</Link>
+          </div>
         </div>
         <div className="cmslist">
           <CMSHomepage />
