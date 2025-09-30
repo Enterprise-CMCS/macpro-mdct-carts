@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { Accordion, AccordionItem } from "@reach/accordion";
+import { Accordion } from "@cmsgov/design-system";
 
 import { Objective } from "./Objective";
 import {
@@ -40,20 +40,15 @@ const Objectives = ({
 
   return (
     <>
-      <Accordion
-        collapsible
-        multiple
-        defaultIndex={[...Array(100)].map((_, i) => i)}
-      >
+      <Accordion>
         {question.questions.map((q, i) => (
-          <AccordionItem key={q.id}>
-            <Objective
-              headerRef={ref}
-              objective={q}
-              objectiveNumber={i + 1}
-              printView={printView}
-            />
-          </AccordionItem>
+          <Objective
+            key={q.id}
+            headerRef={ref}
+            objective={q}
+            objectiveNumber={i + 1}
+            printView={printView}
+          />
         ))}
 
         {question.questions.length > 1 && (
