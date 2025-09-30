@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router";
 import { UserContext } from "./userContext";
 import { AppRoles, IdmRoles } from "../../types";
 import { loadUser } from "../../actions/initial";

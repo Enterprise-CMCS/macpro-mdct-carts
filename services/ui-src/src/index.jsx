@@ -1,6 +1,6 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router";
 import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
 import { UserProvider } from "./hooks/authHooks";

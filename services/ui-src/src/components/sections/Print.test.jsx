@@ -23,7 +23,7 @@ jest.mock("../../actions/initial", () => ({
 // Mock apiLib.post for getPdfFriendlyDocument
 jest.mock("../../util/apiLib", () => ({
   apiLib: {
-    post: jest.fn(() => Promise.resolve({ data: "mockPdfBase64" })),
+    post: jest.fn(() => Promise.resolve({ data: "aGVsbG8gd29ybGQNCg==" })), // pragma: allowlist secret
   },
 }));
 

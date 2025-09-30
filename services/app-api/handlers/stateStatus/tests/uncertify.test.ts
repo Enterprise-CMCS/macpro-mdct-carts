@@ -41,7 +41,7 @@ describe("Test Uncertify CARTS Report Handler", () => {
       .replace(/(?<=\d{2}:\d{2}:)\d{2}/, "..");
 
     expect(res.statusCode).toBe(200);
-    expect(dynamodbLib.update).toBeCalledWith({
+    expect(dynamodbLib.update).toHaveBeenCalledWith({
       ExpressionAttributeNames: {
         "#lastChanged": "lastChanged",
         "#status": "status",

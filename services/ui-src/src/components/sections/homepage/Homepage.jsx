@@ -1,37 +1,71 @@
-import React from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import ReportItem from "./ReportItem";
+// components
+import ReportItemLinks from "./ReportItemLinks";
+import SortableTable, { generateColumns } from "./SortableTable";
 import TemplateDownload from "./TemplateDownload";
 import { Main } from "../../layout/Main";
-import { REPORT_STATUS, STATUS_MAPPING, AppRoles } from "../../../types";
-
-function formatStateStatus(item) {
-  if (item) {
-    const editable =
-      item.status === REPORT_STATUS.not_started ||
-      item.status === REPORT_STATUS.in_progress ||
-      item.status === REPORT_STATUS.uncertified;
-    return (
-      <ReportItem
-        key={item.stateCode + "-" + item.year}
-        name={item.year}
-        lastChanged={item.lastChanged}
-        link1URL={`sections/${item.year}/00`}
-        link1Text={editable ? "Edit" : "View"}
-        statusText={STATUS_MAPPING[item.status]}
-        userRole={AppRoles.STATE_USER}
-        year={item.year}
-        stateAbbr={item.stateCode}
-      />
-    );
-  }
-}
+// types
+import { REPORT_STATUS, AppRoles } from "../../../types";
+// utils
+import mapStatesData from "../../utils/mapStatesData";
 
 const Homepage = ({ reportStatus }) => {
   const getFiscalYearTemplateLink = (year) => {
     return `/templates/FFY_${year}_CARTS_Template.pdf`;
   };
+
+  // Sortable table settings
+  const states = useMemo(
+    () => Object.values(reportStatus ?? {}).filter(Boolean),
+    [reportStatus]
+  );
+
+  const data = useMemo(() => mapStatesData(states), [states]);
+
+  const customCells = (headKey, value, originalRowData) => {
+    const { entity } = originalRowData;
+    const { stateCode, status, year } = entity;
+
+    const editable = [
+      REPORT_STATUS.not_started,
+      REPORT_STATUS.in_progress,
+      REPORT_STATUS.uncertified,
+    ].includes(status);
+
+    const actionLinkText = editable ? "Edit" : "View";
+    const actionLinkURL = `sections/${year}/00`;
+
+    switch (headKey) {
+      case "year": {
+        return <span className="name">{value}</span>;
+      }
+      case "actions": {
+        return (
+          <ReportItemLinks
+            actionLinkText={actionLinkText}
+            actionLinkURL={actionLinkURL}
+            stateCode={stateCode}
+            status={status}
+            userRole={AppRoles.STATE_USER}
+            year={year}
+          />
+        );
+      }
+      default:
+        return value;
+    }
+  };
+
+  const sortableHeadRow = {
+    year: { header: "Year" },
+    statusText: { header: "Status" },
+    lastEdited: { header: "Last Edited" },
+    actions: { header: "Actions", sort: false },
+  };
+
+  const columns = generateColumns(sortableHeadRow, true, customCells);
 
   return (
     <Main className="homepage">
@@ -49,23 +83,12 @@ const Homepage = ({ reportStatus }) => {
           </h2>
         </div>
         <div className="ds-l-row">
-          <div className="reports ds-l-col--12">
-            <table
-              className="carts-report preview__grid"
-              aria-labelledby="reports-heading"
-            >
-              <thead>
-                <tr className="report-header ds-l-row">
-                  <th className="ds-l-col--2">Year</th>
-                  <th className="ds-l-col--2">Status</th>
-                  <th className="ds-l-col--3">Last Edited</th>
-                  <th className="ds-l-col--4">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Object.values(reportStatus).map(formatStateStatus)}
-              </tbody>
-            </table>
+          <div className="reports">
+            <SortableTable
+              aria-labelledBy={"reports-heading"}
+              columns={columns}
+              data={data}
+            />
           </div>
         </div>
         <div className="ds-l-row">
@@ -83,6 +106,7 @@ const Homepage = ({ reportStatus }) => {
     </Main>
   );
 };
+
 Homepage.propTypes = {
   reportStatus: PropTypes.object.isRequired,
 };

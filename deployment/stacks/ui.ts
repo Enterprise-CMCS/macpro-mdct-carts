@@ -69,14 +69,7 @@ export function createUiComponents(props: CreateUiComponentsProps) {
       ],
     });
 
-    logBucket.addToResourcePolicy(
-      new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        principals: [new iam.ServicePrincipal("cloudfront.amazonaws.com")],
-        actions: ["s3:PutObject"],
-        resources: [`${logBucket.bucketArn}/*`],
-      })
-    );
+    logBucket.grantPut(new iam.ServicePrincipal("cloudfront.amazonaws.com"));
 
     loggingConfig = {
       enableLogging: true,
@@ -150,6 +143,7 @@ export function createUiComponents(props: CreateUiComponentsProps) {
           responsePagePath: "/index.html",
         },
       ],
+      priceClass: cloudfront.PriceClass.PRICE_CLASS_ALL,
     }
   );
 
