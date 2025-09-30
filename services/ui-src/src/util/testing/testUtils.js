@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router";
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { render } from "@testing-library/react";
@@ -16,9 +16,7 @@ export const storeFactory = (initialState) => {
 };
 
 export const RouterWrappedComponent = ({ children }) => (
-  <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-    {children}
-  </Router>
+  <Router>{children}</Router>
 );
 
 /*

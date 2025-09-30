@@ -67,7 +67,7 @@ describe("Test Update State Status Handlers", () => {
     const res = await updateStateStatus(event, null);
 
     expect(res.statusCode).toBe(200);
-    expect(dynamodbLib.update).toBeCalledWith({
+    expect(dynamodbLib.update).toHaveBeenCalledWith({
       ExpressionAttributeNames: {
         "#lastChanged": "lastChanged",
         "#status": "status",

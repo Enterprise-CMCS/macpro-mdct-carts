@@ -33,7 +33,7 @@ describe("Test Get State Status Handlers", () => {
     const res = await getStateStatus(event, null);
 
     expect(res.statusCode).toBe(200);
-    expect(dynamodbLib.scanSome).toBeCalledWith({
+    expect(dynamodbLib.scanSome).toHaveBeenCalledWith({
       ExpressionAttributeNames: {
         "#stateId": "stateId",
       },
@@ -53,7 +53,7 @@ describe("Test Get State Status Handlers", () => {
     const res = await getStateStatus(event, null);
 
     expect(res.statusCode).toBe(200);
-    expect(dynamodbLib.scanSome).toBeCalledWith({
+    expect(dynamodbLib.scanSome).toHaveBeenCalledWith({
       TableName: undefined,
     });
   });

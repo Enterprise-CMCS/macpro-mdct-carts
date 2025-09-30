@@ -24,3 +24,4 @@ package-lock.json
 cdk.context.json
 .qlty/*
 !.qlty/qlty.toml
+/cli/dist

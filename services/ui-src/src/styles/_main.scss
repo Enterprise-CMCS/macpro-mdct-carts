@@ -145,25 +145,30 @@ img {
       color: variables.$black;
       font-weight: variables.$font-weight-bold;
     }
+  }
 
-    .link {
-      background: none !important;
-      border: none;
-      padding: 0 !important;
-      font-family: inherit;
-      font-size: inherit;
+  .report-item-link {
+    background: none !important;
+    border: none;
+    color: #0071bc;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    margin-left: 0.75rem;
+    padding: 0 !important;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+
+    &:focus {
+      color: #4c2c92;
+    }
+
+    &:hover {
       color: #0071bc;
-      text-decoration: underline;
-      text-decoration-thickness: 1px;
-      cursor: pointer;
+    }
 
-      &:focus {
-        color: #4c2c92;
-      }
-
-      &:hover {
-        color: #0071bc;
-      }
+    &:first-child {
+      margin-left: 0;
     }
   }
 

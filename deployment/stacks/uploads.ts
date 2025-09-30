@@ -69,32 +69,9 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
     serverAccessLogsPrefix: `AWSLogs/${Aws.ACCOUNT_ID}/s3/`,
   });
 
-  const commonLambdaProps = {
-    stackName: `${service}-${stage}`,
-    additionalPolicies: [
-      new iam.PolicyStatement({
-        actions: [
-          "s3:GetObject",
-          "s3:GetObjectTagging",
-          "s3:PutObject",
-          "s3:PutObjectAcl",
-          "s3:PutObjectTagging",
-          "s3:PutObjectVersionTagging",
-        ],
-        resources: [
-          `${attachmentsBucket.bucketArn}/*`,
-          `${clamDefsBucket.bucketArn}/*`,
-        ],
-      }),
-      new iam.PolicyStatement({
-        actions: ["s3:ListBucket"],
-        resources: [attachmentsBucket.bucketArn, clamDefsBucket.bucketArn],
-      }),
-    ],
-    environment: {
-      CLAMAV_BUCKET_NAME: clamDefsBucket.bucketName,
-      PATH_TO_AV_DEFINITIONS: "lambda/s3-antivirus/av-definitions",
-    },
+  const environment = {
+    CLAMAV_BUCKET_NAME: clamDefsBucket.bucketName,
+    PATH_TO_AV_DEFINITIONS: "lambda/s3-antivirus/av-definitions",
   };
 
   let clamAvLayer: lambda.ILayerVersion | undefined;
@@ -115,9 +92,15 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
         timeout: Duration.seconds(300),
         layers: [clamAvLayer],
         isDev,
-        ...commonLambdaProps,
+        stackName: `${service}-${stage}`,
+        environment,
       }
     ).lambda;
+
+    attachmentsBucket.grantReadWrite(avDownloadDefinitionsLambda);
+    attachmentsBucket.grantPutAcl(avDownloadDefinitionsLambda);
+    clamDefsBucket.grantReadWrite(avDownloadDefinitionsLambda);
+    clamDefsBucket.grantPutAcl(avDownloadDefinitionsLambda);
 
     new triggers.Trigger(scope, "AvDownloadDefinitionsTrigger", {
       handler: avDownloadDefinitionsLambda,
@@ -141,8 +124,14 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
     timeout: Duration.seconds(300),
     layers: isLocalStack ? [] : [clamAvLayer!],
     isDev,
-    ...commonLambdaProps,
+    stackName: `${service}-${stage}`,
+    environment,
   }).lambda;
+
+  attachmentsBucket.grantReadWrite(avScanLambda);
+  attachmentsBucket.grantPutAcl(avScanLambda);
+  clamDefsBucket.grantReadWrite(avScanLambda);
+  clamDefsBucket.grantPutAcl(avScanLambda);
 
   attachmentsBucket.addEventNotification(
     s3.EventType.OBJECT_CREATED,
@@ -198,4 +187,6 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
   new CfnOutput(scope, "AttachmentsBucketName", {
     value: attachmentsBucket.bucketName,
   });
+
+  return { attachmentsBucket };
 }

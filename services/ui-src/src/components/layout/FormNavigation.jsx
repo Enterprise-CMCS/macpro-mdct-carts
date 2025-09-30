@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, shallowEqual } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router";
 
 //components
 import { Button } from "@cmsgov/design-system";

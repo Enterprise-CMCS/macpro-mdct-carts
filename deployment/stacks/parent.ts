@@ -1,12 +1,18 @@
 import { Construct } from "constructs";
-import { aws_s3 as s3, Aws, CfnOutput, Stack, StackProps } from "aws-cdk-lib";
+import {
+  aws_iam as iam,
+  aws_s3 as s3,
+  Aws,
+  CfnOutput,
+  Stack,
+  StackProps,
+} from "aws-cdk-lib";
 import { DeploymentConfigProperties } from "../deployment-config";
 import { createDataComponents } from "./data";
 import { createUiAuthComponents } from "./ui-auth";
 import { createUiComponents } from "./ui";
 import { createApiComponents } from "./api";
 import { deployFrontend } from "./deployFrontend";
-import { createCustomResourceRole } from "./customResourceRole";
 import { isLocalStack } from "../local/util";
 import { createUploadsComponents } from "./uploads";
 import { createBigmacStreamsComponents } from "./bigmac-streams";
@@ -27,11 +33,10 @@ export class ParentStack extends Stack {
     const commonProps = {
       scope: this,
       ...props,
+      isDev,
     };
 
     const attachmentsBucketName = `uploads-${stage}-attachments-${Aws.ACCOUNT_ID}`;
-
-    const customResourceRole = createCustomResourceRole({ ...commonProps });
 
     const loggingBucket = s3.Bucket.fromBucketName(
       this,
@@ -41,19 +46,18 @@ export class ParentStack extends Stack {
 
     const { tables } = createDataComponents({
       ...commonProps,
-      customResourceRole,
+    });
+
+    const { attachmentsBucket } = createUploadsComponents({
+      ...commonProps,
+      loggingBucket,
+      attachmentsBucketName: attachmentsBucketName!,
     });
 
     const { apiGatewayRestApiUrl, restApiId } = createApiComponents({
       ...commonProps,
       tables,
-      attachmentsBucketName: attachmentsBucketName!,
-    });
-
-    createUploadsComponents({
-      ...commonProps,
-      loggingBucket,
-      attachmentsBucketName: attachmentsBucketName!,
+      attachmentsBucket,
     });
 
     if (isLocalStack) {
@@ -76,7 +80,6 @@ export class ParentStack extends Stack {
       createUiAuthComponents({
         ...commonProps,
         applicationEndpointUrl,
-        customResourceRole,
         restApiId,
       });
 
@@ -91,7 +94,6 @@ export class ParentStack extends Stack {
       userPoolId,
       userPoolClientId,
       userPoolClientDomain: `${userPoolDomainName}.auth.${Aws.REGION}.amazoncognito.com`,
-      customResourceRole,
       attachmentsBucketName: attachmentsBucketName!,
     });
 
@@ -108,5 +110,43 @@ export class ParentStack extends Stack {
     new CfnOutput(this, "CloudFrontUrl", {
       value: applicationEndpointUrl,
     });
+
+    if (isDev) {
+      applyDenyCreateLogGroupPolicy(this);
+    }
   }
+}
+
+function applyDenyCreateLogGroupPolicy(stack: Stack) {
+  const denyCreateLogGroupPolicy = {
+    PolicyName: "DenyCreateLogGroup",
+    PolicyDocument: {
+      Version: "2012-10-17",
+      Statement: [
+        {
+          Effect: "Deny",
+          Action: "logs:CreateLogGroup",
+          Resource: "*",
+        },
+      ],
+    },
+  };
+
+  const provider = stack.node.tryFindChild(
+    "Custom::S3AutoDeleteObjectsCustomResourceProvider"
+  );
+  const role = provider?.node.tryFindChild("Role") as iam.CfnRole;
+  if (role) {
+    role.addPropertyOverride("Policies", [denyCreateLogGroupPolicy]);
+  }
+
+  stack.node.findAll().forEach((c) => {
+    if (!c.node.id.startsWith("BucketNotificationsHandler")) return;
+
+    const role = c.node.tryFindChild("Role");
+    const cfnRole = role?.node.tryFindChild("Resource") as iam.CfnRole;
+    if (cfnRole) {
+      cfnRole.addPropertyOverride("Policies", [denyCreateLogGroupPolicy]);
+    }
+  });
 }
