@@ -16,7 +16,13 @@ const Repeatable = ({
   const title = type ? `${type} ${number}` : `${number}`;
 
   return (
-    <AccordionItem ref={headerRef} defaultOpen heading={title}>
+    <AccordionItem
+      ref={headerRef}
+      defaultOpen
+      heading={title}
+      isControlledOpen={printView ?? undefined}
+      onChange={printView ? () => {} : undefined}
+    >
       {children.map((q, index) => (
         <Question key={q.id || index} question={q} printView={printView} />
       ))}
