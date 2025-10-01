@@ -450,6 +450,10 @@
   }
 }
 
+.section-footer {
+  margin-top: (variables.$margin * 2);
+}
+
 .review-view {
   h4 {
     color: variables.$black;

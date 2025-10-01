@@ -52,7 +52,10 @@ export const Objective = ({
       onChange={printView ? () => {} : undefined}
     >
       {children.map((q) => (
-        <div className="ds-c-choice__checkedChild" key={q.id}>
+        <div
+          className="ds-c-choice__checkedChild ds-u-padding-top--0 ds-u-display--flex"
+          key={q.id}
+        >
           <Question question={q} printView={printView} />
         </div>
       ))}

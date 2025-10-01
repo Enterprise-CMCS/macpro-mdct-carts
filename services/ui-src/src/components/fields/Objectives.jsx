@@ -41,22 +41,24 @@ const Objectives = ({
   return (
     <>
       <Accordion>
-        {question.questions.map((q, i) => (
-          <Objective
-            key={q.id}
-            headerRef={ref}
-            objective={q}
-            objectiveNumber={i + 1}
-            printView={printView}
-          />
-        ))}
+        <div className="question-container">
+          {question.questions.map((q, i) => (
+            <Objective
+              key={q.id}
+              headerRef={ref}
+              objective={q}
+              objectiveNumber={i + 1}
+              printView={printView}
+            />
+          ))}
+        </div>
 
         {question.questions.length > 1 && (
           <button
             disabled={disabled}
             onClick={remove}
             type="button"
-            className="add-objective ds-c-button ds-c-button--danger"
+            className="ds-c-button ds-c-button--danger"
           >
             Delete last objective
           </button>

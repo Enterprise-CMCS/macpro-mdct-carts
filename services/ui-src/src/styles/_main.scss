@@ -501,7 +501,11 @@ img {
 }
 
 .add-objective {
-  margin-top: (variables.$margin * 4);
+  margin-top: (variables.$margin * 2);
+}
+
+.delete-repeatable {
+  margin-top: (variables.$margin * 3);
 }
 
 .comingsoon {
