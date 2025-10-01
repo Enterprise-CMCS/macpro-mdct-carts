@@ -1,3 +1,4 @@
+// This file is managed by macpro-mdct-core so if you'd like to change it let's do it there
 import yargs from "yargs";
 import "dotenv/config";
 import { deploy } from "./commands/deploy.js";
@@ -7,6 +8,8 @@ import { install, installDeps } from "./commands/install.js";
 import { local } from "./commands/local.js";
 import { updateEnv } from "./commands/update-env.js";
 import { watch } from "./commands/watch.js";
+import { deleteTopics } from "./commands/delete-topics.js";
+import { listTopics } from "./commands/list-topics.js";
 
 await yargs(process.argv.slice(2))
   .middleware(async (argv) => {
@@ -21,6 +24,8 @@ await yargs(process.argv.slice(2))
   .command(local)
   .command(updateEnv)
   .command(watch)
+  .command(deleteTopics)
+  .command(listTopics)
   .strict()
   .scriptName("run")
   .demandCommand(1, "")
