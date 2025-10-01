@@ -48,6 +48,8 @@ export const Objective = ({
       ref={headerRef}
       defaultOpen
       heading={objectiveName(objectiveNumber, name, suggested)}
+      isControlledOpen={printView ?? undefined}
+      onChange={printView ? () => {} : undefined}
     >
       {children.map((q) => (
         <div className="ds-c-choice__checkedChild" key={q.id}>
