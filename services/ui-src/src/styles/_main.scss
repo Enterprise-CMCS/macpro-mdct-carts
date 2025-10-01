@@ -589,9 +589,10 @@ div[data-state="open"] .accordion-header .arrow:before {
 
 .filter-drop-down {
   display: block;
-  margin-top: 15px;
+  margin-top: 24px;
 
   @media screen and (min-width: 768px) {
+    margin-top: 15px;
     display: inline-block;
     width: 100%;
   }
