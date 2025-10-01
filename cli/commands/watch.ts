@@ -1,12 +1,10 @@
+// This file is managed by macpro-mdct-core so if you'd like to change it let's do it there
 import { Argv } from "yargs";
 import { checkIfAuthenticated } from "../lib/sts.js";
 import { runCommand } from "../lib/runner.js";
-import {
-  runFrontendLocally,
-  getCloudFormationStackOutputValues,
-} from "../lib/utils.js";
+import { runFrontendLocally } from "../lib/utils.js";
 import downloadClamAvLayer from "../lib/clam.js";
-import { InvokeCommand, LambdaClient } from "@aws-sdk/client-lambda";
+import { seedData } from "../lib/seedData.js";
 
 export const watch = {
   command: "watch",
@@ -15,23 +13,13 @@ export const watch = {
     return yargs.option("stage", { type: "string", demandOption: true });
   },
   handler: async (options: { stage: string }) => {
-    checkIfAuthenticated();
+    await checkIfAuthenticated();
 
-    const seedDataFunctionName = (
-      await getCloudFormationStackOutputValues(`carts-${options.stage}`)
-    ).SeedDataFunctionName;
-
-    const lambdaClient = new LambdaClient({ region: "us-east-1" });
-    const lambdaCommand = new InvokeCommand({
-      FunctionName: seedDataFunctionName,
-      InvocationType: "Event",
-      Payload: Buffer.from(JSON.stringify({})),
-    });
-    await lambdaClient.send(lambdaCommand);
+    await seedData();
 
     await downloadClamAvLayer();
     await Promise.all([
-      await runCommand(
+      runCommand(
         "CDK watch",
         [
           "yarn",
@@ -43,7 +31,7 @@ export const watch = {
         ],
         "."
       ),
-      await runFrontendLocally(options.stage),
+      runFrontendLocally(options.stage),
     ]);
   },
 };
