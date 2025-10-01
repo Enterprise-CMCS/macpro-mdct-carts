@@ -1,8 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router";
 import { Button } from "@cmsgov/design-system";
 import { MultiSelect } from "react-multi-select-component";
 // components
+import { Main } from "../../layout/Main";
 import ReportItemLinks from "./ReportItemLinks";
 import SortableTable, { generateColumns } from "./SortableTable";
 import { DropdownOption } from "../../fields/DropdownOption";
@@ -171,106 +173,100 @@ const CMSHomepage = () => {
   const columns = generateColumns(sortableHeadRow, true, customCells);
 
   return (
-    <div className="ds-l-container">
-      <div className="ds-l-row">
-        <div className="homepage ds-l-col--12">
-          <div className="ds-l-container-large">
-            {currentUserRole !== AppRoles.CMS_ADMIN ? (
-              <div className="ds-l-row ds-u-padding-left--2">
-                <h1 className="page-title ds-u-margin-bottom--0">
-                  CHIP Annual Reporting Template System (CARTS)
-                </h1>
+    <Main className="homepage">
+      <div className="ds-l-container">
+        <div className="ds-l-row ds-u-padding-left--2">
+          <h1 className="page-title ds-u-margin-bottom--0">
+            CHIP Annual Reporting Template System (CARTS)
+          </h1>
+        </div>
+        <div className="ds-l-row">
+          {currentUserRole === AppRoles.CMS_ADMIN && (
+            <div className="ds-l-col--12 ds-u-margin-top--2">
+              <Link to="/templates">Generate Form Base Templates</Link>
+            </div>
+          )}
+          <div className="reports ds-l-col--12">
+            <div className="ds-l-row filter-container">
+              <div className="ds-c-label ds-l-col--12">
+                Search and Filter results
               </div>
-            ) : null}
+              <div
+                data-cy="cms-homepage-state-dropdown"
+                className="filter-drop-down ds-l-col--4"
+              >
+                <MultiSelect
+                  options={stateList}
+                  value={currentlySelectedStates}
+                  onChange={onSelectState}
+                  hasSelectAll={false}
+                  overrideStrings={{ selectSomeItems: "State" }}
+                  ItemRenderer={DropdownOption}
+                />
+              </div>
+              <div
+                data-cy="cms-homepage-year-dropdown"
+                className="filter-drop-down ds-l-col--4"
+              >
+                <MultiSelect
+                  options={yearList}
+                  value={currentlySelectedYears}
+                  onChange={onSelectYear}
+                  hasSelectAll={false}
+                  overrideStrings={{ selectSomeItems: "Year" }}
+                  ItemRenderer={DropdownOption}
+                />
+              </div>
+              <div
+                data-cy="cms-homepage-status-dropdown"
+                className="filter-drop-down ds-l-col--4"
+              >
+                <MultiSelect
+                  options={statusList}
+                  value={currentlySelectedStatuses}
+                  onChange={onSelectStatus}
+                  hasSelectAll={false}
+                  overrideStrings={{ selectSomeItems: "Status" }}
+                  ItemRenderer={DropdownOption}
+                />
+              </div>
+              <div>
+                <Button
+                  type="button"
+                  data-cy="cms-homepage-filter-submit"
+                  className="ds-c-button ds-c-button--solid filter-button"
+                  onClick={() => filterReports()}
+                >
+                  Filter
+                </Button>
+                <Button
+                  type="button"
+                  data-cy="cms-homepage-filter-clear"
+                  className="ds-c-button ds-c-button--solid filter-button"
+                  onClick={() => clearFilter()}
+                >
+                  Clear
+                </Button>
+              </div>
+            </div>
             <div className="ds-l-row">
-              <div className="reports ds-l-col--12">
-                <div className="carts-report preview__grid">
-                  <div className="ds-l-row filter-container">
-                    <div className="filter-div">
-                      <div className="ds-c-label">
-                        Search and Filter results
-                      </div>
-
-                      <div
-                        data-cy="cms-homepage-state-dropdown"
-                        className="filter-drop-down-state"
-                      >
-                        <MultiSelect
-                          options={stateList}
-                          value={currentlySelectedStates}
-                          onChange={onSelectState}
-                          hasSelectAll={false}
-                          overrideStrings={{ selectSomeItems: "State" }}
-                          ItemRenderer={DropdownOption}
-                        />
-                      </div>
-                      <div
-                        data-cy="cms-homepage-year-dropdown"
-                        className="filter-drop-down-year-status"
-                      >
-                        <MultiSelect
-                          options={yearList}
-                          value={currentlySelectedYears}
-                          onChange={onSelectYear}
-                          hasSelectAll={false}
-                          overrideStrings={{ selectSomeItems: "Year" }}
-                          ItemRenderer={DropdownOption}
-                        />
-                      </div>
-                      <div
-                        data-cy="cms-homepage-status-dropdown"
-                        className="filter-drop-down-year-status"
-                      >
-                        <MultiSelect
-                          options={statusList}
-                          value={currentlySelectedStatuses}
-                          onChange={onSelectStatus}
-                          hasSelectAll={false}
-                          overrideStrings={{ selectSomeItems: "Status" }}
-                          ItemRenderer={DropdownOption}
-                        />
-                      </div>
-                      <div>
-                        <Button
-                          type="button"
-                          data-cy="cms-homepage-filter-submit"
-                          className="ds-c-button ds-c-button--solid filter-button"
-                          onClick={() => filterReports()}
-                        >
-                          Filter
-                        </Button>
-                        <Button
-                          type="button"
-                          data-cy="cms-homepage-filter-clear"
-                          className="ds-c-button ds-c-button--solid filter-button"
-                          onClick={() => clearFilter()}
-                        >
-                          Clear
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="ds-l-row">
-                    <h2 id="reports-heading" className="ds-h3 ds-u-padding--2">
-                      All Reports
-                    </h2>
-                  </div>
-                  <div className="ds-l-row">
-                    <div className="reports">
-                      <SortableTable
-                        aria-labelledBy={"reports-heading"}
-                        columns={columns}
-                        data={data}
-                      />
-                    </div>
-                  </div>
-                </div>
+              <h2 id="reports-heading" className="ds-h3 ds-u-padding--2">
+                All Reports
+              </h2>
+            </div>
+            <div className="ds-l-row">
+              <div className="reports">
+                <SortableTable
+                  aria-labelledBy={"reports-heading"}
+                  columns={columns}
+                  data={data}
+                />
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </Main>
   );
 };
 

@@ -9,28 +9,36 @@
   font-family: "Open Sans", sans-serif;
   margin-top: 0;
 
-  .sortable-table-button {
+  &-button {
     background-color: transparent;
     border: 0;
     cursor: pointer;
     margin: 0;
     padding: 0;
+
+    &:focus {
+      outline: 3px solid #bd13b8;
+      outline-offset: 1px;
+      box-shadow: none;
+      color: #4c2c92;
+    }
   }
 
-  .sortable-table-header {
+  &-header {
     font-family: inherit;
     font-size: 0.8rem;
     font-weight: bold;
     text-transform: uppercase;
     white-space: nowrap;
   }
-  .sortable-table-arrows {
+
+  &-arrows {
     display: inline-block;
     margin-left: 0.75rem;
     width: 10px;
   }
 
-  .sortable-table-hidden {
+  &-hidden {
     border: 0;
     clip: rect(0, 0, 0, 0);
     margin: -1px;
@@ -40,5 +48,13 @@
     position: absolute;
     white-space: nowrap;
     width: 1px;
+  }
+
+  &-row-even {
+    background-color: variables.$color-gray-lighter;
+  }
+
+  &-row-odd {
+    background-color: variables.$white;
   }
 }
