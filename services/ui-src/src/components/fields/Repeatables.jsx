@@ -68,7 +68,7 @@ const Repeatables = ({
             disabled={disabled}
             onClick={remove}
             type="button"
-            className="add-objective ds-c-button ds-c-button--danger"
+            className="delete-repeatable ds-c-button ds-c-button--danger"
           >
             Delete last {question.typeLabel || "item"}
           </button>

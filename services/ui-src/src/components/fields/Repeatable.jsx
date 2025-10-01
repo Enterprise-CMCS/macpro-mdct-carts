@@ -23,9 +23,13 @@ const Repeatable = ({
       isControlledOpen={printView ?? undefined}
       onChange={printView ? () => {} : undefined}
     >
-      {children.map((q, index) => (
-        <Question key={q.id || index} question={q} printView={printView} />
-      ))}
+      <div className="ds-c-choice__checkedChild ds-u-padding-top--0 ds-u-display--flex">
+        <div className="question-container">
+          {children.map((q, index) => (
+            <Question key={q.id || index} question={q} printView={printView} />
+          ))}
+        </div>
+      </div>
     </AccordionItem>
   );
 };
