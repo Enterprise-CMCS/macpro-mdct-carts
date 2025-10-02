@@ -22,6 +22,7 @@ const Repeatable = ({
       heading={title}
       isControlledOpen={printView ?? undefined}
       onChange={printView ? () => {} : undefined}
+      headingLevel="3"
     >
       <div className="ds-c-choice__checkedChild ds-u-padding-top--0 ds-u-display--flex">
         <div className="question-container">
