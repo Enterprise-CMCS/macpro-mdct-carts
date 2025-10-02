@@ -50,6 +50,8 @@ export const Objective = ({
       heading={objectiveName(objectiveNumber, name, suggested)}
       isControlledOpen={printView ?? undefined}
       onChange={printView ? () => {} : undefined}
+      closeIcon={<span aria-hidden="true">–</span>}
+      openIcon={<span aria-hidden="true">+</span>}
     >
       {children.map((q) => (
         <div
