@@ -27,7 +27,7 @@ describe("Repeatable component", () => {
       </Accordion>
     );
     expect(
-      screen.getByRole("button", { name: /mock repeatable 1/ })
+      screen.getByRole("button", { name: "mock repeatable 1" })
     ).toBeVisible();
     expect(mockQuestion).toHaveBeenCalledWith(
       expect.objectContaining({

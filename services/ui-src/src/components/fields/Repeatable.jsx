@@ -22,6 +22,9 @@ const Repeatable = ({
       heading={title}
       isControlledOpen={printView ?? undefined}
       onChange={printView ? () => {} : undefined}
+      headingLevel="3"
+      closeIcon={<span aria-hidden="true">–</span>}
+      openIcon={<span aria-hidden="true">+</span>}
     >
       <div className="ds-c-choice__checkedChild ds-u-padding-top--0 ds-u-display--flex">
         <div className="question-container">
