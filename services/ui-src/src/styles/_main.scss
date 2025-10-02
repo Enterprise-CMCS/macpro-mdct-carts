@@ -185,6 +185,44 @@ img {
     }
   }
 
+  .sortable-table {
+
+    .cell-bolded {
+      color: #333;
+      font-weight: 700;
+    }
+
+    thead {
+      display: none;
+    }
+
+    .cell-header {
+      font-weight: 700;
+    }
+
+    @media only screen and (min-width: 768px) {
+      thead {
+        display: table-header-group;
+      }
+
+      .cell-header {
+        display: none;
+      }
+    }
+
+    @media only screen and (max-width: 767px) {
+      tr {
+        display: grid;
+        padding: 12px 0;
+      }
+
+      td {
+        width: 100%;
+        padding: 4px 16px;
+      }
+    }
+  }
+
   .ds-c-table th {
     background: none;
     color: #333;
