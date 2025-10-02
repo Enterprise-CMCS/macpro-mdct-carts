@@ -255,14 +255,31 @@ input[type=radio]+label {
     margin-bottom: (variables.$margin * 2);
   }
 
-  .date-range {
-    border-left: 4px solid variables.$brand-primary;
-    padding-left: (variables.$padding * 2);
+  .date-range-start {
+    margin-top: (variables.$margin * 2);
   }
 
   .question-outer-header {
     margin-bottom: 0;
     margin-top: (variables.$margin * 4);
+  }
+
+  label {
+    margin-bottom: (variables.$margin * 2);
+  }
+
+  button {
+    margin-top: variables.$margin;
+    margin-right: variables.$margin;
+  }
+
+  .ds-c-choice__checkedChild {
+    margin-bottom: 0;
+    margin-left: 0;
+  }
+
+  .ds-c-accordion__content {
+    padding-left: (variables.$padding * 2);
   }
 }
 
