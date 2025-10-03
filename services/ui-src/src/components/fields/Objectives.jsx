@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { Accordion, AccordionItem } from "@reach/accordion";
+import { Accordion } from "@cmsgov/design-system";
 
 import { Objective } from "./Objective";
 import {
@@ -40,28 +40,25 @@ const Objectives = ({
 
   return (
     <>
-      <Accordion
-        collapsible
-        multiple
-        defaultIndex={[...Array(100)].map((_, i) => i)}
-      >
-        {question.questions.map((q, i) => (
-          <AccordionItem key={q.id}>
+      <Accordion>
+        <div className="question-container">
+          {question.questions.map((q, i) => (
             <Objective
+              key={q.id}
               headerRef={ref}
               objective={q}
               objectiveNumber={i + 1}
               printView={printView}
             />
-          </AccordionItem>
-        ))}
+          ))}
+        </div>
 
         {question.questions.length > 1 && (
           <button
             disabled={disabled}
             onClick={remove}
             type="button"
-            className="add-objective ds-c-button ds-c-button--danger"
+            className="ds-c-button ds-c-button--danger"
           >
             Delete last objective
           </button>

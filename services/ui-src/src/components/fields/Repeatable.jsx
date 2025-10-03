@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { AccordionButton, AccordionPanel } from "@reach/accordion";
+import { AccordionItem } from "@cmsgov/design-system";
 
 import Question from "./Question";
 
@@ -16,20 +16,24 @@ const Repeatable = ({
   const title = type ? `${type} ${number}` : `${number}`;
 
   return (
-    <>
-      <div className="accordion-header" ref={headerRef}>
-        <span className="span-pdf-no-bookmark">
-          <AccordionButton>
-            <div className="accordion-title">{title}</div>
-          </AccordionButton>
-        </span>
+    <AccordionItem
+      ref={headerRef}
+      defaultOpen
+      heading={title}
+      isControlledOpen={printView ?? undefined}
+      onChange={printView ? () => {} : undefined}
+      headingLevel="3"
+      closeIcon={<span aria-hidden="true">–</span>}
+      openIcon={<span aria-hidden="true">+</span>}
+    >
+      <div className="ds-c-choice__checkedChild ds-u-padding-top--0 ds-u-display--flex">
+        <div className="question-container">
+          {children.map((q, index) => (
+            <Question key={q.id || index} question={q} printView={printView} />
+          ))}
+        </div>
       </div>
-      <AccordionPanel>
-        {children.map((q, index) => (
-          <Question key={q.id || index} question={q} printView={printView} />
-        ))}
-      </AccordionPanel>
-    </>
+    </AccordionItem>
   );
 };
 Repeatable.propTypes = {

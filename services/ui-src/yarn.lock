@@ -2287,40 +2287,6 @@
     tar-fs "^3.1.0"
     yargs "^17.7.2"
 
-"@reach/accordion@^0.18.0":
-  version "0.18.0"
-  resolved "https://registry.yarnpkg.com/@reach/accordion/-/accordion-0.18.0.tgz#7bd76caaa8394b2e67cbf6de7892b02d9cbd7eb1"
-  integrity sha512-jOQ1jj0Oc4yYu58R7WzSCkDSNO8kpy8ovQTjKk0Bo3pbmmkX7QQq292TTl8dMz0RXGe0pmLViubRsD0GkrBFIA==
-  dependencies:
-    "@reach/auto-id" "0.18.0"
-    "@reach/descendants" "0.18.0"
-    "@reach/polymorphic" "0.18.0"
-    "@reach/utils" "0.18.0"
-
-"@reach/auto-id@0.18.0":
-  version "0.18.0"
-  resolved "https://registry.yarnpkg.com/@reach/auto-id/-/auto-id-0.18.0.tgz#4b97085cd1cf1360a9bedc6e9c78e97824014f0d"
-  integrity sha512-XwY1IwhM7mkHZFghhjiqjQ6dstbOdpbFLdggeke75u8/8icT8uEHLbovFUgzKjy9qPvYwZIB87rLiR8WdtOXCg==
-  dependencies:
-    "@reach/utils" "0.18.0"
-
-"@reach/descendants@0.18.0":
-  version "0.18.0"
-  resolved "https://registry.yarnpkg.com/@reach/descendants/-/descendants-0.18.0.tgz#16fe52a5154da262994b0b8768baff4f670922d1"
-  integrity sha512-GXUxnM6CfrX5URdnipPIl3Tlc6geuz4xb4n61y4tVWXQX1278Ra9Jz9DMRN8x4wheHAysvrYwnR/SzAlxQzwtA==
-  dependencies:
-    "@reach/utils" "0.18.0"
-
-"@reach/polymorphic@0.18.0":
-  version "0.18.0"
-  resolved "https://registry.yarnpkg.com/@reach/polymorphic/-/polymorphic-0.18.0.tgz#2fe42007a774e06cdbc8e13e0d46f2dc30f2f1ed"
-  integrity sha512-N9iAjdMbE//6rryZZxAPLRorzDcGBnluf7YQij6XDLiMtfCj1noa7KyLpEc/5XCIB/EwhX3zCluFAwloBKdblA==
-
-"@reach/utils@0.18.0":
-  version "0.18.0"
-  resolved "https://registry.yarnpkg.com/@reach/utils/-/utils-0.18.0.tgz#4f3cebe093dd436eeaff633809bf0f68f4f9d2ee"
-  integrity sha512-KdVMdpTgDyK8FzdKO9SCpiibuy/kbv3pwgfXshTI6tEcQT1OOwj7BAksnzGC0rPz0UholwC+AgkqEl3EJX3M1A==
-
 "@redux-devtools/extension@^3.3.0":
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/@redux-devtools/extension/-/extension-3.3.0.tgz#bc775d289f15604c472112920beac2cf4dbb7907"

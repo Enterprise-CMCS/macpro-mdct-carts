@@ -370,45 +370,6 @@ img {
   }
 }
 
-.accordion-header {
-  h3 {
-    margin-bottom: 0;
-
-    button {
-      background: variables.$lily-white;
-      border: none;
-      border-top: 6px solid variables.$brand-primary;
-      border-bottom: 1px solid variables.$color-gray-light;
-      cursor: pointer;
-      font-size: 1.6rem;
-      font-weight: bold;
-      padding: (variables.$padding * 4) (variables.$padding * 2);
-      position: relative;
-      text-align: left;
-      width: 100%;
-
-      .arrow {
-        position: absolute;
-        top: calc(50% - 30px);
-        right: 16px;
-
-        &:before {
-          content: "\f106";
-          font-family: "FontAwesome";
-          position: absolute;
-          right: 0;
-          top: (variables.$margin * 2);
-          transform: rotate(180deg);
-        }
-      }
-    }
-  }
-}
-
-div[data-state="open"] .accordion-header .arrow:before {
-  transform: rotate(0deg);
-}
-
 .objective-body,
 .objective-footer {
   background: variables.$color-gray-lightest;
@@ -536,7 +497,11 @@ div[data-state="open"] .accordion-header .arrow:before {
 }
 
 .add-objective {
-  margin-top: (variables.$margin * 4);
+  margin-top: (variables.$margin * 2);
+}
+
+.delete-repeatable {
+  margin-top: (variables.$margin * 3);
 }
 
 .comingsoon {
