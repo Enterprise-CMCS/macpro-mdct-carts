@@ -142,9 +142,37 @@ const CMSHomepage = () => {
     const actionLinkURL = `/views/sections/${stateCode}/${year}/00/a`;
 
     switch (headKey) {
-      case "stateName":
+      case "stateName": {
+        return (
+          <span className="cell-bolded">
+            <span className="cell-header">State: </span>
+            {value}
+          </span>
+        );
+      }
       case "year": {
-        return <span className="name">{value}</span>;
+        return (
+          <span className="cell-bolded">
+            <span className="cell-header">Year: </span>
+            {value}
+          </span>
+        );
+      }
+      case "statusText": {
+        return (
+          <span>
+            <span className="cell-header">Status: </span>
+            {value}
+          </span>
+        );
+      }
+      case "lastEdited": {
+        return (
+          <span>
+            <span className="cell-header">Last Edited: </span>
+            {value}
+          </span>
+        );
       }
       case "actions": {
         return (

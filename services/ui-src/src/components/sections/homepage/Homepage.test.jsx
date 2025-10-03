@@ -34,9 +34,11 @@ describe("<Homepage />", () => {
       screen.getByRole("button", { name: "Download template" })
     );
     expect(screen.getAllByRole("row").length).toBe(3);
-    expect(screen.getByRole("cell", { name: "In Progress" })).toBeVisible();
     expect(
-      screen.getByRole("cell", { name: "Certified and Submitted" })
+      screen.getByRole("cell", { name: "Status: In Progress" })
+    ).toBeVisible();
+    expect(
+      screen.getByRole("cell", { name: "Status: Certified and Submitted" })
     ).toBeVisible(1);
   });
 });
