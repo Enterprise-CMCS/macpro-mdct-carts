@@ -192,33 +192,41 @@ img {
       font-weight: 700;
     }
 
-    thead {
-      display: none;
-    }
-
     .cell-header {
       font-weight: 700;
     }
 
+    thead {
+      display: none;
+    }
+
+    tr {
+      display: grid;
+      padding: 12px 0;
+    }
+
+    td {
+      width: 100%;
+      padding: 4px 16px;
+    }
+
     @media only screen and (min-width: 768px) {
+      .cell-header {
+        display: none;
+      }
+
       thead {
         display: table-header-group;
       }
 
-      .cell-header {
-        display: none;
-      }
-    }
-
-    @media only screen and (max-width: 767px) {
       tr {
-        display: grid;
-        padding: 12px 0;
+        display: table-row;
+        padding: 0;
       }
 
       td {
-        width: 100%;
-        padding: 4px 16px;
+        width: initial;
+        padding: 16px;
       }
     }
   }
