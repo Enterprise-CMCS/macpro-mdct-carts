@@ -9,6 +9,49 @@
   font-family: "Open Sans", sans-serif;
   margin-top: 0;
 
+  .cell-bolded {
+    color: #333;
+    font-weight: 700;
+  }
+
+  .cell-header {
+    font-weight: 700;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tr {
+    display: grid;
+    padding: 12px 0;
+  }
+
+  td {
+    width: 100%;
+    padding: 4px 16px;
+  }
+
+  @media only screen and (min-width: 768px) {
+    .cell-header {
+      display: none;
+    }
+
+    thead {
+      display: table-header-group;
+    }
+
+    tr {
+      display: table-row;
+      padding: 0;
+    }
+
+    td {
+      width: initial;
+      padding: 16px;
+    }
+  }
+
   &-button {
     background-color: transparent;
     border: 0;
