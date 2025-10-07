@@ -160,18 +160,18 @@ const CMSHomepage = () => {
       }
       case "statusText": {
         return (
-          <span>
+          <>
             <span className="cell-header">Status: </span>
             {value}
-          </span>
+          </>
         );
       }
       case "lastEdited": {
         return (
-          <span>
+          <>
             <span className="cell-header">Last Edited: </span>
             {value}
-          </span>
+          </>
         );
       }
       case "actions": {
