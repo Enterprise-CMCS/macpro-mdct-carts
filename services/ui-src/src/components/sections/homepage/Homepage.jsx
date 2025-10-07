@@ -39,7 +39,28 @@ const Homepage = ({ reportStatus }) => {
 
     switch (headKey) {
       case "year": {
-        return <span className="name">{value}</span>;
+        return (
+          <span className="cell-bolded">
+            <span className="cell-header">Year: </span>
+            {value}
+          </span>
+        );
+      }
+      case "statusText": {
+        return (
+          <>
+            <span className="cell-header">Status: </span>
+            {value}
+          </>
+        );
+      }
+      case "lastEdited": {
+        return (
+          <>
+            <span className="cell-header">Last Edited: </span>
+            {value}
+          </>
+        );
       }
       case "actions": {
         return (
@@ -85,7 +106,7 @@ const Homepage = ({ reportStatus }) => {
         <div className="ds-l-row">
           <div className="reports">
             <SortableTable
-              aria-labelledBy={"reports-heading"}
+              ariaLabelledBy={"reports-heading"}
               columns={columns}
               data={data}
             />

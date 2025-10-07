@@ -25,7 +25,7 @@ import {
 } from "@tanstack/react-table";
 
 const SortableTable = ({
-  "aria-labelledby": ariaLabelledBy,
+  ariaLabelledBy,
   columns,
   data,
   initialSorting = [],
