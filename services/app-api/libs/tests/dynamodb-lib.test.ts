@@ -1,4 +1,4 @@
-import dynamoLib, { getConfig } from "../dynamodb-lib";
+import dynamoLib, { awsConfig } from "../dynamodb-lib";
 import {
   BatchWriteCommand,
   BatchWriteCommandInput,
@@ -135,7 +135,7 @@ describe("DynamoDB Library", () => {
   });
 
   test("Uses AWS config", () => {
-    const config = getConfig();
+    const config = awsConfig;
     expect(config).toHaveProperty("region", "us-east-1");
   });
 });
