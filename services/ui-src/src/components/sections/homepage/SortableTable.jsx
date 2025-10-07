@@ -59,68 +59,64 @@ const SortableTable = ({
 
   return (
     <TableRoot className="sortable-table" aria-labelledby={ariaLabelledBy}>
-      {
-        <Thead>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <Tr className="report-header" key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                const ariaSort = header.column.getIsSorted()
-                  ? {
-                      "aria-sort":
-                        header.column.getIsSorted() === "asc"
-                          ? "ascending"
-                          : "descending",
-                    }
-                  : {};
+      <Thead>
+        {table.getHeaderGroups().map((headerGroup) => (
+          <Tr className="report-header" key={headerGroup.id}>
+            {headerGroup.headers.map((header) => {
+              const ariaSort = header.column.getIsSorted()
+                ? {
+                    "aria-sort":
+                      header.column.getIsSorted() === "asc"
+                        ? "ascending"
+                        : "descending",
+                  }
+                : {};
 
-                return (
-                  <Th key={header.id} scope="col" {...ariaSort}>
-                    {header.column.getCanSort() && (
-                      <button
-                        className="sortable-table-button sortable-table-header"
-                        onClick={header.column.getToggleSortingHandler()}
-                        aria-label={headerLabels[header.id]}
-                        type="button"
-                      >
-                        <span
-                          ref={(el) => (headerRefs.current[header.id] = el)}
-                        >
-                          {flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                        </span>
-                        <span
-                          className="sortable-table-arrows"
-                          aria-hidden="true"
-                        >
-                          {!header.column.getIsSorted() && (
-                            <FontAwesomeIcon icon={faArrowsUpDown} />
-                          )}
-                          {header.column.getIsSorted() === "asc" && (
-                            <FontAwesomeIcon icon={faArrowUpLong} />
-                          )}
-                          {header.column.getIsSorted() === "desc" && (
-                            <FontAwesomeIcon icon={faArrowDownLong} />
-                          )}
-                        </span>
-                      </button>
-                    )}
-                    {!header.column.getCanSort() && (
-                      <span className="sortable-table-header">
+              return (
+                <Th key={header.id} scope="col" {...ariaSort}>
+                  {header.column.getCanSort() && (
+                    <button
+                      className="sortable-table-button sortable-table-header"
+                      onClick={header.column.getToggleSortingHandler()}
+                      aria-label={headerLabels[header.id]}
+                      type="button"
+                    >
+                      <span ref={(el) => (headerRefs.current[header.id] = el)}>
                         {flexRender(
                           header.column.columnDef.header,
                           header.getContext()
                         )}
                       </span>
-                    )}
-                  </Th>
-                );
-              })}
-            </Tr>
-          ))}
-        </Thead>
-      }
+                      <span
+                        className="sortable-table-arrows"
+                        aria-hidden="true"
+                      >
+                        {!header.column.getIsSorted() && (
+                          <FontAwesomeIcon icon={faArrowsUpDown} />
+                        )}
+                        {header.column.getIsSorted() === "asc" && (
+                          <FontAwesomeIcon icon={faArrowUpLong} />
+                        )}
+                        {header.column.getIsSorted() === "desc" && (
+                          <FontAwesomeIcon icon={faArrowDownLong} />
+                        )}
+                      </span>
+                    </button>
+                  )}
+                  {!header.column.getCanSort() && (
+                    <span className="sortable-table-header">
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                    </span>
+                  )}
+                </Th>
+              );
+            })}
+          </Tr>
+        ))}
+      </Thead>
       <Tbody>
         {table.getRowModel().rows.map((row, idx) => (
           <Tr
