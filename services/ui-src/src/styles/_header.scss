@@ -10,6 +10,7 @@
   top: 0;
   z-index: 1;
   background-color: variables.$color-gray-lightest;
+
   @media only screen and (max-width: 767px) {
     position: static;
   }
@@ -49,6 +50,7 @@
     @media only screen and (max-width: 767px) {
       font-size: 1.6rem;
     }
+
     @media only screen and (min-width: 768px) {
       padding-left: 0;
     }
@@ -57,7 +59,8 @@
   #carts-logo {
     width: 100%;
     max-width: 300px;
-    padding-top: .5rem;
+    padding-top: 1rem;
+
     @media only screen and (min-width: 767px) {
       width: 300px;
     }
@@ -86,6 +89,7 @@
 
   .nav-user {
     width: 50%;
+
     @media only screen and (min-width: 768px) {
       width: auto;
     }
@@ -119,12 +123,13 @@
         }
 
         button {
-          padding-left:0;
+          padding-left: 0;
           padding-right: 0;
           height: 100%;
           cursor: pointer;
           text-decoration: none;
           color: #fff;
+
           &:hover {
             color: #8ed2e5;
           }
@@ -160,18 +165,22 @@
         top: (variables.$padding * 6.25);
         transition: all 2s;
       }
+
       a,
       button {
         &:focus {
           background-color: initial;
         }
       }
+
       .contact-us {
         padding: (variables.$padding * 2) 0 (variables.$padding * 1.5);
         position: relative;
         width: 100%;
+
         a {
           padding: (variables.$padding * 2) (variables.$padding * 9.75) (variables.$padding * 1.5) variables.$padding;
+
           &:before {
             content: "\f05a";
             font-family: "FontAwesome";
@@ -181,12 +190,15 @@
           }
         }
       }
+
       .manage-account {
         padding: (variables.$padding * 2) 0 (variables.$padding * 1.5);
         position: relative;
         width: 100%;
+
         a {
           padding: (variables.$padding * 2) (variables.$padding * 4) (variables.$padding * 1.5) variables.$padding;
+
           &:before {
             content: "\f044";
             font-family: "FontAwesome";
@@ -196,6 +208,7 @@
           }
         }
       }
+
       .logout {
         position: relative;
         width: 100%;
@@ -213,9 +226,11 @@
           font-weight: normal;
           color: #fff;
           padding: (variables.$padding * 2) (variables.$padding * 12.25) (variables.$padding * 1.5) variables.$padding;
+
           &:hover {
             color: #8ed2e5;
           }
+
           &:before {
             content: "\f08b";
             font-family: "FontAwesome";
@@ -227,6 +242,7 @@
       }
     }
   }
+
   .header-row {
     position: relative;
     margin: 0;
@@ -257,6 +273,7 @@
       display: none;
     }
   }
+
   &-status {
     font-size: 0.95rem;
     font-style: italic;
