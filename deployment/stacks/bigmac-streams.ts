@@ -129,7 +129,7 @@ export function createBigmacStreamsComponents(
     vpcSubnets: { subnets: kafkaAuthorizedSubnets },
     securityGroups: [lambdaSG],
     environment: {
-      BOOTSTRAP_BROKER_STRING_TLS: brokerString,
+      brokerString,
       STAGE: stage,
     },
     ...commonProps,

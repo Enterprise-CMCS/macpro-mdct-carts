@@ -33,6 +33,9 @@
 
 .ds-l-col fieldset .ds-c-label {
   white-space: nowrap;
+  .ds-c-field__error-message {
+    white-space: wrap;
+  }
 }
 
 .ds-l-col--2 {
@@ -425,8 +428,6 @@
 }
 
 .dropdown-container {
-  max-width: 320px;
-
   .dropdown-heading-value {
     color: #262626;
   }

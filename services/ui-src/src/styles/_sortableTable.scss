@@ -9,28 +9,79 @@
   font-family: "Open Sans", sans-serif;
   margin-top: 0;
 
-  .sortable-table-button {
+  .cell-bolded {
+    color: #333;
+    font-weight: 700;
+  }
+
+  .cell-header {
+    font-weight: 700;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tr {
+    display: grid;
+    padding: 12px 0;
+  }
+
+  td {
+    width: 100%;
+    padding: 4px 16px;
+  }
+
+  @media only screen and (min-width: 768px) {
+    .cell-header {
+      display: none;
+    }
+
+    thead {
+      display: table-header-group;
+    }
+
+    tr {
+      display: table-row;
+      padding: 0;
+    }
+
+    td {
+      width: initial;
+      padding: 16px;
+    }
+  }
+
+  &-button {
     background-color: transparent;
     border: 0;
     cursor: pointer;
     margin: 0;
     padding: 0;
+
+    &:focus {
+      outline: 3px solid #bd13b8;
+      outline-offset: 1px;
+      box-shadow: none;
+      color: #4c2c92;
+    }
   }
 
-  .sortable-table-header {
+  &-header {
     font-family: inherit;
     font-size: 0.8rem;
     font-weight: bold;
     text-transform: uppercase;
     white-space: nowrap;
   }
-  .sortable-table-arrows {
+
+  &-arrows {
     display: inline-block;
     margin-left: 0.75rem;
     width: 10px;
   }
 
-  .sortable-table-hidden {
+  &-hidden {
     border: 0;
     clip: rect(0, 0, 0, 0);
     margin: -1px;
@@ -40,5 +91,13 @@
     position: absolute;
     white-space: nowrap;
     width: 1px;
+  }
+
+  &-row-even {
+    background-color: variables.$color-gray-lighter;
+  }
+
+  &-row-odd {
+    background-color: variables.$white;
   }
 }

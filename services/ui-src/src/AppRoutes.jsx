@@ -7,7 +7,6 @@ import { useUser } from "./hooks/authHooks";
 import "font-awesome/css/font-awesome.min.css";
 import "./styles/app.scss";
 import GetHelp from "./components/sections/GetHelp";
-import AdminHome from "./components/layout/HomeAdmin";
 import StateHome from "./components/layout/HomeState";
 import Sidebar from "./components/layout/Sidebar";
 import InvokeSection from "./components/utils/InvokeSection";
@@ -70,9 +69,7 @@ const AppRoutes = () => {
           element={
             isStateUser ? (
               <StateHome />
-            ) : isAdminUser ? (
-              <AdminHome />
-            ) : isCMSUser ? (
+            ) : isCMSUser | isAdminUser ? (
               <CMSHomepage />
             ) : (
               <Navigate to="/user/profile" />

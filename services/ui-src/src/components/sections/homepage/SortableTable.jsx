@@ -25,7 +25,7 @@ import {
 } from "@tanstack/react-table";
 
 const SortableTable = ({
-  "aria-labelledby": ariaLabelledBy,
+  ariaLabelledBy,
   columns,
   data,
   initialSorting = [],
@@ -118,8 +118,15 @@ const SortableTable = ({
         ))}
       </Thead>
       <Tbody>
-        {table.getRowModel().rows.map((row) => (
-          <Tr key={row.id}>
+        {table.getRowModel().rows.map((row, idx) => (
+          <Tr
+            key={row.id}
+            className={
+              idx % 2 === 0
+                ? "sortable-table-row-even"
+                : "sortable-table-row-odd"
+            }
+          >
             {row.getVisibleCells().map((cell) => {
               return (
                 <Td key={cell.id}>

@@ -28,10 +28,15 @@ const CmsHomepageComponent = (
 describe("<CMSHomepage />", () => {
   test("renders all rows", () => {
     render(CmsHomepageComponent);
-    expect(screen.getAllByRole("cell", { name: "Alabama" }).length).toBe(2);
-    expect(screen.getAllByRole("cell", { name: "Alaska" }).length).toBe(1);
+    expect(screen.getAllByRole("cell", { name: "State: Alabama" }).length).toBe(
+      2
+    );
+    expect(screen.getAllByRole("cell", { name: "State: Alaska" }).length).toBe(
+      1
+    );
     expect(
-      screen.getAllByRole("cell", { name: "Certified and Submitted" }).length
+      screen.getAllByRole("cell", { name: "Status: Certified and Submitted" })
+        .length
     ).toBe(1);
   });
 
@@ -39,8 +44,12 @@ describe("<CMSHomepage />", () => {
     const user = userEvent.setup();
     render(CmsHomepageComponent);
     expect(screen.getAllByRole("row").length).toBe(4);
-    expect(screen.getAllByRole("cell", { name: "Alabama" }).length).toBe(2);
-    expect(screen.getAllByRole("cell", { name: "Alaska" }).length).toBe(1);
+    expect(screen.getAllByRole("cell", { name: "State: Alabama" }).length).toBe(
+      2
+    );
+    expect(screen.getAllByRole("cell", { name: "State: Alaska" }).length).toBe(
+      1
+    );
     expect(
       screen.queryByRole("cell", { name: "California" })
     ).not.toBeInTheDocument();
@@ -61,9 +70,11 @@ describe("<CMSHomepage />", () => {
     await user.click(screen.getByText("Filter", { selector: "button" }));
 
     expect(screen.getAllByRole("row").length).toBe(3);
-    expect(screen.getAllByRole("cell", { name: "Alabama" }).length).toBe(2);
+    expect(screen.getAllByRole("cell", { name: "State: Alabama" }).length).toBe(
+      2
+    );
     expect(
-      screen.queryByRole("cell", { name: "Alaska" })
+      screen.queryByRole("cell", { name: "State: Alaska" })
     ).not.toBeInTheDocument();
   });
 
@@ -71,8 +82,8 @@ describe("<CMSHomepage />", () => {
     const user = userEvent.setup();
     render(CmsHomepageComponent);
     expect(screen.getAllByRole("row").length).toBe(4);
-    expect(screen.getAllByRole("cell", { name: "2021" }).length).toBe(2);
-    expect(screen.getAllByRole("cell", { name: "2020" }).length).toBe(1);
+    expect(screen.getAllByRole("cell", { name: "Year: 2021" }).length).toBe(2);
+    expect(screen.getAllByRole("cell", { name: "Year: 2020" }).length).toBe(1);
 
     let filterContainer = document.querySelector("div.filter-container");
     const yearFilterDropdown = within(filterContainer).getByText("Year", {
@@ -88,9 +99,9 @@ describe("<CMSHomepage />", () => {
     await user.click(screen.getByText("Filter", { selector: "button" }));
 
     expect(screen.getAllByRole("row").length).toBe(3);
-    expect(screen.getAllByRole("cell", { name: "2021" }).length).toBe(2);
+    expect(screen.getAllByRole("cell", { name: "Year: 2021" }).length).toBe(2);
     expect(
-      screen.queryByRole("cell", { name: "2020" })
+      screen.queryByRole("cell", { name: "Year: 2020" })
     ).not.toBeInTheDocument();
   });
 
@@ -99,7 +110,9 @@ describe("<CMSHomepage />", () => {
     render(CmsHomepageComponent);
     expect(screen.getAllByRole("row").length).toBe(4);
     expect(screen.queryByText("Not Started")).not.toBeInTheDocument();
-    expect(screen.getAllByRole("cell", { name: "In Progress" }).length).toBe(2);
+    expect(
+      screen.getAllByRole("cell", { name: "Status: In Progress" }).length
+    ).toBe(2);
 
     const filterContainer = document.querySelector("div.filter-container");
     const yearFilterDropdown = within(filterContainer).getByText("Status", {
@@ -111,7 +124,7 @@ describe("<CMSHomepage />", () => {
 
     expect(screen.getAllByRole("row").length).toBe(1);
     expect(
-      screen.queryByRole("cell", { name: "In Progress" })
+      screen.queryByRole("cell", { name: "Status: In Progress" })
     ).not.toBeInTheDocument();
   });
 
@@ -119,7 +132,9 @@ describe("<CMSHomepage />", () => {
     const user = userEvent.setup();
     render(CmsHomepageComponent);
     expect(screen.getAllByRole("row").length).toBe(4);
-    expect(screen.getAllByRole("cell", { name: "In Progress" }).length).toBe(2);
+    expect(
+      screen.getAllByRole("cell", { name: "Status: In Progress" }).length
+    ).toBe(2);
     expect(
       screen.queryByRole("cell", { name: "Not Started" })
     ).not.toBeInTheDocument();
@@ -134,15 +149,17 @@ describe("<CMSHomepage />", () => {
 
     expect(screen.getAllByRole("row").length).toBe(1);
     expect(
-      screen.queryByRole("cell", { name: "In Progress" })
+      screen.queryByRole("cell", { name: "Status: In Progress" })
     ).not.toBeInTheDocument();
 
     await user.click(screen.getByText("Clear", { selector: "button" }));
 
     expect(screen.getAllByRole("row").length).toBe(4);
-    expect(screen.getAllByRole("cell", { name: "In Progress" }).length).toBe(2);
     expect(
-      screen.queryByRole("cell", { name: "Not Started" })
+      screen.getAllByRole("cell", { name: "Status: In Progress" }).length
+    ).toBe(2);
+    expect(
+      screen.queryByRole("cell", { name: "Status: Not Started" })
     ).not.toBeInTheDocument();
   });
 });
