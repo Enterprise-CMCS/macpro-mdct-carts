@@ -3,7 +3,7 @@ import { Construct } from "constructs";
 import { LambdaDynamoEventSource } from "../constructs/lambda-dynamo-event";
 import { getSubnets } from "../utils/vpc";
 import { LambdaKafkaEventSource } from "../constructs/lambda-kafka-event";
-import { DynamoDBTableIdentifiers } from "../constructs/dynamodb-table";
+import { DynamoDBTable } from "../constructs/dynamodb-table";
 
 interface CreateBigmacStreamsComponentsProps {
   scope: Construct;
@@ -14,7 +14,7 @@ interface CreateBigmacStreamsComponentsProps {
   kafkaAuthorizedSubnetIds: string;
   brokerString: string;
   stageEnrollmentCountsTableName: string;
-  tables: DynamoDBTableIdentifiers[];
+  tables: DynamoDBTable[];
   sedsTopic: string;
 }
 
