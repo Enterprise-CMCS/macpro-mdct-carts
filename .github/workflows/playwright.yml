@@ -13,6 +13,11 @@ on:
         description: 'Result of the test execution'
         value: ${{ jobs.playwright-tests.result }}
 
+permissions:
+  id-token: write
+  contents: write
+  actions: read
+
 jobs:
   playwright-tests:
     timeout-minutes: 60
@@ -22,8 +27,6 @@ jobs:
     - uses: actions/setup-node@v4
       with:
         node-version-file: ".nvmrc"
-    - name: Install root dependencies
-      run: yarn install
     - name: Install test dependencies
       run: yarn install
       working-directory: tests/playwright
@@ -44,13 +47,12 @@ jobs:
       run: yarn playwright install --with-deps
       working-directory: tests/playwright
     - name: Run Playwright tests
-      run: yarn playwright test
+      run: yarn playwright test --reporter=github
       working-directory: tests/playwright
       env:
         BASE_URL: ${{ inputs.base-url }}
         CYPRESS_STATE_USER_EMAIL: ${{ secrets.CYPRESS_STATE_USER_EMAIL }}
         CYPRESS_STATE_USER_PASSWORD: ${{ secrets.CYPRESS_STATE_USER_PASSWORD }}
-
     - name: Upload test results
       uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
