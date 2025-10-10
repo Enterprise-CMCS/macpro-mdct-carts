@@ -10,16 +10,14 @@ import {
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { logger } from "./debug-lib";
 
-export const getConfig = () => {
-  return {
-    region: "us-east-1",
-    logger,
-    endpoint: process.env.AWS_ENDPOINT_URL,
-    forcePathStyle: true,
-  };
+export const awsConfig = {
+  region: "us-east-1",
+  logger,
+  endpoint: process.env.AWS_ENDPOINT_URL,
+  forcePathStyle: true,
 };
 
-const client = new S3Client(getConfig());
+const client = new S3Client(awsConfig);
 
 export default {
   deleteObject: (params: DeleteObjectRequest) =>
