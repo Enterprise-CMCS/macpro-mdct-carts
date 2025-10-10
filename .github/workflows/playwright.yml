@@ -15,8 +15,6 @@ on:
 
 permissions:
   id-token: write
-  contents: write
-  actions: read
 
 jobs:
   playwright-tests:
