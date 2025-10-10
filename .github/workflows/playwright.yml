@@ -45,7 +45,7 @@ jobs:
       run: yarn playwright install --with-deps
       working-directory: tests/playwright
     - name: Run Playwright tests
-      run: yarn playwright test --reporter=github
+      run: yarn playwright test --reporter=github,html
       working-directory: tests/playwright
       env:
         BASE_URL: ${{ inputs.base-url }}
