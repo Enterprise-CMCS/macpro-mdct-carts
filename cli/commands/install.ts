@@ -12,15 +12,17 @@ const directories = [
 export const installDeps = async () => {
   await runCommand(
     "yarn install root",
-    ["yarn", "install", "--frozen-lockfile"],
-    "."
+    ["yarn", "--silent", "install", "--frozen-lockfile"],
+    ".",
+    { quiet: true }
   );
 
   for (const dir of directories) {
     await runCommand(
       `yarn install ${dir}`,
-      ["yarn", "install", "--frozen-lockfile"],
-      dir
+      ["yarn", "--silent", "install", "--frozen-lockfile"],
+      dir,
+      { quiet: true }
     );
   }
 };
