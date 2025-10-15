@@ -112,9 +112,11 @@ export class ParentStack extends Stack {
     if (!isDev) {
       createBigmacStreamsComponents({
         ...commonProps,
+        vpc,
+        kafkaAuthorizedSubnets,
         stageEnrollmentCountsTableName: "main-stg-enrollment-counts",
         tables: tables.filter((table) =>
-          ["StateStatus", "Section"].includes(table.id)
+          ["StateStatus", "Section"].includes(table.node.id)
         ),
       });
     }

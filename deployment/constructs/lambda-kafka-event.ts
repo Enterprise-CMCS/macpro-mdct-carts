@@ -1,5 +1,6 @@
 import { Construct } from "constructs";
 import {
+  aws_ec2 as ec2,
   aws_iam as iam,
   aws_lambda as lambda,
   aws_logs as logs,
@@ -16,13 +17,13 @@ interface LambdaKafkaEventProps
   additionalPolicies?: iam.PolicyStatement[];
   kafkaBootstrapServers: string[];
   securityGroupId: string;
-  subnets: string[];
   topics: string[];
   consumerGroupId: string;
   stackName: string;
   isDev: boolean;
   tables?: DynamoDBTable[];
   buckets?: s3.IBucket[];
+  vpcSubnets: ec2.SubnetSelection;
 }
 
 export class LambdaKafkaEventSource extends Construct {
@@ -38,13 +39,13 @@ export class LambdaKafkaEventSource extends Construct {
       timeout = Duration.seconds(6),
       kafkaBootstrapServers,
       securityGroupId,
-      subnets,
       topics,
       consumerGroupId,
       stackName,
       isDev,
       tables = [],
       buckets = [],
+      vpcSubnets,
       ...restProps
     } = props;
 
@@ -84,9 +85,9 @@ export class LambdaKafkaEventSource extends Construct {
       selfManagedKafkaEventSourceConfig: { consumerGroupId },
       topics,
       sourceAccessConfigurations: [
-        ...subnets.map((subnetId) => ({
+        ...vpcSubnets.subnets!.map((subnet: ec2.ISubnet) => ({
           type: "VPC_SUBNET",
-          uri: `subnet:${subnetId}`,
+          uri: `subnet:${subnet.subnetId}`,
         })),
         {
           type: "VPC_SECURITY_GROUP",
