@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { AccordionButton, AccordionPanel } from "@reach/accordion";
+import { AccordionItem } from "@cmsgov/design-system";
 
 import Question from "./Question";
 
@@ -44,24 +44,24 @@ export const Objective = ({
   };
 
   return (
-    <>
-      <div className="accordion-header" ref={headerRef}>
-        <span className="span-pdf-no-bookmark">
-          <AccordionButton>
-            <div className="accordion-title">
-              {objectiveName(objectiveNumber, name, suggested)}
-            </div>
-          </AccordionButton>
-        </span>
-      </div>
-      <AccordionPanel>
-        {children.map((q) => (
-          <div className="ds-c-choice__checkedChild" key={q.id}>
-            <Question question={q} printView={printView} />
-          </div>
-        ))}
-      </AccordionPanel>
-    </>
+    <AccordionItem
+      ref={headerRef}
+      defaultOpen
+      heading={objectiveName(objectiveNumber, name, suggested)}
+      isControlledOpen={printView ?? undefined}
+      onChange={printView ? () => {} : undefined}
+      closeIcon={<span aria-hidden="true">–</span>}
+      openIcon={<span aria-hidden="true">+</span>}
+    >
+      {children.map((q) => (
+        <div
+          className="ds-c-choice__checkedChild ds-u-padding-top--0 ds-u-display--flex"
+          key={q.id}
+        >
+          <Question question={q} printView={printView} />
+        </div>
+      ))}
+    </AccordionItem>
   );
 };
 
