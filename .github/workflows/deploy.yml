@@ -69,6 +69,8 @@ jobs:
           # When deploying multiple copies of this quickstart to the same AWS Account (not ideal), a prefix helps prevent stepping on each other.
           # This can optionally be set as an GitHub Actions Secret
           ./run deploy --stage $branch_name
+        env:
+          PROJECT: ${{ vars.APP_NAME_LOWER }}
       - id: endpoint
         if: ${{ !startsWith(github.ref_name, 'skipci') && !startsWith(github.ref_name, 'code-json-') }}
         run: |
@@ -231,6 +233,17 @@ jobs:
             ${{github.workspace}}/tests/cypress/screenshots/
             ${{github.workspace}}/tests/cypress/videos/
           retention-days: 14
+
+  playwright-test:
+    name: Playwright Tests
+    if: ${{ needs.deploy.result == 'success' && github.ref_name != 'production' && !startsWith(github.ref_name, 'skipci') && !startsWith(github.ref_name, 'code-json-') }}
+    needs:
+      - deploy
+    uses: ./.github/workflows/playwright.yml
+    with:
+      base-url: ${{ needs.deploy.outputs.application_endpoint }}
+    secrets: inherit #pragma: allowlist secret
+
   # cleanup:
   #   name: Delist GHA Runner CIDR Blocks
   #   if: ${{ github.ref_name != 'main' && github.ref_name != 'val' && github.ref_name != 'production' && !startsWith(github.ref_name, 'skipci') && !startsWith(github.ref_name, 'code-json-') }}
