@@ -6,8 +6,8 @@ test.describe("State user report tests", () => {
   test("can open a report", async ({ page }) => {
     await stateUserHomePageLoad(page);
     await enterFirstReport(page);
-    expect(
-      page.getByRole("heading", { name: /CARTS FY\d{4} Report/ })
-    ).toBeVisible();
+    const reportTitle = page.locator('[data-testid="report-title"] h1');
+    await expect(reportTitle).toBeVisible();
+    await expect(reportTitle).toHaveText(/CARTS FY\d{4} Report/);
   });
 });
