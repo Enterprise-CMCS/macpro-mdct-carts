@@ -1,20 +1,19 @@
 import { aws_ec2 as ec2, Duration } from "aws-cdk-lib";
 import { Construct } from "constructs";
 import { LambdaDynamoEventSource } from "../constructs/lambda-dynamo-event";
-import { getSubnets } from "../utils/vpc";
 import { LambdaKafkaEventSource } from "../constructs/lambda-kafka-event";
-import { DynamoDBTableIdentifiers } from "../constructs/dynamodb-table";
+import { DynamoDBTable } from "../constructs/dynamodb-table";
 
 interface CreateBigmacStreamsComponentsProps {
   scope: Construct;
   stage: string;
   project: string;
   isDev: boolean;
-  vpcName: string;
-  kafkaAuthorizedSubnetIds: string;
+  vpc: ec2.IVpc;
+  kafkaAuthorizedSubnets: ec2.ISubnet[];
   brokerString: string;
   stageEnrollmentCountsTableName: string;
-  tables: DynamoDBTableIdentifiers[];
+  tables: DynamoDBTable[];
   sedsTopic: string;
 }
 
@@ -25,8 +24,8 @@ export function createBigmacStreamsComponents(
     scope,
     stage,
     project,
-    vpcName,
-    kafkaAuthorizedSubnetIds,
+    vpc,
+    kafkaAuthorizedSubnets,
     brokerString,
     tables,
     sedsTopic,
@@ -36,12 +35,6 @@ export function createBigmacStreamsComponents(
   const kafkaBootstrapServers = brokerString.split(",");
 
   const service = "carts-bigmac-streams";
-
-  const vpc = ec2.Vpc.fromLookup(scope, "Vpc", { vpcName });
-  const kafkaAuthorizedSubnets = getSubnets(
-    scope,
-    kafkaAuthorizedSubnetIds ?? ""
-  );
 
   const lambdaSG = new ec2.SecurityGroup(
     scope,
@@ -112,7 +105,6 @@ export function createBigmacStreamsComponents(
     securityGroups: [lambdaSG],
     kafkaBootstrapServers,
     securityGroupId: lambdaSG.securityGroupId,
-    subnets: kafkaAuthorizedSubnetIds.split(","),
     topics: [sedsTopic],
     consumerGroupId: `${project}-${stage}`,
     ...commonProps,

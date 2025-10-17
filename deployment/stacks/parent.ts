@@ -1,5 +1,6 @@
 import { Construct } from "constructs";
 import {
+  aws_ec2 as ec2,
   aws_iam as iam,
   aws_s3 as s3,
   Aws,
@@ -16,6 +17,8 @@ import { deployFrontend } from "./deployFrontend";
 import { isLocalStack } from "../local/util";
 import { createUploadsComponents } from "./uploads";
 import { createBigmacStreamsComponents } from "./bigmac-streams";
+import { createTopicsComponents } from "./topics";
+import { getSubnets } from "../utils/vpc";
 
 export class ParentStack extends Stack {
   constructor(
@@ -23,7 +26,13 @@ export class ParentStack extends Stack {
     id: string,
     props: StackProps & DeploymentConfigProperties
   ) {
-    const { isDev, secureCloudfrontDomainName, stage } = props;
+    const {
+      isDev,
+      secureCloudfrontDomainName,
+      stage,
+      vpcName,
+      kafkaAuthorizedSubnetIds,
+    } = props;
 
     super(scope, id, {
       ...props,
@@ -35,6 +44,9 @@ export class ParentStack extends Stack {
       ...props,
       isDev,
     };
+
+    const vpc = ec2.Vpc.fromLookup(this, "Vpc", { vpcName });
+    const kafkaAuthorizedSubnets = getSubnets(this, kafkaAuthorizedSubnetIds);
 
     const attachmentsBucketName = `uploads-${stage}-attachments-${Aws.ACCOUNT_ID}`;
 
@@ -100,15 +112,23 @@ export class ParentStack extends Stack {
     if (!isDev) {
       createBigmacStreamsComponents({
         ...commonProps,
+        vpc,
+        kafkaAuthorizedSubnets,
         stageEnrollmentCountsTableName: "main-stg-enrollment-counts",
         tables: tables.filter((table) =>
-          ["StateStatus", "Section"].includes(table.id)
+          ["StateStatus", "Section"].includes(table.node.id)
         ),
       });
     }
 
     new CfnOutput(this, "CloudFrontUrl", {
       value: applicationEndpointUrl,
+    });
+
+    createTopicsComponents({
+      ...commonProps,
+      vpc,
+      kafkaAuthorizedSubnets,
     });
 
     if (isDev) {
