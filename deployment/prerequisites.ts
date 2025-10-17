@@ -1,8 +1,10 @@
 #!/usr/bin/env node
+// This file is managed by macpro-mdct-core so if you'd like to change it let's do it there
 import "source-map-support/register";
 import {
   App,
   aws_apigateway as apigateway,
+  aws_ec2 as ec2,
   aws_iam as iam,
   DefaultStackSynthesizer,
   Stack,
@@ -12,9 +14,11 @@ import {
 import { CloudWatchLogsResourcePolicy } from "./constructs/cloudwatch-logs-resource-policy";
 import { loadDefaultSecret } from "./deployment-config";
 import { Construct } from "constructs";
+import { isLocalStack } from "./local/util";
 
 interface PrerequisiteConfigProps {
   project: string;
+  vpcName: string;
   branchFilter: string;
 }
 
@@ -26,7 +30,14 @@ export class PrerequisiteStack extends Stack {
   ) {
     super(scope, id, props);
 
-    const { project, branchFilter } = props;
+    const { project, vpcName, branchFilter } = props;
+
+    if (!isLocalStack) {
+      const vpc = ec2.Vpc.fromLookup(this, "Vpc", { vpcName });
+      vpc.addGatewayEndpoint("S3Endpoint", {
+        service: ec2.GatewayVpcEndpointAwsService.S3,
+      });
+    }
 
     new CloudWatchLogsResourcePolicy(this, "logPolicy", { project });
 
@@ -66,7 +77,7 @@ export class PrerequisiteStack extends Stack {
             "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
           },
           StringLike: {
-            "token.actions.githubusercontent.com:sub": `repo:Enterprise-CMCS/macpro-mdct-carts:${branchFilter}`,
+            "token.actions.githubusercontent.com:sub": `repo:Enterprise-CMCS/macpro-mdct-${project}:${branchFilter}`,
           },
         },
         "sts:AssumeRoleWithWebIdentity"
@@ -105,10 +116,15 @@ async function main() {
     }),
   });
 
-  Tags.of(app).add("PROJECT", "CARTS");
+  if (!process.env.PROJECT) {
+    throw new Error("PROJECT enironment variable is required but not set");
+  }
 
   const project = process.env.PROJECT!;
-  new PrerequisiteStack(app, "carts-prerequisites", {
+
+  Tags.of(app).add("PROJECT", project.toUpperCase());
+
+  new PrerequisiteStack(app, `${project}-prerequisites`, {
     project,
     ...(await loadDefaultSecret(project)),
     env: {
