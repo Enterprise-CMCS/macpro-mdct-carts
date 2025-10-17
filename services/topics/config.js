@@ -1,9 +1,9 @@
 export default [
   {
-    topicPrefix: "aws.carts.chip.cdc",
+    topicPrefix: "aws.carts.chip.cdc.dynamodb-",
     version: ".v0",
     numPartitions: 1,
     replicationFactor: 3,
-    topics: [".dynamodb-section", ".dynamodb-state-status"],
+    topics: ["section", "state-status"],
   },
 ];
