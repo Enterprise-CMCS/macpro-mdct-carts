@@ -16,7 +16,7 @@ export const getSignedFileUrl = handler(async (event, _context) => {
 
   // Get file, check aws filename before deleting
   const documentParams = {
-    TableName: process.env.UploadsTableName!,
+    TableName: process.env.UploadsTable!,
     KeyConditionExpression:
       "uploadedState = :uploadedState AND fileId = :fileId",
     ExpressionAttributeValues: {

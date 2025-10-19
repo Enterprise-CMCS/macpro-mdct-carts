@@ -80,10 +80,7 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     attachmentsBucketName: attachmentsBucket.bucketName,
     NODE_OPTIONS: "--enable-source-maps",
     ...Object.fromEntries(
-      tables.map((table) => [
-        `${table.node.id}TableName`,
-        table.table.tableName,
-      ])
+      tables.map((table) => [`${table.node.id}Table`, table.table.tableName])
     ),
   };
 
