@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import { expect, Page, test as setup } from "@playwright/test";
+import { STATE_USER_HOME_HEADING } from "../../utils";
 
 const stateUserAuthPath: string = ".auth/user.json";
 const stateUser = process.env.CYPRESS_STATE_USER_EMAIL!;
@@ -44,7 +45,7 @@ setup("authenticate as user", async ({ page }) => {
     page,
     stateUser,
     statePassword,
-    "CHIP Annual Reporting Template System (CARTS)",
+    STATE_USER_HOME_HEADING,
     "state user"
   );
   await page.context().storageState({ path: stateUserAuthPath });

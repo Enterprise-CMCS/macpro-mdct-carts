@@ -20,7 +20,7 @@ export const deleteUpload = handler(async (event, _context) => {
   const decodedFileId = decodeURIComponent(fileId);
   // Get file, check aws filename before deleting
   const documentParams = {
-    TableName: process.env.UploadsTableName!,
+    TableName: process.env.UploadsTable!,
     KeyConditionExpression:
       "uploadedState = :uploadedState AND fileId = :fileId",
     ExpressionAttributeValues: {
@@ -43,7 +43,7 @@ export const deleteUpload = handler(async (event, _context) => {
 
   // DELETE Dynamo entry
   const deleteParams = {
-    TableName: process.env.UploadsTableName!,
+    TableName: process.env.UploadsTable!,
     Key: {
       uploadedState: state,
       fileId: decodedFileId,
