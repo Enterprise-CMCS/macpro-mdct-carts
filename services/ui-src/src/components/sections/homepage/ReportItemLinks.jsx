@@ -66,26 +66,24 @@ const ReportItemLinks = ({
       >
         Print
       </Link>
-
-      {isShowing && (
-        <Dialog
-          onExit={toggleModal}
-          heading={`Uncertify ${stateCode} ${year} report?`}
-          actions={[
-            <button
-              className="ds-c-button ds-c-button--solid ds-u-margin-right--1"
-              key="primary"
-              onClick={uncertify}
-              aria-label={`Uncertify ${stateCode} ${year} report`}
-            >
-              Yes, Uncertify
-            </button>,
-          ]}
-        >
-          Uncertifying will send this CARTS report back to the stateCode user
-          who submitted it
-        </Dialog>
-      )}
+      <Dialog
+        isOpen={isShowing}
+        onExit={toggleModal}
+        heading={`Uncertify ${stateCode} ${year} report?`}
+        actions={[
+          <button
+            className="ds-c-button ds-c-button--solid ds-u-margin-right--1"
+            key="primary"
+            onClick={uncertify}
+            aria-label={`Uncertify ${stateCode} ${year} report`}
+          >
+            Yes, Uncertify
+          </button>,
+        ]}
+      >
+        Uncertifying will send this CARTS report back to the stateCode user who
+        submitted it
+      </Dialog>
     </>
   );
 };
