@@ -27,7 +27,7 @@ export const updateStateStatus = handler(async (event, _context) => {
   // state users can only update a state status associated with their assigned state
   if (user.role === AppRoles.STATE_USER && user.state === state) {
     const updateStateStatusparams = {
-      TableName: process.env.StateStatusTableName!,
+      TableName: process.env.StateStatusTable!,
       Key: {
         stateId: state,
         year: parseInt(year),
@@ -52,7 +52,7 @@ export const updateStateStatus = handler(async (event, _context) => {
      * CMS_User, CMS_Admin, and CMS_Approver uncertifies a CARTS report
      */
     const uncertifyReportParams = {
-      TableName: process.env.StateStatusTableName!,
+      TableName: process.env.StateStatusTable!,
       Key: {
         stateId: state,
         year: parseInt(year),
