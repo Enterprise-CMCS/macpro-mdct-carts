@@ -1,11 +1,9 @@
 import React from "react";
 import { Provider } from "react-redux";
 import { screen, render } from "@testing-library/react";
-import userEventLib from "@testing-library/user-event";
+import userEvent from "@testing-library/user-event";
 import configureMockStore from "redux-mock-store";
 import { Ranges } from "./Ranges";
-
-const userEvent = userEventLib.setup();
 
 const mockStore = configureMockStore();
 const store = mockStore({
@@ -128,7 +126,7 @@ describe("<Ranges />", () => {
     const rangeEndInput = screen.getByLabelText("Mock Range End");
     await userEvent.type(rangeEndInput, "5");
 
-    expect(defaultProps.onChange).toBeCalled();
+    expect(defaultProps.onChange).toHaveBeenCalled();
     const evt = defaultProps.onChange.mock.calls[0][0];
     expect(evt).toEqual({
       target: {

@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { Provider } from "react-redux";
 import { screen, render } from "@testing-library/react";
-import userEventLib from "@testing-library/user-event";
+import userEvent from "@testing-library/user-event";
 import configureMockStore from "redux-mock-store";
 import { Range } from "./Ranges";
-
-const userEvent = userEventLib.setup();
 
 const mockStore = configureMockStore();
 const store = mockStore({

@@ -13,7 +13,7 @@
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.8.0",
     "@testing-library/react": "^15.0.7",
-    "@testing-library/user-event": "^14.6.1",
+    "@testing-library/user-event": "^13",
     "@vitejs/plugin-react": "4.7.0",
     "aws-amplify": "^6.15.6",
     "date-fns": "^4.1.0",

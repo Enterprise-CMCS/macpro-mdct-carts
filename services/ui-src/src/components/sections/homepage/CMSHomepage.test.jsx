@@ -41,7 +41,6 @@ describe("<CMSHomepage />", () => {
   });
 
   test("can be filtered by state", async () => {
-    const user = userEvent.setup();
     render(CmsHomepageComponent);
     expect(screen.getAllByRole("row").length).toBe(4);
     expect(screen.getAllByRole("cell", { name: "State: Alabama" }).length).toBe(
@@ -57,7 +56,7 @@ describe("<CMSHomepage />", () => {
     const stateFilterDropdown = screen.getByText("State", {
       selector: "span",
     });
-    await user.click(stateFilterDropdown);
+    await userEvent.click(stateFilterDropdown);
 
     const filterContainer = document.querySelector("div.filter-container");
     const alabamaDropdownOption = within(filterContainer).queryByText(
@@ -66,8 +65,8 @@ describe("<CMSHomepage />", () => {
         selector: "span",
       }
     );
-    await user.click(alabamaDropdownOption);
-    await user.click(screen.getByText("Filter", { selector: "button" }));
+    await userEvent.click(alabamaDropdownOption);
+    await userEvent.click(screen.getByText("Filter", { selector: "button" }));
 
     expect(screen.getAllByRole("row").length).toBe(3);
     expect(screen.getAllByRole("cell", { name: "State: Alabama" }).length).toBe(
@@ -79,7 +78,6 @@ describe("<CMSHomepage />", () => {
   });
 
   test("can be filtered by year", async () => {
-    const user = userEvent.setup();
     render(CmsHomepageComponent);
     expect(screen.getAllByRole("row").length).toBe(4);
     expect(screen.getAllByRole("cell", { name: "Year: 2021" }).length).toBe(2);
@@ -89,14 +87,14 @@ describe("<CMSHomepage />", () => {
     const yearFilterDropdown = within(filterContainer).getByText("Year", {
       selector: "span",
     });
-    await user.click(yearFilterDropdown);
+    await userEvent.click(yearFilterDropdown);
 
     filterContainer = document.querySelector("div.filter-container");
     const year2021DropdownOption = within(filterContainer).queryByText("2021", {
       selector: "span",
     });
-    await user.click(year2021DropdownOption);
-    await user.click(screen.getByText("Filter", { selector: "button" }));
+    await userEvent.click(year2021DropdownOption);
+    await userEvent.click(screen.getByText("Filter", { selector: "button" }));
 
     expect(screen.getAllByRole("row").length).toBe(3);
     expect(screen.getAllByRole("cell", { name: "Year: 2021" }).length).toBe(2);
@@ -106,7 +104,6 @@ describe("<CMSHomepage />", () => {
   });
 
   test("can be filtered by status", async () => {
-    const user = userEvent.setup();
     render(CmsHomepageComponent);
     expect(screen.getAllByRole("row").length).toBe(4);
     expect(screen.queryByText("Not Started")).not.toBeInTheDocument();
@@ -118,9 +115,9 @@ describe("<CMSHomepage />", () => {
     const yearFilterDropdown = within(filterContainer).getByText("Status", {
       selector: "span",
     });
-    await user.click(yearFilterDropdown);
-    await user.click(screen.queryByText("Not Started"));
-    await user.click(screen.getByText("Filter", { selector: "button" }));
+    await userEvent.click(yearFilterDropdown);
+    await userEvent.click(screen.queryByText("Not Started"));
+    await userEvent.click(screen.getByText("Filter", { selector: "button" }));
 
     expect(screen.getAllByRole("row").length).toBe(1);
     expect(
@@ -129,7 +126,6 @@ describe("<CMSHomepage />", () => {
   });
 
   test("can clear filters", async () => {
-    const user = userEvent.setup();
     render(CmsHomepageComponent);
     expect(screen.getAllByRole("row").length).toBe(4);
     expect(
@@ -143,16 +139,16 @@ describe("<CMSHomepage />", () => {
     const yearFilterDropdown = within(filterContainer).getByText("Status", {
       selector: "span",
     });
-    await user.click(yearFilterDropdown);
-    await user.click(screen.queryByText("Not Started"));
-    await user.click(screen.getByText("Filter", { selector: "button" }));
+    await userEvent.click(yearFilterDropdown);
+    await userEvent.click(screen.queryByText("Not Started"));
+    await userEvent.click(screen.getByText("Filter", { selector: "button" }));
 
     expect(screen.getAllByRole("row").length).toBe(1);
     expect(
       screen.queryByRole("cell", { name: "Status: In Progress" })
     ).not.toBeInTheDocument();
 
-    await user.click(screen.getByText("Clear", { selector: "button" }));
+    await userEvent.click(screen.getByText("Clear", { selector: "button" }));
 
     expect(screen.getAllByRole("row").length).toBe(4);
     expect(
