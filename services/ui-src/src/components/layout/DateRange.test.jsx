@@ -1,12 +1,10 @@
 import React from "react";
 import { screen, render } from "@testing-library/react";
-import userEventLib from "@testing-library/user-event";
+import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 
 import DateRange from "./DateRange";
-
-const userEvent = userEventLib.setup();
 
 const mockStore = configureMockStore();
 const store = mockStore({

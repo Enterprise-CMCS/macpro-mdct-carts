@@ -13,6 +13,6 @@ describe("<FillForm />", () => {
     render(form);
     const button = screen.getByTestId("form-action");
     await userEvent.click(button);
-    expect(mockEvent).toBeCalled();
+    expect(mockEvent).toHaveBeenCalled();
   });
 });

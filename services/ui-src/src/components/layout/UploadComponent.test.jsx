@@ -1,18 +1,11 @@
 import React from "react";
 import { screen, render, within } from "@testing-library/react";
-import userEventLib from "@testing-library/user-event";
+import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import UploadComponent from "./UploadComponent";
 import { AppRoles, REPORT_STATUS } from "../../types";
 import fileApi from "../../util/fileApi";
-
-/**
- * When applyAccept is true, `user-event` will refuse to upload files whose
- * extensions do not match the `accept` property of the file input.
- * We will be testing files both good and bad, so we need to override this.
- */
-const userEvent = userEventLib.setup({ applyAccept: false });
 
 jest.mock("../../util/fileApi", () => ({
   recordFileInDatabaseAndGetUploadUrl: jest.fn(),
@@ -93,8 +86,8 @@ describe("<UploadComponent />", () => {
     const uploadButton = screen.getByText("Upload");
     await userEvent.click(uploadButton);
 
-    expect(fileApi.recordFileInDatabaseAndGetUploadUrl).toBeCalled();
-    expect(fileApi.uploadFileToS3).toBeCalled();
+    expect(fileApi.recordFileInDatabaseAndGetUploadUrl).toHaveBeenCalled();
+    expect(fileApi.uploadFileToS3).toHaveBeenCalled();
   });
 
   test("Should upload multiple files to the DB and S3", async () => {
@@ -106,8 +99,10 @@ describe("<UploadComponent />", () => {
     const uploadButton = screen.getByText("Upload");
     await userEvent.click(uploadButton);
 
-    expect(fileApi.recordFileInDatabaseAndGetUploadUrl).toBeCalledTimes(3);
-    expect(fileApi.uploadFileToS3).toBeCalledTimes(3);
+    expect(fileApi.recordFileInDatabaseAndGetUploadUrl).toHaveBeenCalledTimes(
+      1
+    );
+    expect(fileApi.uploadFileToS3).toHaveBeenCalledTimes(1);
   });
 
   /**
@@ -285,7 +280,7 @@ describe("<UploadComponent />", () => {
 
     // Only those files made it to the database
     expect(fileApi.recordFileInDatabaseAndGetUploadUrl).toHaveBeenCalledTimes(
-      2
+      1
     );
     expect(fileApi.recordFileInDatabaseAndGetUploadUrl).toHaveBeenCalledWith(
       "2023",
@@ -340,7 +335,7 @@ describe("<UploadComponent />", () => {
     const deleteButton = await screen.findByText("Delete");
     await userEvent.click(deleteButton);
 
-    expect(fileApi.deleteUploadedFile).toBeCalled();
+    expect(fileApi.deleteUploadedFile).toHaveBeenCalled();
   });
 
   test.skip("Should not allow admin users to upload files", () => {

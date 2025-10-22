@@ -1,10 +1,9 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import userEventLib from "@testing-library/user-event";
+import userEvent from "@testing-library/user-event";
 import TemplateDownload from "./TemplateDownload";
 import { testA11y } from "../../../util/testing/testUtils";
 
-const userEvent = userEventLib.setup({ applyAccept: false });
 const myMock = jest.fn();
 const defaultProps = { getTemplate: myMock };
 const wrapper = <TemplateDownload {...defaultProps} />;
