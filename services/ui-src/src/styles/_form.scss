@@ -12,8 +12,8 @@
   margin: 2rem;
 }
 
-.radio-container {
-  margin: 2rem 0;
+.radio-container input {
+  display: revert;
 }
 
 .ds-u-color--error {
@@ -29,6 +29,7 @@
   max-width: 100%;
   position: relative;
   color: #262626;
+  padding: 16px 0 0 16px;
 }
 
 .ds-l-col fieldset .ds-c-label {

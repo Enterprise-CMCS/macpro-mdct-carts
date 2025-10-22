@@ -28,4 +28,8 @@
     font-weight: variables.$font-weight-semi-bold;
     overflow-wrap: anywhere; 
   }
+
+  .ds-c-vertical-nav__label {
+    text-align: left;
+  }
 }
