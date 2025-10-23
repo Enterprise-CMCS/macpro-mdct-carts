@@ -115,6 +115,13 @@ const renderQuestion = (props) =>
 
 // Isolate render so mocked child components are clean
 const renderMockedQuestion = (props) => {
+  // Mock TextField
+  jest.mock("@cmsgov/design-system", () => {
+    return {
+      TextField: () => <div />,
+    };
+  });
+
   jest.isolateModules(() => {
     // Question has to be re-imported
     const Question = require("./Question").default;
@@ -176,7 +183,7 @@ describe("<Question />", () => {
     });
   });
 
-  describe.skip("Text question", () => {
+  describe("Text question", () => {
     const props = {
       ...baseProps,
       question: {
@@ -246,7 +253,7 @@ describe("<Question />", () => {
       expect(numberInput).toHaveValue("<11");
     });
 
-    test.skip("renders Integer with extra props", () => {
+    test("renders Integer with extra props", () => {
       mockComponent("./Integer", propSpies["integer"]);
       renderMockedQuestion(props);
       expect(propSpies["integer"]).toHaveBeenCalledWith(
@@ -258,7 +265,7 @@ describe("<Question />", () => {
     });
   });
 
-  describe.skip("Fieldset question", () => {
+  describe("Fieldset question", () => {
     const props = {
       ...baseProps,
       question: mockQuestions["fieldset"],
@@ -285,7 +292,7 @@ describe("<Question />", () => {
 
   const connectedComponentsExported = ["Objectives", "Repeatables"];
 
-  describe.skip.each(connectedComponentsExported)("%s question", (exported) => {
+  describe.each(connectedComponentsExported)("%s question", (exported) => {
     const questionType = exported.toLowerCase();
 
     const props = {
