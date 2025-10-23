@@ -36,6 +36,7 @@ const Submit = ({ openCertifyConfirmation }) => (
       data-testid="certifySubmit"
       onClick={openCertifyConfirmation}
       variation="solid"
+      className="certify-button"
     >
       Certify and Submit
     </Button>
