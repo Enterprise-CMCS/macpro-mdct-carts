@@ -89,6 +89,7 @@ Cypress.Commands.add("ensureAvailableReport", () => {
   cy.get("body").then(($body) => {
     if ($body.find(uncertifyButton).length > 0) {
       cy.get(uncertifyButton).first().click();
+      cy.wait(3000);
       cy.get("button").contains("Yes, Uncertify").click();
     }
     return;
