@@ -75,7 +75,7 @@ export function createApiComponents(props: CreateApiComponentsProps) {
   });
 
   const environment = {
-    stage,
+    STAGE: stage,
     docraptorApiKey,
     attachmentsBucketName: attachmentsBucket.bucketName,
     NODE_OPTIONS: "--enable-source-maps",

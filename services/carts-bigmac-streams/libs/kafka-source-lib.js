@@ -1,9 +1,9 @@
 import { unmarshall } from "@aws-sdk/util-dynamodb";
 import { Kafka } from "kafkajs";
 
-const STAGE = process.env.STAGE;
+const stage = process.env.STAGE;
 const kafka = new Kafka({
-  clientId: `carts-${STAGE}`,
+  clientId: `carts-${stage}`,
   brokers: process.env.brokerString.split(","),
   enforceRequestTimeout: false,
   retry: {
@@ -46,7 +46,7 @@ export class KafkaSourceLib {
 
   determineTopicName(streamARN) {
     for (const table of this.tables) {
-      if (streamARN.includes(`/${STAGE}-${table}/`)) return this.topic(table);
+      if (streamARN.includes(`/${stage}-${table}/`)) return this.topic(table);
     }
   }
 
