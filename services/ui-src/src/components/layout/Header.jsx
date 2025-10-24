@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router";
 import { useSelector, shallowEqual } from "react-redux";
 // components
-import UsaBanner from "@cmsgov/design-system/dist/components/UsaBanner/UsaBanner";
+import { UsaBanner } from "@cmsgov/design-system";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import Autosave from "./Autosave";

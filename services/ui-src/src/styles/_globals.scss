@@ -7,6 +7,11 @@
   box-sizing: border-box;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font: revert;
+  line-height: revert;
+}
+
 h1 {
   font-weight: variables.$font-weight-normal;
 }
