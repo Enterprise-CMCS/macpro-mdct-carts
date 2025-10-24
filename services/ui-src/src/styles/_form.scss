@@ -8,8 +8,13 @@
   color: #e31c3d;
 }
 
+label,
+legend {
+  margin-block: 0;
+}
+
 .label-radio {
-  margin: 2rem;
+  margin: .5rem;
 }
 
 .radio-container input {
@@ -21,6 +26,10 @@
   top: -24px;
 }
 
+input:not(button, [type=checkbox], [type=radio]) {
+  margin-top: variables.$margin * 2;
+}
+
 .ds-c-field--error {
   border: 2px solid #e31c3d;
 }
@@ -29,11 +38,15 @@
   max-width: 100%;
   position: relative;
   color: #262626;
-  padding: 16px 0 0 16px;
+}
+
+.ds-c-fieldset {
+  margin: 0;
 }
 
 .ds-l-col fieldset .ds-c-label {
   white-space: nowrap;
+
   .ds-c-field__error-message {
     white-space: wrap;
   }
@@ -134,8 +147,12 @@
   margin-top: variables.$margin * 3;
 }
 
-.radio-container .radio-children {
-  margin-left: (variables.$margin * 8);
+.radio-container {
+  display: flex;
+
+  .radio-children {
+    margin-left: (variables.$margin * 8);
+  }
 }
 
 .question-container {
@@ -242,8 +259,7 @@
   }
 
   .question {
-    font-weight: variables.$font-weight-bold;
-    margin-top: (variables.$margin * 2);
+    margin-top: (variables.$margin * 3);
   }
 
   .date-range {
@@ -285,24 +301,25 @@
 }
 
 .cmsranges {
+  margin-bottom: (variables.$margin * 3);
+
   h3 {
     margin: 2.2rem 0 0 0;
   }
 
-  .cmsrange {
-    &:nth-child(odd) {
-      margin-bottom: 2.2rem;
-    }
-  }
-
   .cmsranges-btn {
-    margin: 2.2rem 1.2rem 0 0;
+    margin: 1rem 0 0 0;
     min-height: 3rem;
   }
 
   .ds-c-button {
-    margin: 1.2rem 0 0 1rem;
+    margin: 1.5rem 0 0 0;
   }
+}
+
+.cmsrange-inner {
+  display: flex;
+  margin-top: 1rem;
 }
 
 .cmsranges-container,
@@ -349,6 +366,18 @@
 .multi-select.rmsc {
   --rmsc-gray: #262626;
   --rmsc-border: #262626;
+}
+
+.file_upload {
+  margin-bottom: (variables.$margin * 1);
+
+  label {
+    margin-top: (variables.$margin * 1);
+  }
+}
+
+.input-grid__group {
+  margin-top: -(variables.$margin * 3);
 }
 
 .nav-buttons {
@@ -567,4 +596,8 @@
 
 .print-text-area {
   display: none;
+}
+
+.certify-button {
+  margin-top: variables.$margin * 2;
 }

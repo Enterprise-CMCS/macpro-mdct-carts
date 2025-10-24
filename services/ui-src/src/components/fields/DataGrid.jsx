@@ -10,11 +10,6 @@ const DataGrid = ({ question, printView }) => {
   const lastYearFormData = useSelector((state) => state.lastYearFormData);
   const dispatch = useDispatch();
 
-  const rowStyle =
-    question.questions.length > 5
-      ? `subquestion ds-u-padding-left--2`
-      : `ds-u-margin-top--0`;
-
   // Pull data from last year
   const getDataFromLastYear = async (item) => {
     if (!item.id || !Array.isArray(questionsToSet)) {
@@ -138,7 +133,7 @@ const DataGrid = ({ question, printView }) => {
   }, [dispatch]);
 
   return renderQuestions.length ? (
-    <div className={`ds-l-row input-grid__group ${rowStyle}`}>
+    <div className={`ds-l-row input-grid__group`}>
       {renderQuestions.map((question, index) => {
         return (
           <div className="ds-l-col" key={index}>

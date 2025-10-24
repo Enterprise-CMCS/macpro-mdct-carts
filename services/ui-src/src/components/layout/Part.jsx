@@ -59,7 +59,7 @@ const Part = ({ partId, partNumber, printView }) => {
   const getPartContent = () => {
     if (show) {
       return (
-        <>
+        <div className="question-container">
           {text && <Text data-testid="part-text">{text}</Text>}
           {questions.map((question, index) => (
             <Question
@@ -69,7 +69,7 @@ const Part = ({ partId, partNumber, printView }) => {
               printView={printView}
             />
           ))}
-        </>
+        </div>
       );
     } else {
       if (contextData) {

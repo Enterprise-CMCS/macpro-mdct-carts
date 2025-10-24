@@ -116,9 +116,9 @@ const Range = ({
 
   return (
     <div className="cmsrange">
-      <div className="cmsrange-outer ds-l-container">
+      <div className="cmsrange-outer">
         {rangeError ? <div className="errors">{rangeError}</div> : null}
-        <div className="ds-l-row">
+        <div className="cmsrange-inner">
           {[
             {
               className: "range-start",
