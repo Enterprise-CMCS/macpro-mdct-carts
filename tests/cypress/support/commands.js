@@ -96,7 +96,7 @@ Cypress.Commands.add("ensureAvailableReport", () => {
         .find("button")
         .contains("Yes, Uncertify")
         .should("be.visible")
-        .click();      
+        .click();
     }
     return;
   });
