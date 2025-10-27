@@ -28,7 +28,8 @@ export const print = handler(async (event, _context) => {
     throw new Error("Could not process request");
   }
 
-  const { docraptorApiKey, STAGE } = process.env;
+  const { docraptorApiKey } = process.env;
+  const stage = process.env.STAGE;
   if (!docraptorApiKey) {
     throw new Error("No config found to make request to PDF API");
   }
@@ -39,8 +40,8 @@ export const print = handler(async (event, _context) => {
       document_content: rawHtml,
       type: "pdf" as const,
       // This tag differentiates QMR and CARTS requests in DocRaptor's logs.
-      tag: `CARTS ${STAGE}`,
-      test: STAGE !== "production",
+      tag: `CARTS ${stage}`,
+      test: stage !== "production",
       prince_options: {
         profile: "PDF/UA-1" as const,
       },
