@@ -1,11 +1,6 @@
 // This file is managed by macpro-mdct-core so if you'd like to change it let's do it there
 import { Construct } from "constructs";
-import {
-  aws_ec2 as ec2,
-  CfnOutput,
-  Duration,
-  triggers,
-} from "aws-cdk-lib";
+import { aws_ec2 as ec2, CfnOutput, Duration, triggers } from "aws-cdk-lib";
 import { Lambda } from "../constructs/lambda";
 
 interface CreateTopicsComponentsProps {
@@ -40,7 +35,7 @@ export function createTopicsComponents(props: CreateTopicsComponentsProps) {
       vpc,
       description: "Security Group for the topics service lambdas",
       allowAllOutbound: true,
-    }
+    },
   );
 
   const commonProps = {
