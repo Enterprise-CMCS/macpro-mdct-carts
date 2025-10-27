@@ -28,7 +28,8 @@ export const print = handler(async (event, _context) => {
     throw new Error("Could not process request");
   }
 
-  const { docraptorApiKey, stage } = process.env;
+  const { docraptorApiKey } = process.env;
+  const stage = process.env.STAGE;
   if (!docraptorApiKey) {
     throw new Error("No config found to make request to PDF API");
   }
