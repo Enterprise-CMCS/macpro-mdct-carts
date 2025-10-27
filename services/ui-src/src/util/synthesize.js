@@ -490,8 +490,8 @@ const synthesizeValue = (
   stateUserAbbr,
   chipEnrollments,
   formData,
-  printView = false,
-  lastYearFormData = []
+  lastYearFormData = [],
+  printView = false
 ) => {
   if (value.contents) {
     return value;

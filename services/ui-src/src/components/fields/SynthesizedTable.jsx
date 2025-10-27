@@ -56,8 +56,8 @@ const SynthesizedTable = ({ question, printView }) => {
         stateUserAbbr,
         chipEnrollments,
         formData,
-        printView,
-        lastYearFormData
+        lastYearFormData,
+        printView
       );
 
       return typeof value.contents === "number" && Number.isNaN(value.contents)
