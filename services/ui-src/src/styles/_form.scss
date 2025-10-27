@@ -17,8 +17,8 @@ legend {
   margin: .5rem;
 }
 
-.radio-container input {
-  display: revert;
+input.ds-c-field {
+  display: block
 }
 
 .ds-u-color--error {
@@ -26,9 +26,9 @@ legend {
   top: -24px;
 }
 
-input:not(button, [type=checkbox], [type=radio]) {
-  margin-top: variables.$margin * 2;
-}
+// input:not(button, [type=checkbox], [type=radio]) {
+//   margin-top: variables.$margin * 2;
+// }
 
 .ds-c-field--error {
   border: 2px solid #e31c3d;
@@ -69,8 +69,6 @@ input:not(button, [type=checkbox], [type=radio]) {
 }
 
 .ds-c-table {
-  margin: 1.2rem 0;
-
   .row-header {
     font-weight: 650;
   }
@@ -147,11 +145,21 @@ input:not(button, [type=checkbox], [type=radio]) {
   margin-top: variables.$margin * 3;
 }
 
+input[type=checkbox]+label,
+input[type=radio]+label {
+  display: inline;
+}
+
 .radio-container {
-  display: flex;
+  display: block;
+
+  input {
+    display: inline-block;
+  }
 
   .radio-children {
     margin-left: (variables.$margin * 8);
+    margin-top: -(variables.$margin * 3);
   }
 }
 
@@ -577,15 +585,6 @@ input:not(button, [type=checkbox], [type=radio]) {
   .accordion-header h3 button {
     background: variables.$white;
     border-top: 6px solid variables.$color-gray;
-  }
-
-  .objective-body,
-  .objective-footer {
-    background: variables.$white;
-  }
-
-  .objective-accordion div[hidden] {
-    display: block;
   }
 }
 
