@@ -75,10 +75,34 @@ const numberAndPercentage = (
   values,
   precision = 2,
   mask = false,
-  printView = false
+  printView = false,
+  targets,
+  lastYearFormData
 ) => {
-  const denominator = values.pop();
-  const numerator = sum(values);
+  /*
+   * Grab the first target, get the id (Example ID: 2025-03-c-05-11-b) by splitting on ',
+   * split on - to get the year (2025), and then check if that year is odd or even
+   */
+  const isOddYear = targets[0].split("'")[1].split("-")[0] % 2 === 1;
+
+  let denominator, numerator;
+
+  // If its an odd year, we can try and grab last years value for missing data
+  if (isOddYear && values.some((element) => element === null)) {
+    const lastYearsValues = targets.map((target, index) => {
+      if (values[index] !== null) {
+        return values[index];
+      } else {
+        return jsonpath.query(lastYearFormData, target)[0];
+      }
+    });
+    denominator = lastYearsValues.pop();
+    numerator = sum(lastYearsValues);
+  } else {
+    denominator = values.pop();
+    numerator = sum(values);
+  }
+
   if (mask && numerator > 0 && numerator < 11 && printView) {
     return `<11`;
   }
@@ -91,17 +115,50 @@ const numberAndPercentage = (
 
 const sumAndPercentage = (
   values,
-  additionalTargets,
+  additionalValues,
   precision = 2,
   mask = false,
-  printView = false
+  printView = false,
+  targets,
+  additionalTargets,
+  lastYearFormData
 ) => {
-  const numerator = sum(values);
+  /*
+   * Grab the first target, get the id (Example ID: 2025-03-c-05-11-b) by splitting on ',
+   * split on - to get the year (2025), and then check if that year is odd or even
+   */
+  const isOddYear = targets[0].split("'")[1].split("-")[0] % 2 === 1;
+
+  let denominator, numerator;
+
+  // If its an odd year, we can try and grab last years value for missing data
+  if (isOddYear && values.some((element) => element === null)) {
+    const foundValues = targets.map((target, index) => {
+      if (values[index] !== null) {
+        return values[index];
+      } else {
+        return jsonpath.query(lastYearFormData, target)[0];
+      }
+    });
+
+    const lastYearsValues = additionalTargets.map((target, index) => {
+      if (additionalValues[index] !== null) {
+        return additionalValues[index];
+      } else {
+        return jsonpath.query(lastYearFormData, target)[0];
+      }
+    });
+    denominator = sum(lastYearsValues);
+    numerator = sum(foundValues);
+  } else {
+    denominator = sum(additionalValues);
+    numerator = sum(values);
+  }
+
   if (mask && numerator > 0 && numerator < 11 && printView) {
     return `<11`;
   }
 
-  const denominator = sum(additionalTargets);
   const percentage = percent([numerator, denominator], precision);
   if (percentage === "") {
     return "";
@@ -433,7 +490,8 @@ const synthesizeValue = (
   stateUserAbbr,
   chipEnrollments,
   formData,
-  printView = false
+  printView = false,
+  lastYearFormData = []
 ) => {
   if (value.contents) {
     return value;
@@ -513,7 +571,9 @@ const synthesizeValue = (
               targets,
               value.precision,
               value?.mask,
-              printView
+              printView,
+              value.targets,
+              lastYearFormData
             ),
           };
         case "sumAndPercentage":
@@ -523,7 +583,10 @@ const synthesizeValue = (
               additionalTargets,
               value.precision,
               value?.mask,
-              printView
+              printView,
+              value.targets,
+              value.additional_targets,
+              lastYearFormData
             ),
           };
         case "rpn":
