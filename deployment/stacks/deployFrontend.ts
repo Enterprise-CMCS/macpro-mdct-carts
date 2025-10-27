@@ -63,7 +63,7 @@ export function deployFrontend(props: DeployFrontendProps) {
         s3_deployment.CacheControl.setPublic(),
         s3_deployment.CacheControl.maxAge(Duration.days(365)),
       ],
-    },
+    }
   );
 
   const deployTimeConfig = new s3_deployment.DeployTimeSubstitutedFile(
@@ -86,7 +86,7 @@ export function deployFrontend(props: DeployFrontendProps) {
         userPoolId,
         stage,
       },
-    },
+    }
   );
 
   deployTimeConfig.node.addDependency(deployWebsite);
