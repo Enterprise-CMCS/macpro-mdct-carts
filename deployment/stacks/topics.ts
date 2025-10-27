@@ -35,7 +35,7 @@ export function createTopicsComponents(props: CreateTopicsComponentsProps) {
       vpc,
       description: "Security Group for the topics service lambdas",
       allowAllOutbound: true,
-    },
+    }
   );
 
   const commonProps = {
