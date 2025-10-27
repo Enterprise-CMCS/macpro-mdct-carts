@@ -5,9 +5,9 @@ import {
   aws_wafv2 as wafv2,
   Aws,
   CfnOutput,
-  custom_resources as cr,
   Duration,
   RemovalPolicy,
+  triggers,
 } from "aws-cdk-lib";
 import { WafConstruct } from "../constructs/waf";
 import { isLocalStack } from "../local/util";
@@ -239,32 +239,10 @@ export function createUiAuthComponents(props: CreateUiAuthComponentsProps) {
   }
 
   if (bootstrapUsersFunction) {
-    const bootstrapUsersInvoke = new cr.AwsCustomResource(
-      scope,
-      "InvokeBootstrapUsersFunction",
-      {
-        onCreate: {
-          service: "Lambda",
-          action: "invoke",
-          parameters: {
-            FunctionName: bootstrapUsersFunction.functionName,
-            InvocationType: "Event",
-            Payload: JSON.stringify({}),
-          },
-          physicalResourceId: cr.PhysicalResourceId.of(
-            `InvokeBootstrapUsersFunction-${stage}`
-          ),
-        },
-        policy: cr.AwsCustomResourcePolicy.fromSdkCalls({
-          resources: [bootstrapUsersFunction.functionArn],
-        }),
-        resourceType: "Custom::InvokeBootstrapUsersFunction",
-      }
-    );
-
-    bootstrapUsersFunction.grantInvoke(bootstrapUsersInvoke.grantPrincipal);
-
-    bootstrapUsersInvoke.node.addDependency(bootstrapUsersFunction);
+    new triggers.Trigger(scope, "InvokeBootstrapUsersFunction", {
+      handler: bootstrapUsersFunction,
+      invocationType: triggers.InvocationType.EVENT,
+    });
   }
 
   new CfnOutput(scope, "CognitoIdentityPoolId", {
