@@ -215,7 +215,7 @@ const CMSHomepage = () => {
             </div>
           )}
           <div className="reports ds-l-col--12">
-            <div className="ds-l-row">
+            <div id="filter-container" className="ds-l-row">
               <div className="ds-c-label ds-l-col--12">
                 Search and Filter results
               </div>
