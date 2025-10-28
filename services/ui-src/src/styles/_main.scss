@@ -465,7 +465,11 @@ div[data-state="open"] .accordion-header .arrow:before {
 }
 
 .filter-header {
-  margin: variables.$margin * 2 variables.$margin * 2 0 variables.$margin * 2;
+  margin: variables.$margin * 2 0 0 0;
+
+  @media screen and (min-width: 768px) {
+    margin: variables.$margin * 2 variables.$margin * 2 0 variables.$margin * 2;
+  }
 }
 
 .filter-drop-down {
