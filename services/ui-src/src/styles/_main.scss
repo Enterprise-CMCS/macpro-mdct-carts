@@ -320,6 +320,7 @@ img {
       p {
         line-height: 1.5rem;
         margin: (variables.$margin * 2) 0;
+        max-width: 750px;
 
         @media only screen and (min-width: 768px) {
           margin: 0;
