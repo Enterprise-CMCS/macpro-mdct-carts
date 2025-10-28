@@ -157,7 +157,7 @@ input[type=radio]+label {
 .radio-container {
   display: block;
 
-  input {
+  &>input {
     display: inline-block;
   }
 
@@ -272,6 +272,7 @@ input[type=radio]+label {
 
   .question {
     margin-top: (variables.$margin * 3);
+    margin-bottom: (variables.$margin * 2);
   }
 
   .date-range {
@@ -326,6 +327,7 @@ input[type=radio]+label {
 
   .ds-c-button {
     margin: 1.5rem 0 0 0;
+    display: block;
   }
 }
 
