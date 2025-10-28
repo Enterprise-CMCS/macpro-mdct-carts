@@ -99,7 +99,10 @@ const Homepage = ({ reportStatus }) => {
         <TemplateDownload getTemplate={getFiscalYearTemplateLink} />
         {/*Table Heading */}
         <div className="ds-l-row">
-          <h2 id="reports-heading" className="ds-h3 ds-u-padding--2">
+          <h2
+            id="reports-heading"
+            className="all-reports-heading ds-u-padding--2"
+          >
             All Reports
           </h2>
         </div>
