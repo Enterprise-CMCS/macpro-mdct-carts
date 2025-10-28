@@ -394,14 +394,12 @@ input[type=radio]+label {
 
 .nav-buttons {
   float: right;
-  margin: (variables.$margin * 8) 0 (variables.$margin * 2);
+  margin: 0 0 (variables.$margin * 2);
   text-align: center;
   width: 48%;
 
   .form-buttons {
-    @media only screen and (min-width: 767px) {
-      text-align: right;
-    }
+    text-align: right;
 
     .form-button {
       margin: variables.$margin 0;
@@ -424,7 +422,7 @@ input[type=radio]+label {
     clear: both;
     display: block;
     float: right;
-    margin-top: 0;
+    margin-top: variables.$margin;
     max-width: 360px;
     padding: 0.6rem;
     position: relative;
