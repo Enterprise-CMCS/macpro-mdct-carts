@@ -80,6 +80,14 @@ input.ds-c-field {
   color: #262626;
 }
 
+.ds-c-alert {
+  margin-top: variables.$margin * 2;
+
+  &__text p {
+    margin: 0;
+  }
+}
+
 .synthesized-table {
   overflow-x: auto;
 }

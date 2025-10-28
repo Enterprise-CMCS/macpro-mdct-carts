@@ -215,7 +215,7 @@ const CMSHomepage = () => {
             </div>
           )}
           <div className="reports ds-l-col--12">
-            <div className="ds-l-row filter-container">
+            <div className="ds-l-row">
               <div className="ds-c-label ds-l-col--12">
                 Search and Filter results
               </div>
@@ -278,7 +278,10 @@ const CMSHomepage = () => {
               </div>
             </div>
             <div className="ds-l-row">
-              <h2 id="reports-heading" className="ds-h3 ds-u-padding--2">
+              <h2
+                id="reports-heading"
+                className="all-reports-heading ds-u-padding--2"
+              >
                 All Reports
               </h2>
             </div>

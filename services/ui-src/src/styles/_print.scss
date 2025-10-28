@@ -5,19 +5,21 @@
  */
 
 .print-all {
+
   .ds-c-alert,
   .form-footer,
   .page-info,
   .non-print-textarea {
     display: none;
   }
+
   .print-only,
   .print-helper {
     display: block;
   }
 
   .print-helper {
-    margin: 1.2rem 0;
+    margin: 1rem 0;
   }
 
   .screen-only {
@@ -25,20 +27,20 @@
   }
 
   .print-all-btn {
-    margin: 2.2rem;
+    margin: 0 1rem;
   }
 
   .print-directions {
     border: 1px solid #aaa;
     border-radius: variables.$border-radius;
     box-shadow: 2px 3px 4px #aaa;
-    margin: 2.2rem auto;
+    margin: 2rem auto;
     max-width: 90%;
     text-align: center;
     width: auto;
 
     .print-all-btn {
-      margin: 0 2.2rem 1.2rem 2.2rem;
+      margin: 1rem 2rem;
     }
   }
 
@@ -50,10 +52,12 @@
 }
 
 @media print {
+
   .no-print,
   .non-print-textarea {
     display: none !important;
   }
+
   .action-buttons,
   .ds-c-alert,
   .footer,
@@ -72,7 +76,7 @@
   }
 
   .print-helper {
-    margin: 1.2rem 0;
+    margin: 1rem 0;
   }
 
   .screen-only {
@@ -83,7 +87,7 @@
     min-width: 100%;
   }
 
-  .ds-c-choice:checked + label:before {
+  .ds-c-choice:checked+label:before {
     background-color: variables.$brand-primary;
     -webkit-print-color-adjust: exact;
   }
@@ -98,6 +102,7 @@
       display: block !important;
       border-top: 8px solid variables.$alto;
     }
+
     .ds-c-tabs__item[aria-selected="false"] {
       display: none;
     }
@@ -122,6 +127,7 @@
   .ly_header {
     margin-bottom: (variables.$margin * 8);
   }
+
   .question {
     break-inside: avoid;
   }
