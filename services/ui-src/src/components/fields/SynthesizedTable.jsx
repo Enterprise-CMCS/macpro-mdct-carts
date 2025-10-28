@@ -7,18 +7,24 @@ import { lteMask } from "../../util/constants";
 import PropTypes from "prop-types";
 
 const SynthesizedTable = ({ question, printView }) => {
-  const [allStatesData, stateName, stateUserAbbr, chipEnrollments, formData] =
-    useSelector(
-      (state) => [
-        state.allStatesData,
-        state.global.stateName,
-        state.stateUser.abbr,
-        state.enrollmentCounts.chipEnrollments,
-        state.formData,
-      ],
-      shallowEqual
-    );
-
+  const [
+    allStatesData,
+    stateName,
+    stateUserAbbr,
+    chipEnrollments,
+    formData,
+    lastYearFormData,
+  ] = useSelector(
+    (state) => [
+      state.allStatesData,
+      state.global.stateName,
+      state.stateUser.abbr,
+      state.enrollmentCounts.chipEnrollments,
+      state.formData,
+      state.lastYearFormData,
+    ],
+    shallowEqual
+  );
   const rows = question.fieldset_info.rows.map((row) => {
     let contents = row;
 
@@ -50,6 +56,7 @@ const SynthesizedTable = ({ question, printView }) => {
         stateUserAbbr,
         chipEnrollments,
         formData,
+        lastYearFormData,
         printView
       );
 
