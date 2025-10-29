@@ -8,10 +8,9 @@
     "strict": true,
     "allowJs": true,
     "target": "es5",
-    "module": "Node16",
+    "module": "node16",
     "outDir": ".build",
     "lib": ["ES2018", "DOM"],
-    "rootDir": "./",
-    "moduleResolution": "node16"
+    "rootDir": "./"
   }
 }
