@@ -64,7 +64,7 @@ jobs:
             ${{github.workspace}}/services/app-api/coverage/lcov.info:lcov
             ${{github.workspace}}/services/ui-src/coverage/lcov.info
       - name: deploy
-        if: ${{ !startsWith(github.ref_name, 'skipci') && !startsWith(github.ref_name, 'code-json-') }}
+        if: ${{ !startsWith(github.ref_name, 'skipci') }}
         run: |
           # When deploying multiple copies of this quickstart to the same AWS Account (not ideal), a prefix helps prevent stepping on each other.
           # This can optionally be set as an GitHub Actions Secret
@@ -72,7 +72,7 @@ jobs:
         env:
           PROJECT: ${{ vars.APP_NAME_LOWER }}
       - id: endpoint
-        if: ${{ !startsWith(github.ref_name, 'skipci') && !startsWith(github.ref_name, 'code-json-') }}
+        if: ${{ !startsWith(github.ref_name, 'skipci') }}
         run: |
           APPLICATION_ENDPOINT=$(./scripts/output.sh carts-$branch_name CloudFrontUrl)
           echo "application_endpoint=$APPLICATION_ENDPOINT" >> $GITHUB_OUTPUT
@@ -84,7 +84,7 @@ jobs:
 
   # register-runner:
   #   name: Register GitHub Runner
-  #   if: ${{ github.ref_name != 'main' && github.ref_name != 'val' && github.ref_name != 'production' && !startsWith(github.ref_name, 'skipci') && !startsWith(github.ref_name, 'code-json-') }}
+  #   if: ${{ github.ref_name != 'main' && github.ref_name != 'val' && github.ref_name != 'production' && !startsWith(github.ref_name, 'skipci') }}
   #   runs-on: ubuntu-latest
   #   needs: deploy
   #   steps:
@@ -170,7 +170,7 @@ jobs:
 
   e2e-test:
     name: E2E Integration Tests (Cypress)
-    if: ${{ always() && !cancelled() && needs.deploy.result == 'success' && github.ref_name != 'production' && !startsWith(github.ref_name, 'skipci') && !startsWith(github.ref_name, 'code-json-') }}
+    if: ${{ always() && !cancelled() && needs.deploy.result == 'success' && github.ref_name != 'production' && !startsWith(github.ref_name, 'skipci') }}
     needs:
       - deploy
       # - register-runner
@@ -203,7 +203,7 @@ jobs:
 
   a11y-tests:
     name: A11y Tests
-    if: ${{ always() && !cancelled() && needs.deploy.result == 'success' && github.ref_name != 'production' && !startsWith(github.ref_name, 'skipci') && !startsWith(github.ref_name, 'code-json-') }}
+    if: ${{ always() && !cancelled() && needs.deploy.result == 'success' && github.ref_name != 'production' && !startsWith(github.ref_name, 'skipci') }}
     needs:
       - deploy
       # - register-runner
@@ -236,7 +236,7 @@ jobs:
 
   playwright-test:
     name: Playwright Tests
-    if: ${{ needs.deploy.result == 'success' && github.ref_name != 'production' && !startsWith(github.ref_name, 'skipci') && !startsWith(github.ref_name, 'code-json-') }}
+    if: ${{ needs.deploy.result == 'success' && github.ref_name != 'production' && !startsWith(github.ref_name, 'skipci') }}
     needs:
       - deploy
     uses: ./.github/workflows/playwright.yml
@@ -244,9 +244,10 @@ jobs:
       base-url: ${{ needs.deploy.outputs.application_endpoint }}
     secrets: inherit #pragma: allowlist secret
 
+
   # cleanup:
   #   name: Delist GHA Runner CIDR Blocks
-  #   if: ${{ github.ref_name != 'main' && github.ref_name != 'val' && github.ref_name != 'production' && !startsWith(github.ref_name, 'skipci') && !startsWith(github.ref_name, 'code-json-') }}
+  #   if: ${{ github.ref_name != 'main' && github.ref_name != 'val' && github.ref_name != 'production' && !startsWith(github.ref_name, 'skipci') }}
   #   runs-on: ubuntu-latest
   #   needs:
   #     - register-runner
