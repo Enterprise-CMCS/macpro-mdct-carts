@@ -152,7 +152,6 @@
     .menu-block {
       display: none;
       position: relative;
-      transition: all 2s;
 
       &.open {
         background: variables.$primary-darkest;
@@ -161,10 +160,20 @@
         align-items: baseline;
         padding: variables.$padding;
         position: absolute;
-        right: 0;
-        top: (variables.$padding * 6.25);
-        transition: all 2s;
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+        top: (variables.$padding * 16);
         gap: 0;
+        z-index: 100;
+
+        @media only screen and (min-width: 768px) {
+          left: unset;
+          -webkit-transform: unset;
+          transform: unset;
+          right: 0;
+          top: (variables.$padding * 9);
+        }
       }
 
       a,
@@ -174,71 +183,56 @@
         }
       }
 
-      .contact-us {
-        padding: (variables.$padding * 2) 0 (variables.$padding * 1.5);
+      li {
+        padding: variables.$padding variables.$padding;
         position: relative;
         width: 100%;
+        text-align: left;
 
         a {
-          padding: (variables.$padding * 2) (variables.$padding * 9.75) (variables.$padding * 1.5) variables.$padding;
-
-          &:before {
-            content: "\f05a";
-            font-family: "FontAwesome";
-            display: inline-block;
-            width: 16px;
-            padding-right: (variables.$padding * 2);
-          }
+          display: block;
         }
       }
 
-      .manage-account {
-        padding: (variables.$padding * 2) 0 (variables.$padding * 1.5);
-        position: relative;
-        width: 100%;
-
-        a {
-          padding: (variables.$padding * 2) (variables.$padding * 4) (variables.$padding * 1.5) variables.$padding;
-
-          &:before {
-            content: "\f044";
-            font-family: "FontAwesome";
-            display: inline-block;
-            width: 16px;
-            padding-right: (variables.$padding * 2);
-          }
-        }
+      .contact-us a:before {
+        content: "\f05a";
+        font-family: "FontAwesome";
+        display: inline-block;
+        padding-right: (variables.$padding + 2);
       }
 
-      .logout {
-        position: relative;
+      .manage-account a:before {
+        content: "\f044";
+        font-family: "FontAwesome";
+        display: inline-block;
+        padding-right: variables.$padding;
+      }
+
+      .logout a:before {
+        content: "\f2f5";
+        font-family: "FontAwesome";
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      button {
+        text-decoration: none;
+        font-weight: normal;
+        color: #fff;
+        padding: 0;
+        text-align: left;
         width: 100%;
 
-        a:before {
-          content: "\f2f5";
+        &:hover {
+          color: #8ed2e5;
+        }
+
+        &:before {
+          content: "\f08b";
           font-family: "FontAwesome";
-          position: absolute;
-          top: 0;
-          left: 0;
-        }
-
-        button {
-          text-decoration: none;
-          font-weight: normal;
-          color: #fff;
-          padding: (variables.$padding * 2) (variables.$padding * 12.25) (variables.$padding * 1.5) variables.$padding;
-
-          &:hover {
-            color: #8ed2e5;
-          }
-
-          &:before {
-            content: "\f08b";
-            font-family: "FontAwesome";
-            display: inline-block;
-            width: 16px;
-            padding-right: (variables.$padding * 2);
-          }
+          display: inline-block;
+          padding-right: variables.$padding;
         }
       }
     }
@@ -255,11 +249,13 @@
   USA BANNER
 **********************/
 .usabanner-section-layout {
-  margin-left: auto;
-  margin-right: auto;
-  background-color: variables.$color-gray-lightest;
-  max-width: 1040px;
-  padding-left: 16px;
+  .ds-c-usa-banner__header {
+    padding: variables.$padding variables.$padding * 2;
+
+    @media only screen and (min-width: 544px) {
+      padding: variables.$padding variables.$padding * 4;
+    }
+  }
 }
 
 /**********************
