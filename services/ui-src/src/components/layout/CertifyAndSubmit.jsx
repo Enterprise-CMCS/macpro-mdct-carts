@@ -36,6 +36,7 @@ const Submit = ({ openCertifyConfirmation }) => (
       data-testid="certifySubmit"
       onClick={openCertifyConfirmation}
       variation="solid"
+      className="certify-button"
     >
       Certify and Submit
     </Button>
@@ -119,34 +120,32 @@ const CertifyAndSubmit = () => {
   return (
     <div className="section-basic-info ds-l-col--9 content">
       <Main className="main">
-        {isShowing && (
-          <Dialog
-            isShowing={isShowing}
-            onExit={toggleModal}
-            heading="Certify and Submit this Report?"
-            actions={[
-              <button
-                className="ds-c-button ds-u-margin-right--1"
-                key="Review Report"
-                aria-label="Review Report"
-                onClick={toggleModal}
-              >
-                Review Report
-              </button>,
-              <button
-                className="ds-c-button ds-c-button--solid ds-u-margin-right--1"
-                key="Confirm Certify"
-                aria-label="Confirm Certify and Submit"
-                onClick={confirmCertifyAction}
-              >
-                Confirm Certify and Submit
-              </button>,
-            ]}
-          >
-            You won’t be able to make any edits after submitting, unless you
-            send a request to CMS to uncertify your report
-          </Dialog>
-        )}
+        <Dialog
+          isOpen={isShowing}
+          onExit={toggleModal}
+          heading="Certify and Submit this Report?"
+          actions={[
+            <button
+              className="ds-c-button ds-u-margin-right--1"
+              key="Review Report"
+              aria-label="Review Report"
+              onClick={toggleModal}
+            >
+              Review Report
+            </button>,
+            <button
+              className="ds-c-button ds-c-button--solid ds-u-margin-right--1"
+              key="Confirm Certify"
+              aria-label="Confirm Certify and Submit"
+              onClick={confirmCertifyAction}
+            >
+              Confirm Certify and Submit
+            </button>,
+          ]}
+        >
+          You won’t be able to make any edits after submitting, unless you send
+          a request to CMS to uncertify your report
+        </Dialog>
         <PageInfo />
         {currentUserRole === AppRoles.STATE_USER && <h2>Certify and Submit</h2>}
         {isCertified ? (

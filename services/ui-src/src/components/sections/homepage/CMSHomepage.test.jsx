@@ -59,7 +59,7 @@ describe("<CMSHomepage />", () => {
     });
     await user.click(stateFilterDropdown);
 
-    const filterContainer = document.querySelector("div.filter-container");
+    const filterContainer = document.querySelector("div#filter-container");
     const alabamaDropdownOption = within(filterContainer).queryByText(
       "Alabama",
       {
@@ -85,13 +85,13 @@ describe("<CMSHomepage />", () => {
     expect(screen.getAllByRole("cell", { name: "Year: 2021" }).length).toBe(2);
     expect(screen.getAllByRole("cell", { name: "Year: 2020" }).length).toBe(1);
 
-    let filterContainer = document.querySelector("div.filter-container");
+    let filterContainer = document.querySelector("div#filter-container");
     const yearFilterDropdown = within(filterContainer).getByText("Year", {
       selector: "span",
     });
     await user.click(yearFilterDropdown);
 
-    filterContainer = document.querySelector("div.filter-container");
+    filterContainer = document.querySelector("div#filter-container");
     const year2021DropdownOption = within(filterContainer).queryByText("2021", {
       selector: "span",
     });
@@ -114,7 +114,7 @@ describe("<CMSHomepage />", () => {
       screen.getAllByRole("cell", { name: "Status: In Progress" }).length
     ).toBe(2);
 
-    const filterContainer = document.querySelector("div.filter-container");
+    const filterContainer = document.querySelector("div#filter-container");
     const yearFilterDropdown = within(filterContainer).getByText("Status", {
       selector: "span",
     });
@@ -139,7 +139,7 @@ describe("<CMSHomepage />", () => {
       screen.queryByRole("cell", { name: "Not Started" })
     ).not.toBeInTheDocument();
 
-    const filterContainer = document.querySelector("div.filter-container");
+    const filterContainer = document.querySelector("div#filter-container");
     const yearFilterDropdown = within(filterContainer).getByText("Status", {
       selector: "span",
     });

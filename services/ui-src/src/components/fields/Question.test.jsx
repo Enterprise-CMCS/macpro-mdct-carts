@@ -115,6 +115,13 @@ const renderQuestion = (props) =>
 
 // Isolate render so mocked child components are clean
 const renderMockedQuestion = (props) => {
+  // Mock TextField
+  jest.mock("@cmsgov/design-system", () => {
+    return {
+      TextField: () => <div />,
+    };
+  });
+
   jest.isolateModules(() => {
     // Question has to be re-imported
     const Question = require("./Question").default;

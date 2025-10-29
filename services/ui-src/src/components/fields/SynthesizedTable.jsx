@@ -73,9 +73,9 @@ const SynthesizedTable = ({ question, printView }) => {
     : question.fieldset_info.headers;
 
   return (
-    <div className="synthesized-table ds-u-margin-top--2">
+    <div className="synthesized-table">
       <table
-        className="ds-c-table ds-u-margin-top--2"
+        className="ds-c-table"
         id="synthesized-table-1"
         summary={question.label || "This is a table for the CARTS Application"}
       >

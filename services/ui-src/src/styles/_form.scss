@@ -8,12 +8,17 @@
   color: #e31c3d;
 }
 
-.label-radio {
-  margin: 2rem;
+label,
+legend {
+  margin-block: 0;
 }
 
-.radio-container {
-  margin: 2rem 0;
+.label-radio {
+  margin: .5rem;
+}
+
+input.ds-c-field {
+  display: block
 }
 
 .ds-u-color--error {
@@ -31,8 +36,13 @@
   color: #262626;
 }
 
+.ds-c-fieldset {
+  margin: 0;
+}
+
 .ds-l-col fieldset .ds-c-label {
   white-space: nowrap;
+
   .ds-c-field__error-message {
     white-space: wrap;
   }
@@ -55,8 +65,6 @@
 }
 
 .ds-c-table {
-  margin: 1.2rem 0;
-
   .row-header {
     font-weight: 650;
   }
@@ -70,6 +78,14 @@
 
 .ds-c-field__hint {
   color: #262626;
+}
+
+.ds-c-alert {
+  margin-top: variables.$margin * 2;
+
+  &__text p {
+    margin: 0;
+  }
 }
 
 .synthesized-table {
@@ -133,8 +149,22 @@
   margin-top: variables.$margin * 3;
 }
 
-.radio-container .radio-children {
-  margin-left: (variables.$margin * 8);
+input[type=checkbox]+label,
+input[type=radio]+label {
+  display: inline;
+}
+
+.radio-container {
+  display: block;
+
+  &>input {
+    display: inline-block;
+  }
+
+  .radio-children {
+    margin-left: (variables.$margin * 8);
+    margin-top: -(variables.$margin * 3);
+  }
 }
 
 .question-container {
@@ -241,8 +271,8 @@
   }
 
   .question {
-    font-weight: variables.$font-weight-bold;
-    margin-top: (variables.$margin * 2);
+    margin-top: (variables.$margin * 3);
+    margin-bottom: (variables.$margin * 2);
   }
 
   .date-range {
@@ -284,24 +314,26 @@
 }
 
 .cmsranges {
+  margin-bottom: (variables.$margin * 3);
+
   h3 {
     margin: 2.2rem 0 0 0;
   }
 
-  .cmsrange {
-    &:nth-child(odd) {
-      margin-bottom: 2.2rem;
-    }
-  }
-
   .cmsranges-btn {
-    margin: 2.2rem 1.2rem 0 0;
+    margin: 1rem 0 0 0;
     min-height: 3rem;
   }
 
   .ds-c-button {
-    margin: 1.2rem 0 0 1rem;
+    margin: 1.5rem 0 0 0;
+    display: block;
   }
+}
+
+.cmsrange-inner {
+  display: flex;
+  margin-top: 1rem;
 }
 
 .cmsranges-container,
@@ -350,16 +382,42 @@
   --rmsc-border: #262626;
 }
 
+.file_upload {
+  margin-bottom: (variables.$margin * 1);
+
+  label {
+    margin-top: (variables.$margin * 1);
+  }
+
+  &_item {
+    margin: (variables.$margin * 2) 0;
+  }
+
+  &_buttons {
+    margin-top: (variables.$margin * 2);
+
+    button {
+      margin-right: variables.$margin;
+    }
+  }
+
+  &_table td {
+    padding-top: variables.$padding * 2;
+  }
+}
+
+.input-grid__group {
+  margin-top: -(variables.$margin * 3);
+}
+
 .nav-buttons {
   float: right;
-  margin: (variables.$margin * 8) 0 (variables.$margin * 2);
+  margin: 0 0 (variables.$margin * 2);
   text-align: center;
   width: 48%;
 
   .form-buttons {
-    @media only screen and (min-width: 767px) {
-      text-align: right;
-    }
+    text-align: right;
 
     .form-button {
       margin: variables.$margin 0;
@@ -382,7 +440,7 @@
     clear: both;
     display: block;
     float: right;
-    margin-top: 0;
+    margin-top: variables.$margin;
     max-width: 360px;
     padding: 0.6rem;
     position: relative;
@@ -548,15 +606,6 @@
     background: variables.$white;
     border-top: 6px solid variables.$color-gray;
   }
-
-  .objective-body,
-  .objective-footer {
-    background: variables.$white;
-  }
-
-  .objective-accordion div[hidden] {
-    display: block;
-  }
 }
 
 .label-header {
@@ -566,4 +615,8 @@
 
 .print-text-area {
   display: none;
+}
+
+.certify-button {
+  margin-top: variables.$margin * 2;
 }

@@ -7,6 +7,16 @@
   box-sizing: border-box;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font: revert;
+  line-height: revert;
+}
+
 h1 {
   font-weight: variables.$font-weight-normal;
 }
@@ -45,26 +55,32 @@ img {
     background-color: white;
     color: black;
   }
+
   color: black;
 }
 
 .searchable {
   width: 50%;
+
   .searchable-input {
     .searchable-input-control {
       input[type="text"] {
         background-color: white;
         color: black;
       }
+
       color: black;
     }
+
     color: black;
     background-color: #595959;
     border: 1px solid black;
+
     &::placeholder {
       /* Chrome, Firefox, Opera, Safari 10.1+ */
       color: red;
-      opacity: 1; /* Firefox */
+      opacity: 1;
+      /* Firefox */
     }
   }
 
@@ -75,14 +91,17 @@ img {
         color: black;
       }
     }
+
     background-color: white;
     color: black;
   }
+
   .searchable-input-arrow-inner {
     svg {
       color: black;
     }
   }
+
   .searchable-list-item {
     background-color: white;
     color: black;
@@ -93,6 +112,7 @@ img {
   .ds-c-label {
     font-weight: 70;
   }
+
   .ds-c-field {
     border: 1px solid #212121;
   }
