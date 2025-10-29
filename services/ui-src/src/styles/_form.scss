@@ -388,6 +388,22 @@ input[type=radio]+label {
   label {
     margin-top: (variables.$margin * 1);
   }
+
+  &_item {
+    margin: (variables.$margin * 2) 0;
+  }
+
+  &_buttons {
+    margin-top: (variables.$margin * 2);
+
+    button {
+      margin-right: variables.$margin;
+    }
+  }
+
+  &_table td {
+    padding-top: variables.$padding * 2;
+  }
 }
 
 .input-grid__group {
