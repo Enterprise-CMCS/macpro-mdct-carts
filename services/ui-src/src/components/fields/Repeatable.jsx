@@ -4,24 +4,16 @@ import { AccordionItem } from "@cmsgov/design-system";
 
 import Question from "./Question";
 
-const Repeatable = ({
-  headerRef,
-  number,
-  question,
-  type = null,
-  printView,
-}) => {
+const Repeatable = ({ number, question, type = null, printView }) => {
   const children = question.questions ? question.questions : [];
 
   const title = type ? `${type} ${number}` : `${number}`;
 
   return (
     <AccordionItem
-      ref={headerRef}
       defaultOpen
       heading={title}
-      isControlledOpen={printView ?? undefined}
-      onChange={printView ? () => {} : undefined}
+      isControlledOpen={printView ? true : undefined}
       headingLevel="3"
       closeIcon={<span aria-hidden="true">–</span>}
       openIcon={<span aria-hidden="true">+</span>}
@@ -37,7 +29,6 @@ const Repeatable = ({
   );
 };
 Repeatable.propTypes = {
-  headerRef: PropTypes.object.isRequired,
   number: PropTypes.number.isRequired,
   question: PropTypes.object.isRequired,
   type: PropTypes.string,

@@ -4,12 +4,7 @@ import { AccordionItem } from "@cmsgov/design-system";
 
 import Question from "./Question";
 
-export const Objective = ({
-  headerRef,
-  objective,
-  objectiveNumber,
-  printView,
-}) => {
+export const Objective = ({ objective, objectiveNumber, printView }) => {
   const firstQuestion = objective.questions?.[0];
   let children = [];
   let name = "";
@@ -45,11 +40,9 @@ export const Objective = ({
 
   return (
     <AccordionItem
-      ref={headerRef}
       defaultOpen
       heading={objectiveName(objectiveNumber, name, suggested)}
-      isControlledOpen={printView ?? undefined}
-      onChange={printView ? () => {} : undefined}
+      isControlledOpen={printView ? true : undefined}
       closeIcon={<span aria-hidden="true">–</span>}
       openIcon={<span aria-hidden="true">+</span>}
     >
@@ -66,7 +59,6 @@ export const Objective = ({
 };
 
 Objective.propTypes = {
-  headerRef: PropTypes.object.isRequired,
   objective: PropTypes.object.isRequired,
   objectiveNumber: PropTypes.number.isRequired,
   printView: PropTypes.bool,
