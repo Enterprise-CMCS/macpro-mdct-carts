@@ -17,8 +17,7 @@
     "test:e2e": "cd tests/playwright && yarn run test:e2e",
     "test:e2e-ui": "cd tests/playwright && yarn run test:e2e-ui",
     "test:e2e-stable": "cd tests/playwright && yarn run test:e2e-stable",
-    "test:e2e-stable-ui": "cd tests/playwright && yarn run test:e2e-stable-ui",
-    "track-flags": "./scripts/track-flags.sh"
+    "test:e2e-stable-ui": "cd tests/playwright && yarn run test:e2e-stable-ui"
   },
   "repository": {
     "type": "git",
