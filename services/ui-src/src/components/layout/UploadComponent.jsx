@@ -16,7 +16,7 @@ import PropTypes from "prop-types";
 import { REPORT_STATUS, AppRoles } from "../../types";
 
 const UploadComponent = ({ question }) => {
-  // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [blockFileSubmission, setBlockFileSubmission] = useState(true);
   const [loadedFiles, setLoadedFiles] = useState([]);
   const [uploadedFiles, setUploadedFiles] = useState([]);

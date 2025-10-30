@@ -7,7 +7,7 @@
  * @param {*} callback
  */
 
-// eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function myHandler(event, context, callback) {
   // eslint-disable-next-line no-console
   console.log("Seeding Tables");
