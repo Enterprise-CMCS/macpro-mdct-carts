@@ -20,7 +20,7 @@ const LocalLogin = () => {
       await loginUser(fields.email, fields.password);
       navigate("/");
       setError(false);
-    } catch (error) {
+    } catch {
       setError(true);
     }
   }

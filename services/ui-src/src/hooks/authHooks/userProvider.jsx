@@ -59,7 +59,7 @@ export const UserProvider = ({ children }) => {
       };
       setUser(currentUser);
       dispatch(loadUser(currentUser));
-    } catch (e) {
+    } catch {
       if (isProduction) {
         await authenticateWithIDM();
       } else {
