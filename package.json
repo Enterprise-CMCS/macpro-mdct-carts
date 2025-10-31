@@ -48,7 +48,7 @@
     "@types/yargs": "^17.0.33",
     "@typescript-eslint/eslint-plugin": "5.18.0",
     "@typescript-eslint/parser": "5.18.0",
-    "aws-cdk": "^2.1028.0",
+    "aws-cdk": "^2.1029.0",
     "aws-cdk-local": "^2.19.2",
     "chromedriver": ">=135.0.1",
     "dotenv": "^16.5.0",
@@ -63,9 +63,6 @@
     "prettier": "^2.8.8",
     "tsx": "^4.20.5",
     "typescript": "^4.9.5",
-    "yargs": "^16.2.0"
-  },
-  "resolutions": {
-    "loader-utils": "^2.0.4"
+    "yargs": "^17.7.2"
   }
 }
