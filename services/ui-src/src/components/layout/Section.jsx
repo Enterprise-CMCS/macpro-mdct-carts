@@ -9,7 +9,7 @@ import { Main } from "./Main";
 const Section = ({ subsectionId, printView }) => {
   return (
     <div className="section-basic-info ds-l-col--9 content">
-      <Main id="main-content" className="main">
+      <Main className="main">
         <PageInfo />
         <Subsection
           key={subsectionId}

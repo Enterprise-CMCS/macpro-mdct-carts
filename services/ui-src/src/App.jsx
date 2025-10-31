@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from "react-router";
 import { useUser } from "./hooks/authHooks";
 import { PostLogoutRedirect } from "./components/layout/PostLogoutRedirect";
 import AppRoutes from "./AppRoutes";
+import SkipNav from "./components/layout/SkipNav";
 import Header from "./components/layout/Header";
 import Timeout from "./components/layout/Timeout";
 import Footer from "./components/layout/Footer";
@@ -29,6 +30,11 @@ function App() {
           data-test="component-app"
         >
           <div className="app-content">
+            <SkipNav
+              id="skip-nav-main"
+              href="#main-content"
+              text="Skip to main content"
+            />
             <Timeout />
             <Header />
             <AppRoutes />
