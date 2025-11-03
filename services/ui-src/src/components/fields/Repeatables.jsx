@@ -1,9 +1,9 @@
-import React, { useRef } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { Accordion, AccordionItem } from "@reach/accordion";
+import { Accordion } from "@cmsgov/design-system";
 
 import { Repeatable } from "./Repeatable";
 import {
@@ -19,21 +19,8 @@ const Repeatables = ({
   type = null,
   printView,
 }) => {
-  const ref = useRef();
-
   const add = () => {
     addRepeatableTo(question.id);
-
-    /*
-     * Do the focus+scroll on the next UI tick so the DOM will have updated
-     * before we try to grab DOM elements.
-     */
-    setTimeout(() => {
-      if (ref.current) {
-        ref.current.focus();
-        ref.current.scrollIntoView();
-      }
-    }, 10);
   };
 
   const remove = () => {
@@ -51,21 +38,15 @@ const Repeatables = ({
 
   return (
     <>
-      <Accordion
-        collapsible
-        multiple
-        defaultIndex={[...Array(100)].map((_, i) => i)}
-      >
+      <Accordion>
         {question.questions.map((q, i) => (
-          <AccordionItem key={q.id}>
-            <Repeatable
-              headerRef={ref}
-              number={i + 1}
-              question={q}
-              type={question.typeLabel ? question.typeLabel : type}
-              printView={printView}
-            />
-          </AccordionItem>
+          <Repeatable
+            key={q.id}
+            number={i + 1}
+            question={q}
+            type={question.typeLabel ? question.typeLabel : type}
+            printView={printView}
+          />
         ))}
 
         {question.questions.length > 1 && (
@@ -73,7 +54,7 @@ const Repeatables = ({
             disabled={disabled}
             onClick={remove}
             type="button"
-            className="add-objective ds-c-button ds-c-button--danger"
+            className="delete-repeatable ds-c-button ds-c-button--danger"
           >
             Delete last {question.typeLabel || "item"}
           </button>
