@@ -1,4 +1,4 @@
-# MDCT CARTS (CHIP Annual Reporting Template System) 💅🏻
+# MDCT CARTS (CHIP Annual Reporting Template System)
 
 [![CodeQL](https://github.com/Enterprise-CMCS/macpro-mdct-carts/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/Enterprise-CMCS/macpro-mdct-carts/actions/workflows/codeql-analysis.yml)
 [![Maintainability](https://qlty.sh/badges/56366865-e4c7-43ff-9ee9-5a44fd29b0f2/maintainability.svg)](https://qlty.sh/gh/Enterprise-CMCS/projects/macpro-mdct-carts)
