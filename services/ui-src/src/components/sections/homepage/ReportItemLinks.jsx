@@ -26,8 +26,8 @@ const ReportItemLinks = ({
   const dispatch = useDispatch();
   const { isShowing, toggleModal } = useModal();
 
-  const uncertify = () => {
-    dispatch(uncertifyReport(stateCode, Number(year)));
+  const uncertify = async () => {
+    await dispatch(uncertifyReport(stateCode, Number(year)));
     toggleModal();
     window.location.reload(false);
   };
