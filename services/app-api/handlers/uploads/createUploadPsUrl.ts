@@ -44,7 +44,7 @@ export const psUpload = handler(async (event, _context) => {
   };
 
   const params = {
-    TableName: process.env.UploadsTableName!,
+    TableName: process.env.UploadsTable!,
     Key: {
       uploadedState: state,
       fileId: `${year}-${questionId}_${awsFilename}`, // questionId is not unique outside of a year

@@ -21,7 +21,7 @@ export const getEnrollmentCounts = handler(async (event, _context) => {
   } else {
     // Current year values
     const currentParams = {
-      TableName: process.env.StageEnrollmentCountsTableName!,
+      TableName: process.env.StageEnrollmentCountsTable!,
       KeyConditionExpression: "pk = :pk",
       ExpressionAttributeValues: {
         ":pk": `${state}-${year}`,
@@ -34,7 +34,7 @@ export const getEnrollmentCounts = handler(async (event, _context) => {
     // Provide past year values as fallback
     const pastYear = parseInt(year) - 1;
     const pastParams = {
-      TableName: process.env.StageEnrollmentCountsTableName!,
+      TableName: process.env.StageEnrollmentCountsTable!,
       KeyConditionExpression: "pk = :pk",
       ExpressionAttributeValues: {
         ":pk": `${state}-${pastYear}`,

@@ -41,39 +41,82 @@ const state = {
       id: "section1",
       items: [
         {
-          id: "item0",
+          id: "2025-01-a-01-01-a",
           answer: { entry: "0" },
         },
         {
-          id: "item1",
+          id: "2025-01-a-01-01-b",
           answer: { entry: "1" },
         },
         {
-          id: "item2",
+          id: "2025-01-a-01-01-c",
           answer: { entry: "2" },
         },
         {
-          id: "item3",
+          id: "2025-01-a-01-01-d",
           answer: { entry: "3" },
         },
         {
-          id: "item4",
+          id: "2025-01-a-01-01-e",
           answer: { entry: "4" },
         },
         {
-          id: "item5",
+          id: "2025-01-a-01-01-f",
           answer: { entry: "5" },
         },
         {
-          id: "item6",
+          id: "2025-01-a-01-01-g",
           answer: { entry: null },
         },
         {
-          id: "item7",
+          id: "2025-01-a-01-01-h",
           answer: { entry: "abc" },
         },
         {
-          id: "item8",
+          id: "2025-01-a-01-01-i",
+          answer: { entry: "1,001" },
+        },
+      ],
+    },
+  ],
+  lastYearFormData: [
+    {
+      id: "section1",
+      items: [
+        {
+          id: "2024-01-a-01-01-a",
+          answer: { entry: "0" },
+        },
+        {
+          id: "2024-01-a-01-01-b",
+          answer: { entry: "1" },
+        },
+        {
+          id: "2024-01-a-01-01-c",
+          answer: { entry: "2" },
+        },
+        {
+          id: "2024-01-a-01-01-d",
+          answer: { entry: "3" },
+        },
+        {
+          id: "2024-01-a-01-01-e",
+          answer: { entry: "4" },
+        },
+        {
+          id: "2024-01-a-01-01-f",
+          answer: { entry: "5" },
+        },
+        {
+          id: "2024-01-a-01-01-g",
+          answer: { entry: "6" },
+        },
+        {
+          id: "2024-01-a-01-01-h",
+          answer: { entry: "abc" },
+        },
+        {
+          id: "2024-01-a-01-01-i",
           answer: { entry: "1,001" },
         },
       ],
@@ -155,8 +198,8 @@ describe("synthesize()", () => {
       const out = synthesize(
         {
           targets: [
-            "$..*[?(@ && @.id==='item3')].answer.entry",
-            "$..*[?(@ && @.id==='item4')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-d')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-e')].answer.entry",
           ],
           actions: ["identity"],
         },
@@ -176,9 +219,9 @@ describe("synthesize()", () => {
       const out = synthesize(
         {
           targets: [
-            "$..*[?(@ && @.id==='item1')].answer.entry",
-            "$..*[?(@ && @.id==='item3')].answer.entry",
-            "$..*[?(@ && @.id==='item7')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-b')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-d')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-h')].answer.entry",
           ],
           actions: ["sum"],
         },
@@ -196,9 +239,9 @@ describe("synthesize()", () => {
       const out = synthesize(
         {
           targets: [
-            "$..*[?(@ && @.id==='item1')].answer.entry",
-            "$..*[?(@ && @.id==='item3')].answer.entry",
-            "$..*[?(@ && @.id==='item100')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-b')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-d')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-z')].answer.entry",
           ],
           actions: ["sum"],
         },
@@ -216,9 +259,9 @@ describe("synthesize()", () => {
       const out = synthesize(
         {
           targets: [
-            "$..*[?(@ && @.id==='item1')].answer.entry",
-            "$..*[?(@ && @.id==='item3')].answer.entry",
-            "$..*[?(@ && @.id==='item6')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-b')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-d')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-g')].answer.entry",
           ],
           actions: ["sum"],
         },
@@ -236,9 +279,9 @@ describe("synthesize()", () => {
       const out = synthesize(
         {
           targets: [
-            "$..*[?(@ && @.id==='item1')].answer.entry",
-            "$..*[?(@ && @.id==='item3')].answer.entry",
-            "$..*[?(@ && @.id==='item5')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-b')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-d')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-f')].answer.entry",
           ],
           actions: ["sum"],
         },
@@ -256,9 +299,9 @@ describe("synthesize()", () => {
       const out = synthesize(
         {
           targets: [
-            "$..*[?(@ && @.id==='item8')].answer.entry",
-            "$..*[?(@ && @.id==='item6')].answer.entry",
-            "$..*[?(@ && @.id==='item1')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-i')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-g')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-b')].answer.entry",
           ],
           actions: ["sum"],
         },
@@ -276,9 +319,9 @@ describe("synthesize()", () => {
       const out = synthesize(
         {
           targets: [
-            "$..*[?(@ && @.id==='item8')].answer.entry",
-            "$..*[?(@ && @.id==='item6')].answer.entry",
-            "$..*[?(@ && @.id==='item100')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-i')].answer.entry", // "1,001"
+            "$..*[?(@ && @.id==='2025-01-a-01-01-g')].answer.entry", // null
+            "$..*[?(@ && @.id==='2025-01-a-01-01-z')].answer.entry", // does not exist
           ],
           actions: ["sum"],
         },
@@ -297,7 +340,7 @@ describe("synthesize()", () => {
       // No denominator, no percenator
       const out = synthesize(
         {
-          targets: ["$..*[?(@ && @.id==='item4')].answer.entry"],
+          targets: ["$..*[?(@ && @.id==='2025-01-a-01-01-d')].answer.entry"], // 3
           actions: ["percentage"],
         },
         state.allStatesData,
@@ -314,8 +357,8 @@ describe("synthesize()", () => {
       const out = synthesize(
         {
           targets: [
-            "$..*[?(@ && @.id==='item4')].answer.entry",
-            "$..*[?(@ && @.id==='item0')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-d')].answer.entry", // 3
+            "$..*[?(@ && @.id==='2025-01-a-01-01-a')].answer.entry", // 0
           ],
           actions: ["percentage"],
         },
@@ -333,8 +376,8 @@ describe("synthesize()", () => {
       const out = synthesize(
         {
           targets: [
-            "$..*[?(@ && @.id==='item1')].answer.entry",
-            "$..*[?(@ && @.id==='item3')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-b')].answer.entry", // 1
+            "$..*[?(@ && @.id==='2025-01-a-01-01-d')].answer.entry", // 3
           ],
           actions: ["percentage"],
         },
@@ -352,8 +395,8 @@ describe("synthesize()", () => {
       const out = synthesize(
         {
           targets: [
-            "$..*[?(@ && @.id==='item1')].answer.entry",
-            "$..*[?(@ && @.id==='item3')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-b')].answer.entry", // 1
+            "$..*[?(@ && @.id==='2025-01-a-01-01-d')].answer.entry", // 3
           ],
           actions: ["percentage"],
           precision: 4,
@@ -372,8 +415,8 @@ describe("synthesize()", () => {
       const out = synthesize(
         {
           targets: [
-            "$..*[?(@ && @.id==='item1')].answer.entry",
-            "$..*[?(@ && @.id==='item3')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-b')].answer.entry", // 1
+            "$..*[?(@ && @.id==='2025-01-a-01-01-d')].answer.entry", // 3
           ],
           actions: ["percentage"],
           precision: 0,
@@ -392,8 +435,8 @@ describe("synthesize()", () => {
       const out = synthesize(
         {
           targets: [
-            "$..*[?(@ && @.id==='item1')].answer.entry",
-            "$..*[?(@ && @.id==='item3')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-b')].answer.entry", // 1
+            "$..*[?(@ && @.id==='2025-01-a-01-01-d')].answer.entry", // 3
           ],
           actions: ["percentage"],
           precision: -3,
@@ -413,9 +456,9 @@ describe("synthesize()", () => {
       const out = synthesize(
         {
           targets: [
-            "$..*[?(@ && @.id==='item1')].answer.entry", // 1
-            "$..*[?(@ && @.id==='item3')].answer.entry", // 3
-            "$..*[?(@ && @.id==='item0')].answer.entry", // 0 (denominator)
+            "$..*[?(@ && @.id==='2025-01-a-01-01-b')].answer.entry", // 1
+            "$..*[?(@ && @.id==='2025-01-a-01-01-d')].answer.entry", // 3
+            "$..*[?(@ && @.id==='2025-01-a-01-01-a')].answer.entry", // 0 (denominator)
           ],
           actions: ["numberAndPercentage"],
           mask: true,
@@ -425,6 +468,7 @@ describe("synthesize()", () => {
         state.stateUser.abbr,
         state.enrollmentCounts.chipEnrollments,
         state.formData,
+        [],
         true // printView
       );
       expect(out).toEqual({ contents: "<11" });
@@ -434,9 +478,9 @@ describe("synthesize()", () => {
       const out = synthesize(
         {
           targets: [
-            "$..*[?(@ && @.id==='item1')].answer.entry", // 1
-            "$..*[?(@ && @.id==='item3')].answer.entry", // 3
-            "$..*[?(@ && @.id==='item0')].answer.entry", // 0 (denominator)
+            "$..*[?(@ && @.id==='2025-01-a-01-01-b')].answer.entry", // 1
+            "$..*[?(@ && @.id==='2025-01-a-01-01-d')].answer.entry", // 3
+            "$..*[?(@ && @.id==='2025-01-a-01-01-a')].answer.entry", // 0 (denominator)
           ],
           actions: ["numberAndPercentage"],
         },
@@ -453,9 +497,9 @@ describe("synthesize()", () => {
       const out = synthesize(
         {
           targets: [
-            "$..*[?(@ && @.id==='item1')].answer.entry", // 1
-            "$..*[?(@ && @.id==='item3')].answer.entry", // 3
-            "$..*[?(@ && @.id==='item4')].answer.entry", // 4 (denominator)
+            "$..*[?(@ && @.id==='2025-01-a-01-01-b')].answer.entry", // 1
+            "$..*[?(@ && @.id==='2025-01-a-01-01-d')].answer.entry", // 3
+            "$..*[?(@ && @.id==='2025-01-a-01-01-e')].answer.entry", // 4 (denominator)
           ],
           actions: ["numberAndPercentage"],
         },
@@ -473,9 +517,9 @@ describe("synthesize()", () => {
       const out = synthesize(
         {
           targets: [
-            "$..*[?(@ && @.id==='item1')].answer.entry", // 1
-            "$..*[?(@ && @.id==='item3')].answer.entry", // 3
-            "$..*[?(@ && @.id==='item5')].answer.entry", // 5 (denominator)
+            "$..*[?(@ && @.id==='2025-01-a-01-01-b')].answer.entry", // 1
+            "$..*[?(@ && @.id==='2025-01-a-01-01-d')].answer.entry", // 3
+            "$..*[?(@ && @.id==='2025-01-a-01-01-f')].answer.entry", // 5 (denominator)
           ],
           actions: ["numberAndPercentage"],
           precision: 1,
@@ -490,144 +534,12 @@ describe("synthesize()", () => {
       expect(out).toEqual({ contents: "4 (80%)" });
     });
 
-    describe("handles sumAndPercentage", () => {
-      test("returns <11 when mask is true, numerator < 11, and printView is true", () => {
-        const out = synthesize(
-          {
-            targets: [
-              "$..*[?(@ && @.id==='item1')].answer.entry", // 1
-              "$..*[?(@ && @.id==='item3')].answer.entry", // 3
-            ],
-            additional_targets: [
-              "$..*[?(@ && @.id==='item4')].answer.entry", // 4 (denominator)
-            ],
-            actions: ["sumAndPercentage"],
-            mask: true,
-          },
-          state.allStatesData,
-          state.global.stateName,
-          state.stateUser.abbr,
-          state.enrollmentCounts.chipEnrollments,
-          state.formData,
-          true // printView
-        );
-        expect(out).toEqual({ contents: "<11" });
-      });
-
-      test("returns empty string when denominator is zero", () => {
-        const out = synthesize(
-          {
-            targets: [
-              "$..*[?(@ && @.id==='item1')].answer.entry", // 1
-              "$..*[?(@ && @.id==='item3')].answer.entry", // 3
-            ],
-            additional_targets: [
-              "$..*[?(@ && @.id==='item0')].answer.entry", // 0 (denominator)
-            ],
-            actions: ["sumAndPercentage"],
-          },
-          state.allStatesData,
-          state.global.stateName,
-          state.stateUser.abbr,
-          state.enrollmentCounts.chipEnrollments,
-          state.formData
-        );
-        expect(out).toEqual({ contents: "" });
-      });
-
-      test("returns correct sum and percentage with valid values", () => {
-        const out = synthesize(
-          {
-            targets: [
-              "$..*[?(@ && @.id==='item1')].answer.entry", // 1
-              "$..*[?(@ && @.id==='item3')].answer.entry", // 3
-            ],
-            additional_targets: [
-              "$..*[?(@ && @.id==='item4')].answer.entry", // 4 (denominator)
-            ],
-            actions: ["sumAndPercentage"],
-          },
-          state.allStatesData,
-          state.global.stateName,
-          state.stateUser.abbr,
-          state.enrollmentCounts.chipEnrollments,
-          state.formData
-        );
-        // numerator = 1 + 3 = 4, denominator = 4, percent = 100%
-        expect(out).toEqual({ contents: "4 (100%)" });
-      });
-
-      test("returns correct sum and percentage with precision", () => {
-        const out = synthesize(
-          {
-            targets: [
-              "$..*[?(@ && @.id==='item1')].answer.entry", // 1
-              "$..*[?(@ && @.id==='item3')].answer.entry", // 3
-            ],
-            additional_targets: [
-              "$..*[?(@ && @.id==='item5')].answer.entry", // 5 (denominator)
-            ],
-            actions: ["sumAndPercentage"],
-            precision: 1,
-          },
-          state.allStatesData,
-          state.global.stateName,
-          state.stateUser.abbr,
-          state.enrollmentCounts.chipEnrollments,
-          state.formData
-        );
-        // numerator = 1 + 3 = 4, denominator = 5, percent = 80.0%
-        expect(out).toEqual({ contents: "4 (80%)" });
-      });
-
-      test("returns empty string when numerator is blank", () => {
-        const out = synthesize(
-          {
-            targets: [
-              "$..*[?(@ && @.id==='item6')].answer.entry", // null
-            ],
-            additional_targets: [
-              "$..*[?(@ && @.id==='item0')].answer.entry", // 0 (denominator)
-            ],
-            actions: ["sumAndPercentage"],
-          },
-          state.allStatesData,
-          state.global.stateName,
-          state.stateUser.abbr,
-          state.enrollmentCounts.chipEnrollments,
-          state.formData
-        );
-        expect(out).toEqual({ contents: "" });
-      });
-
-      test("returns empty string when denominator is blank", () => {
-        const out = synthesize(
-          {
-            targets: [
-              "$..*[?(@ && @.id==='item1')].answer.entry", // 1
-              "$..*[?(@ && @.id==='item3')].answer.entry", // 3
-            ],
-            additional_targets: [
-              "$..*[?(@ && @.id==='item6')].answer.entry", // null (denominator)
-            ],
-            actions: ["sumAndPercentage"],
-          },
-          state.allStatesData,
-          state.global.stateName,
-          state.stateUser.abbr,
-          state.enrollmentCounts.chipEnrollments,
-          state.formData
-        );
-        expect(out).toEqual({ contents: "" });
-      });
-    });
-
     test("returns empty string when numerator is blank", () => {
       const out = synthesize(
         {
           targets: [
-            "$..*[?(@ && @.id==='item6')].answer.entry", // null
-            "$..*[?(@ && @.id==='item0')].answer.entry", // 0 (denominator)
+            "$..*[?(@ && @.id==='2025-01-a-01-01-g')].answer.entry", // null
+            "$..*[?(@ && @.id==='2025-01-a-01-01-a')].answer.entry", // 0 (denominator)
           ],
           actions: ["numberAndPercentage"],
         },
@@ -638,6 +550,185 @@ describe("synthesize()", () => {
         state.formData
       );
       expect(out).toEqual({ contents: "" });
+    });
+
+    test("numberAndPercentage uses lastYearFormData for odd year and missing values", () => {
+      // Odd year: 2025, missing value (null), should pull from lastYearFormData
+      const out = synthesize(
+        {
+          targets: [
+            "$..*[?(@ && @.id==='2025-01-a-01-01-b')].answer.entry", // 1
+            "$..*[?(@ && @.id==='2025-01-a-01-01-g')].answer.entry", // null, should pull from lastYearFormData (2024-01-a-01-01-g) which is 6
+            "$..*[?(@ && @.id==='2025-01-a-01-01-e')].answer.entry", // 4 (denominator)
+          ],
+          actions: ["numberAndPercentage"],
+        },
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData,
+        state.lastYearFormData
+      );
+      // numerator = 1 + 6 (from lastYearFormData) = 7, denominator = 4, percent = 175%
+      expect(out).toEqual({ contents: "7 (175%)" });
+    });
+  });
+
+  describe("handles sumAndPercentage", () => {
+    test("returns <11 when mask is true, numerator < 11, and printView is true", () => {
+      const out = synthesize(
+        {
+          targets: [
+            "$..*[?(@ && @.id==='2025-01-a-01-01-b')].answer.entry", // 1
+            "$..*[?(@ && @.id==='2025-01-a-01-01-d')].answer.entry", // 3
+          ],
+          additional_targets: [
+            "$..*[?(@ && @.id==='2025-01-a-01-01-e')].answer.entry", // 4 (denominator)
+          ],
+          actions: ["sumAndPercentage"],
+          mask: true,
+        },
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData,
+        state.lastYearFormData,
+        true // printView
+      );
+      expect(out).toEqual({ contents: "<11" });
+    });
+
+    test("returns empty string when denominator is zero", () => {
+      const out = synthesize(
+        {
+          targets: [
+            "$..*[?(@ && @.id==='2025-01-a-01-01-b')].answer.entry", // 1
+            "$..*[?(@ && @.id==='2025-01-a-01-01-d')].answer.entry", // 3
+          ],
+          additional_targets: [
+            "$..*[?(@ && @.id==='2025-01-a-01-01-a')].answer.entry", // 0 (denominator)
+          ],
+          actions: ["sumAndPercentage"],
+        },
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
+      );
+      expect(out).toEqual({ contents: "" });
+    });
+
+    test("returns correct sum and percentage with valid values", () => {
+      const out = synthesize(
+        {
+          targets: [
+            "$..*[?(@ && @.id==='2025-01-a-01-01-b')].answer.entry", // 1
+            "$..*[?(@ && @.id==='2025-01-a-01-01-d')].answer.entry", // 3
+          ],
+          additional_targets: [
+            "$..*[?(@ && @.id==='2025-01-a-01-01-e')].answer.entry", // 4 (denominator)
+          ],
+          actions: ["sumAndPercentage"],
+        },
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
+      );
+      // numerator = 1 + 3 = 4, denominator = 4, percent = 100%
+      expect(out).toEqual({ contents: "4 (100%)" });
+    });
+
+    test("returns correct sum and percentage with precision", () => {
+      const out = synthesize(
+        {
+          targets: [
+            "$..*[?(@ && @.id==='2025-01-a-01-01-b')].answer.entry", // 1
+            "$..*[?(@ && @.id==='2025-01-a-01-01-d')].answer.entry", // 3
+          ],
+          additional_targets: [
+            "$..*[?(@ && @.id==='2025-01-a-01-01-f')].answer.entry", // 5 (denominator)
+          ],
+          actions: ["sumAndPercentage"],
+          precision: 1,
+        },
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
+      );
+      // numerator = 1 + 3 = 4, denominator = 5, percent = 80.0%
+      expect(out).toEqual({ contents: "4 (80%)" });
+    });
+
+    test("returns empty string when numerator is blank", () => {
+      const out = synthesize(
+        {
+          targets: [
+            "$..*[?(@ && @.id==='2025-01-a-01-01-f')].answer.entry", // null
+          ],
+          additional_targets: [
+            "$..*[?(@ && @.id==='2025-01-a-01-01-a')].answer.entry", // 0 (denominator)
+          ],
+          actions: ["sumAndPercentage"],
+        },
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
+      );
+      expect(out).toEqual({ contents: "" });
+    });
+
+    test("returns empty string when denominator is blank", () => {
+      const out = synthesize(
+        {
+          targets: [
+            "$..*[?(@ && @.id==='2025-01-a-01-01-b')].answer.entry", // 1
+            "$..*[?(@ && @.id==='2025-01-a-01-01-d')].answer.entry", // 3
+          ],
+          additional_targets: [
+            "$..*[?(@ && @.id==='2025-01-a-01-01-g')].answer.entry", // null (denominator)
+          ],
+          actions: ["sumAndPercentage"],
+        },
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData
+      );
+      expect(out).toEqual({ contents: "" });
+    });
+
+    test("sumAndPercentage uses lastYearFormData for odd year and missing values", () => {
+      // Odd year: 2025, missing value (null), should pull from lastYearFormData
+      const out = synthesize(
+        {
+          targets: [
+            "$..*[?(@ && @.id==='2025-01-a-01-01-b')].answer.entry", // 1
+            "$..*[?(@ && @.id==='2025-01-a-01-01-g')].answer.entry", // null, should pull from lastYearFormData (2024-01-a-01-01-g) which is 6
+          ],
+          additional_targets: [
+            "$..*[?(@ && @.id==='2025-01-a-01-01-e')].answer.entry", // 4 (denominator)
+          ],
+          actions: ["sumAndPercentage"],
+        },
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData,
+        state.lastYearFormData
+      );
+      // numerator = 1 + 6 (from lastYearFormData) = 7, denominator = 4, percent = 175%
+      expect(out).toEqual({ contents: "7 (175%)" });
     });
   });
 
@@ -650,8 +741,8 @@ describe("synthesize()", () => {
       const out = synthesize(
         {
           targets: [
-            "$..*[?(@ && @.id==='item1')].answer.entry",
-            "$..*[?(@ && @.id==='item3')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-b')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-d')].answer.entry",
           ],
           actions: ["rpn"],
           rpn: "@ @ + + -",
@@ -671,10 +762,10 @@ describe("synthesize()", () => {
       const out = synthesize(
         {
           targets: [
-            "$..*[?(@ && @.id==='item1')].answer.entry",
-            "$..*[?(@ && @.id==='item3')].answer.entry",
-            "$..*[?(@ && @.id==='item1')].answer.entry",
-            "$..*[?(@ && @.id==='item3')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-b')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-d')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-b')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-d')].answer.entry",
           ],
           actions: ["rpn"],
           rpn: "@ @ +",
@@ -697,10 +788,10 @@ describe("synthesize()", () => {
       const out = synthesize(
         {
           targets: [
-            "$..*[?(@ && @.id==='item1')].answer.entry",
-            "$..*[?(@ && @.id==='item2')].answer.entry",
-            "$..*[?(@ && @.id==='item3')].answer.entry",
-            "$..*[?(@ && @.id==='item4')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-b')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-c')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-d')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-e')].answer.entry",
           ],
           actions: ["rpn"],
           rpn: "@ @ @ @ @ - + * /",
@@ -720,11 +811,11 @@ describe("synthesize()", () => {
       const out = synthesize(
         {
           targets: [
-            "$..*[?(@ && @.id==='item1')].answer.entry",
-            "$..*[?(@ && @.id==='item2')].answer.entry",
-            "$..*[?(@ && @.id==='item3')].answer.entry",
-            "$..*[?(@ && @.id==='item4')].answer.entry",
-            "$..*[?(@ && @.id==='item5')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-b')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-c')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-d')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-e')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-f')].answer.entry",
           ],
           actions: ["rpn"],
           rpn: "@ @ @ @ @ - + * /",
@@ -744,9 +835,9 @@ describe("synthesize()", () => {
       const out = synthesize(
         {
           targets: [
-            "$..*[?(@ && @.id==='item1')].answer.entry",
-            "$..*[?(@ && @.id==='item2')].answer.entry",
-            "$..*[?(@ && @.id==='item3')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-b')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-c')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-d')].answer.entry",
           ],
           actions: ["rpn"],
           rpn: "@ @ @ 2 + + *",
@@ -771,11 +862,11 @@ describe("synthesize()", () => {
       const out = synthesize(
         {
           targets: [
-            "$..*[?(@ && @.id==='item1')].answer.entry",
-            "$..*[?(@ && @.id==='item2')].answer.entry",
-            "$..*[?(@ && @.id==='item3')].answer.entry",
-            "$..*[?(@ && @.id==='item4')].answer.entry",
-            "$..*[?(@ && @.id==='item5')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-b')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-c')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-d')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-e')].answer.entry",
+            "$..*[?(@ && @.id==='2025-01-a-01-01-f')].answer.entry",
           ],
           actions: ["rpn"],
           rpn: "- + @ @ * / @ @ @",

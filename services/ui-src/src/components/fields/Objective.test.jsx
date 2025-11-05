@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { Objective } from "./Objective";
-import { Accordion, AccordionItem } from "@reach/accordion";
+import { Accordion } from "@cmsgov/design-system";
 
 describe("Objective component", () => {
   test("renders", () => {
@@ -23,9 +23,7 @@ describe("Objective component", () => {
     };
     render(
       <Accordion>
-        <AccordionItem key={"mock-item-1"}>
-          <Objective {...props} />
-        </AccordionItem>
+        <Objective {...props} />
       </Accordion>
     );
     expect(screen.getByText("Objective 1")).toBeInTheDocument();

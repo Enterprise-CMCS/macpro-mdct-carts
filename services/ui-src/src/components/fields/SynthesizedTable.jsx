@@ -7,18 +7,24 @@ import { lteMask } from "../../util/constants";
 import PropTypes from "prop-types";
 
 const SynthesizedTable = ({ question, printView }) => {
-  const [allStatesData, stateName, stateUserAbbr, chipEnrollments, formData] =
-    useSelector(
-      (state) => [
-        state.allStatesData,
-        state.global.stateName,
-        state.stateUser.abbr,
-        state.enrollmentCounts.chipEnrollments,
-        state.formData,
-      ],
-      shallowEqual
-    );
-
+  const [
+    allStatesData,
+    stateName,
+    stateUserAbbr,
+    chipEnrollments,
+    formData,
+    lastYearFormData,
+  ] = useSelector(
+    (state) => [
+      state.allStatesData,
+      state.global.stateName,
+      state.stateUser.abbr,
+      state.enrollmentCounts.chipEnrollments,
+      state.formData,
+      state.lastYearFormData,
+    ],
+    shallowEqual
+  );
   const rows = question.fieldset_info.rows.map((row) => {
     let contents = row;
 
@@ -50,6 +56,7 @@ const SynthesizedTable = ({ question, printView }) => {
         stateUserAbbr,
         chipEnrollments,
         formData,
+        lastYearFormData,
         printView
       );
 
@@ -66,9 +73,9 @@ const SynthesizedTable = ({ question, printView }) => {
     : question.fieldset_info.headers;
 
   return (
-    <div className="synthesized-table ds-u-margin-top--2">
+    <div className="synthesized-table">
       <table
-        className="ds-c-table ds-u-margin-top--2"
+        className="ds-c-table"
         id="synthesized-table-1"
         summary={question.label || "This is a table for the CARTS Application"}
       >

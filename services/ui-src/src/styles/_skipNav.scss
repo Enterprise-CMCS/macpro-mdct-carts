@@ -1,0 +1,22 @@
+@use "variables";
+
+/**********************
+  SKIPNAV
+**********************/
+.skip-nav {
+  background: variables.$white;
+  left: 0;
+  min-width: 200px;
+  outline-offset: variables.$border-width;
+  outline: transparent solid 2px;
+  padding: variables.$padding (variables.$padding * 2);
+  position: absolute;
+  top: -96px;
+  transition: all 0s !important;
+  z-index: 2;
+
+  &:focus-visible {
+    top: variables.$padding;
+    box-shadow: 0 0 0 3px variables.$white,0 0 4px 6px variables.$color-focus !important;
+  }
+}

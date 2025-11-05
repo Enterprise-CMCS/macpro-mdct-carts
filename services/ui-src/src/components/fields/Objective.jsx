@@ -1,15 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { AccordionButton, AccordionPanel } from "@reach/accordion";
+import { AccordionItem } from "@cmsgov/design-system";
 
 import Question from "./Question";
 
-export const Objective = ({
-  headerRef,
-  objective,
-  objectiveNumber,
-  printView,
-}) => {
+export const Objective = ({ objective, objectiveNumber, printView }) => {
   const firstQuestion = objective.questions?.[0];
   let children = [];
   let name = "";
@@ -44,29 +39,26 @@ export const Objective = ({
   };
 
   return (
-    <>
-      <div className="accordion-header" ref={headerRef}>
-        <span className="span-pdf-no-bookmark">
-          <AccordionButton>
-            <div className="accordion-title">
-              {objectiveName(objectiveNumber, name, suggested)}
-            </div>
-          </AccordionButton>
-        </span>
-      </div>
-      <AccordionPanel>
-        {children.map((q) => (
-          <div className="ds-c-choice__checkedChild" key={q.id}>
-            <Question question={q} printView={printView} />
-          </div>
-        ))}
-      </AccordionPanel>
-    </>
+    <AccordionItem
+      defaultOpen
+      heading={objectiveName(objectiveNumber, name, suggested)}
+      isControlledOpen={printView ? true : undefined}
+      closeIcon={<span aria-hidden="true">–</span>}
+      openIcon={<span aria-hidden="true">+</span>}
+    >
+      {children.map((q) => (
+        <div
+          className="ds-c-choice__checkedChild ds-u-padding-top--0 ds-u-display--flex"
+          key={q.id}
+        >
+          <Question question={q} printView={printView} />
+        </div>
+      ))}
+    </AccordionItem>
   );
 };
 
 Objective.propTypes = {
-  headerRef: PropTypes.object.isRequired,
   objective: PropTypes.object.isRequired,
   objectiveNumber: PropTypes.number.isRequired,
   printView: PropTypes.bool,
