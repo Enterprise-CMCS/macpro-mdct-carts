@@ -103,7 +103,10 @@ export function createBigmacStreamsComponents(
     securityGroups: [lambdaSG],
     kafkaBootstrapServers,
     securityGroupId: lambdaSG.securityGroupId,
-    topics: ["aws.mdct.seds.cdc.state-forms.v0"],
+    topics: [
+      // Matches services/carts-bigmac-streams/sinkEnrollmentCounts.js
+      "aws.mdct.seds.cdc.state-forms.v0",
+    ],
     consumerGroupId: `${project}-${stage}`,
     environment: {
       StageEnrollmentCountsTableName: props.stageEnrollmentCountsTableName,

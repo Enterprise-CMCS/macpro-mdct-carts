@@ -70,7 +70,7 @@ const getRecords = (kafkaEvent) => {
    * This lambda's CDK setup subscribes it to the SEDS state-forms topic.
    * We expect the shape of the event to be:
    * {
-   *   "eventSource": "SelfManagedKafka"
+   *   "eventSource": "SelfManagedKafka",
    *   "records": {
    *     "aws.mdct.seds.cdc.state-forms.v0": [
    *       {
@@ -79,8 +79,9 @@ const getRecords = (kafkaEvent) => {
    *     ]
    *   }
    * }
+   * See also: deployment/stacks/bigmac-streams.ts
    */
-  return Object.values(kafkaEvent?.records ?? {}).flat(1);
+  return kafkaEvent?.records?.["aws.mdct.seds.cdc.state-forms.v0"] ?? [];
 };
 
 const updateEnrollment = async (pk, entryKey, enrollmentData, dynamoClient) => {
