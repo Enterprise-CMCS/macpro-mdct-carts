@@ -107,6 +107,10 @@ export function createBigmacStreamsComponents(
     securityGroupId: lambdaSG.securityGroupId,
     topics: [sedsTopic],
     consumerGroupId: `${project}-${stage}`,
+    environment: {
+      sedsTopic,
+      StageEnrollmentCountsTableName: props.stageEnrollmentCountsTableName,
+    },
     ...commonProps,
   });
 

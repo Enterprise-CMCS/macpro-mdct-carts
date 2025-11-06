@@ -11,7 +11,7 @@ import { buildClient, convertToDynamoExpression } from "../libs/dynamo-lib.js";
  * @param {*} _callback
  */
 export async function handler(event, _context, _callback) {
-  const sedsTopicKey = `${process.env.sedsTopic}-0`;
+  const sedsTopicKey = process.env.sedsTopic;
   if (!event?.records?.[sedsTopicKey]) {
     return;
   }
