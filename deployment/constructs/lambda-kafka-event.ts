@@ -73,6 +73,13 @@ export class LambdaKafkaEventSource extends Construct {
       ...restProps,
     });
 
+    this.lambda.addToRolePolicy(
+      new iam.PolicyStatement({
+        actions: ["ec2:DescribeSecurityGroups", "ec2:DescribeVpcs"],
+        resources: ["*"],
+      })
+    );
+
     for (const stmt of additionalPolicies) {
       this.lambda.addToRolePolicy(stmt);
     }

@@ -41,7 +41,6 @@ export class LocalPrerequisiteStack extends Stack {
         docraptorApiKey: SecretValue.unsafePlainText(
           process.env.docraptorApiKey!
         ),
-        sedsTopic: SecretValue.unsafePlainText("localstack"),
       },
     });
 
