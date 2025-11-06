@@ -4,11 +4,6 @@ repos:
     rev: v4.0.1
     hooks:
       - id: check-added-large-files
-        exclude: |
-          (?x)(
-              ^services/ui-src/public/templates/mlr-reporting-template\.xlsx$|
-              ^services/ui-src/public/templates/mcpar-reporting-template\.xlsx$
-          )
       - id: no-commit-to-branch
         args:
           # We include branch names in various AWS resource names, including S3 buckets, so:
