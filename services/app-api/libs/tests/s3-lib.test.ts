@@ -33,7 +33,7 @@ describe("S3 Library", () => {
     const url = await s3Lib.createPresignedPost({ Bucket: "b", Key: "k" });
 
     expect(url).toBe("mock signed url");
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line no-unused-vars
     const [_client, command, _options] = (getSignedUrl as jest.Mock).mock
       .calls[0];
     expect(command).toBeInstanceOf(PutObjectCommand);
@@ -43,7 +43,7 @@ describe("S3 Library", () => {
     const url = await s3Lib.getSignedDownloadUrl({ Bucket: "b", Key: "k" });
 
     expect(url).toBe("mock signed url");
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line no-unused-vars
     const [_client, command, _options] = (getSignedUrl as jest.Mock).mock
       .calls[0];
     expect(command).toBeInstanceOf(GetObjectCommand);
@@ -53,7 +53,7 @@ describe("S3 Library", () => {
     const url = await s3Lib.getSignedDownloadUrl({ Bucket: "b", Key: "k" });
 
     expect(url).toBe("mock signed url");
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line no-unused-vars
     const [client, command, _options] = (getSignedUrl as jest.Mock).mock
       .calls[0];
     expect(await client.config.region()).toBe("us-east-1");

@@ -23,9 +23,7 @@ rules:
   no-duplicate-imports: error
   no-unreachable: error
   no-unused-vars: off
-  '@typescript-eslint/no-unused-vars':
-    - error
-    - argsIgnorePattern: "^_"
+  '@typescript-eslint/no-unused-vars': off
   no-console: error
   no-empty: error
   no-extra-semi: error

@@ -59,21 +59,21 @@ const Question = ({
   "data-testid": dataTestId,
   disabled = false,
   hideNumber = false,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   hint,
   id,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   label,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   name,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   onChange,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   onClick,
   question,
   prevYear,
   printView = false,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   setAnswer,
   ...props
 }) => {
