@@ -14,7 +14,6 @@ interface CreateBigmacStreamsComponentsProps {
   brokerString: string;
   stageEnrollmentCountsTableName: string;
   tables: DynamoDBTable[];
-  sedsTopic: string;
 }
 
 export function createBigmacStreamsComponents(
@@ -28,7 +27,6 @@ export function createBigmacStreamsComponents(
     kafkaAuthorizedSubnets,
     brokerString,
     tables,
-    sedsTopic,
     isDev,
   } = props;
 
@@ -105,10 +103,9 @@ export function createBigmacStreamsComponents(
     securityGroups: [lambdaSG],
     kafkaBootstrapServers,
     securityGroupId: lambdaSG.securityGroupId,
-    topics: [sedsTopic],
+    topics: ["aws.mdct.seds.cdc.state-forms.v0"],
     consumerGroupId: `${project}-${stage}`,
     environment: {
-      sedsTopic,
       StageEnrollmentCountsTableName: props.stageEnrollmentCountsTableName,
     },
     ...commonProps,
