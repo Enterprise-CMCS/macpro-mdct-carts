@@ -72,7 +72,7 @@ const getRecords = (kafkaEvent) => {
    * {
    *   "eventSource": "SelfManagedKafka",
    *   "records": {
-   *     "aws.mdct.seds.cdc.state-forms.v0": [
+   *     "aws.mdct.seds.cdc.state-forms.v0-0": [
    *       {
    *         "value": "base64-encoded JSON"
    *       }
