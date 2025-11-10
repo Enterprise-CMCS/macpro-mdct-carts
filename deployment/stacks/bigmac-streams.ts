@@ -12,7 +12,7 @@ interface CreateBigmacStreamsComponentsProps {
   vpc: ec2.IVpc;
   kafkaAuthorizedSubnets: ec2.ISubnet[];
   brokerString: string;
-  stageEnrollmentCountsTableName: string;
+  stageEnrollmentCountsTable: DynamoDBTable;
   tables: DynamoDBTable[];
 }
 
@@ -28,6 +28,7 @@ export function createBigmacStreamsComponents(
     brokerString,
     tables,
     isDev,
+    stageEnrollmentCountsTable,
   } = props;
 
   const kafkaBootstrapServers = brokerString.split(",");
@@ -92,27 +93,34 @@ export function createBigmacStreamsComponents(
    *       arn:aws:dynamodb:us-east-1:519095364708:table/main-section/stream/2022-05-20T16:01:33.665
    */
 
-  new LambdaKafkaEventSource(scope, "sinkEnrollmentCounts", {
-    entry: "services/carts-bigmac-streams/handlers/sinkEnrollmentCounts.js",
-    handler: "handler",
-    timeout: Duration.seconds(120),
-    memorySize: 1024,
-    retryAttempts: 2,
-    vpc,
-    vpcSubnets: { subnets: kafkaAuthorizedSubnets },
-    securityGroups: [lambdaSG],
-    kafkaBootstrapServers,
-    securityGroupId: lambdaSG.securityGroupId,
-    topics: [
-      // Matches services/carts-bigmac-streams/sinkEnrollmentCounts.js
-      "aws.mdct.seds.cdc.state-forms.v0",
-    ],
-    consumerGroupId: `${project}-${stage}`,
-    environment: {
-      StageEnrollmentCountsTableName: props.stageEnrollmentCountsTableName,
-    },
-    ...commonProps,
-  });
+  const sinkEnrollmentCountsLambda = new LambdaKafkaEventSource(
+    scope,
+    "sinkEnrollmentCounts",
+    {
+      entry: "services/carts-bigmac-streams/handlers/sinkEnrollmentCounts.js",
+      handler: "handler",
+      timeout: Duration.seconds(120),
+      memorySize: 1024,
+      retryAttempts: 2,
+      vpc,
+      vpcSubnets: { subnets: kafkaAuthorizedSubnets },
+      securityGroups: [lambdaSG],
+      kafkaBootstrapServers,
+      securityGroupId: lambdaSG.securityGroupId,
+      topics: [
+        // Matches services/carts-bigmac-streams/sinkEnrollmentCounts.js
+        "aws.mdct.seds.cdc.state-forms.v0",
+      ],
+      consumerGroupId: `${project}-${stage}`,
+      environment: {
+        StageEnrollmentCountsTableName:
+          stageEnrollmentCountsTable.table.tableName,
+      },
+      ...commonProps,
+    }
+  ).lambda;
+
+  stageEnrollmentCountsTable.table.grantWriteData(sinkEnrollmentCountsLambda);
 
   // postKafkaData Lambda with two DynamoDB streams
   new LambdaDynamoEventSource(scope, "postKafkaData", {
