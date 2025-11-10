@@ -6,6 +6,7 @@ import {
   aws_apigateway as apigateway,
   aws_ec2 as ec2,
   aws_iam as iam,
+  custom_resources as cr,
   DefaultStackSynthesizer,
   Stack,
   StackProps,
@@ -34,9 +35,50 @@ export class PrerequisiteStack extends Stack {
 
     if (!isLocalStack) {
       const vpc = ec2.Vpc.fromLookup(this, "Vpc", { vpcName });
+
+      // Enable DNS hostnames on the VPC using a custom resource
+      const enableDnsHostnames = new cr.AwsCustomResource(
+        this,
+        "EnableDnsHostnames",
+        {
+          onCreate: {
+            service: "EC2",
+            action: "modifyVpcAttribute",
+            parameters: {
+              VpcId: vpc.vpcId,
+              EnableDnsHostnames: { Value: true },
+            },
+            physicalResourceId: cr.PhysicalResourceId.of(
+              `enable-dns-hostnames-${vpc.vpcId}`
+            ),
+          },
+          policy: cr.AwsCustomResourcePolicy.fromSdkCalls({
+            resources: [
+              `arn:aws:ec2:${this.region}:${this.account}:vpc/${vpc.vpcId}`,
+            ],
+          }),
+        }
+      );
+
       vpc.addGatewayEndpoint("S3Endpoint", {
         service: ec2.GatewayVpcEndpointAwsService.S3,
       });
+
+      vpc.addGatewayEndpoint("DynamoDbEndpoint", {
+        service: ec2.GatewayVpcEndpointAwsService.DYNAMODB,
+      });
+
+      const lambdaEndpoint = vpc.addInterfaceEndpoint("LambdaEndpoint", {
+        service: ec2.InterfaceVpcEndpointAwsService.LAMBDA,
+        privateDnsEnabled: true,
+      });
+      lambdaEndpoint.node.addDependency(enableDnsHostnames);
+
+      const stsEndpoint = vpc.addInterfaceEndpoint("StsEndpoint", {
+        service: ec2.InterfaceVpcEndpointAwsService.STS,
+        privateDnsEnabled: true,
+      });
+      stsEndpoint.node.addDependency(enableDnsHostnames);
     }
 
     new CloudWatchLogsResourcePolicy(this, "logPolicy", { project });
