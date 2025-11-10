@@ -81,7 +81,7 @@ const getRecords = (kafkaEvent) => {
    * }
    * See also: deployment/stacks/bigmac-streams.ts
    */
-  return kafkaEvent?.records?.["aws.mdct.seds.cdc.state-forms.v0-0"] ?? [];
+  return Object.values(kafkaEvent?.records ?? {}).flat(1);
 };
 
 const updateEnrollment = async (pk, entryKey, enrollmentData, dynamoClient) => {
