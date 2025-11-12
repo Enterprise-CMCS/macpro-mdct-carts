@@ -40,14 +40,7 @@ export class PrerequisiteStack extends Stack {
       });
 
       // add optional app-specific prerequisites
-      try {
-        const {
-          addAdditionalPrerequisites,
-        } = require("./prerequisites-additional");
-        addAdditionalPrerequisites(this, vpc);
-      } catch (error) {
-        // prerequisites-additional.ts is optional and may not exist in all apps
-      }
+      this.addAdditionalPrerequisitesAsync(vpc);
     }
 
     new CloudWatchLogsResourcePolicy(this, "logPolicy", { project });
@@ -107,6 +100,17 @@ export class PrerequisiteStack extends Stack {
         iam.ManagedPolicy.fromAwsManagedPolicyName("AdministratorAccess"),
       ],
     });
+  }
+
+  async addAdditionalPrerequisitesAsync(vpc: ec2.IVpc) {
+    try {
+      const { addAdditionalPrerequisites } = await import(
+        "./prerequisites-additional"
+      );
+      addAdditionalPrerequisites(this, vpc);
+    } catch (error) {
+      // prerequisites-additional.ts is optional and may not exist in all apps
+    }
   }
 }
 
