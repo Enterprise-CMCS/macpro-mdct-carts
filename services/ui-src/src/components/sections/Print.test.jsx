@@ -97,7 +97,15 @@ describe("<Print />", () => {
     const path = "/print?year=2020&state=AL";
     render(setup(path));
     const sections = screen.getAllByTestId("print-section");
-    expect(sections.length).toBe(5);
+    expect(sections).toHaveLength(5);
+  });
+
+  test("should render full form with only one <main>", () => {
+    const path = "/print?year=2020&state=AL";
+    render(setup(path));
+
+    const mains = screen.getAllByRole("main");
+    expect(mains).toHaveLength(1);
   });
 
   test("should render for a subsection when provided the subsection query param", () => {
@@ -105,7 +113,16 @@ describe("<Print />", () => {
       "print?year=2020&state=AL&sectionId=2020-03&subsectionId=2020-03-b";
     render(setup(path));
     const sections = screen.getAllByTestId("print-section");
-    expect(sections.length).toBe(1);
+    expect(sections).toHaveLength(1);
+  });
+
+  test("should render subsection with only one <main>", () => {
+    const path =
+      "print?year=2020&state=AL&sectionId=2020-03&subsectionId=2020-03-b";
+    render(setup(path));
+
+    const mains = screen.getAllByRole("main");
+    expect(mains).toHaveLength(1);
   });
 
   test("does not render sections if formData is empty", () => {

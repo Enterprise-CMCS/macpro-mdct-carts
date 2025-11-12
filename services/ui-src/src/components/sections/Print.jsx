@@ -8,6 +8,7 @@ import { Helmet } from "react-helmet";
 // components
 import Title from "../layout/Title";
 import Section from "../layout/Section";
+import { Main } from "../layout/Main";
 // utils
 import statesArray from "../utils/statesArray";
 import { loadEnrollmentCounts, loadSections } from "../../actions/initial";
@@ -141,7 +142,8 @@ export const Print = () => {
           sectionId={sectionId}
           subsectionId={subsectionId}
           readonly="false"
-          printView="true"
+          printView={true}
+          useMain={false}
         />
       );
     } else {
@@ -165,7 +167,8 @@ export const Print = () => {
               sectionId={sectionId}
               subsectionId={subsectionId}
               readonly="false"
-              printView="true"
+              printView={true}
+              useMain={false}
             />
           );
         }
@@ -193,7 +196,7 @@ export const Print = () => {
         <meta name="author" content="CMS" />
         <meta name="subject" content="Annual CARTS Report" />
       </Helmet>
-      {sections}
+      <Main className="main">{sections}</Main>
       <Button
         className="ds-c-button--solid ds-c-button--large print-all-btn"
         onClick={getPdfFriendlyDocument}
