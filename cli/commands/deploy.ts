@@ -1,12 +1,13 @@
+// This file is managed by macpro-mdct-core so if you'd like to change it let's do it there
 import { Argv } from "yargs";
-import { checkIfAuthenticated } from "../lib/sts.js";
 import {
   CloudFormationClient,
   DescribeStacksCommand,
 } from "@aws-sdk/client-cloudformation";
+import { checkIfAuthenticated } from "../lib/sts.js";
 import { region } from "../lib/consts.js";
-import downloadClamAvLayer from "../lib/clam.js";
 import { runCommand } from "../lib/runner.js";
+import { tryImport } from "../lib/optional-imports.js";
 
 const stackExists = async (stackName: string): Promise<boolean> => {
   const client = new CloudFormationClient({ region });
@@ -27,10 +28,20 @@ export const deploy = {
   handler: async (options: { stage: string }) => {
     await checkIfAuthenticated();
 
-    if (await stackExists("carts-prerequisites")) {
-      await downloadClamAvLayer();
+    if (!process.env.PROJECT) {
+      throw new Error("PROJECT environment variable is required but not set");
+    }
 
-      await runCommand(
+    const project = process.env.PROJECT!;
+
+    if (await stackExists(`${project}-prerequisites`)) {
+      const clamModule = await tryImport<{ default: () => Promise<void> }>(
+        "../lib/clam.js"
+      );
+      if (clamModule) {
+        const downloadClamAvLayer = clamModule.default;
+        await downloadClamAvLayer();
+      } await runCommand(
         "CDK deploy",
         [
           "yarn",
@@ -44,9 +55,6 @@ export const deploy = {
         "."
       );
     } else {
-      // TODO: FYI, I got this error when my internet connection was down, so we could improve the logic here.
-
-      // TODO: FYI, I got this error when my AWS credentials were expired, so we could improve the logic here.
       console.error(
         "MISSING PREREQUISITE STACK! Must deploy it before attempting to deploy the application."
       );

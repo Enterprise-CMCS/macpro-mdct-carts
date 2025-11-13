@@ -15,6 +15,7 @@ import { CloudWatchLogsResourcePolicy } from "./constructs/cloudwatch-logs-resou
 import { loadDefaultSecret } from "./deployment-config";
 import { Construct } from "constructs";
 import { isLocalStack } from "./local/util";
+import { tryImport } from "./utils/misc";
 
 interface PrerequisiteConfigProps {
   project: string;
@@ -103,13 +104,11 @@ export class PrerequisiteStack extends Stack {
   }
 
   async addAdditionalPrerequisitesAsync(vpc: ec2.IVpc) {
-    try {
-      const { addAdditionalPrerequisites } = await import(
-        "./prerequisites-additional"
-      );
-      addAdditionalPrerequisites(this, vpc);
-    } catch (error) {
-      // prerequisites-additional.ts is optional and may not exist in all apps
+    const module = await tryImport<{
+      addAdditionalPrerequisites: (stack: Stack, vpc: ec2.IVpc) => void;
+    }>("./prerequisites-additional");
+    if (module?.addAdditionalPrerequisites) {
+      module.addAdditionalPrerequisites(this, vpc);
     }
   }
 }
