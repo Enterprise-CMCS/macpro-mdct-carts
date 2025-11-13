@@ -44,7 +44,7 @@ function App() {
       )}
       {!user && showLocalLogins && (
         <Main>
-          <LocalLogins loginWithIDM={loginWithIDM} />;
+          <LocalLogins loginWithIDM={loginWithIDM} />
         </Main>
       )}
     </>
