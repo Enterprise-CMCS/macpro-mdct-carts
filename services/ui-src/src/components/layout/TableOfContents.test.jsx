@@ -139,6 +139,14 @@ describe("<TableOfContents />", () => {
   beforeEach(() => {
     setLocation();
   });
+  test("should render skip link", async () => {
+    render(tableOfContents);
+    expect(screen.getByText("Skip to main content")).toBeVisible();
+  });
+  test("should render state image", async () => {
+    render(tableOfContents);
+    expect(screen.getByAltText("Alabama")).toBeVisible();
+  });
   test("should render cmsgov vertical nav and pass sections and certify and submit", async () => {
     render(tableOfContents);
     expect(screen.getByText("Section 1: my section")).toBeVisible();

@@ -114,7 +114,9 @@ export class ParentStack extends Stack {
         ...commonProps,
         vpc,
         kafkaAuthorizedSubnets,
-        stageEnrollmentCountsTableName: "main-stg-enrollment-counts",
+        stageEnrollmentCountsTable: tables.find(
+          (table) => table.node.id === "StageEnrollmentCounts"
+        )!,
         tables: tables.filter((table) =>
           ["StateStatus", "Section"].includes(table.node.id)
         ),

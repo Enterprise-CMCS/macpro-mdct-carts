@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router";
 import { useSelector, shallowEqual } from "react-redux";
 //components
 import { VerticalNav } from "@cmsgov/design-system";
+import StateHeader from "./StateHeader";
 //types
 import { AppRoles } from "../../types";
 
@@ -106,6 +107,19 @@ const TableOfContents = () => {
       url: `/sections/${formYear}/certify-and-submit`,
     });
   }
+
+  // Add skip link and state header as the first item
+  items.unshift({
+    id: "skip-and-state",
+    component: () => (
+      <>
+        <div className="skip-content">
+          <a href="#main-content">Skip to main content</a>
+        </div>
+        <StateHeader />
+      </>
+    ),
+  });
 
   const foundSelectedId = items.find((item) => item.selected)?.id;
   return <VerticalNav selectedId={foundSelectedId} items={items} />;
