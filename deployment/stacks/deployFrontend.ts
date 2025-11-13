@@ -1,10 +1,8 @@
 import { Construct } from "constructs";
 import {
   aws_cloudfront as cloudfront,
-  aws_iam as iam,
   aws_s3 as s3,
   aws_s3_deployment as s3_deployment,
-  custom_resources as cr,
   Duration,
 } from "aws-cdk-lib";
 import path from "path";
@@ -52,12 +50,6 @@ export function deployFrontend(props: DeployFrontendProps) {
     stdio: "inherit",
   });
 
-  const deploymentRole = new iam.Role(scope, "BucketDeploymentRole", {
-    assumedBy: new iam.ServicePrincipal("lambda.amazonaws.com"),
-  });
-
-  uiBucket.grantReadWrite(deploymentRole);
-
   const deployWebsite = new s3_deployment.BucketDeployment(
     scope,
     "DeployWebsite",
@@ -70,9 +62,7 @@ export function deployFrontend(props: DeployFrontendProps) {
       cacheControl: [
         s3_deployment.CacheControl.setPublic(),
         s3_deployment.CacheControl.maxAge(Duration.days(365)),
-        s3_deployment.CacheControl.noCache(),
       ],
-      role: deploymentRole,
     }
   );
 
@@ -100,33 +90,4 @@ export function deployFrontend(props: DeployFrontendProps) {
   );
 
   deployTimeConfig.node.addDependency(deployWebsite);
-
-  const invalidateCloudfront = new cr.AwsCustomResource(
-    scope,
-    "InvalidateCloudfront",
-    {
-      onUpdate: {
-        service: "CloudFront",
-        action: "createInvalidation",
-        parameters: {
-          DistributionId: distribution.distributionId,
-          InvalidationBatch: {
-            Paths: {
-              Quantity: 1,
-              Items: ["/*"],
-            },
-            CallerReference: new Date().toISOString(),
-          },
-        },
-        physicalResourceId: cr.PhysicalResourceId.of(
-          `InvalidateCloudfront-${stage}`
-        ),
-      },
-      role: deploymentRole,
-    }
-  );
-
-  distribution.grantCreateInvalidation(invalidateCloudfront.grantPrincipal);
-
-  invalidateCloudfront.node.addDependency(deployTimeConfig);
 }

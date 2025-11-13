@@ -9,6 +9,7 @@ plugins:
   - '@typescript-eslint'
   - 'jest'
   - 'cypress'
+  - 'playwright'
 parserOptions:
   ecmaVersion: 6
   sourceType: module
@@ -21,9 +22,8 @@ rules:
   no-const-assign: error
   no-duplicate-imports: error
   no-unreachable: error
-  no-unused-vars:
-    - error
-    - argsIgnorePattern: "^_"
+  no-unused-vars: off
+  '@typescript-eslint/no-unused-vars': off
   no-console: error
   no-empty: error
   no-extra-semi: error
@@ -33,6 +33,7 @@ rules:
 
 overrides:
   - files:
+      - "tests/**/*"
       - "cli/**"
       - "deployment/**"
     rules:

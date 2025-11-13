@@ -18,7 +18,6 @@ export interface DeploymentConfigProperties {
   vpcName: string;
   vpnIpSetArn?: string;
   vpnIpv6SetArn?: string;
-  sedsTopic: string;
 }
 
 export const determineDeploymentConfig = async (stage: string) => {
@@ -80,7 +79,6 @@ function validateConfig(config: {
     "redirectSignout",
     "stage",
     "vpcName",
-    "sedsTopic",
   ];
 
   const invalidKeys = expectedKeys.filter(

@@ -261,9 +261,7 @@ img {
   }
 
   .page-title {
-    font-size: 2em;
     margin-top: (variables.$margin * 4);
-    margin-bottom: variables.$margin;
   }
 
   .report-section-title {
@@ -321,6 +319,12 @@ img {
 
       p {
         line-height: 1.5rem;
+        margin: (variables.$margin * 2) 0;
+        max-width: 750px;
+
+        @media only screen and (min-width: 768px) {
+          margin: 0;
+        }
       }
 
       .icon {
@@ -370,190 +374,25 @@ img {
   }
 }
 
-.accordion-header {
-  h3 {
-    margin-bottom: 0;
-
-    button {
-      background: variables.$lily-white;
-      border: none;
-      border-top: 6px solid variables.$brand-primary;
-      border-bottom: 1px solid variables.$color-gray-light;
-      cursor: pointer;
-      font-size: 1.6rem;
-      font-weight: bold;
-      padding: (variables.$padding * 4) (variables.$padding * 2);
-      position: relative;
-      text-align: left;
-      width: 100%;
-
-      .arrow {
-        position: absolute;
-        top: calc(50% - 30px);
-        right: 16px;
-
-        &:before {
-          content: "\f106";
-          font-family: "FontAwesome";
-          position: absolute;
-          right: 0;
-          top: (variables.$margin * 2);
-          transform: rotate(180deg);
-        }
-      }
-    }
-  }
-}
-
-div[data-state="open"] .accordion-header .arrow:before {
-  transform: rotate(0deg);
-}
-
-.objective-body,
-.objective-footer {
-  background: variables.$color-gray-lightest;
-  padding: (variables.$padding * 2);
-  // margin-left: ($margin * 10);
-
-  .add-goal {
-    margin-top: (variables.$margin * 4);
-    margin-bottom: (variables.$margin * 4);
-  }
-}
-
-.objective-footer {
-  padding-left: (variables.$padding * 2);
-}
-
-.objective-body {
-  h3>button {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    font-weight: variables.$font-weight-bold;
-  }
-
-  .goals {
-    padding-left: (variables.$padding * 2);
-    border-bottom: 6px solid black;
-  }
-}
-
-.objective-body .percentages-info {
-  padding: 0 (variables.$padding * 2);
-}
-
-.percentages-info {
-  padding: 0 (variables.$padding * 2);
-
-  h4 {
-    margin-bottom: 0;
-  }
-}
-
-.percentages {
-  padding: (variables.$padding * 2);
-}
-
-.percentages {
-  &>div {
-    display: inline-block;
-    width: auto;
-
-    &:last-of-type {
-      div:first-of-type {
-        margin-left: 4px;
-      }
-    }
-
-    &>div {
-      display: inline-block;
-    }
-  }
-
-  .divide {
-    margin: (variables.$margin * 2);
-  }
+.all-reports-heading {
+  margin-top: 0;
 }
 
 .action-buttons {
-  position: relative;
-  text-align: center;
+  text-align: right;
+  margin: 0;
 
-  @media only screen and (min-width: 768px) {
-    text-align: right;
-  }
-
-  &>div {
-    display: block;
-    margin: (variables.$margin * 2) variables.$margin;
-  }
-
-  .share-container {
-    background: variables.$white;
-    box-shadow: 0px 0px 8px variables.$color-gray;
-    display: none;
-    padding: variables.$padding * 2;
-    position: absolute;
-    right: 0;
-    text-align: left;
-    top: 60px;
-    width: 260px;
-
-    &.active {
-      display: block;
-    }
-
-    h4 {
-      margin: 0;
-    }
-
-    .close {
-      position: absolute;
-      top: 2px;
-      right: 0;
-
-      svg {
-        color: variables.$color-gray-light;
-
-        &:hover {
-          color: variables.$color-gray;
-        }
-      }
-    }
-
-    .form,
-    .copy {
-      display: inline-block;
-    }
-
-    .copy {
-      svg {
-        color: variables.$color-gray-light;
-      }
-    }
+  @media screen and (min-width: 768px) {
+    margin: 0 variables.$margin;
   }
 }
 
 .add-objective {
-  margin-top: (variables.$margin * 4);
+  margin-top: (variables.$margin * 2);
 }
 
-.comingsoon {
-  text-align: center;
-
-  h1,
-  h4 {
-    color: variables.$brand-primary;
-    font-weight: variables.$font-weight-bold;
-    text-align: center;
-    width: 100%;
-  }
-
-  div {
-    margin: 0.8rem;
-    width: 100%;
-  }
+.delete-repeatable {
+  margin-top: (variables.$margin * 3);
 }
 
 .profile-information {
@@ -584,6 +423,14 @@ div[data-state="open"] .accordion-header .arrow:before {
 .report-status {
   &>div:nth-child(even) {
     background-color: #efefef;
+  }
+}
+
+.filter-header {
+  margin: variables.$margin * 2 0 0 0;
+
+  @media screen and (min-width: 768px) {
+    margin: variables.$margin * 2 variables.$margin * 2 0 variables.$margin * 2;
   }
 }
 

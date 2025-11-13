@@ -45,7 +45,7 @@ export const updateSections = handler(async (event, _context) => {
   const lastChanged = new Date().toString();
   for (let section = 0; section < reportData.length; section++) {
     const params = {
-      TableName: process.env.SectionTableName!,
+      TableName: process.env.SectionTable!,
       Key: {
         pk: `${state}-${year}`,
         sectionId: section,
@@ -63,7 +63,7 @@ export const updateSections = handler(async (event, _context) => {
   }
 
   const params = {
-    TableName: process.env.StateStatusTableName!,
+    TableName: process.env.StateStatusTable!,
     KeyConditionExpression:
       "stateId = :stateId AND #currentYear = :currentYear",
     ExpressionAttributeValues: {
@@ -91,7 +91,7 @@ export const updateSections = handler(async (event, _context) => {
     stateStatus?.programType;
 
   const statusParams = {
-    TableName: process.env.StateStatusTableName!,
+    TableName: process.env.StateStatusTable!,
     Key: {
       stateId: state,
       year: parseInt(year),

@@ -11,11 +11,12 @@ import { buildClient, convertToDynamoExpression } from "../libs/dynamo-lib.js";
  * @param {*} _callback
  */
 export async function handler(event, _context, _callback) {
-  const sedsTopicKey = `${process.env.sedsTopic}-0`;
-  if (!event?.records?.[sedsTopicKey]) {
+  const records = getRecords(event);
+  if (records.length === 0) {
+    // eslint-disable-next-line no-console
+    console.log(`Ignoring event: no data in event.records[topic]`);
     return;
   }
-  const records = event.records[sedsTopicKey];
   const currentYear = getReportingYear();
   const dynamoClient = buildClient();
 
@@ -63,6 +64,25 @@ export async function handler(event, _context, _callback) {
     }
   }
 }
+
+const getRecords = (kafkaEvent) => {
+  /*
+   * This lambda's CDK setup subscribes it to the SEDS state-forms topic.
+   * We expect the shape of the event to be:
+   * {
+   *   "eventSource": "SelfManagedKafka",
+   *   "records": {
+   *     "aws.mdct.seds.cdc.state-forms.v0-0": [
+   *       {
+   *         "value": "base64-encoded JSON"
+   *       }
+   *     ]
+   *   }
+   * }
+   * See also: deployment/stacks/bigmac-streams.ts
+   */
+  return Object.values(kafkaEvent?.records ?? {}).flat(1);
+};
 
 const updateEnrollment = async (pk, entryKey, enrollmentData, dynamoClient) => {
   const params = {

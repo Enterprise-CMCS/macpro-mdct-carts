@@ -10,7 +10,9 @@
     "test:e2e-stable-ui": "playwright test --ui --grep-invert \"@flaky|@probation\""
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
     "@playwright/test": "^1.55.1",
-    "@types/node": "^24.7.0"
+    "@types/node": "^24.7.0",
+    "dotenv": "^17.2.3"
   }
 }

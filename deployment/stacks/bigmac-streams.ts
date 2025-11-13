@@ -1,21 +1,19 @@
 import { aws_ec2 as ec2, Duration } from "aws-cdk-lib";
 import { Construct } from "constructs";
 import { LambdaDynamoEventSource } from "../constructs/lambda-dynamo-event";
-import { getSubnets } from "../utils/vpc";
 import { LambdaKafkaEventSource } from "../constructs/lambda-kafka-event";
-import { DynamoDBTableIdentifiers } from "../constructs/dynamodb-table";
+import { DynamoDBTable } from "../constructs/dynamodb-table";
 
 interface CreateBigmacStreamsComponentsProps {
   scope: Construct;
   stage: string;
   project: string;
   isDev: boolean;
-  vpcName: string;
-  kafkaAuthorizedSubnetIds: string;
+  vpc: ec2.IVpc;
+  kafkaAuthorizedSubnets: ec2.ISubnet[];
   brokerString: string;
-  stageEnrollmentCountsTableName: string;
-  tables: DynamoDBTableIdentifiers[];
-  sedsTopic: string;
+  stageEnrollmentCountsTable: DynamoDBTable;
+  tables: DynamoDBTable[];
 }
 
 export function createBigmacStreamsComponents(
@@ -25,23 +23,17 @@ export function createBigmacStreamsComponents(
     scope,
     stage,
     project,
-    vpcName,
-    kafkaAuthorizedSubnetIds,
+    vpc,
+    kafkaAuthorizedSubnets,
     brokerString,
     tables,
-    sedsTopic,
     isDev,
+    stageEnrollmentCountsTable,
   } = props;
 
   const kafkaBootstrapServers = brokerString.split(",");
 
   const service = "carts-bigmac-streams";
-
-  const vpc = ec2.Vpc.fromLookup(scope, "Vpc", { vpcName });
-  const kafkaAuthorizedSubnets = getSubnets(
-    scope,
-    kafkaAuthorizedSubnetIds ?? ""
-  );
 
   const lambdaSG = new ec2.SecurityGroup(
     scope,
@@ -101,22 +93,34 @@ export function createBigmacStreamsComponents(
    *       arn:aws:dynamodb:us-east-1:519095364708:table/main-section/stream/2022-05-20T16:01:33.665
    */
 
-  new LambdaKafkaEventSource(scope, "sinkEnrollmentCounts", {
-    entry: "services/carts-bigmac-streams/handlers/sinkEnrollmentCounts.js",
-    handler: "handler",
-    timeout: Duration.seconds(120),
-    memorySize: 1024,
-    retryAttempts: 2,
-    vpc,
-    vpcSubnets: { subnets: kafkaAuthorizedSubnets },
-    securityGroups: [lambdaSG],
-    kafkaBootstrapServers,
-    securityGroupId: lambdaSG.securityGroupId,
-    subnets: kafkaAuthorizedSubnetIds.split(","),
-    topics: [sedsTopic],
-    consumerGroupId: `${project}-${stage}`,
-    ...commonProps,
-  });
+  const sinkEnrollmentCountsLambda = new LambdaKafkaEventSource(
+    scope,
+    "sinkEnrollmentCounts",
+    {
+      entry: "services/carts-bigmac-streams/handlers/sinkEnrollmentCounts.js",
+      handler: "handler",
+      timeout: Duration.seconds(120),
+      memorySize: 1024,
+      retryAttempts: 2,
+      vpc,
+      vpcSubnets: { subnets: kafkaAuthorizedSubnets },
+      securityGroups: [lambdaSG],
+      kafkaBootstrapServers,
+      securityGroupId: lambdaSG.securityGroupId,
+      topics: [
+        // Matches services/carts-bigmac-streams/sinkEnrollmentCounts.js
+        "aws.mdct.seds.cdc.state-forms.v0",
+      ],
+      consumerGroupId: `${project}-${stage}`,
+      environment: {
+        StageEnrollmentCountsTableName:
+          stageEnrollmentCountsTable.table.tableName,
+      },
+      ...commonProps,
+    }
+  ).lambda;
+
+  stageEnrollmentCountsTable.table.grantWriteData(sinkEnrollmentCountsLambda);
 
   // postKafkaData Lambda with two DynamoDB streams
   new LambdaDynamoEventSource(scope, "postKafkaData", {

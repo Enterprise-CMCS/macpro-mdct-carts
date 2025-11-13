@@ -1,4 +1,4 @@
-import s3Lib, { getConfig } from "../s3-lib";
+import s3Lib, { awsConfig } from "../s3-lib";
 import {
   DeleteObjectCommand,
   GetObjectCommand,
@@ -61,7 +61,7 @@ describe("S3 Library", () => {
   });
 
   test("Uses AWS config when appropriate", () => {
-    const config = getConfig();
+    const config = awsConfig;
     expect(config).toHaveProperty("region", "us-east-1");
   });
 });

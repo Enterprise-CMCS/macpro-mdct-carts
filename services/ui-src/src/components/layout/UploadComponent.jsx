@@ -203,7 +203,7 @@ const UploadComponent = ({ question }) => {
       </div>
 
       {loadedFiles?.map((file, i) => (
-        <div key={file.name}>
+        <div key={file.name} className="file_upload_item">
           <a href={encodeURIComponent(file.name)} download>
             {file.name}
           </a>
@@ -218,18 +218,20 @@ const UploadComponent = ({ question }) => {
         </div>
       ))}
 
-      <Button
-        onClick={submitUpload}
-        size="small"
-        disabled={!submissionsAllowed}
-        className=""
-      >
-        Upload
-      </Button>
+      <div className="file_upload_buttons">
+        <Button
+          onClick={submitUpload}
+          size="small"
+          disabled={!submissionsAllowed}
+          className=""
+        >
+          Upload
+        </Button>
 
-      <Button onClick={viewUploaded} size="small" className="margin-left-1em">
-        {displayUploadedFiles ? `Hide Uploaded` : `View Uploaded`}
-      </Button>
+        <Button onClick={viewUploaded} size="small" className="margin-left-1em">
+          {displayUploadedFiles ? `Hide Uploaded` : `View Uploaded`}
+        </Button>
+      </div>
 
       {displayUploadedFiles && uploadedFiles?.length > 0 ? (
         <table
@@ -238,6 +240,7 @@ const UploadComponent = ({ question }) => {
           summary={
             question.label || "This is a table for the CARTS Application"
           }
+          className="file_upload_table"
         >
           <tbody>
             {!uploadedFilesRetrieved ? (
