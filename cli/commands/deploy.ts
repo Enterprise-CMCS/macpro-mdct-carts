@@ -41,7 +41,8 @@ export const deploy = {
       if (clamModule) {
         const downloadClamAvLayer = clamModule.default;
         await downloadClamAvLayer();
-      } await runCommand(
+      }
+      await runCommand(
         "CDK deploy",
         [
           "yarn",

@@ -131,7 +131,7 @@ async function main() {
   });
 
   if (!process.env.PROJECT) {
-    throw new Error("PROJECT enironment variable is required but not set");
+    throw new Error("PROJECT environment variable is required but not set");
   }
 
   const project = process.env.PROJECT!;
