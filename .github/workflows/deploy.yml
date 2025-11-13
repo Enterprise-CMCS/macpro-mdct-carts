@@ -47,7 +47,7 @@ jobs:
         run: |
           echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
       - name: run unit tests
-        run: ./test-unit.sh
+        run: ./scripts/test-unit.sh
       - name: publish test coverage to qlty
         uses: qltysh/qlty-action/coverage@v1
         with:

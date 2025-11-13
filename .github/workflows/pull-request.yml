@@ -1,8 +1,14 @@
+# This file is managed by macpro-mdct-core so if you'd like to change it let's do it there
 name: Pull Request
 
 on:
   pull_request:
     types: [opened, reopened, ready_for_review, synchronize]
+
+permissions:
+  contents: read
+  id-token: write
+  pull-requests: write
 
 jobs:
   prchecks:
@@ -18,14 +24,27 @@ jobs:
       - name: Configure pre-commit to skip irrelevant checks
         run: echo "SKIP=typescript-check-cli,typescript-check-api,typescript-check-ui,no-commit-to-branch" >> $GITHUB_ENV
       - uses: pre-commit/action@v3.0.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+      - name: run unit tests
+        run: ./scripts/test-unit.sh
+      - name: publish test coverage to qlty
+        uses: qltysh/qlty-action/coverage@v1
+        with:
+          oidc: true
+          files: |
+            ${{github.workspace}}/services/app-api/coverage/lcov.info
+            ${{github.workspace}}/services/ui-src/coverage/lcov.info
+        env:
+          CODE_CLIMATE_ID: ${{ secrets.CODE_CLIMATE_ID }}
   assignAuthor:
-    if: github.event.pull_request.user.type != 'Bot'
+    if: github.event.pull_request.user.type != 'Bot' && github.event.action == 'opened'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
       - name: Assign PR to Creator
-        run: gh pr edit $PRNUM --add-assignee $PR_AUTHOR
+        run: gh pr edit $PR_URL --add-assignee $PR_AUTHOR
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PRNUM: ${{ github.event.pull_request.number }}
           PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+          PR_URL: ${{github.event.pull_request.html_url}}
