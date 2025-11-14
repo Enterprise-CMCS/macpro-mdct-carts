@@ -39,10 +39,50 @@ const section = (
 describe("<Section />", () => {
   test("passes subsection info to the subsection component", () => {
     render(section);
+
     expect(mockChildComponent).toHaveBeenCalledWith(
       expect.objectContaining({
         subsectionId: testSubSectionId,
       })
     );
+  });
+
+  test("by default should render with a main element", () => {
+    const { container } = render(section);
+    const mainElement = container.querySelector("main");
+
+    expect(mainElement).toBeInTheDocument();
+  });
+
+  test("renders with a <main> if useMain is true", () => {
+    const sectionWithUseMain = (
+      <Provider store={store}>
+        <Section
+          useMain={true}
+          sectionId={testSectionId}
+          subsectionId={testSubSectionId}
+        />
+      </Provider>
+    );
+    const { container } = render(sectionWithUseMain);
+    const mainElement = container.querySelector("main");
+
+    expect(mainElement).toBeInTheDocument();
+  });
+
+  test("renders without a <main> if useMain is false", () => {
+    const sectionNoUseMain = (
+      <Provider store={store}>
+        <Section
+          useMain={false}
+          sectionId={testSectionId}
+          subsectionId={testSubSectionId}
+        />
+      </Provider>
+    );
+    const { container } = render(sectionNoUseMain);
+    const mainElement = container.querySelector("main");
+
+    expect(mainElement).not.toBeInTheDocument();
   });
 });
