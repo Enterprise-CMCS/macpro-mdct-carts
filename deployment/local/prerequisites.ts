@@ -20,7 +20,7 @@ export class LocalPrerequisiteStack extends Stack {
       enableDnsSupport: true,
       enableDnsHostnames: false,
       subnetConfiguration: [],
-      vpcName: "localstack",
+      vpcName: "localstack-dev",
     });
 
     const subnet1 = new ec2.Subnet(this, "Subnet1", {
@@ -32,7 +32,7 @@ export class LocalPrerequisiteStack extends Stack {
     new secretsmanager.Secret(this, "DefaultSecret", {
       secretName: "carts-default", // pragma: allowlist-secret
       secretObjectValue: {
-        vpcName: SecretValue.unsafePlainText("localstack"),
+        vpcName: SecretValue.unsafePlainText("localstack-dev"),
         brokerString: SecretValue.unsafePlainText("localstack"),
         kafkaAuthorizedSubnetIds: SecretValue.unsafePlainText(subnet1.subnetId),
         oktaMetadataUrl: SecretValue.unsafePlainText("localstack"),

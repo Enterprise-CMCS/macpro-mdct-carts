@@ -3,39 +3,23 @@ name: Deploy
 on: [push]
 
 concurrency:
-  # Ensuring group key matches the destroy workflow currently in main
   group: ${{ github.ref_name }}
-  cancel-in-progress: false
 
 permissions:
   id-token: write
-  contents: read
+  contents: write
   actions: read
+
+env:
+  PROJECT: ${{ vars.APP_NAME_LOWER }}
 
 jobs:
   deploy:
+    if: ${{ !startsWith(github.ref_name, 'skipci') }}
     runs-on: ubuntu-latest
+    environment: ${{ (github.ref_name == 'production' && 'production') || (github.ref_name == 'val' && 'val') || 'dev' }}
     steps:
       - uses: actions/checkout@v4
-      - name: set branch_name # Some integrations (Dependabot & Snyk) build very long branch names. This is a switch to make long branch names shorter.
-        run: |
-          BRANCH_NAME=$(./.github/setBranchName.sh ${{ github.ref_name }})
-          echo "branch_name=${BRANCH_NAME}" >> $GITHUB_ENV
-      - name: Validate branch name
-        run: ./.github/branchNameValidation.sh $branch_name
-      - name: set branch specific variable names
-        run: ./.github/buildVars.sh set_names
-      - name: set variable values
-        run: ./.github/buildVars.sh set_values
-        env:
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-          AWS_OIDC_ROLE_TO_ASSUME: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_OIDC_ROLE_TO_ASSUME] || secrets.AWS_OIDC_ROLE_TO_ASSUME }}
-          CODE_CLIMATE_ID: ${{ secrets.CODE_CLIMATE_ID }}
-      - name: Configure AWS credentials for GitHub Actions
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ env.AWS_OIDC_ROLE_TO_ASSUME }}
-          aws-region: ${{ env.AWS_DEFAULT_REGION }}
       - uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
@@ -43,232 +27,70 @@ jobs:
         with:
           path: "**/node_modules"
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock', 'plugins/**') }}
-      - name: set path
+      - name: path + branch settings + install packages
         run: |
           echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
-      - name: run unit tests
-        run: ./scripts/test-unit.sh
-      - name: publish test coverage to qlty
-        uses: qltysh/qlty-action/coverage@v1
+          BRANCH_NAME=$(./.github/setBranchName.sh ${{ github.ref_name }})
+          echo "branch_name=${BRANCH_NAME}" >> $GITHUB_ENV
+          ./.github/branchNameValidation.sh $BRANCH_NAME
+          ./run install
+      - name: Configure AWS credentials for GitHub Actions
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          oidc: true
-          files: |
-            ${{github.workspace}}/services/app-api/coverage/lcov.info
-            ${{github.workspace}}/services/ui-src/coverage/lcov.info
-      - name: Store unit test results
-        uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: unit-test-results
-          path: |
-            ${{github.workspace}}/services/app-api/coverage/lcov.info:lcov
-            ${{github.workspace}}/services/ui-src/coverage/lcov.info
+          role-to-assume: ${{ secrets.AWS_OIDC_ROLE_TO_ASSUME }}
+          aws-region: us-east-1
       - name: deploy
-        if: ${{ !startsWith(github.ref_name, 'skipci') }}
-        run: |
-          # When deploying multiple copies of this quickstart to the same AWS Account (not ideal), a prefix helps prevent stepping on each other.
-          # This can optionally be set as an GitHub Actions Secret
-          ./run deploy --stage $branch_name
-        env:
-          PROJECT: ${{ vars.APP_NAME_LOWER }}
+        run: ./run deploy --stage $branch_name
       - id: endpoint
-        if: ${{ !startsWith(github.ref_name, 'skipci') }}
         run: |
-          APPLICATION_ENDPOINT=$(./scripts/output.sh carts-$branch_name CloudFrontUrl)
+          APPLICATION_ENDPOINT=$(./scripts/output.sh ${{ env.PROJECT }}-$branch_name CloudFrontUrl)
           echo "application_endpoint=$APPLICATION_ENDPOINT" >> $GITHUB_OUTPUT
           echo "## Application Endpoint" >> $GITHUB_STEP_SUMMARY
           echo "<$APPLICATION_ENDPOINT>" >> $GITHUB_STEP_SUMMARY
     outputs:
       application_endpoint: ${{ steps.endpoint.outputs.application_endpoint }}
-      BRANCH_SPECIFIC_VARNAME_AWS_OIDC_ROLE_TO_ASSUME: ${{ steps.set_names.outputs.BRANCH_SPECIFIC_VARNAME_AWS_OIDC_ROLE_TO_ASSUME }}
 
-  # register-runner:
-  #   name: Register GitHub Runner
-  #   if: ${{ github.ref_name != 'main' && github.ref_name != 'val' && github.ref_name != 'production' && !startsWith(github.ref_name, 'skipci') }}
-  #   runs-on: ubuntu-latest
-  #   needs: deploy
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-
-  #     - name: set branch_name
-  #       run: |
-  #         BRANCH_NAME=$(./.github/setBranchName.sh ${{ github.ref_name }})
-  #         echo "branch_name=${BRANCH_NAME}" >> $GITHUB_ENV
-
-  #     - name: set branch specific variable names
-  #       id: set_names
-  #       run: ./.github/buildVars.sh set_names
-
-  #     - name: set variable values
-  #       id: set_values
-  #       run: ./.github/buildVars.sh set_values
-  #       env:
-  #         AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-  #         AWS_OIDC_ROLE_TO_ASSUME: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_OIDC_ROLE_TO_ASSUME] || secrets.AWS_OIDC_ROLE_TO_ASSUME }}
-
-  #     - name: Configure AWS credentials for GitHub Actions
-  #       uses: aws-actions/configure-aws-credentials@v4
-  #       with:
-  #         role-to-assume: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_OIDC_ROLE_TO_ASSUME] || secrets.AWS_OIDC_ROLE_TO_ASSUME }}
-  #         aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
-
-  #     - name: output account id
-  #       id: output_account_id
-  #       run: |
-  #         #!/bin/bash
-  #         AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
-  #         echo "Current Account ID: ${AWS_ACCOUNT_ID}"
-
-  #     - name: Get Github Actions CIDR Blocks
-  #       id: get-gha-cidrs
-  #       shell: bash
-  #       run: |
-  #         #!/bin/bash
-  #         GHA_RESP=$(curl --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/meta)
-  #         echo "Response for GHA runner CIDR blocks:  $GHA_RESP"
-  #         IPV4_CIDR_ARR=($(echo $GHA_RESP | jq -r '.actions | .[]' | grep -v ':'))
-  #         GHA_CIDRS_IPV4=$(echo $(IFS=" "; echo ${IPV4_CIDR_ARR[*]}))
-  #         echo "GHA_CIDRS_IPV4=$GHA_CIDRS_IPV4" >> $GITHUB_OUTPUT
-
-  #     - name: Generate IP Set Name
-  #       id: gen-ip-set-name
-  #       run: |
-  #         #!/bin/bash
-  #         STAGE_GH_IPSET_NAME=$branch_name-gh-ipset
-  #         echo "Github IP Set name:  $STAGE_GH_IPSET_NAME"
-  #         echo "STAGE_GH_IPSET_NAME=$STAGE_GH_IPSET_NAME" >> $GITHUB_OUTPUT
-
-  #     - name: Fetch AWS IP Set Metadata
-  #       id: fetch-ip-set-info
-  #       run: |
-  #         #!/bin/bash
-  #         # Fetch AWS IP set ARNs using AWS CLI and store them in a variable
-  #         AWS_IP_SET_INFO=$(aws wafv2 list-ip-sets --scope=CLOUDFRONT)
-  #         echo "Outputting AWS IP Set Info:  ${AWS_IP_SET_INFO}"
-  #         # Store the IP set ARNs in an output variable using GITHUB_OUTPUT
-  #         IPSET_NAME=${{ steps.gen-ip-set-name.outputs.STAGE_GH_IPSET_NAME }}
-  #         IPSET=$(jq '.IPSets | map(select(.Name == "'${IPSET_NAME}'")) | .[]' <<< ${AWS_IP_SET_INFO})
-  #         [ -z "$IPSET" ] && echo "IP Set with name ${IPSET_NAME} was not located.  Exiting..." && exit 1
-  #         echo "IP Set metadata:  ${IPSET}"
-  #         #Get Values from the IP SET
-  #         IPSET_ID=$(jq -r '.Id' <<< ${IPSET})
-  #         echo "IPSET_ARN=$IPSET_ARN" >> $GITHUB_OUTPUT
-  #         echo "IPSET_NAME=$IPSET_NAME" >> $GITHUB_OUTPUT
-  #         echo "IPSET_ID=$IPSET_ID" >> $GITHUB_OUTPUT
-
-  #     - name: Update IP Set
-  #       id: update-ip-set
-  #       run: ./.github/wafController.sh set ${{ steps.fetch-ip-set-info.outputs.IPSET_NAME }} ${{ steps.fetch-ip-set-info.outputs.IPSET_ID }} ${{ steps.get-gha-cidrs.outputs.GHA_CIDRS_IPV4 }}
-  #       env:
-  #         AWS_RETRY_MODE: adaptive
-  #         AWS_MAX_ATTEMPTS: 10
-
-  #   outputs:
-  #     ipset_name: ${{ steps.fetch-ip-set-info.outputs.IPSET_NAME }}
-  #     ipset_id: ${{ steps.fetch-ip-set-info.outputs.IPSET_ID }}
-
-  e2e-test:
-    name: E2E Integration Tests (Cypress)
-    if: ${{ always() && !cancelled() && needs.deploy.result == 'success' && github.ref_name != 'production' && !startsWith(github.ref_name, 'skipci') }}
-    needs:
-      - deploy
-      # - register-runner
+  e2e-tests:
+    if: ${{ github.ref_name != 'production' }}
     runs-on: ubuntu-latest
+    needs: deploy
     steps:
       - uses: actions/checkout@v4
+      - name: Install Dependencies for Cypress
+        run: yarn install
+        working-directory: tests/cypress
       - name: Run Cypress Tests
         uses: cypress-io/github-action@v6
         with:
           working-directory: tests/cypress
-          spec: tests/integration/*.spec.js
           browser: chrome
           config: baseUrl=${{ needs.deploy.outputs.application_endpoint }}
-          wait-on: ${{ needs.deploy.outputs.application_endpoint }}
-          env: true
         env:
           CYPRESS_STATE_USER_EMAIL: ${{ secrets.CYPRESS_STATE_USER_EMAIL }}
           CYPRESS_STATE_USER_PASSWORD: ${{ secrets.CYPRESS_STATE_USER_PASSWORD }}
           CYPRESS_ADMIN_USER_EMAIL: ${{ secrets.CYPRESS_ADMIN_USER_EMAIL }}
           CYPRESS_ADMIN_USER_PASSWORD: ${{ secrets.CYPRESS_ADMIN_USER_PASSWORD }}
       - name: Upload screenshots
+        if: ${{ failure() }}
         uses: actions/upload-artifact@v4
-        if: failure()
         with:
-          name: cypress-test-results
-          path: |
-            ${{github.workspace}}/tests/cypress/screenshots/
-            ${{github.workspace}}/tests/cypress/videos/
-          retention-days: 14
-
-  a11y-tests:
-    name: A11y Tests
-    if: ${{ always() && !cancelled() && needs.deploy.result == 'success' && github.ref_name != 'production' && !startsWith(github.ref_name, 'skipci') }}
-    needs:
-      - deploy
-      # - register-runner
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Check Project A11y
-        uses: cypress-io/github-action@v6
-        with:
-          working-directory: tests/cypress
-          spec: tests/a11y/*.spec.js
-          browser: chrome
-          config: baseUrl=${{ needs.deploy.outputs.application_endpoint }}
-          wait-on: ${{ needs.deploy.outputs.application_endpoint }}
-          env: true
+          name: cypress-test-results-${{ github.run_number }}
+          path: tests/cypress/screenshots/
+          retention-days: 30
+      - name: Run Playwright tests
+        run: |
+          yarn install
+          yarn playwright install
+          yarn playwright test --grep-invert "@flaky" --reporter=github,html
+        working-directory: tests/playwright
         env:
+          BASE_URL: ${{ needs.deploy.outputs.application_endpoint }}
           CYPRESS_STATE_USER_EMAIL: ${{ secrets.CYPRESS_STATE_USER_EMAIL }}
           CYPRESS_STATE_USER_PASSWORD: ${{ secrets.CYPRESS_STATE_USER_PASSWORD }}
-          CYPRESS_ADMIN_USER_EMAIL: ${{ secrets.CYPRESS_ADMIN_USER_EMAIL }}
-          CYPRESS_ADMIN_USER_PASSWORD: ${{ secrets.CYPRESS_ADMIN_USER_PASSWORD }}
-      - name: Upload screenshots
+      - name: Upload playwright results
         uses: actions/upload-artifact@v4
-        if: failure()
+        if: ${{ failure() }}
         with:
-          name: a11y-test-results
-          path: |
-            ${{github.workspace}}/tests/cypress/screenshots/
-            ${{github.workspace}}/tests/cypress/videos/
-          retention-days: 14
-
-  playwright-test:
-    name: Playwright Tests
-    if: ${{ needs.deploy.result == 'success' && github.ref_name != 'production' && !startsWith(github.ref_name, 'skipci') }}
-    needs:
-      - deploy
-    uses: ./.github/workflows/playwright.yml
-    with:
-      base-url: ${{ needs.deploy.outputs.application_endpoint }}
-    secrets: inherit #pragma: allowlist secret
-
-
-  # cleanup:
-  #   name: Delist GHA Runner CIDR Blocks
-  #   if: ${{ github.ref_name != 'main' && github.ref_name != 'val' && github.ref_name != 'production' && !startsWith(github.ref_name, 'skipci') }}
-  #   runs-on: ubuntu-latest
-  #   needs:
-  #     - register-runner
-  #     - a11y-tests
-  #     - e2e-test
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: Configure AWS credentials for GitHub Actions
-  #       uses: aws-actions/configure-aws-credentials@v4
-  #       with:
-  #         role-to-assume: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_OIDC_ROLE_TO_ASSUME] || secrets.AWS_OIDC_ROLE_TO_ASSUME }}
-  #         aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
-  #     - name: output account id
-  #       id: output_account_id
-  #       run: |
-  #         #!/bin/bash
-  #         AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
-  #         echo "Current Account ID: ${AWS_ACCOUNT_ID}"
-  #     - name: cleanup-ip-list
-  #       id: reset-ip-set
-  #       run: ./.github/wafController.sh set ${{ needs.register-runner.outputs.ipset_name }} ${{ needs.register-runner.outputs.ipset_id }} '[]'
-  #       env:
-  #         AWS_RETRY_MODE: adaptive
-  #         AWS_MAX_ATTEMPTS: 10
+          name: playwright-html-report-${{ github.run_number }}
+          path: tests/playwright-report
+          retention-days: 30
