@@ -4,7 +4,6 @@ import {
   aws_iam as iam,
   aws_s3 as s3,
   Aws,
-  CfnOutput,
   RemovalPolicy,
 } from "aws-cdk-lib";
 
@@ -129,10 +128,10 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
 
   attachmentsBucket.addToResourcePolicy(
     new iam.PolicyStatement({
-      actions: ["s3:GetObject"],
       effect: iam.Effect.DENY,
+      principals: [new iam.AnyPrincipal()],
+      actions: ["s3:GetObject"],
       resources: [`${attachmentsBucket.bucketArn}/*`],
-      principals: [new iam.ArnPrincipal("*")],
       conditions: {
         StringNotEquals: {
           "s3:ExistingObjectTag/GuardDutyMalwareScanStatus": "NO_THREATS_FOUND",
@@ -186,9 +185,5 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
     role: s3MalwareProtectionRole.roleArn,
   });
 
-  new CfnOutput(scope, "AttachmentsBucketName", {
-    value: attachmentsBucket.bucketName,
-  });
-
-  return { attachmentsBucket };
+  return attachmentsBucket;
 }
