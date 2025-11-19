@@ -1,31 +1,22 @@
 import { Construct } from "constructs";
 import {
-  aws_s3 as s3,
-  aws_lambda as lambda,
-  aws_s3_notifications as s3notifications,
+  aws_guardduty as guardduty,
   aws_iam as iam,
-  aws_events as events,
-  aws_events_targets as eventstargets,
-  triggers,
-  Duration,
-  RemovalPolicy,
+  aws_s3 as s3,
   Aws,
   CfnOutput,
+  RemovalPolicy,
 } from "aws-cdk-lib";
-import { isLocalStack } from "../local/util";
-import { Lambda } from "../constructs/lambda";
 
 interface CreateUploadsComponentsProps {
-  scope: Construct;
-  stage: string;
-  loggingBucket: s3.IBucket;
-  isDev: boolean;
   attachmentsBucketName: string;
+  isDev: boolean;
+  loggingBucket: s3.IBucket;
+  scope: Construct;
 }
 
 export function createUploadsComponents(props: CreateUploadsComponentsProps) {
-  const { scope, stage, loggingBucket, isDev, attachmentsBucketName } = props;
-  const service = "uploads";
+  const { attachmentsBucketName, isDev, loggingBucket, scope } = props;
 
   const attachmentsBucket = new s3.Bucket(scope, "AttachmentsBucket", {
     bucketName: attachmentsBucketName,
@@ -56,86 +47,84 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
     serverAccessLogsPrefix: `AWSLogs/${Aws.ACCOUNT_ID}/s3/`,
   });
 
-  const clamDefsBucket = new s3.Bucket(scope, "ClamDefsBucket", {
-    bucketName: `${service}-${stage}-avscan-${Aws.ACCOUNT_ID}`,
-    autoDeleteObjects: isDev,
-    encryption: s3.BucketEncryption.S3_MANAGED,
-    versioned: true,
-    removalPolicy: isDev ? RemovalPolicy.DESTROY : RemovalPolicy.RETAIN,
-    blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
-    enforceSSL: true,
-    accessControl: s3.BucketAccessControl.PRIVATE,
-    serverAccessLogsBucket: loggingBucket,
-    serverAccessLogsPrefix: `AWSLogs/${Aws.ACCOUNT_ID}/s3/`,
-  });
-
-  const environment = {
-    CLAMAV_BUCKET_NAME: clamDefsBucket.bucketName,
-    PATH_TO_AV_DEFINITIONS: "lambda/s3-antivirus/av-definitions",
-  };
-
-  let clamAvLayer: lambda.ILayerVersion | undefined;
-  if (!isLocalStack) {
-    clamAvLayer = new lambda.LayerVersion(scope, "ClamAvLayer", {
-      layerVersionName: `${service}-${stage}-clamDefs`,
-      code: lambda.Code.fromAsset("services/uploads/lambda_layer.zip"),
-      compatibleRuntimes: [lambda.Runtime.NODEJS_20_X],
-    });
-
-    const avDownloadDefinitionsLambda = new Lambda(
-      scope,
-      "AvDownloadDefinitionsLambda",
-      {
-        entry: "services/uploads/src/download-definitions.js",
-        handler: "lambdaHandleEvent",
-        memorySize: 3072,
-        timeout: Duration.seconds(300),
-        layers: [clamAvLayer],
-        isDev,
-        stackName: `${service}-${stage}`,
-        environment,
-      }
-    ).lambda;
-
-    attachmentsBucket.grantReadWrite(avDownloadDefinitionsLambda);
-    attachmentsBucket.grantPutAcl(avDownloadDefinitionsLambda);
-    clamDefsBucket.grantReadWrite(avDownloadDefinitionsLambda);
-    clamDefsBucket.grantPutAcl(avDownloadDefinitionsLambda);
-
-    new triggers.Trigger(scope, "AvDownloadDefinitionsTrigger", {
-      handler: avDownloadDefinitionsLambda,
-      invocationType: triggers.InvocationType.EVENT,
-    });
-
-    new events.Rule(scope, `schedule-av-download-definitions`, {
-      schedule: events.Schedule.cron({ minute: "15", hour: "1" }),
-      targets: [
-        new eventstargets.LambdaFunction(avDownloadDefinitionsLambda, {
-          retryAttempts: 2,
+  const s3MalwareProtectionRole = new iam.Role(
+    scope,
+    "S3MalwareProtectionRole",
+    {
+      assumedBy: new iam.ServicePrincipal(
+        "malware-protection-plan.guardduty.amazonaws.com"
+      ),
+      inlinePolicies: {
+        S3MalwareProtectionPolicy: new iam.PolicyDocument({
+          statements: [
+            new iam.PolicyStatement({
+              sid: "AllowManagedRuleToSendS3EventsToGuardDuty",
+              effect: iam.Effect.ALLOW,
+              actions: [
+                "events:PutRule",
+                "events:DeleteRule",
+                "events:PutTargets",
+                "events:RemoveTargets",
+              ],
+              resources: [
+                `arn:aws:events:us-east-1:${Aws.ACCOUNT_ID}:rule/DO-NOT-DELETE-AmazonGuardDutyMalwareProtectionS3*`,
+              ],
+              conditions: {
+                StringLike: {
+                  "events:ManagedBy":
+                    "malware-protection-plan.guardduty.amazonaws.com",
+                },
+              },
+            }),
+            new iam.PolicyStatement({
+              sid: "AllowGuardDutyToMonitorEventBridgeManagedRule",
+              effect: iam.Effect.ALLOW,
+              actions: ["events:DescribeRule", "events:ListTargetsByRule"],
+              resources: [
+                `arn:aws:events:us-east-1:${Aws.ACCOUNT_ID}:rule/DO-NOT-DELETE-AmazonGuardDutyMalwareProtectionS3*`,
+              ],
+            }),
+            new iam.PolicyStatement({
+              sid: "AllowPostScanTag",
+              effect: iam.Effect.ALLOW,
+              actions: [
+                "s3:PutObjectTagging",
+                "s3:GetObjectTagging",
+                "s3:PutObjectVersionTagging",
+                "s3:GetObjectVersionTagging",
+              ],
+              resources: [`${attachmentsBucket.bucketArn}/*`],
+            }),
+            new iam.PolicyStatement({
+              sid: "AllowEnableS3EventBridgeEvents",
+              effect: iam.Effect.ALLOW,
+              actions: ["s3:PutBucketNotification", "s3:GetBucketNotification"],
+              resources: [attachmentsBucket.bucketArn],
+            }),
+            new iam.PolicyStatement({
+              sid: "AllowPutValidationObject",
+              effect: iam.Effect.ALLOW,
+              actions: ["s3:PutObject"],
+              resources: [
+                `${attachmentsBucket.bucketArn}/malware-protection-resource-validation-object`,
+              ],
+            }),
+            new iam.PolicyStatement({
+              sid: "AllowCheckBucketOwnership",
+              effect: iam.Effect.ALLOW,
+              actions: ["s3:ListBucket"],
+              resources: [attachmentsBucket.bucketArn],
+            }),
+            new iam.PolicyStatement({
+              sid: "AllowMalwareScan",
+              effect: iam.Effect.ALLOW,
+              actions: ["s3:GetObject", "s3:GetObjectVersion"],
+              resources: [`${attachmentsBucket.bucketArn}/*`],
+            }),
+          ],
         }),
-      ],
-    });
-  }
-
-  const avScanLambda = new Lambda(scope, "AvScanLambda", {
-    entry: "services/uploads/src/antivirus.js",
-    handler: "lambdaHandleEvent",
-    memorySize: 3008,
-    timeout: Duration.seconds(300),
-    layers: isLocalStack ? [] : [clamAvLayer!],
-    isDev,
-    stackName: `${service}-${stage}`,
-    environment,
-  }).lambda;
-
-  attachmentsBucket.grantReadWrite(avScanLambda);
-  attachmentsBucket.grantPutAcl(avScanLambda);
-  clamDefsBucket.grantReadWrite(avScanLambda);
-  clamDefsBucket.grantPutAcl(avScanLambda);
-
-  attachmentsBucket.addEventNotification(
-    s3.EventType.OBJECT_CREATED,
-    new s3notifications.LambdaDestination(avScanLambda)
+      },
+    }
   );
 
   attachmentsBucket.addToResourcePolicy(
@@ -146,8 +135,7 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
       principals: [new iam.ArnPrincipal("*")],
       conditions: {
         StringNotEquals: {
-          "s3:ExistingObjectTag/virusScanStatus": "CLEAN",
-          "aws:PrincipalArn": avScanLambda.role?.roleArn,
+          "s3:ExistingObjectTag/GuardDutyMalwareScanStatus": "NO_THREATS_FOUND",
         },
       },
     })
@@ -183,6 +171,20 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
       ],
     })
   );
+
+  new guardduty.CfnMalwareProtectionPlan(scope, "MalwareProtectionPlan", {
+    actions: {
+      tagging: {
+        status: "ENABLED",
+      },
+    },
+    protectedResource: {
+      s3Bucket: {
+        bucketName: attachmentsBucketName,
+      },
+    },
+    role: s3MalwareProtectionRole.roleArn,
+  });
 
   new CfnOutput(scope, "AttachmentsBucketName", {
     value: attachmentsBucket.bucketName,
