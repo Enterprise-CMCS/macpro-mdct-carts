@@ -172,19 +172,19 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
     })
   );
 
-  new guardduty.CfnMalwareProtectionPlan(scope, "MalwareProtectionPlan", {
-    actions: {
-      tagging: {
-        status: "ENABLED",
-      },
-    },
-    protectedResource: {
-      s3Bucket: {
-        bucketName: attachmentsBucketName,
-      },
-    },
-    role: s3MalwareProtectionRole.roleArn,
-  });
+  // new guardduty.CfnMalwareProtectionPlan(scope, "MalwareProtectionPlan", {
+  //   actions: {
+  //     tagging: {
+  //       status: "ENABLED",
+  //     },
+  //   },
+  //   protectedResource: {
+  //     s3Bucket: {
+  //       bucketName: attachmentsBucketName,
+  //     },
+  //   },
+  //   role: s3MalwareProtectionRole.roleArn,
+  // });
 
   new CfnOutput(scope, "AttachmentsBucketName", {
     value: attachmentsBucket.bucketName,
