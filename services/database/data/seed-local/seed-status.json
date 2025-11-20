@@ -5,6 +5,7 @@
     "year": 2025,
     "programType": "user",
     "username": "al@test.com",
+    "email": "al@test.com",
     "lastChanged": "2025-09-30 09:30:00.000000+00"
   },
   {
@@ -13,6 +14,7 @@
     "year": 2024,
     "programType": "user",
     "username": "al@test.com",
+    "email": "al@test.com",
     "lastChanged": "2024-01-04 18:28:18.524133+00"
   },
   {
@@ -21,6 +23,7 @@
     "year": 2023,
     "programType": "user",
     "username": "al@test.com",
+    "email": "al@test.com",
     "lastChanged": "2022-01-04 18:28:18.524133+00"
   },
   {
@@ -29,6 +32,7 @@
     "year": 2022,
     "programType": "combo",
     "username": "al@test.com",
+    "email": "al@test.com",
     "lastChanged": "2022-01-04 18:28:18.524133+00"
   },
   {
@@ -37,6 +41,7 @@
     "year": 2021,
     "programType": "combo",
     "username": "al@test.com",
+    "email": "al@test.com",
     "lastChanged": "2021-01-04 18:28:18.524133+00"
   },
   {
@@ -45,6 +50,7 @@
     "year": 2020,
     "programType": "combo",
     "username": "al@test.com",
+    "email": "al@test.com",
     "lastChanged": "2021-01-04 18:28:18.524133+00"
   },
   {
@@ -53,6 +59,7 @@
     "year": 2021,
     "programType": "combo",
     "username": "al@test.com",
+    "email": "al@test.com",
     "lastChanged": "2021-01-04 18:28:18.524133+00"
   }
 ]

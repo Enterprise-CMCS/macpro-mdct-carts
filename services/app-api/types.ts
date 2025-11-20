@@ -45,6 +45,7 @@ export interface StateStatus {
   stateId: string;
   programType?: string;
   username?: string;
+  email?: string;
   lastChanged?: string;
 }
 

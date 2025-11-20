@@ -31,7 +31,7 @@ describe("Test Update State Status Handlers", () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,
       pathParameters: {},
-      body: `{"status": "certified", "username": "test user"}`,
+      body: `{"status": "certified", "username": "test user", "email": "test@example.com"}`,
     };
 
     const res = await updateStateStatus(event, null);
@@ -46,7 +46,7 @@ describe("Test Update State Status Handlers", () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,
       pathParameters: { year: "2022", state: "AL" },
-      body: `{"username": "test user"}`,
+      body: `{"username": "test user", "email": "test@example.com"}`,
     };
 
     const res = await updateStateStatus(event, null);
@@ -61,7 +61,7 @@ describe("Test Update State Status Handlers", () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,
       pathParameters: { year: "2022", state: "AL" },
-      body: `{"status": "certified", "username": "test user"}`,
+      body: `{"status": "certified", "username": "test user", "email": "test@example.com"}`,
     };
 
     const res = await updateStateStatus(event, null);
@@ -72,10 +72,12 @@ describe("Test Update State Status Handlers", () => {
         "#lastChanged": "lastChanged",
         "#status": "status",
         "#username": "username",
+        "#email": "email",
       },
       ExpressionAttributeValues: {
         ":status": "certified",
         ":username": "test user",
+        ":email": "test@example.com",
         ":lastChanged": new Date().toString(),
       },
       Key: {
@@ -83,7 +85,7 @@ describe("Test Update State Status Handlers", () => {
         year: 2022,
       },
       UpdateExpression:
-        "set #status=:status, #username=:username, #lastChanged=:lastChanged",
+        "set #status=:status, #username=:username, #email=:email, #lastChanged=:lastChanged",
       TableName: undefined,
     });
   });

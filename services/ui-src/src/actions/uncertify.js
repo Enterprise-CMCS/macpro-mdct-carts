@@ -10,6 +10,7 @@ export const uncertifyReport =
     const stateObject = getState();
     const user = stateObject.stateUser.currentUser;
     const username = `${user.firstname} ${user.lastname}`;
+    const email = user.email;
     const state = stateCode;
     const year = reportYear;
 
@@ -19,6 +20,7 @@ export const uncertifyReport =
         body: {
           status: REPORT_STATUS.in_progress,
           username: username,
+          email: email,
           year: reportYear,
           state: state,
         },

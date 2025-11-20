@@ -12,6 +12,7 @@ export const certifyAndSubmit = () => async (dispatch, getState) => {
   const stateObject = getState();
   const user = stateObject.stateUser.currentUser;
   const username = `${user.firstname} ${user.lastname}`;
+  const email = user.email;
   const state = stateObject.stateUser.abbr;
   const year = stateObject.global.formYear;
 
@@ -22,6 +23,7 @@ export const certifyAndSubmit = () => async (dispatch, getState) => {
       body: {
         status: REPORT_STATUS.certified,
         username: username,
+        email: email,
       },
     };
 

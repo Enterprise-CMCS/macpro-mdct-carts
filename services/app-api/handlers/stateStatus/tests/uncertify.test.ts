@@ -23,7 +23,7 @@ describe("Test Uncertify CARTS Report Handler", () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,
       pathParameters: { year: "2021", state: "AL" },
-      body: `{"status": "in_progress", "username": "test user"}`,
+      body: `{"status": "in_progress", "username": "test user", "email": "test@example.com"}`,
     };
 
     const res = await updateStateStatus(event, null);
