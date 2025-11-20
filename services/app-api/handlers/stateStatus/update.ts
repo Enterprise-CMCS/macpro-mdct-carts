@@ -9,6 +9,7 @@ import { convertToDynamoExpression } from "../dynamoUtils/convertToDynamoExpress
  */
 export const updateStateStatus = handler(async (event, _context) => {
   const { body } = event;
+  console.log("event:", event);
   const { status, username } = JSON.parse(body || "{}");
 
   if (!event.pathParameters) throw new Error("No Path Parameters Object");
@@ -34,8 +35,8 @@ export const updateStateStatus = handler(async (event, _context) => {
       },
       ...convertToDynamoExpression(
         {
-          status: status,
-          username: username,
+          status,
+          username,
           lastChanged: new Date().toString(),
         },
         "post"
