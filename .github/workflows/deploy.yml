@@ -80,7 +80,7 @@ jobs:
       - name: Run Playwright tests
         run: |
           yarn install
-          yarn playwright install
+          yarn playwright install --with-deps chromium
           yarn playwright test --grep-invert "@flaky" --reporter=github,html
         working-directory: tests/playwright
         env:
