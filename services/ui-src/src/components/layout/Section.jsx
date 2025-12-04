@@ -6,17 +6,21 @@ import FormNavigation from "./FormNavigation";
 import FormActions from "./FormActions";
 import { Main } from "./Main";
 
-const Section = ({ subsectionId, printView }) => {
+const Section = ({ subsectionId, printView, useMain = true }) => {
+  const section = (
+    <>
+      <PageInfo />
+      <Subsection
+        key={subsectionId}
+        subsectionId={subsectionId}
+        printView={printView}
+      />
+    </>
+  );
+
   return (
     <div className="section-basic-info ds-l-col--9 content">
-      <Main className="main">
-        <PageInfo />
-        <Subsection
-          key={subsectionId}
-          subsectionId={subsectionId}
-          printView={printView}
-        />
-      </Main>
+      {useMain ? <Main className="main">{section}</Main> : section}
       <div className="form-footer">
         <FormNavigation />
         <FormActions />
@@ -28,6 +32,7 @@ Section.propTypes = {
   subsectionId: PropTypes.string.isRequired,
   sectionId: PropTypes.number.isRequired,
   printView: PropTypes.bool,
+  useMain: PropTypes.bool,
 };
 
 export default Section;
