@@ -79,7 +79,7 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
     clamAvLayer = new lambda.LayerVersion(scope, "ClamAvLayer", {
       layerVersionName: `${service}-${stage}-clamDefs`,
       code: lambda.Code.fromAsset("services/uploads/lambda_layer.zip"),
-      compatibleRuntimes: [lambda.Runtime.NODEJS_20_X],
+      compatibleRuntimes: [lambda.Runtime.NODEJS_22_X],
     });
 
     const avDownloadDefinitionsLambda = new Lambda(
