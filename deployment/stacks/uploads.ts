@@ -12,8 +12,8 @@ import {
   Aws,
   CfnOutput,
 } from "aws-cdk-lib";
-import { isLocalStack } from "../local/util";
-import { Lambda } from "../constructs/lambda";
+import { isLocalStack } from "../local/util.js";
+import { Lambda } from "../constructs/lambda.js";
 
 interface CreateUploadsComponentsProps {
   scope: Construct;
