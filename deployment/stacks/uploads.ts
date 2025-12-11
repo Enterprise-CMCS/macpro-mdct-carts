@@ -1,21 +1,21 @@
 import { Construct } from "constructs";
 import {
+  aws_s3 as s3,
   aws_guardduty as guardduty,
   aws_iam as iam,
-  aws_s3 as s3,
-  Aws,
   RemovalPolicy,
+  Aws,
 } from "aws-cdk-lib";
 
 interface CreateUploadsComponentsProps {
-  attachmentsBucketName: string;
-  isDev: boolean;
-  loggingBucket: s3.IBucket;
   scope: Construct;
+  loggingBucket: s3.IBucket;
+  isDev: boolean;
+  attachmentsBucketName: string;
 }
 
 export function createUploadsComponents(props: CreateUploadsComponentsProps) {
-  const { attachmentsBucketName, isDev, loggingBucket, scope } = props;
+  const { scope, loggingBucket, isDev, attachmentsBucketName } = props;
 
   const attachmentsBucket = new s3.Bucket(scope, "AttachmentsBucket", {
     bucketName: attachmentsBucketName,
@@ -128,13 +128,14 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
 
   attachmentsBucket.addToResourcePolicy(
     new iam.PolicyStatement({
-      effect: iam.Effect.DENY,
-      principals: [new iam.AnyPrincipal()],
       actions: ["s3:GetObject"],
+      effect: iam.Effect.DENY,
       resources: [`${attachmentsBucket.bucketArn}/*`],
+      principals: [new iam.ArnPrincipal("*")],
       conditions: {
         StringNotEquals: {
           "s3:ExistingObjectTag/GuardDutyMalwareScanStatus": "NO_THREATS_FOUND",
+          "s3:ExistingObjectTag/virusScanStatus": "CLEAN",
         },
       },
     })
