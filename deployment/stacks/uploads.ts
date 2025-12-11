@@ -57,14 +57,9 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
         S3MalwareProtectionPolicy: new iam.PolicyDocument({
           statements: [
             new iam.PolicyStatement({
-              sid: "AllowManagedRuleToSendS3EventsToGuardDuty",
+              sid: "AllowEventBridgeManagement",
               effect: iam.Effect.ALLOW,
-              actions: [
-                "events:PutRule",
-                "events:DeleteRule",
-                "events:PutTargets",
-                "events:RemoveTargets",
-              ],
+              actions: ["events:*"],
               resources: [
                 `arn:aws:events:us-east-1:${Aws.ACCOUNT_ID}:rule/DO-NOT-DELETE-AmazonGuardDutyMalwareProtectionS3*`,
               ],
@@ -76,49 +71,19 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
               },
             }),
             new iam.PolicyStatement({
-              sid: "AllowGuardDutyToMonitorEventBridgeManagedRule",
-              effect: iam.Effect.ALLOW,
-              actions: ["events:DescribeRule", "events:ListTargetsByRule"],
-              resources: [
-                `arn:aws:events:us-east-1:${Aws.ACCOUNT_ID}:rule/DO-NOT-DELETE-AmazonGuardDutyMalwareProtectionS3*`,
-              ],
-            }),
-            new iam.PolicyStatement({
-              sid: "AllowPostScanTag",
+              sid: "AllowS3Operations",
               effect: iam.Effect.ALLOW,
               actions: [
-                "s3:PutObjectTagging",
-                "s3:GetObjectTagging",
-                "s3:PutObjectVersionTagging",
-                "s3:GetObjectVersionTagging",
+                "s3:GetObject*",
+                "s3:PutObject*",
+                "s3:ListBucket",
+                "s3:*Notification",
+                "s3:*Tagging",
               ],
-              resources: [`${attachmentsBucket.bucketArn}/*`],
-            }),
-            new iam.PolicyStatement({
-              sid: "AllowEnableS3EventBridgeEvents",
-              effect: iam.Effect.ALLOW,
-              actions: ["s3:PutBucketNotification", "s3:GetBucketNotification"],
-              resources: [attachmentsBucket.bucketArn],
-            }),
-            new iam.PolicyStatement({
-              sid: "AllowPutValidationObject",
-              effect: iam.Effect.ALLOW,
-              actions: ["s3:PutObject"],
               resources: [
-                `${attachmentsBucket.bucketArn}/malware-protection-resource-validation-object`,
+                attachmentsBucket.bucketArn,
+                `${attachmentsBucket.bucketArn}/*`,
               ],
-            }),
-            new iam.PolicyStatement({
-              sid: "AllowCheckBucketOwnership",
-              effect: iam.Effect.ALLOW,
-              actions: ["s3:ListBucket"],
-              resources: [attachmentsBucket.bucketArn],
-            }),
-            new iam.PolicyStatement({
-              sid: "AllowMalwareScan",
-              effect: iam.Effect.ALLOW,
-              actions: ["s3:GetObject", "s3:GetObjectVersion"],
-              resources: [`${attachmentsBucket.bucketArn}/*`],
             }),
           ],
         }),
