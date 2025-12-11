@@ -60,7 +60,7 @@ export class ParentStack extends Stack {
       ...commonProps,
     });
 
-    const { attachmentsBucket } = createUploadsComponents({
+    const attachmentsBucket = createUploadsComponents({
       ...commonProps,
       loggingBucket,
       attachmentsBucketName: attachmentsBucketName!,
