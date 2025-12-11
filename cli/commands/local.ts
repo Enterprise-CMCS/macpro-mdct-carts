@@ -1,6 +1,6 @@
 // This file is managed by macpro-mdct-core so if you'd like to change it let's do it there
 import { runCommand } from "../lib/runner.js";
-import { execSync } from "child_process";
+import { execSync } from "node:child_process";
 import { region } from "../lib/consts.js";
 import { runFrontendLocally } from "../lib/utils.js";
 import { seedData } from "../lib/seedData.js";
@@ -46,6 +46,7 @@ export const local = {
     process.env.AWS_SECRET_ACCESS_KEY = "localstack"; // pragma: allowlist secret
     process.env.AWS_ENDPOINT_URL = "http://localhost.localstack.cloud:4566";
 
+    await runCommand("Clean .cdk", ["rm", "-rf", ".cdk"], ".");
     await runCommand(
       "CDK local bootstrap",
       [

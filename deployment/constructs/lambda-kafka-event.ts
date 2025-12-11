@@ -10,7 +10,7 @@ import {
   RemovalPolicy,
 } from "aws-cdk-lib";
 import { createHash } from "crypto";
-import { DynamoDBTable } from "./dynamodb-table";
+import { DynamoDBTable } from "./dynamodb-table.js";
 
 interface LambdaKafkaEventProps
   extends Partial<lambda_nodejs.NodejsFunctionProps> {
@@ -58,7 +58,7 @@ export class LambdaKafkaEventSource extends Construct {
     this.lambda = new lambda_nodejs.NodejsFunction(this, id, {
       functionName: `${stackName}-${id}`,
       handler,
-      runtime: lambda.Runtime.NODEJS_20_X,
+      runtime: lambda.Runtime.NODEJS_22_X,
       timeout,
       memorySize,
       bundling: {
