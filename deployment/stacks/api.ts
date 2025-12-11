@@ -8,10 +8,10 @@ import {
   Duration,
   RemovalPolicy,
 } from "aws-cdk-lib";
-import { Lambda } from "../constructs/lambda";
-import { WafConstruct } from "../constructs/waf";
-import { isLocalStack } from "../local/util";
-import { DynamoDBTable } from "../constructs/dynamodb-table";
+import { Lambda } from "../constructs/lambda.js";
+import { WafConstruct } from "../constructs/waf.js";
+import { isLocalStack } from "../local/util.js";
+import { DynamoDBTable } from "../constructs/dynamodb-table.js";
 
 interface CreateApiComponentsProps {
   docraptorApiKey: string;
