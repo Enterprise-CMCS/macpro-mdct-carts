@@ -34,6 +34,7 @@ export const deploy = {
     const project = process.env.PROJECT!;
 
     if (await stackExists(`${project}-prerequisites`)) {
+      await runCommand("Clean .cdk", ["rm", "-rf", ".cdk"], ".");
       await runCommand(
         "CDK deploy",
         [
