@@ -11,9 +11,9 @@ import {
   StackProps,
   Tags,
 } from "aws-cdk-lib";
+import { Construct } from "constructs";
 import { CloudWatchLogsResourcePolicy } from "./constructs/cloudwatch-logs-resource-policy.js";
 import { loadDefaultSecret } from "./deployment-config.js";
-import { Construct } from "constructs";
 import { isLocalStack } from "./local/util.js";
 import { tryImport } from "./utils/misc.js";
 
