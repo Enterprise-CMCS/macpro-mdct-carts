@@ -1,4 +1,4 @@
-window.env = {
+window._env_ = {
   API_REGION: "us-east-1",
   API_URL: "{{apiGatewayRestApiUrl}}",
   COGNITO_REGION: "us-east-1",
