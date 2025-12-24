@@ -1,13 +1,13 @@
 {
   "name": "cypress-tests",
   "version": "1.0.0",
+  "packageManager": "yarn@4.12.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "cypress": "cypress open",
     "start": "cd ../../ && ./run local && cd -",
-    "test:ci": "cypress install && cypress run --browser chrome --headless",
-    "test": "concurrently --kill-others \"npm start\" \"npm run cypress\""
+    "test:ci": "yarn cypress install && yarn cypress run --browser chrome --headless",
+    "test": "concurrently --kill-others \"yarn start\" \"yarn cypress open\""
   },
   "author": "",
   "license": "ISC",

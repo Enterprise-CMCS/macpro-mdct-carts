@@ -2,6 +2,7 @@
   "name": "app-api",
   "description": "",
   "version": "1.0.0",
+  "packageManager": "yarn@4.12.0",
   "main": "handler.js",
   "scripts": {
     "coverage": "jest --coverage",

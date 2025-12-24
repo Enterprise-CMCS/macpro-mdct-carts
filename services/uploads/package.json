@@ -1,6 +1,7 @@
 {
   "name": "uploads",
   "version": "1.0.0",
+  "packageManager": "yarn@4.12.0",
   "main": "index.js",
   "type": "commonjs",
   "license": "CC0-1.0"

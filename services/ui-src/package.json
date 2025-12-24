@@ -1,6 +1,7 @@
 {
   "name": "iridat",
   "version": "0.1.0",
+  "packageManager": "yarn@4.12.0",
   "private": true,
   "dependencies": {
     "@cmsgov/design-system": "^13",

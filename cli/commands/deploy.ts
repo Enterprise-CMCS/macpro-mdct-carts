@@ -4,9 +4,9 @@ import {
   CloudFormationClient,
   DescribeStacksCommand,
 } from "@aws-sdk/client-cloudformation";
-import { checkIfAuthenticated } from "../lib/sts.js";
-import { region } from "../lib/consts.js";
-import { runCommand } from "../lib/runner.js";
+import { checkIfAuthenticated } from "../lib/sts.ts";
+import { region } from "../lib/consts.ts";
+import { runCommand } from "../lib/runner.ts";
 
 const stackExists = async (stackName: string): Promise<boolean> => {
   const client = new CloudFormationClient({ region });

@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const configFilePath = path.resolve(
-  path.join(__dirname, "../../services/ui-src/public/env-config.js")
+  path.join(__dirname, "../../services/ui-src/public/env-config.ts")
 );
 
 export const writeLocalUiEnvFile = async (
