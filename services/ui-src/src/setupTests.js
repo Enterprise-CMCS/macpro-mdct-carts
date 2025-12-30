@@ -10,7 +10,7 @@ import { TextEncoder } from "util";
 
 global.TextEncoder = TextEncoder;
 
-global.window.env = {
+global.window._env_ = {
   API_POSTGRES_URL: "fakeurl",
 };
 
