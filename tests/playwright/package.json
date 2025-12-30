@@ -1,6 +1,7 @@
 {
   "name": "playwright",
   "version": "1.0.0",
+  "packageManager": "yarn@4.12.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
