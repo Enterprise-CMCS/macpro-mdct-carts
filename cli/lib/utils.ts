@@ -4,7 +4,7 @@ import {
 } from "@aws-sdk/client-cloudformation";
 import { writeLocalUiEnvFile } from "./write-ui-env-file.ts";
 import { runCommand } from "../lib/runner.ts";
-import { region } from "./consts.ts";
+import { project, region } from "./consts.ts";
 
 export const getCloudFormationStackOutputValues = async (
   stackName: string
@@ -68,7 +68,9 @@ const buildUiEnvObject = (
 };
 
 export const runFrontendLocally = async (stage: string) => {
-  const outputs = await getCloudFormationStackOutputValues(`carts-${stage}`);
+  const outputs = await getCloudFormationStackOutputValues(
+    `${project}-${stage}`
+  );
   const envVars = buildUiEnvObject(stage, outputs);
   await writeLocalUiEnvFile(envVars);
 
