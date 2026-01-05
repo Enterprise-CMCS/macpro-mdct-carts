@@ -10,7 +10,7 @@ import {
   RemovalPolicy,
 } from "aws-cdk-lib";
 import { createHash } from "crypto";
-import { DynamoDBTable } from "./dynamodb-table.js";
+import { DynamoDBTable } from "./dynamodb-table.ts";
 
 interface LambdaKafkaEventProps
   extends Partial<lambda_nodejs.NodejsFunctionProps> {
