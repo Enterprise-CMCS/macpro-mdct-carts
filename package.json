@@ -13,7 +13,7 @@
     "build": "tsc",
     "watch": "tsc -w",
     "cdk": "cdk",
-    "test": "cd tests/cypress && npm test && cd -",
+    "test": "cd tests/cypress && yarn test && cd -",
     "test:ci": "cd tests/cypress && yarn run test:ci",
     "test:e2e": "cd tests/playwright && yarn run test:e2e",
     "test:e2e-ui": "cd tests/playwright && yarn run test:e2e-ui",
