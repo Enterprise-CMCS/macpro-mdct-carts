@@ -5,8 +5,8 @@ import {
   Duration,
   triggers,
 } from "aws-cdk-lib";
-import { DynamoDBTable } from "../constructs/dynamodb-table.js";
-import { Lambda } from "../constructs/lambda.js";
+import { DynamoDBTable } from "../constructs/dynamodb-table.ts";
+import { Lambda } from "../constructs/lambda.ts";
 
 interface CreateDataComponentsProps {
   scope: Construct;

@@ -26,3 +26,4 @@ cdk.context.json
 !.qlty/qlty.toml
 /cli/dist
 **/.yarn/*
+services/ui-src/public/env-config.ts

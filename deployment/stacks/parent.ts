@@ -1,4 +1,5 @@
 import { Construct } from "constructs";
+import type { StackProps } from "aws-cdk-lib";
 import {
   aws_ec2 as ec2,
   aws_iam as iam,
@@ -6,19 +7,18 @@ import {
   Aws,
   CfnOutput,
   Stack,
-  StackProps,
 } from "aws-cdk-lib";
-import { DeploymentConfigProperties } from "../deployment-config.js";
-import { createDataComponents } from "./data.js";
-import { createUiAuthComponents } from "./ui-auth.js";
-import { createUiComponents } from "./ui.js";
-import { createApiComponents } from "./api.js";
-import { deployFrontend } from "./deployFrontend.js";
-import { isLocalStack } from "../local/util.js";
-import { createTopicsComponents } from "./topics.js";
-import { createBigmacStreamsComponents } from "./bigmac-streams.js";
-import { createUploadsComponents } from "./uploads.js";
-import { getSubnets } from "../utils/vpc.js";
+import type { DeploymentConfigProperties } from "../deployment-config.ts";
+import { createDataComponents } from "./data.ts";
+import { createUiAuthComponents } from "./ui-auth.ts";
+import { createUiComponents } from "./ui.ts";
+import { createApiComponents } from "./api.ts";
+import { deployFrontend } from "./deployFrontend.ts";
+import { isLocalStack } from "../local/util.ts";
+import { createTopicsComponents } from "./topics.ts";
+import { createBigmacStreamsComponents } from "./bigmac-streams.ts";
+import { createUploadsComponents } from "./uploads.ts";
+import { getSubnets } from "../utils/vpc.ts";
 
 export class ParentStack extends Stack {
   constructor(

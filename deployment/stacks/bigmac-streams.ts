@@ -1,8 +1,8 @@
 import { aws_ec2 as ec2, Duration } from "aws-cdk-lib";
 import { Construct } from "constructs";
-import { LambdaDynamoEventSource } from "../constructs/lambda-dynamo-event.js";
-import { LambdaKafkaEventSource } from "../constructs/lambda-kafka-event.js";
-import { DynamoDBTable } from "../constructs/dynamodb-table.js";
+import { LambdaDynamoEventSource } from "../constructs/lambda-dynamo-event.ts";
+import { LambdaKafkaEventSource } from "../constructs/lambda-kafka-event.ts";
+import { DynamoDBTable } from "../constructs/dynamodb-table.ts";
 
 interface CreateBigmacStreamsComponentsProps {
   scope: Construct;
