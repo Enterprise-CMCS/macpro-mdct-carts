@@ -35,7 +35,8 @@
     "jwt-decode": "^4.0.0"
   },
   "resolutions": {
-    "ws": "^8.18.3"
+    "ws": "^8.18.3",
+    "glob": "10.5.0"
   },
   "jest": {
     "verbose": true,
