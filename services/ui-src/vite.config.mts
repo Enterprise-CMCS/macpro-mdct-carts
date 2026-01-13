@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import tsconfigPaths from 'vite-tsconfig-paths';
+import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
   base: "/",
@@ -18,8 +18,8 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        api: 'modern-compiler' // or "modern"
-      }
-    }
-  }
+        api: "modern-compiler", // or "modern"
+      },
+    },
+  },
 });

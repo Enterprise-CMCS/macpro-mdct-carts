@@ -12,8 +12,7 @@ import {
 import { createHash } from "crypto";
 import { DynamoDBTable } from "./dynamodb-table.ts";
 
-interface LambdaKafkaEventProps
-  extends Partial<lambda_nodejs.NodejsFunctionProps> {
+interface LambdaKafkaEventProps extends Partial<lambda_nodejs.NodejsFunctionProps> {
   additionalPolicies?: iam.PolicyStatement[];
   kafkaBootstrapServers: string[];
   securityGroupId: string;
