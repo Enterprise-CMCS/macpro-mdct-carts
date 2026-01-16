@@ -5,7 +5,6 @@
  */
 
 .print-all {
-
   .ds-c-alert,
   .form-footer,
   .page-info,
@@ -52,7 +51,6 @@
 }
 
 @media print {
-
   .no-print,
   .non-print-textarea {
     display: none !important;
@@ -87,7 +85,7 @@
     min-width: 100%;
   }
 
-  .ds-c-choice:checked+label:before {
+  .ds-c-choice:checked + label:before {
     background-color: variables.$brand-primary;
     -webkit-print-color-adjust: exact;
   }

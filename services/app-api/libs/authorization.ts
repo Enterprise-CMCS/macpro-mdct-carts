@@ -1,14 +1,13 @@
 import { jwtDecode } from "jwt-decode";
 import { IdmRoles, AppRoles, APIGatewayProxyEvent } from "../types";
 
-// prettier-ignore
 interface DecodedToken {
   "custom:cms_roles": IdmRoles;
   "custom:cms_state"?: string;
   given_name?: string;
   family_name?: string;
   identities?: [{ userId?: string }];
-  email?: string
+  email?: string;
 }
 
 export class UserCredentials {
