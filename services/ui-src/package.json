@@ -1,8 +1,16 @@
 {
   "name": "iridat",
   "version": "0.1.0",
-  "packageManager": "yarn@4.12.0",
   "private": true,
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "jest",
+    "coverage": "jest --coverage",
+    "watchTest": "jest --watch",
+    "pa11y": "pa11y --runner axe --runner htmlcs"
+  },
   "dependencies": {
     "@cmsgov/design-system": "^13",
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
@@ -29,27 +37,6 @@
     "sass": "^1.92.1",
     "uuid": "11.1.0"
   },
-  "scripts": {
-    "start": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "test": "jest",
-    "coverage": "jest --coverage",
-    "watchTest": "jest --watch",
-    "pa11y": "pa11y --runner axe --runner htmlcs"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
   "devDependencies": {
     "@babel/core": "^7.28.4",
     "@babel/preset-env": "^7.28.3",
@@ -73,8 +60,23 @@
     "vite": "6.4.1",
     "vite-tsconfig-paths": "^5.1.4"
   },
+  "resolutions": {
+    "react-error-overlay": "6.1.0",
+    "tar-fs": "3.1.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "jest": {
-    "testEnvironment": "jsdom",
     "collectCoverageFrom": [
       "src/components/**/*.{js,jsx}",
       "src/util/**/*.{js,jsx}",
@@ -99,16 +101,14 @@
       "text",
       "text-summary"
     ],
-    "setupFilesAfterEnv": [
-      "<rootDir>/src/setupTests.js"
-    ],
     "moduleNameMapper": {
       "\\.(css|less|scss)$": "<rootDir>/src/util/testing/styleMock.js",
       "\\.(jpg|jpeg|png|gif|webp|svg|mp4|webm|wav|mp3|m4a)$": "<rootDir>/src/util/testing/mockAsset.ts"
-    }
+    },
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setupTests.js"
+    ],
+    "testEnvironment": "jsdom"
   },
-  "resolutions": {
-    "react-error-overlay": "6.1.0",
-    "tar-fs": "3.1.1"
-  }
+  "packageManager": "yarn@4.12.0"
 }

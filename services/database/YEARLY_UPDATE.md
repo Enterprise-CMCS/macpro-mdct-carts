@@ -75,7 +75,7 @@ Other copy changes will need to be made to update instances of prior year in que
 CARTS uses a separate handler to seed the FMAP and ACS Data. You'll need to do the following for ACS:
 
 1. Navigate to the services/database/data/seed folder
-2. Create a seed-acs-{enterYearHere}.json file (For example, you'd put seed-acs-2023) 
+2. Create a seed-acs-{enterYearHere}.json file (For example, you'd put seed-acs-2023)
 3. In the seed-acs-2023 file, you will add the data from columns D-G in the ACS file (See [the readme](../../README.md) on how to find this). It will go in an array of object format that looks like this:
 
 ```
@@ -124,8 +124,9 @@ const seed = {
 
 module.exports = seed;
 ```
+
 7. Create and PR and deploy the application
-8. Open the deployed instance 
+8. Open the deployed instance
 9. Open up a associated year's report
 10. Navigate to Section 2, Part 2
 11. Using the seed-acs-2023.json file, note that the table here has the exact same numbers as the seed file.
@@ -135,7 +136,7 @@ module.exports = seed;
 CARTS uses a separate handler to seed the FMAP and ACS Data. FMAP follows a similar process to ACS. You'll need to do the following for FMAP:
 
 1. Navigate to the services/database/data/seed folder
-2. Open the seed-fmap.json file 
+2. Open the seed-fmap.json file
 3. Add the data from the first table's rightmost column (The Enhanced federal medical assistance percentages). See [the readme](../../README.md) on how to find this
 4. Unlike ACS, all the data is located in this one file. Append the latest year's data to the bottom of the array. The format for this data is as follows:
 
@@ -168,7 +169,7 @@ CARTS uses a separate handler to seed the FMAP and ACS Data. FMAP follows a simi
 ```
 
 5. Merge this change and deploy the application
-6. Open the deployed instance 
+6. Open the deployed instance
 7. Open up an associated year's report
 8. Navigate to Section 5, Part 2 Table 3 (Federal and State Shares Table)
 9. Using the seed-fmap.json file, ensure that the table here displays the same numbers as the seed-fmap.json file.

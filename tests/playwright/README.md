@@ -13,7 +13,7 @@ To run playwright tests locally you will go to the root of the project and you'l
 ### One time setup
 
 1. If you have a 1Password account and 1Password CLI installed locally you can run
-`./run update-env` to pull values from 1Password and create an updated .env
+   `./run update-env` to pull values from 1Password and create an updated .env
 
 2. Alternatively, if you do not have a 1Password account you can copy the contents of the `.env.tpl` file to a `.env` file at the top level of the repo and reach out to the team for appropriate values to be populated by hand.
 
@@ -24,20 +24,24 @@ To run playwright tests locally you will go to the root of the project and you'l
 There are four options for running tests locally. You can execute these commands from project root or from the `tests/` folder.
 
 1. `yarn test:e2e`
-  - Starts the app locally and runs all tests in terminal. Terminates when tests complete.
+
+- Starts the app locally and runs all tests in terminal. Terminates when tests complete.
 
 2. `yarn test:e2e-ui`
-  - Starts the app locally
-  - Launches Playwright UI
-  - Runs all the tests
+
+- Starts the app locally
+- Launches Playwright UI
+- Runs all the tests
 
 3. `yarn test:e2e-stable`
-  - Starts the app locally and runs tests in the terminal without the @flaky or @probation tags
+
+- Starts the app locally and runs tests in the terminal without the @flaky or @probation tags
 
 4. `yarn test:e2e-stable-ui`
-  - Starts the app locally
-  - Launches Playwright UI
-  - Runs tests without the @flaky or @probation tags
+
+- Starts the app locally
+- Launches Playwright UI
+- Runs tests without the @flaky or @probation tags
 
 ## Troubleshooting
 

@@ -205,7 +205,6 @@ This repository uses 3 webhooks to publish to 3 different channels all in CMS Sl
 - INTEGRATIONS_SLACK_WEBHOOK: This is used to publish new pull requests to the `mdct-integrations-channel`
 
 - PROD_RELEASE_SLACK_WEBHOOK: This is used to publish to the `mdct-prod-releases` channel upon successful release of CARTS to production.
-
   - Webhooks are created by CMS tickets, populated into GitHub Secrets
 
 ## GitHub Actions Secret Management
