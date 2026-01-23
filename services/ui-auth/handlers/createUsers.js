@@ -3,7 +3,7 @@
 
 import * as cognitolib from "../libs/cognito-lib.js";
 const userPoolId = process.env.userPoolId;
-import users from "../libs/users.json" assert { type: "json" };
+import users from "../libs/users.json" with { type: "json" };
 
 // eslint-disable-next-line no-unused-vars
 export async function handler(_event, _context, _callback) {
