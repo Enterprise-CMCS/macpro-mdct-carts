@@ -1,5 +1,4 @@
 .idea/
-.vscode/
 .infra
 .dynamodb
 .yarn_install
