@@ -26,3 +26,4 @@ cdk.context.json
 /cli/dist
 **/.yarn/*
 services/ui-src/public/env-config.ts
+.vscode/settings.json
