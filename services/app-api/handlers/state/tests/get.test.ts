@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { getStates } from "../get";
 import dbLib from "../../../libs/dynamodb-lib";
 import { APIGatewayProxyEvent } from "../../../types";

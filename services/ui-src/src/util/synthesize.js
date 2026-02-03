@@ -1,8 +1,6 @@
 import { evaluate } from "mathjs";
 import jsonpath from "./jsonpath";
 
-/* eslint-disable camelcase */
-
 // For the identity case, just return the first target value.
 const identity = ([value]) => value;
 const round = (number, precision) => {
@@ -20,7 +18,7 @@ const round = (number, precision) => {
    * Exponent. Because Math.round always rounds off all decimals, preemptively
    * multiply by some number of tens to get the right precision.
    */
-  const exp = Math.pow(10, decimals); // eslint-disable-line no-restricted-properties
+  const exp = Math.pow(10, decimals);
   /*
    * Disable the eslint rule above. Math.pow is restricted, but the
    * exponentiation operator (**) is not supported in IE.
@@ -400,7 +398,7 @@ export const compareACS = (
 
       // Calculate the percent change
 
-      returnValue = // eslint-disable-next-line
+      returnValue =
         parseFloat(((tempEnd - tempStart) / tempStart) * 100)
           .toFixed(percentagePrecision)
           .toLocaleString() + "%";

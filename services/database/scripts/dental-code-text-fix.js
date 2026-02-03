@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const { buildDynamoClient, scan, update } = require("./utils/dynamodb.js");
 
 const isLocal = !!process.env.DYNAMODB_URL;

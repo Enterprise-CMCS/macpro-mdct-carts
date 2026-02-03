@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /*
  * Local:
  *    DYNAMODB_URL="http://localhost:4566" year="2024" node services/database/scripts/create-contact-list.js

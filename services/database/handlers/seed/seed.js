@@ -7,9 +7,7 @@
  * @param {*} callback
  */
 
-// eslint-disable-next-line no-unused-vars
 async function myHandler(event, context, callback) {
-  // eslint-disable-next-line no-console
   console.log("Seeding Tables");
 
   const buildRunner = require("./services/seedRunner");
@@ -20,7 +18,6 @@ async function myHandler(event, context, callback) {
   data = data.concat(tables);
 
   if (process.env.seedTestData === "true") {
-    // eslint-disable-next-line no-console
     console.log("Including test data");
     const { testTables } = require("./test-tables/index");
     data = data.concat(testTables);
@@ -30,7 +27,6 @@ async function myHandler(event, context, callback) {
     await seedRunner.executeSeed(table);
   }
 
-  // eslint-disable-next-line no-console
   console.log("Seed Finished");
 }
 
