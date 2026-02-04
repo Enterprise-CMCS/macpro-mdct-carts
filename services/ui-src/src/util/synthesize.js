@@ -20,8 +20,8 @@ const round = (number, precision) => {
    */
   const exp = Math.pow(10, decimals);
   /*
-   * Disable the eslint rule above. Math.pow is restricted, but the
-   * exponentiation operator (**) is not supported in IE.
+   * Math.pow is restricted, but the exponentiation operator (**)
+   * is not supported in IE.
    */
 
   const value = Math.round(+number * exp);
