@@ -7,7 +7,7 @@
  * @param {*} callback
  */
 
-async function myHandler(event, context, callback) {
+async function myHandler(_event, _context, _callback) {
   console.log("Seeding Tables");
 
   const buildRunner = require("./services/seedRunner");

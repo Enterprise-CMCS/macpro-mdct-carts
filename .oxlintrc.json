@@ -8,7 +8,6 @@
     "no-restricted-globals": "error",
     "no-unreachable": "error",
     "no-unused-expressions": "off",
-    "no-unused-vars": "off",
     "no-useless-escape": "off",
 
     // Unicorn

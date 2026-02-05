@@ -59,16 +59,10 @@ const Question = ({
   "data-testid": dataTestId,
   disabled = false,
   hideNumber = false,
-  hint,
   id,
-  label,
-  name,
-  onChange,
-  onClick,
   question,
   prevYear,
   printView = false,
-  setAnswer,
   ...props
 }) => {
   let Component = Text;
