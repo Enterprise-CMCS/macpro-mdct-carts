@@ -63,6 +63,14 @@ const Question = ({
   question,
   prevYear,
   printView = false,
+  // eslint-disable no-unused-vars
+  hint,
+  label,
+  name,
+  onChange,
+  onClick,
+  setAnswer,
+  // eslint-enable no-unused-vars
   ...props
 }) => {
   let Component = Text;
