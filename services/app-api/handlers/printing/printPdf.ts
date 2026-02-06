@@ -1,10 +1,15 @@
 import handler from "../../libs/handler-lib";
 import * as logger from "../../libs/debug-lib";
 import createDOMPurify from "dompurify";
-import { JSDOM } from "jsdom";
+import { Window } from "happy-dom";
 
-const windowEmulator: any = new JSDOM("").window;
-const DOMPurify = createDOMPurify(windowEmulator);
+declare module "dompurify" {
+  interface DOMPurify {
+    (root: Window): DOMPurify;
+  }
+}
+
+const DOMPurify = createDOMPurify(new Window());
 
 /**
  * Generates 508 compliant PDF using an external Prince-based service for a given HTML block.
