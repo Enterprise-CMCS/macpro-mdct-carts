@@ -101,7 +101,6 @@ export interface DynamoFetch {
   };
 }
 
-/* eslint-disable no-unused-vars */
 export const enum CoreSetAbbr {
   ACS = "ACS", // adult
   CCS = "CCS", // child combined
@@ -160,7 +159,6 @@ export const ReportPdfs: ReportPdfsInterface = {
   2024: "FFY_2024_CARTS_Template.pdf",
   2025: "FFY_2025_CARTS_Template.pdf",
 };
-/* eslint-enable no-unused-vars */
 
 /**
  * Abridged copy of the type used by `aws-lambda@1.0.7` (from `@types/aws-lambda@8.10.88`)

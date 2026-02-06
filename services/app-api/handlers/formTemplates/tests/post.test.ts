@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { testEvent } from "../../../test-util/testEvents";
 import { AppRoles, APIGatewayProxyEvent } from "../../../types";
 import dynamodbLib from "../../../libs/dynamodb-lib";

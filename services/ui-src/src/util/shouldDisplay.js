@@ -104,10 +104,8 @@ const hideIfTableValue = (
   let result;
 
   // Loop through variations and check is threshold is met
-  /* eslint-disable no-plusplus */
   for (let i = 0; i < variations.length; i++) {
     // Loop through table rows for matches
-    /* eslint-disable no-plusplus */
     for (let j = 0; j < computedValues.length; j++) {
       // Check if current variation corresponds with targetValue row
       let rowValue;
@@ -116,7 +114,6 @@ const hideIfTableValue = (
       } else {
         rowValue = parseFloat(variations[i].row, 10);
       }
-      /* eslint-disable no-plusplus */
       if (rowValue === "*" || rowValue === j) {
         // get row key
         const rowKey = parseFloat(variations[i].row_key, 10);

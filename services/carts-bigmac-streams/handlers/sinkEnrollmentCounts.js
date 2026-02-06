@@ -13,7 +13,6 @@ import { buildClient, convertToDynamoExpression } from "../libs/dynamo-lib.js";
 export async function handler(event, _context, _callback) {
   const records = getRecords(event);
   if (records.length === 0) {
-    // eslint-disable-next-line no-console
     console.log(`Ignoring event: no data in event.records[topic]`);
     return;
   }
@@ -29,7 +28,6 @@ export async function handler(event, _context, _callback) {
       value.NewImage.quarter === 4
     ) {
       try {
-        // eslint-disable-next-line no-console
         console.log("Sink message received", value);
         const indexToUpdate =
           value.NewImage.enrollmentCounts.year === currentYear ? 2 : 1;
@@ -58,7 +56,6 @@ export async function handler(event, _context, _callback) {
 
         await updateEnrollment(pk, entryKey, enrollmentEntry, dynamoClient);
       } catch (error) {
-        // eslint-disable-next-line no-console
         console.log(error);
       }
     }

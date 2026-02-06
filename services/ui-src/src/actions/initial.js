@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle, no-console */
 import { getProgramData, getStateData, getUserData } from "../store/stateUser";
 import { apiLib } from "../util/apiLib";
 

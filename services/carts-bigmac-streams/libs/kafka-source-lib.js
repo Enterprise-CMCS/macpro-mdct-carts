@@ -110,19 +110,16 @@ export class KafkaSourceLib {
     }
 
     if (!connected) {
-      // eslint-disable-next-line no-console
       console.log("Attempting connection...");
       await producer.connect();
       connected = true;
     }
-    // eslint-disable-next-line no-console
     console.log("Raw event", this.stringify(event, true));
 
     if (event.Records) {
       const outboundEvents = this.createOutboundEvents(event.Records);
 
       const topicMessages = Object.values(outboundEvents);
-      // eslint-disable-next-line no-console
       console.log(
         `Batch configuration: ${this.stringify(topicMessages, true)}`
       );
@@ -130,7 +127,6 @@ export class KafkaSourceLib {
       await producer.sendBatch({ topicMessages });
     }
 
-    // eslint-disable-next-line no-console
     console.log(`Successfully processed ${event.Records.length} records.`);
   }
 }

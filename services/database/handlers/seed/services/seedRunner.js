@@ -9,13 +9,11 @@ let dynamoPrefix;
 
 const runSeed = async (seedInstructions) => {
   const { name, data, tableNameBuilder, keys } = seedInstructions;
-  // eslint-disable-next-line no-console
   console.log(`  - ${name}: Seeding`);
 
   const tableName = tableNameBuilder(dynamoPrefix);
   if (!data || data.length <= 0) return;
 
-  // eslint-disable-next-line no-console
   console.log(`  -  ${tableName}: Updating ${data.length} entries`);
   await updateItems(tableName, data, keys);
 };
@@ -37,7 +35,6 @@ const updateItems = async (tableName, items, keys) => {
       await dynamoClient.send(new UpdateCommand(params));
     }
   } catch (e) {
-    // eslint-disable-next-line no-console
     console.log(` -- ERROR UPLOADING ${tableName}\n`, e);
   }
 };
@@ -66,10 +63,10 @@ const buildSeedRunner = () => {
   const dynamoConfig = {
     region: "us-east-1",
     logger: {
-      debug: console.debug, // eslint-disable-line no-console
-      info: console.info, // eslint-disable-line no-console
-      warn: console.warn, // eslint-disable-line no-console
-      error: console.error, // eslint-disable-line no-console
+      debug: console.debug,
+      info: console.info,
+      warn: console.warn,
+      error: console.error,
     },
     endpoint: process.env.AWS_ENDPOINT_URL,
   };

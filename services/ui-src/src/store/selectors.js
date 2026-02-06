@@ -1,6 +1,6 @@
 import jsonpath from "../util/jsonpath";
 import { REPORT_STATUS, AppRoles } from "../types";
-import { selectFragment } from "./formData"; // eslint-disable-line
+import { selectFragment } from "./formData";
 import { shouldDisplay } from "../util/shouldDisplay";
 import statesArray from "../components/utils/statesArray";
 
@@ -165,7 +165,7 @@ export const selectSectionsForNav = (formData) => {
         id,
         ordinal,
         title,
-        subsections: subsections.map(({ id, title }) => ({ id, title })), // eslint-disable-line no-shadow
+        subsections: subsections.map(({ id, title }) => ({ id, title })),
       })
     );
   }
@@ -252,7 +252,7 @@ export const { selectFormStatus, selectFormStatuses } = (() => {
         allReportStatuses[0][0] !== "status"
       ) {
         returnObject = Object.entries(state.reportStatus).map(
-          // eslint-disable-next-line
+          // oxlint-disable-next-line no-empty-pattern
           ([{}, { status, year, stateCode, lastChanged, username }]) => ({
             state: statesArray.find(({ value }) => value === stateCode)?.label,
             stateCode,

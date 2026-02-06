@@ -5,8 +5,8 @@ import { failure, success, buildResponse } from "./response-lib";
 import { NotFoundError, UnauthorizedError } from "./httpErrors";
 
 type LambdaFunction = (
-  event: APIGatewayProxyEvent, // eslint-disable-line no-unused-vars
-  context: any // eslint-disable-line no-unused-vars
+  event: APIGatewayProxyEvent,
+  context: any
 ) => Promise<any>;
 
 export default function handler(lambda: LambdaFunction) {
