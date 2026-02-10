@@ -20,7 +20,7 @@
     "@aws-sdk/lib-dynamodb": "^3.985.0",
     "@aws-sdk/s3-request-presigner": "^3.985.0",
     "dompurify": "^3.2.7",
-    "happy-dom": "^17.4.4",
+    "happy-dom": "^20.0.2",
     "jsonpath-plus": "^10.3.0",
     "jsonschema": "^1.5.0",
     "jwt-decode": "^4.0.0"
