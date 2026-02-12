@@ -84,6 +84,7 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     ...Object.fromEntries(
       tables.map((table) => [`${table.node.id}Table`, table.table.tableName])
     ),
+    ...(isLocalStack && { AWS_ENDPOINT_URL: process.env.AWS_ENDPOINT_URL }),
   };
 
   const commonProps = {
