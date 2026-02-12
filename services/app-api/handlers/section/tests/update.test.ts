@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { updateSections } from "../update";
 import dbLib from "../../../libs/dynamodb-lib";
 import { testEvent } from "../../../test-util/testEvents";

@@ -20,19 +20,17 @@ import { MODE, BASE_URL } from "./util/metaEnv";
 
 const isLocalhost = Boolean(
   window.location.hostname === "localhost" ||
-    // [::1] is the IPv6 localhost address.
-    window.location.hostname === "[::1]" ||
-    // 127.0.0.0/8 are considered localhost for IPv4.
-    window.location.hostname.match(
-      /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
-    )
+  // [::1] is the IPv6 localhost address.
+  window.location.hostname === "[::1]" ||
+  // 127.0.0.0/8 are considered localhost for IPv4.
+  window.location.hostname.match(
+    /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
+  )
 );
 
 export function register(config) {
-  // eslint-disable-next-line no-undef
   if (MODE === "production" && "serviceWorker" in navigator) {
     // The URL constructor is available in all browsers that support SW.
-    // eslint-disable-next-line no-undef
     const publicUrl = new URL(BASE_URL, window.location.href);
     if (publicUrl.origin !== window.location.origin) {
       /*
@@ -44,7 +42,6 @@ export function register(config) {
     }
 
     window.addEventListener("load", () => {
-      // eslint-disable-next-line no-undef
       const swUrl = `${BASE_URL}/service-worker.js`;
 
       if (isLocalhost) {
@@ -103,7 +100,7 @@ function registerValidSW(swUrl, config) {
       };
     })
     .catch((error) => {
-      console.error("Error during service worker registration:", error); // eslint-disable-line no-console
+      console.error("Error during service worker registration:", error);
     });
 }
 
@@ -131,11 +128,9 @@ function checkValidServiceWorker(swUrl, config) {
       }
     })
     .catch(() => {
-      /* eslint-disable no-console */
       console.log(
         "No internet connection found. App is running in offline mode."
       );
-      /* eslint-enable no-console */
     });
 }
 
@@ -146,7 +141,7 @@ export function unregister() {
         registration.unregister();
       })
       .catch((error) => {
-        console.error(error.message); // eslint-disable-line no-console
+        console.error(error.message);
       });
   }
 }

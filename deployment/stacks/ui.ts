@@ -1,4 +1,3 @@
-/* eslint-disable multiline-comment-style */
 import { Construct } from "constructs";
 import {
   aws_certificatemanager as acm,
@@ -10,8 +9,8 @@ import {
   Duration,
   RemovalPolicy,
 } from "aws-cdk-lib";
-import { WafConstruct } from "../constructs/waf";
-import { isLocalStack } from "../local/util";
+import { WafConstruct } from "../constructs/waf.ts";
+import { isLocalStack } from "../local/util.ts";
 
 interface CreateUiComponentsProps {
   scope: Construct;

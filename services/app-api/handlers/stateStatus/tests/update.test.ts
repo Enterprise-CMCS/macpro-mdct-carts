@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { updateStateStatus } from "../update";
 import { testEvent } from "../../../test-util/testEvents";
 import { AppRoles, APIGatewayProxyEvent } from "../../../types";

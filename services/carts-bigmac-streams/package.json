@@ -1,13 +1,15 @@
 {
   "name": "carts-bigmac-streams",
   "version": "1.0.0",
-  "main": "index.js",
-  "type": "module",
   "description": "",
+  "license": "CC0-1.0",
+  "type": "module",
+  "main": "index.js",
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.887.0",
-    "@aws-sdk/lib-dynamodb": "^3.887.0",
-    "@aws-sdk/util-dynamodb": "^3.887.0",
+    "@aws-sdk/client-dynamodb": "^3.985.0",
+    "@aws-sdk/lib-dynamodb": "^3.985.0",
+    "@aws-sdk/util-dynamodb": "^3.985.0",
     "kafkajs": "^2.2.4"
-  }
+  },
+  "packageManager": "yarn@4.12.0"
 }

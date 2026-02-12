@@ -128,7 +128,7 @@ describe("<Ranges />", () => {
     const rangeEndInput = screen.getByLabelText("Mock Range End");
     await userEvent.type(rangeEndInput, "5");
 
-    expect(defaultProps.onChange).toBeCalled();
+    expect(defaultProps.onChange).toHaveBeenCalled();
     const evt = defaultProps.onChange.mock.calls[0][0];
     expect(evt).toEqual({
       target: {

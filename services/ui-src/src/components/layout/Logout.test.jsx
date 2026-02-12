@@ -15,6 +15,6 @@ describe("<Logout />", () => {
   test("triggers logout on click event", () => {
     const { getByTestId } = render(logoutComponent);
     fireEvent.click(getByTestId("logout"));
-    expect(mockLogout).toBeCalled();
+    expect(mockLogout).toHaveBeenCalled();
   });
 });

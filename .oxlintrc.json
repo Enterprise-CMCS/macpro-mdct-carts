@@ -1,0 +1,22 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["unicorn", "typescript", "oxc", "react"],
+  "rules": {
+    // ESLint
+    "no-duplicate-imports": "error",
+    "no-empty": "error",
+    "no-restricted-globals": "error",
+    "no-unreachable": "error",
+    "no-unused-expressions": "off",
+    "no-useless-escape": "off",
+
+    // Unicorn
+    "no-new-array": "off",
+
+    // React
+    "rules-of-hooks": "error",
+    "exhaustive-deps": "off",
+    "jsx-key": "off",
+    "no-children-prop": "error"
+  }
+}

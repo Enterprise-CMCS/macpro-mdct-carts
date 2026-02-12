@@ -13067,7 +13067,9 @@
                           }
                         ],
                         [
-                          { "contents": "PMPM Costs - Medicaid Expansion CHIP" },
+                          {
+                            "contents": "PMPM Costs - Medicaid Expansion CHIP"
+                          },
                           {
                             "actions": ["identity"],
                             "targets": [

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { expect, Page, test as setup } from "@playwright/test";
 import { STATE_USER_HOME_HEADING } from "../../utils";
 

@@ -2,9 +2,9 @@ import {
   CloudFormationClient,
   DescribeStacksCommand,
 } from "@aws-sdk/client-cloudformation";
-import { writeLocalUiEnvFile } from "./write-ui-env-file.js";
-import { runCommand } from "../lib/runner.js";
-import { region } from "./consts.js";
+import { writeLocalUiEnvFile } from "./write-ui-env-file.ts";
+import { runCommand } from "../lib/runner.ts";
+import { project, region } from "./consts.ts";
 
 export const getCloudFormationStackOutputValues = async (
   stackName: string
@@ -68,7 +68,9 @@ const buildUiEnvObject = (
 };
 
 export const runFrontendLocally = async (stage: string) => {
-  const outputs = await getCloudFormationStackOutputValues(`carts-${stage}`);
+  const outputs = await getCloudFormationStackOutputValues(
+    `${project}-${stage}`
+  );
   const envVars = buildUiEnvObject(stage, outputs);
   await writeLocalUiEnvFile(envVars);
 

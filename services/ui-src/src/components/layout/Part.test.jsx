@@ -120,6 +120,6 @@ describe("<Part />", () => {
     render(buildPart("2020-00-a-02"));
     const title = screen.queryByTestId("part-header");
     screen.conta;
-    expect(title).toBeNull;
+    expect(title).toBeNull();
   });
 });

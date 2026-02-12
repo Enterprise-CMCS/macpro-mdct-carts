@@ -272,6 +272,7 @@ export const sectionSchema = {
           },
         },
       },
+      // oxlint-disable-next-line no-thenable
       then: {
         properties: {
           id: {

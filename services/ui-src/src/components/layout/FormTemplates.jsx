@@ -19,7 +19,7 @@ const FormTemplates = () => {
       await apiLib.post("/formTemplates", opts);
       window.alert("Request Completed");
       navigate("/");
-    } catch (e) {
+    } catch {
       window.alert("Error - Contact Support");
     }
     setInprogress(false);

@@ -93,8 +93,8 @@ describe("<UploadComponent />", () => {
     const uploadButton = screen.getByText("Upload");
     await userEvent.click(uploadButton);
 
-    expect(fileApi.recordFileInDatabaseAndGetUploadUrl).toBeCalled();
-    expect(fileApi.uploadFileToS3).toBeCalled();
+    expect(fileApi.recordFileInDatabaseAndGetUploadUrl).toHaveBeenCalled();
+    expect(fileApi.uploadFileToS3).toHaveBeenCalled();
   });
 
   test("Should upload multiple files to the DB and S3", async () => {
@@ -106,8 +106,10 @@ describe("<UploadComponent />", () => {
     const uploadButton = screen.getByText("Upload");
     await userEvent.click(uploadButton);
 
-    expect(fileApi.recordFileInDatabaseAndGetUploadUrl).toBeCalledTimes(3);
-    expect(fileApi.uploadFileToS3).toBeCalledTimes(3);
+    expect(fileApi.recordFileInDatabaseAndGetUploadUrl).toHaveBeenCalledTimes(
+      3
+    );
+    expect(fileApi.uploadFileToS3).toHaveBeenCalledTimes(3);
   });
 
   /**
@@ -340,7 +342,7 @@ describe("<UploadComponent />", () => {
     const deleteButton = await screen.findByText("Delete");
     await userEvent.click(deleteButton);
 
-    expect(fileApi.deleteUploadedFile).toBeCalled();
+    expect(fileApi.deleteUploadedFile).toHaveBeenCalled();
   });
 
   test.skip("Should not allow admin users to upload files", () => {
