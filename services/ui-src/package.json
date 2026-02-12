@@ -21,7 +21,7 @@
     "aws-amplify": "^6.16.2",
     "date-fns": "^4.1.0",
     "font-awesome": "^4.7.0",
-    "jsonpath": "^1.2.0",
+    "jsonpath": "^1.2.1",
     "launchdarkly-react-client-sdk": "^3.8.1",
     "mathjs": "^14.7.0",
     "prop-types": "^15.8.1",
