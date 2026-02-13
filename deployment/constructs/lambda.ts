@@ -61,6 +61,7 @@ export class Lambda extends Construct {
           .digest("hex"),
         minify: true,
         sourceMap: true,
+        nodeModules: ["jsdom"],
       },
       logGroup,
       ...restProps,
