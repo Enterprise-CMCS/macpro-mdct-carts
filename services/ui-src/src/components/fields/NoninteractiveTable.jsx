@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from "uuid";
 
 const NoninteractiveTable = ({ question }) => {
   const columnWidth = 100 / question.fieldset_info.headers.length;
-  // eslint-disable-next-line
   let percentLocation = [];
   let count = -1;
   return (
@@ -112,7 +111,6 @@ const NoninteractiveTable = ({ question }) => {
                         {value.toLocaleString()}%
                       </td>
                     );
-                    // eslint-disable-next-line
                   } else {
                     if (index === 0) {
                       value.toLocaleString();

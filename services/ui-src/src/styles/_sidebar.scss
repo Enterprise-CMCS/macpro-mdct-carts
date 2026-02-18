@@ -7,7 +7,6 @@
 .sidebar {
   margin: (variables.$margin * 3) 0;
 
-
   .skip-content {
     margin-bottom: (variables.$margin * 3);
   }
@@ -26,7 +25,7 @@
   .state-name {
     font-size: 1.6rem;
     font-weight: variables.$font-weight-semi-bold;
-    overflow-wrap: anywhere; 
+    overflow-wrap: anywhere;
   }
 
   .ds-c-vertical-nav__label {

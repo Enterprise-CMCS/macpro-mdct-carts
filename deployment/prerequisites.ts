@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // This file is managed by macpro-mdct-core so if you'd like to change it let's do it there
-import "source-map-support/register";
+import "source-map-support/register.js";
 import {
   App,
   aws_apigateway as apigateway,
@@ -8,14 +8,14 @@ import {
   aws_iam as iam,
   DefaultStackSynthesizer,
   Stack,
-  StackProps,
   Tags,
+  type StackProps,
 } from "aws-cdk-lib";
-import { CloudWatchLogsResourcePolicy } from "./constructs/cloudwatch-logs-resource-policy";
-import { loadDefaultSecret } from "./deployment-config";
 import { Construct } from "constructs";
-import { isLocalStack } from "./local/util";
-import { tryImport } from "./utils/misc";
+import { CloudWatchLogsResourcePolicy } from "./constructs/cloudwatch-logs-resource-policy.ts";
+import { loadDefaultSecret } from "./deployment-config.ts";
+import { isLocalStack } from "./local/util.ts";
+import { tryImport } from "./utils/misc.ts";
 
 interface PrerequisiteConfigProps {
   project: string;

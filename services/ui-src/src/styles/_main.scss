@@ -13,16 +13,16 @@ body,
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family:
+    source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 .App {
@@ -398,7 +398,7 @@ img {
 .profile-information {
   margin-block: 1.2rem;
 
-  &>div:nth-child(even) {
+  & > div:nth-child(even) {
     background-color: #efefef;
   }
 
@@ -421,7 +421,7 @@ img {
 }
 
 .report-status {
-  &>div:nth-child(even) {
+  & > div:nth-child(even) {
     background-color: #efefef;
   }
 }
@@ -438,7 +438,7 @@ img {
   display: block;
   margin-top: 16px;
 
-  &~.filter-drop-down {
+  & ~ .filter-drop-down {
     margin-top: 24px;
 
     @media screen and (min-width: 768px) {

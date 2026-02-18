@@ -17,6 +17,8 @@
 
   &:focus-visible {
     top: variables.$padding;
-    box-shadow: 0 0 0 3px variables.$white,0 0 4px 6px variables.$color-focus !important;
+    box-shadow:
+      0 0 0 3px variables.$white,
+      0 0 4px 6px variables.$color-focus !important;
   }
 }

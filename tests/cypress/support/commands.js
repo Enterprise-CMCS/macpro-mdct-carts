@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import "cypress-file-upload";
 
 before(() => {

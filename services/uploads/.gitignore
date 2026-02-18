@@ -1,12 +1,2 @@
 # package directories
 node_modules
-jspm_packages
-
-*.zip
-
-# ClamAV
-*.so.*
-*.so*
-clamscan
-freshclam
-*.chk*

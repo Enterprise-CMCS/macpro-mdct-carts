@@ -14,11 +14,11 @@ legend {
 }
 
 .label-radio {
-  margin: .5rem;
+  margin: 0.5rem;
 }
 
 input.ds-c-field {
-  display: block
+  display: block;
 }
 
 .ds-u-color--error {
@@ -129,15 +129,15 @@ input.ds-c-field {
   margin-top: variables.$margin * 3;
 }
 
-input[type=checkbox]+label,
-input[type=radio]+label {
+input[type="checkbox"] + label,
+input[type="radio"] + label {
   display: inline;
 }
 
 .radio-container {
   display: block;
 
-  &>input {
+  & > input {
     display: inline-block;
   }
 
@@ -245,8 +245,8 @@ input[type=radio]+label {
     }
   }
 
-  .date-range fieldset>div div:nth-of-type(2),
-  .date-range fieldset>div span:first-of-type {
+  .date-range fieldset > div div:nth-of-type(2),
+  .date-range fieldset > div span:first-of-type {
     display: none;
   }
 
@@ -462,7 +462,7 @@ input[type=radio]+label {
     }
 
     .print-options {
-      &>div {
+      & > div {
         display: inline-block;
         padding: 0 1.2rem;
         width: auto;
@@ -506,10 +506,9 @@ input[type=radio]+label {
 }
 
 .date-range {
-
   .date-range-start-wrapper,
   .date-range-end-wrapper {
-    &>div {
+    & > div {
       display: inline-block;
       width: auto;
     }
@@ -535,13 +534,13 @@ input[type=radio]+label {
     color: variables.$black;
   }
 
-  .ds-c-choice:disabled+label:before {
+  .ds-c-choice:disabled + label:before {
     background: variables.$white;
   }
 
-  .ds-c-choice:checked+label:before {
+  .ds-c-choice:checked + label:before {
     background-color: variables.$white;
-    background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22gray%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M20.285%202l-11.285%2011.567-5.286-5.011-3.714%203.716%209%208.728%2015-15.285z%22%2F%3E%3C%2Fsvg%3E');
+    background-image: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22gray%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M20.285%202l-11.285%2011.567-5.286-5.011-3.714%203.716%209%208.728%2015-15.285z%22%2F%3E%3C%2Fsvg%3E");
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: 24px;
@@ -571,13 +570,13 @@ input[type=radio]+label {
       color: variables.$black;
     }
 
-    .ds-c-choice:disabled+label:before {
+    .ds-c-choice:disabled + label:before {
       background: variables.$white;
     }
 
-    .ds-c-choice:checked+label:before {
+    .ds-c-choice:checked + label:before {
       background-color: variables.$white;
-      background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22gray%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M20.285%202l-11.285%2011.567-5.286-5.011-3.714%203.716%209%208.728%2015-15.285z%22%2F%3E%3C%2Fsvg%3E');
+      background-image: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22gray%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M20.285%202l-11.285%2011.567-5.286-5.011-3.714%203.716%209%208.728%2015-15.285z%22%2F%3E%3C%2Fsvg%3E");
       background-position: 50%;
       background-repeat: no-repeat;
       background-size: 24px;

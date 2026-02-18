@@ -103,7 +103,6 @@ describe("Test Print PDF handler", () => {
     const res = await print(event, null);
 
     expect(res.statusCode).toBe(500);
-    // eslint-disable-next-line no-console
     expect(console.warn).toHaveBeenCalledWith(
       expect.any(Date),
       expect.stringContaining("It broke.")

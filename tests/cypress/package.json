@@ -2,21 +2,21 @@
   "name": "cypress-tests",
   "version": "1.0.0",
   "description": "",
+  "license": "ISC",
+  "author": "",
   "main": "index.js",
   "scripts": {
-    "cypress": "cypress open",
     "start": "cd ../../ && ./run local && cd -",
-    "test:ci": "cypress install && cypress run --browser chrome --headless",
-    "test": "concurrently --kill-others \"npm start\" \"npm run cypress\""
+    "test:ci": "yarn cypress install && yarn cypress run --browser chrome --headless",
+    "test": "concurrently --kill-others \"yarn start\" \"yarn cypress open\""
   },
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
-    "axe-core": "^4.10.3",
-    "concurrently": "^9.1.2",
-    "cypress": "^15.3.0",
-    "cypress-axe": "^1.6.0",
+    "axe-core": "^4.11.0",
+    "concurrently": "^9.2.1",
+    "cypress": "^15.10.0",
+    "cypress-axe": "^1.7.0",
     "cypress-file-upload": "^5.0.8",
-    "dotenv": "^17.2.2"
-  }
+    "dotenv": "^17.2.3"
+  },
+  "packageManager": "yarn@4.12.0"
 }

@@ -3,7 +3,6 @@ import statesArray from "../components/utils/statesArray";
 // Storing global variables that will be the same regardless of users
 const earliestYear = 2020;
 
-// eslint-disable-next-line no-extend-native
 String.prototype.containsAny =
   String.prototype.containsAny ||
   function (arr) {

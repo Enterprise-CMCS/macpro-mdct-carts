@@ -26,7 +26,7 @@ export const UserProvider = ({ children }) => {
       localStorage.removeItem("mdctcarts_session_exp");
       await logoutUser();
     } catch (error) {
-      console.log("error signing out: ", error); // eslint-disable-line no-console
+      console.log("error signing out: ", error);
     }
   }, []);
 
@@ -59,7 +59,7 @@ export const UserProvider = ({ children }) => {
       };
       setUser(currentUser);
       dispatch(loadUser(currentUser));
-    } catch (e) {
+    } catch {
       if (isProduction) {
         await authenticateWithIDM();
       } else {

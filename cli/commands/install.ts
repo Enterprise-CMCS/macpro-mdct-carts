@@ -1,5 +1,5 @@
 // This file is managed by macpro-mdct-core so if you'd like to change it let's do it there
-import { runCommand } from "../lib/runner.js";
+import { runCommand } from "../lib/runner.ts";
 import { readdir } from "node:fs/promises";
 import { join } from "node:path";
 
@@ -7,7 +7,7 @@ async function* findPackageJsonDirectories(
   directory: string
 ): AsyncGenerator<string> {
   const SKIP_DIRECTORIES = [".git", ".cdk", "node_modules"];
-  for (let entry of await readdir(directory, { withFileTypes: true })) {
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
     if (entry.isDirectory() && !SKIP_DIRECTORIES.includes(entry.name)) {
       yield* findPackageJsonDirectories(join(directory, entry.name));
     } else if (entry.isFile() && entry.name === "package.json") {
@@ -18,12 +18,14 @@ async function* findPackageJsonDirectories(
 
 export const installDeps = async () => {
   for await (const dir of findPackageJsonDirectories(".")) {
-    await runCommand(
-      `yarn install ${dir}`,
-      ["yarn", "--silent", "install", "--frozen-lockfile"],
-      dir,
-      { quiet: true }
-    );
+    const commandPieces = ["yarn", "install"];
+    if (process.env.CI === "true") {
+      commandPieces.push("--immutable");
+    }
+
+    await runCommand(`yarn install ${dir}`, commandPieces, dir, {
+      quiet: true,
+    });
   }
 };
 

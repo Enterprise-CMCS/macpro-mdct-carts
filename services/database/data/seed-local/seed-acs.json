@@ -47,7 +47,7 @@
     "percentUninsured": 1.9,
     "percentUninsuredMoe": 0.3
   },
-    {
+  {
     "stateId": "AL",
     "year": 2023,
     "numberUninsured": 24000,

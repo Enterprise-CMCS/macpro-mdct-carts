@@ -13,6 +13,7 @@ import config from "./config";
 import { asyncWithLDProvider } from "launchdarkly-react-client-sdk";
 
 // Internet Explorer
+// oxlint-disable-next-line no-constant-binary-expression
 const isIE = /*@cc_on!@*/ false || !!document.documentMode;
 
 // Edge

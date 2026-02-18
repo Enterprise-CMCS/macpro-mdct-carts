@@ -1,5 +1,4 @@
 .idea/
-.vscode/
 .infra
 .dynamodb
 .yarn_install
@@ -25,3 +24,6 @@ cdk.context.json
 .qlty/*
 !.qlty/qlty.toml
 /cli/dist
+**/.yarn/*
+services/ui-src/public/env-config.ts
+.vscode/settings.json

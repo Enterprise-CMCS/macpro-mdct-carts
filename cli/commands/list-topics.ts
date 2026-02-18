@@ -1,13 +1,10 @@
 // This file is managed by macpro-mdct-core so if you'd like to change it let's do it there
-import { Argv } from "yargs";
+import { type Argv } from "yargs";
 import { InvokeCommand, LambdaClient } from "@aws-sdk/client-lambda";
-import { project, region } from "../lib/consts.js";
-import { getCloudFormationStackOutputValues } from "../lib/utils.js";
+import { project, region } from "../lib/consts.ts";
+import { getCloudFormationStackOutputValues } from "../lib/utils.ts";
 
-export const list_topics = async (options: {
-  stage: string;
-  quiet: boolean;
-}) => {
+export const list_topics = async (options: { stage: string }) => {
   const lambdaClient = new LambdaClient({ region });
 
   const outputs = await getCloudFormationStackOutputValues(
@@ -26,11 +23,7 @@ export const list_topics = async (options: {
     const response = await lambdaClient.send(command);
     const result = Buffer.from(response.Payload || []).toString();
 
-    if (options.quiet) {
-      console.log(result);
-    } else {
-      console.log("listTopics response:", result);
-    }
+    console.log(result);
   }
 };
 
@@ -38,12 +31,6 @@ export const listTopics = {
   command: "list-topics",
   describe: "list topics for the stage",
   builder: (yargs: Argv) =>
-    yargs
-      .option("stage", { type: "string", demandOption: true })
-      .option("quiet", {
-        type: "boolean",
-        demandOption: false,
-        default: false,
-      }),
+    yargs.option("stage", { type: "string", demandOption: true }),
   handler: list_topics,
 };

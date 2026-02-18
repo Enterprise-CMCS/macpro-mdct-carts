@@ -170,11 +170,31 @@ yarn pa11y <url-endpoint>
 
 Cypress `a11y` tests use [cypress-axe](https://github.com/component-driven/cypress-axe)
 
-### Prettier Linter
+### oxfmt
 
-We use Prettier to format all code. This runs as part of a Git Hook and changes to files will cause the deploy to fail. If you followed the instructions above this is already installed and configured.
+---
 
-Most IDEs have a Prettier plugin that can be configured to run on file save. You can also run the format check manually from the IDE or invoking Prettier on the command line.
+This repo uses the code formatter [oxfmt](https://oxc.rs/docs/guide/usage/formatter.html). The formatter is run automatically in a pre-commit hook. Additionally, oxfmt can be run on file save in many IDEs or run ad hoc from the command line.
+
+#### oxfmt with VS Code
+
+---
+
+The oxc extension can be downloaded from the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=oxc.oxc-vscode).
+
+Once installed, open VS Code's Preferences. Search for "Format on Save". Clicking the checkbox should engage the oxfmt formatter on file save.
+
+VS Code is used almost ubiquitously across the current development team, generally speaking this tools should also work for most other IDEs.
+
+#### oxfmt CLI
+
+---
+
+Using this command, or a variant of it, will format all matching files in the codebase and write the changes. oxfmt has complete [CLI documentation](https://oxc.rs/docs/guide/usage/formatter.html) on their website.
+
+```bash
+npx yarn oxfmt
+```
 
 ## Slack Webhooks
 
@@ -185,7 +205,6 @@ This repository uses 3 webhooks to publish to 3 different channels all in CMS Sl
 - INTEGRATIONS_SLACK_WEBHOOK: This is used to publish new pull requests to the `mdct-integrations-channel`
 
 - PROD_RELEASE_SLACK_WEBHOOK: This is used to publish to the `mdct-prod-releases` channel upon successful release of CARTS to production.
-
   - Webhooks are created by CMS tickets, populated into GitHub Secrets
 
 ## GitHub Actions Secret Management

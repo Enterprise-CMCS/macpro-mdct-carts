@@ -381,28 +381,28 @@
     "username": "cypressstateuser@test.com",
     "attributes": [
       {
-          "Name": "email",
-          "Value": "cypressstateuser@test.com"
+        "Name": "email",
+        "Value": "cypressstateuser@test.com"
       },
       {
-          "Name": "given_name",
-          "Value": "CypressAutomatedIntegrationTests"
+        "Name": "given_name",
+        "Value": "CypressAutomatedIntegrationTests"
       },
       {
-          "Name": "family_name",
-          "Value": "State"
+        "Name": "family_name",
+        "Value": "State"
       },
       {
-          "Name": "email_verified",
-          "Value": "true"
+        "Name": "email_verified",
+        "Value": "true"
       },
       {
-          "Name": "custom:cms_roles",
-          "Value": "mdctcarts-state-user"
+        "Name": "custom:cms_roles",
+        "Value": "mdctcarts-state-user"
       },
       {
-          "Name": "custom:cms_state",
-          "Value": "AL"
+        "Name": "custom:cms_state",
+        "Value": "AL"
       }
     ]
   },
@@ -410,24 +410,24 @@
     "username": "cypressadminuser@test.com",
     "attributes": [
       {
-          "Name": "email",
-          "Value": "cypressadminuser@test.com"
+        "Name": "email",
+        "Value": "cypressadminuser@test.com"
       },
       {
-          "Name": "given_name",
-          "Value": "CypressAutomatedIntegrationTests"
+        "Name": "given_name",
+        "Value": "CypressAutomatedIntegrationTests"
       },
       {
-          "Name": "family_name",
-          "Value": "Admin"
+        "Name": "family_name",
+        "Value": "Admin"
       },
       {
-          "Name": "email_verified",
-          "Value": "true"
+        "Name": "email_verified",
+        "Value": "true"
       },
       {
-          "Name": "custom:cms_roles",
-          "Value": "mdctcarts-project-officer"
+        "Name": "custom:cms_roles",
+        "Value": "mdctcarts-project-officer"
       }
     ]
   }
