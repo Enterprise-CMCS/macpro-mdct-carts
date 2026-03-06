@@ -39,10 +39,13 @@ export const getAllStateStatuses = () => async (dispatch) => {
       }
       return 0;
     })
-    .filter((status, index, original) =>
-      original
-        .slice(index + 1)
-        .some((el) => el.stateId === status.stateId && el.year === status.year)
+    .filter(
+      (status, index, original) =>
+        !original
+          .slice(index + 1)
+          .some(
+            (el) => el.stateId === status.stateId && el.year === status.year
+          )
     )
     .reduce((out, record) => {
       out[record.stateId + record.year] = {
@@ -84,12 +87,13 @@ export const getStateAllStatuses =
       .filter(stateFilter)
       .filter(statusFilter)
       .toSorted((a, b) => (a.year < b.year ? 1 : -1))
-      .filter((status, index, original) =>
-        original
-          .slice(index + 1)
-          .some(
-            (el) => el.stateId === status.stateId && el.year === status.year
-          )
+      .filter(
+        (status, index, original) =>
+          !original
+            .slice(index + 1)
+            .some(
+              (el) => el.stateId === status.stateId && el.year === status.year
+            )
       )
       .reduce((out, record) => {
         out[record.stateId + record.year] = {
