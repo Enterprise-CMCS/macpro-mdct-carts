@@ -38,31 +38,31 @@ const Homepage = ({ reportStatus }) => {
     const actionLinkURL = `sections/${year}/00`;
 
     switch (headKey) {
-      case "year": {
+      case "year":
         return (
           <span className="cell-bolded">
             <span className="cell-header">Year: </span>
             {value}
           </span>
         );
-      }
-      case "statusText": {
+
+      case "statusText":
         return (
           <>
             <span className="cell-header">Status: </span>
             {value}
           </>
         );
-      }
-      case "lastEdited": {
+
+      case "lastEdited":
         return (
           <>
             <span className="cell-header">Last Edited: </span>
             {value}
           </>
         );
-      }
-      case "actions": {
+
+      case "actions":
         return (
           <ReportItemLinks
             actionLinkText={actionLinkText}
@@ -73,7 +73,7 @@ const Homepage = ({ reportStatus }) => {
             year={year}
           />
         );
-      }
+
       default:
         return value;
     }

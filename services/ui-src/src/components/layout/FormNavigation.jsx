@@ -11,7 +11,7 @@ import { selectSectionsForNav } from "../../store/selectors";
 //types
 import { AppRoles } from "../../types";
 
-const idToUrl = (id) => `/sections/${id.replace(/-/g, "/")}`;
+const idToUrl = (id) => `/sections/${id.replaceAll("-", "/")}`;
 
 const FormNavigation = () => {
   const navigate = useNavigate();

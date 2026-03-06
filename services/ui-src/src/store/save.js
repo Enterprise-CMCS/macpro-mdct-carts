@@ -9,6 +9,7 @@ const initial = {
   saving: false,
 };
 
+// oxlint-disable-next-line no-anonymous-default-export
 export default (state = initial, action) => {
   switch (action.type) {
     case SAVE_STARTED:

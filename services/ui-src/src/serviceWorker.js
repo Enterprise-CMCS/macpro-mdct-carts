@@ -65,12 +65,12 @@ function registerValidSW(swUrl, config) {
   navigator.serviceWorker
     .register(swUrl)
     .then((registration) => {
-      registration.onupdatefound = () => {
+      registration.addEventListener("updatefound", () => {
         const installingWorker = registration.installing;
         if (installingWorker == null) {
           return;
         }
-        installingWorker.onstatechange = () => {
+        installingWorker.addEventListener("statechange", () => {
           if (installingWorker.state === "installed") {
             if (navigator.serviceWorker.controller) {
               /*
@@ -96,8 +96,8 @@ function registerValidSW(swUrl, config) {
               }
             }
           }
-        };
-      };
+        });
+      });
     })
     .catch((error) => {
       console.error("Error during service worker registration:", error);
@@ -114,7 +114,7 @@ function checkValidServiceWorker(swUrl, config) {
       const contentType = response.headers.get("content-type");
       if (
         response.status === 404 ||
-        (contentType != null && contentType.indexOf("javascript") === -1)
+        (contentType != null && contentType.includes("javascript"))
       ) {
         // No service worker found. Probably a different app. Reload the page.
         navigator.serviceWorker.ready.then((registration) => {

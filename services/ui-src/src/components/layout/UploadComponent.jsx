@@ -52,7 +52,7 @@ const UploadComponent = ({ question }) => {
       "xlsx",
       "xls",
     ];
-    return allowedFileTypes.indexOf(extension) > -1;
+    return allowedFileTypes.includes(extension);
   };
 
   const isFileNameValid = (fileName) => {

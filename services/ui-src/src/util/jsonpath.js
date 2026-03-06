@@ -110,16 +110,13 @@ const getExactPath = (data, path) => {
  * object, so these should use the cache. Build those methods here.
  */
 const methodsToWrap = ["apply", "nodes", "parent", "paths", "query", "value"];
-const wrappers = methodsToWrap.reduce(
-  (current, methodName) => ({
-    ...current,
-    [methodName]: (obj, path, ...rest) => {
-      const exactPath = getExactPath(obj, path);
-      return jsonpath[methodName](obj, exactPath, ...rest);
-    },
-  }),
-  {}
-);
+const wrappers = methodsToWrap.reduce((current, methodName) => {
+  current[methodName] = (obj, path, ...rest) => {
+    const exactPath = getExactPath(obj, path);
+    return jsonpath[methodName](obj, exactPath, ...rest);
+  };
+  return current;
+}, {});
 
 // These methods don't do lookups, so we can just pass them straight through.
 wrappers.parse = jsonpath.parse;

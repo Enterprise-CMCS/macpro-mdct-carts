@@ -129,8 +129,8 @@ describe("DynamoDB Library", () => {
     try {
       await dynamoLib.batchWriteItem(mockInput);
       throw new Error("batchWriteItem should not have succeeded");
-    } catch (err: any) {
-      expect(err).toHaveProperty("message", expectedMessage);
+    } catch (error: any) {
+      expect(error).toHaveProperty("message", expectedMessage);
     }
   });
 

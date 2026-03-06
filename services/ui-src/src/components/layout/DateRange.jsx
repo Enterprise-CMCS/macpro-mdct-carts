@@ -148,22 +148,12 @@ const DateRange = ({
 
   // This method checks the first month/year input range and sets any validation errors to state
   const validateStartInput = () => {
-    const startErrorArray = [];
-
-    startErrorArray.push(validateMonth(monthStart));
-    startErrorArray.push(validateYear(yearStart));
-
-    setStartErrorMessage(startErrorArray);
+    setStartErrorMessage([validateMonth(monthStart), validateYear(yearStart)]);
   };
 
   // This method checks the second month/year input range and sets any validation errors to state
   const validateEndInput = () => {
-    const endErrorArray = [];
-
-    endErrorArray.push(validateMonth(monthEnd));
-    endErrorArray.push(validateYear(yearEnd));
-
-    setEndErrorMessage(endErrorArray);
+    setEndErrorMessage([validateMonth(monthEnd), validateYear(yearEnd)]);
   };
 
   // This method takes all user input and sets it to state
@@ -193,7 +183,7 @@ const DateRange = ({
     <div className="date-range" data-test="component-date-range">
       <div className="date-range-start">
         <span className="question-inner-header span-inner-label">
-          {question.answer.labels[0] ? question.answer.labels[0] : "Start"}
+          {question.answer.labels[0] ?? "Start"}
         </span>
         <div className="ds-c-field__hint" aria-label="Date range hint">
           mm/yyyy
@@ -234,7 +224,7 @@ const DateRange = ({
 
       <div className="date-range-start">
         <span className="question-inner-header span-inner-label">
-          {question.answer.labels[1] ? question.answer.labels[1] : "End"}{" "}
+          {question.answer.labels[1] ?? "End"}{" "}
         </span>
         <div className="ds-c-field__hint" aria-label="Date range hint">
           mm/yyyy

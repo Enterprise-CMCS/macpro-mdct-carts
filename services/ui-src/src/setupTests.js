@@ -6,7 +6,7 @@
  */
 import "@testing-library/jest-dom";
 import "jest-axe/extend-expect";
-import { TextEncoder } from "util";
+import { TextEncoder } from "node:util";
 
 global.TextEncoder = TextEncoder;
 

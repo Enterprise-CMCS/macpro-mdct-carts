@@ -94,13 +94,13 @@ export default {
   scanAll: async <Result = CartsDynamoTableType>(
     params: Omit<ScanCommandInput, "ExclusiveStartKey">
   ) => {
-    let items: Result[] = [];
+    const items: Result[] = [];
     let ExclusiveStartKey: any;
 
     do {
       const command = new ScanCommand({ ...params, ExclusiveStartKey });
       const result = await client.send(command);
-      items = items.concat((result.Items as Result[]) ?? []);
+      items.push(...((result.Items as Result[]) ?? []));
       ExclusiveStartKey = result.LastEvaluatedKey;
     } while (ExclusiveStartKey);
 
