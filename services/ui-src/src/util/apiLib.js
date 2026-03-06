@@ -69,10 +69,10 @@ const apiRequest = async (request, path, opts, hasResponseBody) => {
     }
     const res = await body.text(); // body.json() dies on an empty response, spectacularly
     return res && res.length > 0 ? JSON.parse(res) : null;
-  } catch (e) {
+  } catch (error) {
     // Return our own error for handling in the app
-    const info = `Request Failed - ${path} - ${e.response?.body}`;
-    console.log(e);
+    const info = `Request Failed - ${path} - ${error.response?.body}`;
+    console.log(error);
     console.log(info);
     throw new Error(info);
   }

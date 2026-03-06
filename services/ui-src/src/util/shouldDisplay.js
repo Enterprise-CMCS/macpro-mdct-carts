@@ -47,7 +47,7 @@ const hideIfNot = (formData, hideIfNotInfo) => {
   const includedBoolean =
     targetAnswer === null
       ? true
-      : !targetAnswer.some((val) => interactiveValues.indexOf(val) !== -1); // Returns false if any targetAnswer is present in the interactiveValues array
+      : !targetAnswer.some((val) => interactiveValues.includes(val)); // Returns false if any targetAnswer is present in the interactiveValues array
 
   return includedBoolean;
 };

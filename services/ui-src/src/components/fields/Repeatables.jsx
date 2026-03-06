@@ -44,7 +44,7 @@ const Repeatables = ({
             key={q.id}
             number={i + 1}
             question={q}
-            type={question.typeLabel ? question.typeLabel : type}
+            type={question.typeLabel ?? type}
             printView={printView}
           />
         ))}

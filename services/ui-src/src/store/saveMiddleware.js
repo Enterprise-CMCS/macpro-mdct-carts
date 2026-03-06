@@ -87,7 +87,7 @@ const saveMiddleware = (store) => {
        * If any new saves came in while we were saving, moves those from the
        * queue into the pending list and fire up another save.
        */
-      if (queued.length) {
+      if (queued.length > 0) {
         pending.push(...queued);
         queued.length = 0;
         doSave();

@@ -6,8 +6,8 @@
  */
 
 const { buildDynamoClient, scan } = require("./utils/dynamodb.js");
-const fs = require("fs");
-const path = require("path");
+const fs = require("node:fs");
+const path = require("node:path");
 
 const OUTPUT_DIR = "output";
 const isLocal = !!process.env.DYNAMODB_URL;
@@ -47,11 +47,11 @@ async function handler() {
       statusCode: 200,
       body: "All done!",
     };
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
     return {
       statusCode: 500,
-      body: err.message,
+      body: error.message,
     };
   }
 }
@@ -99,7 +99,7 @@ function transform(items) {
 function writeCsv(data, filePath) {
   const headers = Object.keys(data[0]);
 
-  const escapeValue = (value) => `"${String(value).replace(/"/g, '""')}"`;
+  const escapeValue = (value) => `"${String(value).replaceAll('"', '""')}"`;
 
   const rows = data.map((row) =>
     headers.map((header) => escapeValue(row[header]))

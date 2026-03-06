@@ -31,8 +31,8 @@ export const certifyAndSubmit = () => async (dispatch, getState) => {
       user: username,
       report: `${state}${year}`,
     });
-  } catch (e) {
-    alert("ERROR_[CERTIFY]: Contact Help Desk. " + e.toString());
+  } catch (error) {
+    alert("ERROR_[CERTIFY]: Contact Help Desk. " + error.toString());
     window.location.reload(false);
     dispatch({ type: CERTIFY_AND_SUBMIT_FAILURE });
   }

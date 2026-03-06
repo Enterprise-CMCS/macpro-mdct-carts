@@ -23,6 +23,6 @@ export const getStates = handler(async (_event, _context) => {
       fmapSet: fmapQueryValue.filter(({ stateId }) => stateId === state.code),
       acsSet: acsQueryValue.filter(({ stateId }) => stateId === state.code),
     }))
-    .sort((a, b) => a.name.localeCompare(b.name));
+    .toSorted((a, b) => a.name.localeCompare(b.name));
   return states;
 });

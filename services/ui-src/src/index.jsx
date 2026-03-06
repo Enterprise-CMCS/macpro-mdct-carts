@@ -65,7 +65,7 @@ const ldClientId = config.REACT_APP_LD_SDK_CLIENT;
     deferInitialization: false,
   });
 
-  const container = document.getElementById("root");
+  const container = document.querySelector("#root");
   const root = createRoot(container);
   root.render(
     <React.StrictMode>
@@ -80,8 +80,8 @@ const ldClientId = config.REACT_APP_LD_SDK_CLIENT;
       </Router>
     </React.StrictMode>
   );
-})().catch((e) => {
-  throw e;
+})().catch((error) => {
+  throw error;
 });
 
 /*

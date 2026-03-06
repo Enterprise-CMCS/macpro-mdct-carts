@@ -69,7 +69,8 @@ const AppRoutes = () => {
           element={
             isStateUser ? (
               <StateHome />
-            ) : isCMSUser | isAdminUser ? (
+            ) : /* oxlint-disable-next-line no-nested-ternary */
+            isCMSUser | isAdminUser ? (
               <CMSHomepage />
             ) : (
               <Navigate to="/user/profile" />

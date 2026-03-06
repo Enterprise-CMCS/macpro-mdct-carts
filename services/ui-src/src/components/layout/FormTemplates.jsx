@@ -9,7 +9,7 @@ const FormTemplates = () => {
   const [inProgress, setInprogress] = useState(false);
 
   const handleUpdateTemplates = async () => {
-    var selectedYear = document.getElementById("selectedYear").value;
+    var selectedYear = document.querySelector("#selectedYear").value;
     setInprogress(true);
 
     try {
