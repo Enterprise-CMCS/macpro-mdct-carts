@@ -16,9 +16,9 @@ import { apiLib } from "../../util/apiLib";
 
 const openPdf = (basePdf) => {
   const byteCharacters = atob(basePdf);
-  let byteNumbers = new Array(byteCharacters.length);
+  let byteNumbers = Array.from({ length: byteCharacters.length });
   for (let i = 0; i < byteCharacters.length; i++) {
-    byteNumbers[i] = byteCharacters.charCodeAt(i);
+    byteNumbers[i] = byteCharacters.codePointAt(i);
   }
   const byteArray = new Uint8Array(byteNumbers);
   const file = new Blob([byteArray], { type: "application/pdf;base64" });
@@ -121,7 +121,7 @@ export const Print = () => {
     };
 
     //NOTE: Every time setAuthTimeout is called, it causes the useEffect to re-run even after data is retrieved
-    if (!formData.length) {
+    if (formData.length === 0) {
       // Call async function to load data
       retrieveUserData();
     }
@@ -130,7 +130,7 @@ export const Print = () => {
   const sections = [];
 
   // Check if formData has values
-  if (formData !== undefined && formData.length !== 0) {
+  if (formData !== undefined && formData.length > 0) {
     sections.push(<Title key={"sectitle-1"} urlStateName={stateName} />);
 
     if (sectionId) {

@@ -5,7 +5,7 @@ import { AccordionItem } from "@cmsgov/design-system";
 import Question from "./Question";
 
 const Repeatable = ({ number, question, type = null, printView }) => {
-  const children = question.questions ? question.questions : [];
+  const children = question.questions ?? [];
 
   const title = type ? `${type} ${number}` : `${number}`;
 

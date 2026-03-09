@@ -23,12 +23,12 @@ export default function handler(lambda: LambdaFunction) {
         // Run the Lambda
         const body = await lambda(event, context);
         return success(body);
-      } catch (e: any) {
+      } catch (error: any) {
         // Print debug messages
-        logger.error("Error: %O", e);
+        logger.error("Error: %O", error);
 
-        const body = { error: e.message };
-        switch (e.constructor) {
+        const body = { error: error.message };
+        switch (error.constructor) {
           case UnauthorizedError:
             return buildResponse(403, body);
           case NotFoundError:

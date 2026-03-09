@@ -128,7 +128,7 @@ const CMSHomepage = () => {
           state.stateCode
         )
     )
-    .sort((a, b) => new Date(b.lastChanged) - new Date(a.lastChanged));
+    .toSorted((a, b) => new Date(b.lastChanged) - new Date(a.lastChanged));
 
   // Sortable table settings
   const data = useMemo(
@@ -142,39 +142,39 @@ const CMSHomepage = () => {
     const actionLinkURL = `/views/sections/${stateCode}/${year}/00/a`;
 
     switch (headKey) {
-      case "stateName": {
+      case "stateName":
         return (
           <span className="cell-bolded">
             <span className="cell-header">State: </span>
             {value}
           </span>
         );
-      }
-      case "year": {
+
+      case "year":
         return (
           <span className="cell-bolded">
             <span className="cell-header">Year: </span>
             {value}
           </span>
         );
-      }
-      case "statusText": {
+
+      case "statusText":
         return (
           <>
             <span className="cell-header">Status: </span>
             {value}
           </>
         );
-      }
-      case "lastEdited": {
+
+      case "lastEdited":
         return (
           <>
             <span className="cell-header">Last Edited: </span>
             {value}
           </>
         );
-      }
-      case "actions": {
+
+      case "actions":
         return (
           <ReportItemLinks
             actionLinkURL={actionLinkURL}
@@ -184,7 +184,7 @@ const CMSHomepage = () => {
             year={year}
           />
         );
-      }
+
       default:
         return value;
     }

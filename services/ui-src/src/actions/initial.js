@@ -15,9 +15,9 @@ export const getAllStatesData = () => {
       const data = await apiLib.get(`/state`);
 
       dispatch({ type: GET_ALL_STATES_DATA, data });
-    } catch (err) {
-      console.log("error:", err);
-      console.dir(err);
+    } catch (error) {
+      console.log("error:", error);
+      console.dir(error);
     }
   };
 };
@@ -27,7 +27,7 @@ export const getAllStateStatuses = () => async (dispatch) => {
   const data = results.Items;
 
   const payload = data
-    .sort((a, b) => {
+    .toSorted((a, b) => {
       const dateA = new Date(a.lastChanged);
       const dateB = new Date(b.lastChanged);
 
@@ -41,26 +41,23 @@ export const getAllStateStatuses = () => async (dispatch) => {
     })
     .filter(
       (status, index, original) =>
-        original
+        !original
           .slice(index + 1)
-          .findIndex(
+          .some(
             (el) => el.stateId === status.stateId && el.year === status.year
-          ) < 0
+          )
     )
-    .reduce(
-      (out, record) => ({
-        ...out,
-        [record.stateId + record.year]: {
-          status: record.status,
-          year: record.year,
-          stateCode: record.stateId,
-          lastChanged: record.lastChanged,
-          username: record.username,
-          programType: record.programType,
-        },
-      }),
-      {}
-    );
+    .reduce((out, record) => {
+      out[record.stateId + record.year] = {
+        status: record.status,
+        year: record.year,
+        stateCode: record.stateId,
+        lastChanged: record.lastChanged,
+        username: record.username,
+        programType: record.programType,
+      };
+      return out;
+    }, {});
   dispatch({ type: SET_STATE_STATUSES, payload });
 };
 
@@ -89,29 +86,26 @@ export const getStateAllStatuses =
       .filter(yearFilter)
       .filter(stateFilter)
       .filter(statusFilter)
-      .sort((a, b) => (a.year < b.year ? 1 : -1))
+      .toSorted((a, b) => (a.year < b.year ? 1 : -1))
       .filter(
         (status, index, original) =>
-          original
+          !original
             .slice(index + 1)
-            .findIndex(
+            .some(
               (el) => el.stateId === status.stateId && el.year === status.year
-            ) < 0
+            )
       )
-      .reduce(
-        (out, record) => ({
-          ...out,
-          [record.stateId + record.year]: {
-            status: record.status,
-            year: record.year,
-            stateCode: record.stateId,
-            lastChanged: record.lastChanged,
-            username: record.username,
-            programType: record.programType,
-          },
-        }),
-        {}
-      );
+      .reduce((out, record) => {
+        out[record.stateId + record.year] = {
+          status: record.status,
+          year: record.year,
+          stateCode: record.stateId,
+          lastChanged: record.lastChanged,
+          username: record.username,
+          programType: record.programType,
+        };
+        return out;
+      }, {});
     dispatch({ type: SET_STATE_STATUSES, payload });
   };
 
@@ -123,15 +117,15 @@ export const loadSections = ({ stateCode, selectedYear }) => {
     let lastYearData = undefined;
     const priorData = await apiLib
       .get(`/section/${lastYear}/${stateCode}`)
-      .catch((err) => {
+      .catch((error) => {
         console.log("--- ERROR PRIOR YEAR SECTIONS ---");
-        console.log(err);
+        console.log(error);
         /*
          * Without the following too many things break, because the
          * entire app is too dependent on section data being present.
          */
         dispatch({ type: LOAD_SECTIONS, data, lastYearData });
-        throw err;
+        throw error;
       });
     if (data.length > 0) {
       lastYearData = priorData;

@@ -120,10 +120,8 @@ const Question = ({
     question.questions.length > 0;
 
   let fieldsetId = false;
-  if (question.type === "fieldset") {
-    if (question.fieldset_info) {
-      fieldsetId = question.fieldset_info.id;
-    }
+  if (question.type === "fieldset" && question.fieldset_info) {
+    fieldsetId = question.fieldset_info.id;
   }
 
   // Check if question should be shown based on pathname

@@ -3,16 +3,21 @@
     "preserveConstEnums": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "strictNullChecks": true,
     "sourceMap": true,
     "strict": true,
     "allowJs": true,
-    "target": "es5",
+    "target": "ES2023",
     "module": "esnext",
     "moduleResolution": "bundler",
     "skipLibCheck": true,
     "outDir": ".build",
-    "lib": ["ES2018", "DOM"],
-    "rootDir": "./"
+    "lib": ["ES2023", "DOM"],
+    "rootDir": "./",
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true
   }
 }

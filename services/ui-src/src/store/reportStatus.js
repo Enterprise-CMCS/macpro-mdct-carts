@@ -9,6 +9,7 @@ const initialState = {
   username: null,
 };
 
+// oxlint-disable-next-line no-anonymous-default-export
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_STATE_STATUS:

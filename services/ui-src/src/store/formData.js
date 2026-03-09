@@ -18,13 +18,14 @@ const sortByOrdinal = (sectionA, sectionB) => {
 };
 const initialState = [];
 
+// oxlint-disable-next-line no-anonymous-default-export
 export default (state = initialState, action) => {
   let updatedData = undefined;
   switch (action.type) {
     case LOAD_SECTIONS:
-      updatedData = action.data.sort(sortByOrdinal);
+      updatedData = action.data.toSorted(sortByOrdinal);
       if (action.lastYearData && action.lastYearData.length > 0) {
-        let lastYearData = action.lastYearData.sort(sortByOrdinal);
+        let lastYearData = action.lastYearData.toSorted(sortByOrdinal);
         const twoYearCycle = action.lastYearData.year % 2 == 0;
         if (
           !updatedData[0].contents.section.subsections[0].parts[0].questions[0]
@@ -187,7 +188,7 @@ export const selectFragmentById = (formData, id) => {
  */
 export const selectFragmentFromTarget = (target, expr) => {
   const results = jsonpath.query(target, expr);
-  return results.length ? results[0] : null;
+  return results.length > 0 ? results[0] : null;
 };
 
 /**
