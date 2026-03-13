@@ -34,8 +34,8 @@ const updateItems = async (tableName, items, keys) => {
       };
       await dynamoClient.send(new UpdateCommand(params));
     }
-  } catch (e) {
-    console.log(` -- ERROR UPLOADING ${tableName}\n`, e);
+  } catch (error) {
+    console.log(` -- ERROR UPLOADING ${tableName}\n`, error);
   }
 };
 

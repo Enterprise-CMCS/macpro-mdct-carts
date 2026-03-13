@@ -80,8 +80,8 @@ const ldClientId = config.REACT_APP_LD_SDK_CLIENT;
       </Router>
     </React.StrictMode>
   );
-})().catch((e) => {
-  throw e;
+})().catch((error) => {
+  throw error;
 });
 
 /*

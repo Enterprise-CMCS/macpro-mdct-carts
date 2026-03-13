@@ -33,7 +33,7 @@ const round = (number, precision) => {
      * from above into individual characters and insert a decimal point in
      * the right place.
      */
-    const digits = `${value}`.split("");
+    const digits = [...`${value}`];
     if (decimals > 0) {
       digits.splice(digits.length - decimals, 0, ".");
     }
@@ -46,7 +46,7 @@ const round = (number, precision) => {
       digits.unshift(0);
     }
 
-    while (digits[digits.length - 1] === 0) {
+    while (digits.at(-1) === 0) {
       digits.pop();
     }
 
@@ -234,7 +234,7 @@ const formula = (targets, providedFormula, precision) => {
     Object.keys(manipulatedFormula).forEach((i) => {
       // Data in Database can get added commas which will break when used in formulas so we get rid of the commas
       if (typeof targets[i] == "string") {
-        targets[i] = targets[i].replace(/,/g, "");
+        targets[i] = targets[i].replaceAll(",", "");
         //Checks for alphabet characters and invalidates those values
         if (!/^[0-9,.]*$/.test(targets[i])) {
           targets[i] = "0";
@@ -273,7 +273,7 @@ const sum = (values) => {
 
   if (hasNumbers) {
     const cleanedValues = values.map(
-      (value) => value && value?.replace(/,/g, "")
+      (value) => value && value?.replaceAll(",", "")
     );
     returnValue = cleanedValues.reduce((acc, value) => acc + +value, 0);
   }
@@ -288,16 +288,16 @@ const lookupFMAP = (allStatesData, stateName, stateUserAbbr, fy) => {
   if (allStatesData && (stateName || stateUserAbbr || stateFromParams)) {
     let stateData = "";
     if (stateUserAbbr) {
-      stateData = allStatesData.filter((st) => st.code === stateUserAbbr)[0];
+      stateData = allStatesData.find((st) => st.code === stateUserAbbr);
     } else if (stateFromParams) {
-      stateData = allStatesData.filter(
+      stateData = allStatesData.find(
         (st) => st.code.toLowerCase() === stateFromParams.toLowerCase()
-      )[0];
+      );
     } else {
-      stateData = allStatesData.filter((st) => st.name === stateName)[0];
+      stateData = allStatesData.find((st) => st.name === stateName);
     }
     const fmap =
-      stateData?.fmapSet.filter((year) => year.fiscalYear === +fy)[0]
+      stateData?.fmapSet.find((year) => year.fiscalYear === +fy)
         ?.enhancedFmap || NaN;
 
     return fmap;
@@ -308,7 +308,7 @@ const lookupFMAP = (allStatesData, stateName, stateUserAbbr, fy) => {
 const snakeToCamel = (str) =>
   str
     .toLowerCase()
-    .replace(/([-_][a-z])/g, (group) =>
+    .replaceAll(/([-_][a-z])/g, (group) =>
       group.toUpperCase().replace("-", "").replace("_", "")
     );
 

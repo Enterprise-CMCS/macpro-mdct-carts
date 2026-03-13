@@ -1,6 +1,6 @@
 import { questionTypes } from "../../components/fields/Question";
 
-export const mockQuestionTypes = Array.from(questionTypes.keys());
+export const mockQuestionTypes = [...questionTypes.keys()];
 export const mockQuestions = Object.fromEntries(
   mockQuestionTypes.map((key) => [key, {}])
 );

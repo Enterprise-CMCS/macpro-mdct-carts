@@ -26,7 +26,7 @@ export const UserProvider = ({ children }) => {
       localStorage.removeItem("mdctcarts_session_exp");
       await logoutUser();
     } catch (error) {
-      console.log("error signing out: ", error);
+      console.log("error signing out:", error);
     }
   }, []);
 

@@ -82,8 +82,8 @@ const Range = ({
 
     if (values.length === 2 && !values.includes(null)) {
       // Strip both values of commas
-      let strippedStart = values[0].replace(/,/g, "");
-      let strippedEnd = values[1].replace(/,/g, "");
+      let strippedStart = values[0].replaceAll(",", "");
+      let strippedEnd = values[1].replaceAll(",", "");
 
       const start = parseFloat(strippedStart);
       const end = parseFloat(strippedEnd);
@@ -111,8 +111,8 @@ const Range = ({
     onChange(row, index, 1, value);
   };
 
-  const startValue = rangeValues[0] ? rangeValues[0] : values[0];
-  const endValue = rangeValues[1] ? rangeValues[1] : values[1];
+  const startValue = rangeValues[0] ?? values[0];
+  const endValue = rangeValues[1] ?? values[1];
 
   return (
     <div className="cmsrange">
@@ -208,7 +208,7 @@ const Ranges = ({
     }
 
     const numberToCreate = min > 0 ? min : 1;
-    return [...Array(numberToCreate)].map(() =>
+    return Array.from({ length: numberToCreate }).map(() =>
       categories.map(() => [null, null])
     );
   });
@@ -228,8 +228,8 @@ const Ranges = ({
   };
 
   const removeRow = () => {
-    if (values.length) {
-      setValues(values.slice(0, values.length - 1));
+    if (values.length > 0) {
+      setValues(values.slice(0, -1));
     }
   };
 

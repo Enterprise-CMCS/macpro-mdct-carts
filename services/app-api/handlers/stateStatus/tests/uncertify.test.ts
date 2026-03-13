@@ -35,9 +35,9 @@ describe("Test Uncertify CARTS Report Handler", () => {
      */
     const expectedDateString = new Date()
       .toString()
-      .replace("(", "\\(")
-      .replace(")", "\\)")
-      .replace("+", "\\+")
+      .replace("(", String.raw`\(`)
+      .replace(")", String.raw`\)`)
+      .replace("+", String.raw`\+`)
       .replace(/(?<=\d{2}:\d{2}:)\d{2}/, "..");
 
     expect(res.statusCode).toBe(200);

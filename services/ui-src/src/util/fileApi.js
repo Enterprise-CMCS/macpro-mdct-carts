@@ -51,9 +51,9 @@ export const getUploadedFiles = async (year, stateCode, questionId) => {
   const response = await apiLib
     .post(`/uploads/${year}/${stateCode}`, opts)
     .catch((error) => {
-      console.log("!!!Error downloading files: ", error);
+      console.log("!!!Error downloading files:", error);
     });
-  return response ? response : [];
+  return response ?? [];
 };
 
 export const deleteUploadedFile = async (year, stateCode, fileId) => {
@@ -61,6 +61,6 @@ export const deleteUploadedFile = async (year, stateCode, fileId) => {
   await apiLib
     .del(`/uploads/${year}/${stateCode}/${encodedFileId}`)
     .catch((error) => {
-      console.log("!!!Error retrieving files: ", error);
+      console.log("!!!Error retrieving files:", error);
     });
 };

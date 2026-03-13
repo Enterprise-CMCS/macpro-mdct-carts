@@ -63,13 +63,13 @@ const Text = ({
     const questions =
       data.contents.section.subsections[2].parts[partIndex].questions;
     // Derive matching question
-    let matchingQuestion = questions.filter(
+    let matchingQuestion = questions.find(
       (question) => fieldsetId === question?.id
     );
 
     // Always use first item in array
-    if (matchingQuestion[0]) {
-      lastYearAnswer = matchingQuestion[0].answer.entry;
+    if (matchingQuestion) {
+      lastYearAnswer = matchingQuestion.answer.entry;
     }
 
     return lastYearAnswer ?? "";

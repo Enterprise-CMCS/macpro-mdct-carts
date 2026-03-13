@@ -333,11 +333,11 @@ async function handler() {
       statusCode: 200,
       body: "All done!",
     };
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
     return {
       statusCode: 500,
-      body: err.message,
+      body: error.message,
     };
   }
 }
@@ -393,10 +393,10 @@ const findQuestionsToUpdate = (
   });
 
   //Double check all questions were updated as expected
-  console.log("Updated Questions Count: ", questionsUpdated.length);
-  console.log("Questions expected to be updated: ", questionsToUpdate.length);
+  console.log("Updated Questions Count:", questionsUpdated.length);
+  console.log("Questions expected to be updated:", questionsToUpdate.length);
   console.log(
-    "Questions that weren't updated: ",
+    "Questions that weren't updated:",
     questionsToUpdate.filter((x) => !questionsUpdated.includes(x))
   );
   if (questionsUpdated.length !== questionsToUpdate.length)
@@ -404,13 +404,13 @@ const findQuestionsToUpdate = (
   console.log("-----");
 
   //Double check all synthesizedTables were updated as expected
-  console.log("Updated Calculations Count: ", synthesizedTablesUpdated.length);
+  console.log("Updated Calculations Count:", synthesizedTablesUpdated.length);
   console.log(
-    "Synthesized Tables expected to be updated: ",
+    "Synthesized Tables expected to be updated:",
     tablesToUpdate.length
   );
   console.log(
-    "Synthesized Tables that weren't updated: ",
+    "Synthesized Tables that weren't updated:",
     tablesToUpdate.filter((x) => !synthesizedTablesUpdated.includes(x))
   );
   if (synthesizedTablesUpdated.length !== tablesToUpdate.length)
@@ -418,13 +418,13 @@ const findQuestionsToUpdate = (
   console.log("-----");
 
   //Double check all synthesizedValues were updated as expected
-  console.log("Updated Calculations Count: ", synthesizedValuesUpdated.length);
+  console.log("Updated Calculations Count:", synthesizedValuesUpdated.length);
   console.log(
-    "Synthesized Values expected to be updated: ",
+    "Synthesized Values expected to be updated:",
     valuesToUpdate.length
   );
   console.log(
-    "Synthesized Values that weren't updated: ",
+    "Synthesized Values that weren't updated:",
     valuesToUpdate.filter((x) => !synthesizedValuesUpdated.includes(x))
   );
   if (synthesizedValuesUpdated.length !== valuesToUpdate.length)

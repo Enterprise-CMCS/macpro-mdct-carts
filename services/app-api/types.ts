@@ -101,6 +101,7 @@ export interface DynamoFetch {
   };
 }
 
+// oxlint-disable-next-line no-const-enum
 export const enum CoreSetAbbr {
   ACS = "ACS", // adult
   CCS = "CCS", // child combined
@@ -109,6 +110,7 @@ export const enum CoreSetAbbr {
   HHCS = "HHCS", // helth homes
 }
 
+// oxlint-disable-next-line no-const-enum
 export const enum MeasureStatus {
   COMPLETE = "complete",
   INCOMPLETE = "incomplete",
@@ -117,6 +119,7 @@ export const enum MeasureStatus {
 /*
  * Roles directly from IDM, their names do not 1:1 match with expected behavior
  */
+// oxlint-disable-next-line no-const-enum
 export const enum IdmRoles {
   APPROVER = "mdctcarts-approver",
   BUSINESS_OWNER_REP = "mdctcarts-bor",
@@ -129,6 +132,7 @@ export const enum IdmRoles {
 /*
  * Carts App roles, naming conveying an expected behavior
  */
+// oxlint-disable-next-line no-const-enum
 export const enum AppRoles {
   CMS_USER = "CMS_USER", // User who can view and reject state submissions
   CMS_ADMIN = "CMS_ADMIN", // Biz Owner - View all, release forms
@@ -138,6 +142,7 @@ export const enum AppRoles {
   STATE_USER = "STATE_USER", // Enter and certifies data for a year
 }
 
+// oxlint-disable-next-line no-const-enum
 export const enum RequestMethods {
   POST = "POST",
   GET = "GET",

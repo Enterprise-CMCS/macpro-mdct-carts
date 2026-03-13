@@ -38,7 +38,7 @@ describe("API lib", () => {
       const spy = jest.spyOn(console, "log");
 
       mockSession.mockImplementation(() => {
-        throw new Error();
+        throw new Error("Some mocked error");
       });
 
       await getRequestHeaders();
