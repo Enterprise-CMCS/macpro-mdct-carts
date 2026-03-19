@@ -60,10 +60,6 @@
     "vite": "6.4.1",
     "vite-tsconfig-paths": "^5.1.4"
   },
-  "resolutions": {
-    "react-error-overlay": "6.1.0",
-    "tar-fs": "3.1.1"
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -109,6 +105,5 @@
       "<rootDir>/src/setupTests.js"
     ],
     "testEnvironment": "jsdom"
-  },
-  "packageManager": "yarn@4.12.0"
+  }
 }

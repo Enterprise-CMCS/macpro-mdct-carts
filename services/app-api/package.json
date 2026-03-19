@@ -65,6 +65,5 @@
       "node_modules/(?!happy-dom/)"
     ],
     "verbose": true
-  },
-  "packageManager": "yarn@4.12.0"
+  }
 }

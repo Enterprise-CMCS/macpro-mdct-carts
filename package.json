@@ -16,6 +16,21 @@
   "directories": {
     "test": "tests"
   },
+  "workspaces": [
+    "cli",
+    "deployment",
+    "services/app-api",
+    "services/carts-bigmac-streams",
+    "services/database",
+    "services/topics",
+    "services/ui",
+    "services/ui-auth",
+    "services/ui-src",
+    "services/uploads",
+    "tests/cypress",
+    "tests/playwright",
+    ".github/scanResources"
+  ],
   "type": "module",
   "main": "index.js",
   "scripts": {
