@@ -149,6 +149,34 @@
       }
     }
 
+    .nav-user > button {
+      font-weight: variables.$font-weight-bold;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      @media only screen and (min-width: 768px) {
+        justify-content: flex-end;
+      }
+
+      &:hover {
+        color: #8ed2e5;
+      }
+
+      svg {
+        padding-right: variables.$padding;
+      }
+
+      &:focus {
+        background-color: initial;
+      }
+
+      i {
+        padding-left: variables.$padding;
+      }
+    }
+
     .menu-block {
       display: none;
       position: relative;
