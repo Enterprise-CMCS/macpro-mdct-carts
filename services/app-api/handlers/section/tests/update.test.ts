@@ -27,12 +27,16 @@ jest.mock("../../dynamoUtils/convertToDynamoExpressionVars", () => ({
   convertToDynamoExpression: jest.fn(),
 }));
 
+const mockDate = new Date("2025-01-01T12:00:00Z");
+
 describe("Test Update Sections Handler", () => {
   beforeEach(() => {
     console.error = jest.fn();
+    jest.useFakeTimers().setSystemTime(mockDate);
   });
   afterEach(() => {
     console.error = originalError;
+    jest.useRealTimers();
   });
 
   test("sections should batch update and update state status if not started", async () => {
@@ -49,7 +53,7 @@ describe("Test Update Sections Handler", () => {
       1,
       {
         contents: { test: "test" },
-        lastChanged: new Date().toString(),
+        lastChanged: mockDate.toString(),
       },
       "post"
     );
@@ -74,7 +78,7 @@ describe("Test Update Sections Handler", () => {
       2,
       {
         status: "in_progress",
-        lastChanged: new Date().toString(),
+        lastChanged: mockDate.toString(),
       },
       "post"
     );
