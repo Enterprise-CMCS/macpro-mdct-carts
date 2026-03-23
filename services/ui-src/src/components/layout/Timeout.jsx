@@ -87,6 +87,7 @@ const Timeout = () => {
       isOpen={showTimeout}
       onExit={refreshAuth}
       heading="You are about to be logged out."
+      className="no-print"
       actions={[
         <button
           className="ds-c-button ds-u-margin-right--1"
