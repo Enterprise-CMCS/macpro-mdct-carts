@@ -64,6 +64,7 @@ const initialState = {
 };
 
 // STATE USER REDUCER
+// oxlint-disable-next-line no-anonymous-default-export
 export default (state = initialState, action) => {
   switch (action.type) {
     case STATE_INFO:

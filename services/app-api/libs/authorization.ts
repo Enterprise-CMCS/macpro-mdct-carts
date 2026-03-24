@@ -1,5 +1,6 @@
 import { jwtDecode } from "jwt-decode";
 import { IdmRoles, AppRoles, APIGatewayProxyEvent } from "../types";
+import { logger } from "./debug-lib";
 
 interface DecodedToken {
   "custom:cms_roles": IdmRoles;
@@ -8,6 +9,7 @@ interface DecodedToken {
   family_name?: string;
   identities?: [{ userId?: string }];
   email?: string;
+  sub?: string;
 }
 
 export class UserCredentials {
@@ -68,6 +70,7 @@ export const getUserCredentialsFromJwt = (event: APIGatewayProxyEvent) => {
   if (!event?.headers || !event.headers?.["x-api-key"])
     return new UserCredentials();
   const decoded = jwtDecode(event.headers["x-api-key"]) as DecodedToken;
+  logger.debug(`Requesting user has sub '${decoded.sub}'`);
   const credentials = new UserCredentials(decoded);
   return credentials;
 };

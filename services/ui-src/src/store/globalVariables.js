@@ -7,7 +7,7 @@ String.prototype.containsAny =
   String.prototype.containsAny ||
   function (arr) {
     for (var i = 0; i < arr.length; i++) {
-      if (this.indexOf(arr[i]) > -1) {
+      if (this.includes(arr[i])) {
         return true;
       }
     }
@@ -57,15 +57,15 @@ export default function global(state = initialState, action) {
 
   for (let activeYear in activeYears) {
     if (
-      state.url.indexOf(activeYears[activeYear]) !== -1 ||
-      state.queryParams.indexOf(activeYears[activeYear]) !== -1
+      state.url.includes(activeYears[activeYear]) ||
+      state.queryParams.includes(activeYears[activeYear])
     ) {
       state.formYear = parseInt(activeYears[activeYear]);
       break;
     }
   }
 
-  if (typeof state.formYear == "undefined") {
+  if (state.formYear === undefined) {
     state.formYear = 2020;
   }
 

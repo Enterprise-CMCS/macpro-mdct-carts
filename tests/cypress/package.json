@@ -17,6 +17,5 @@
     "cypress-axe": "^1.7.0",
     "cypress-file-upload": "^5.0.8",
     "dotenv": "^17.2.3"
-  },
-  "packageManager": "yarn@4.12.0"
+  }
 }

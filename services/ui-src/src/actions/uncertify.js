@@ -30,7 +30,7 @@ export const uncertifyReport =
         user: username,
         report: `${state}${year}`,
       });
-    } catch (e) {
-      dispatch({ type: UNCERTIFY_FAILURE, message: { e } });
+    } catch (error) {
+      dispatch({ type: UNCERTIFY_FAILURE, message: { error } });
     }
   };

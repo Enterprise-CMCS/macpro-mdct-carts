@@ -16,9 +16,9 @@ const createNewRepeatableItem = (parentId, getState) => {
   const state = getState();
   const parent = selectById(state, parentId);
 
-  const previousId = parent.questions[parent.questions.length - 1].id;
+  const previousId = parent.questions.at(-1).id;
 
-  let newItem = JSON.stringify(parent.questions[parent.questions.length - 1]);
+  let newItem = JSON.stringify(parent.questions.at(-1));
   const newId = incrementId(previousId);
 
   /*
@@ -29,7 +29,7 @@ const createNewRepeatableItem = (parentId, getState) => {
    * by a single or double quote and followed by a single or double quote or
    * a dash.
    */
-  newItem = newItem.replace(
+  newItem = newItem.replaceAll(
     new RegExp(`("|')${previousId}("|'|-)`, "g"),
     `$1${newId}$2`
   );
@@ -81,7 +81,7 @@ export const removeRepeatable = (parentId) => (dispatch, getState) => {
       id: parentId,
       value: {
         ...parent,
-        questions: parent.questions.slice(0, parent.questions.length - 1),
+        questions: parent.questions.slice(0, -1),
       },
     });
   }

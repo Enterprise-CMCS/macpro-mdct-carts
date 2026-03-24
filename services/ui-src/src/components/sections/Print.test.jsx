@@ -16,7 +16,7 @@ jest.mock("../layout/Section", () => () => {
 });
 jest.mock("../../actions/initial", () => ({
   loadSections: (...args) =>
-    mockLoadSections(...(args.length ? args : [{ type: "none" }])),
+    mockLoadSections(...(args.length > 0 ? args : [{ type: "none" }])),
   loadEnrollmentCounts: () => ({ type: "none" }),
 }));
 

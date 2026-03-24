@@ -50,7 +50,7 @@ const TableOfContents = () => {
   };
 
   const idToUrl = (location, id) => {
-    const endOfPath = id.replace(/-/g, "/");
+    const endOfPath = id.replaceAll("-", "/");
     if (location.pathname.startsWith("/views/sections")) {
       const pathChunks = location.pathname.split("/");
       const base = pathChunks.slice(0, 4).join("/");
@@ -58,7 +58,8 @@ const TableOfContents = () => {
     }
     return `/sections/${endOfPath}`;
   };
-  const subsection = (index) => String.fromCharCode("A".charCodeAt(0) + index);
+  const subsection = (index) =>
+    String.fromCodePoint("A".codePointAt(0) + index);
 
   const click = (e, _, url) => {
     e.preventDefault();

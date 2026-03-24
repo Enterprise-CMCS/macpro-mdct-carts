@@ -8,7 +8,7 @@ const Checkbox = ({ onChange, question, ...props }) => {
 
   const change = ({ target: { name, value: newValue } }) => {
     const index = value.indexOf(newValue);
-    if (index >= 0) {
+    if (index !== -1) {
       value.splice(index, 1);
       onChange({ target: { name, value } });
     } else {
@@ -31,7 +31,7 @@ const Checkbox = ({ onChange, question, ...props }) => {
             type="checkbox"
             value={checkBoxValue}
             onChange={change}
-            checked={value.indexOf(checkBoxValue) >= 0}
+            checked={value.includes(checkBoxValue)}
             name={props.name}
           />
           <label
