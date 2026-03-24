@@ -123,9 +123,7 @@ describe("<Header />", () => {
     const headerDropDownLinks = screen.getByTestId("headerDropDownLinks");
     expect(headerDropDownMenuButton).toContainElement(chevUp);
     expect(headerDropDownMenu).toContainElement(headerDropDownLinks);
-    expect(
-      screen.getByRole("menuitem", { name: "Manage Account" })
-    ).toBeVisible();
+    expect(screen.getByRole("link", { name: "Manage Account" })).toBeVisible();
   });
 
   test("should open and close the dropdown menu on click", () => {
@@ -139,54 +137,6 @@ describe("<Header />", () => {
     fireEvent.click(headerDropDownMenuButton);
     const chevDown = screen.getByTestId("headerDropDownChevDown");
     expect(headerDropDownMenuButton).toContainElement(chevDown);
-  });
-
-  test("should have correct ARIA attributes on the menu button", () => {
-    render(header);
-    const menuButton = screen.getByTestId("headerDropDownMenuButton");
-    expect(menuButton).toHaveAttribute("aria-expanded", "false");
-    expect(menuButton).toHaveAttribute("aria-haspopup", "true");
-    expect(menuButton).toHaveAttribute("aria-controls", "header-menu");
-  });
-
-  test("should have correct ARIA attributes on the menu", () => {
-    render(header);
-    const menuButton = screen.getByTestId("headerDropDownMenuButton");
-    fireEvent.click(menuButton);
-    const menu = screen.getByRole("menu");
-    expect(menu).toHaveAttribute("id", "header-menu");
-  });
-
-  test("should have no role on list items and role=menuitem on links", () => {
-    const { container } = render(header);
-    const menuButton = screen.getByTestId("headerDropDownMenuButton");
-    fireEvent.click(menuButton);
-    const menuItems = screen.getAllByRole("menuitem");
-    expect(menuItems).toHaveLength(2);
-    const listItems = container.querySelectorAll("li");
-    listItems.forEach((item) => {
-      expect(item).not.toHaveAttribute("role");
-    });
-  });
-
-  test("should close menu and return focus to button on ESC key", () => {
-    render(header);
-    const menuButton = screen.getByTestId("headerDropDownMenuButton");
-    fireEvent.click(menuButton);
-    expect(screen.getByRole("menu")).toBeInTheDocument();
-    fireEvent.keyDown(document, { key: "Escape" });
-    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
-    expect(menuButton).toHaveFocus();
-  });
-
-  test("should close menu when clicking outside", () => {
-    const { container } = render(header);
-    const menuButton = screen.getByTestId("headerDropDownMenuButton");
-    fireEvent.click(menuButton);
-    expect(screen.getByRole("menu")).toBeInTheDocument();
-
-    fireEvent.mouseDown(container);
-    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
   });
 
   testA11y(header);

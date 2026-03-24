@@ -19,7 +19,6 @@ import { useFlags } from "launchdarkly-react-client-sdk";
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
-  const menuButtonRef = useRef(null);
 
   const release2025 = useFlags().release2025;
 
@@ -67,7 +66,7 @@ export const Header = () => {
 
   useEffect(() => {
     const handler = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
+      if (open && menuRef.current && !menuRef.current.contains(event.target)) {
         setIsMenuOpen(false);
       }
     };
@@ -76,21 +75,6 @@ export const Header = () => {
     return () => {
       document.removeEventListener("mousedown", handler);
       document.removeEventListener("touchstart", handler);
-    };
-  }, []);
-
-  useEffect(() => {
-    const handleEscKey = (event) => {
-      if (event.key === "Escape" && isMenuOpen) {
-        setIsMenuOpen(false);
-        menuButtonRef.current?.focus();
-      }
-    };
-    if (isMenuOpen) {
-      document.addEventListener("keydown", handleEscKey);
-    }
-    return () => {
-      document.removeEventListener("keydown", handleEscKey);
     };
   }, [isMenuOpen]);
 
@@ -124,48 +108,44 @@ export const Header = () => {
                     data-testid="headerDropDownMenu"
                     ref={menuRef}
                   >
-                    <button
-                      ref={menuButtonRef}
-                      data-testid={"headerDropDownMenuButton"}
-                      className="ds-c-button ds-c-button--ghost"
-                      type="button"
-                      aria-expanded={isMenuOpen}
-                      aria-haspopup="true"
-                      aria-controls="header-menu"
-                      onClick={() => setIsMenuOpen(!isMenuOpen)}
-                    >
-                      <FontAwesomeIcon icon={faUser} size="lg" />
-                      My Account
-                      {isMenuOpen ? (
-                        <i
-                          data-testid="headerDropDownChevUp"
-                          className="fa fa-chevron-up"
-                          aria-hidden="true"
-                        ></i>
-                      ) : (
-                        <i
-                          data-testid="headerDropDownChevDown"
-                          className="fa fa-chevron-down"
-                          aria-hidden="true"
-                        ></i>
-                      )}
-                    </button>
+                    <ul className="user-email-button">
+                      <li>
+                        <button
+                          data-testid={"headerDropDownMenuButton"}
+                          className="ds-c-button ds-c-button--ghost"
+                          onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        >
+                          <FontAwesomeIcon icon={faUser} size="lg" />
+                          My Account
+                          {isMenuOpen ? (
+                            <i
+                              data-testid="headerDropDownChevUp"
+                              className="fa fa-chevron-up"
+                              aria-hidden="true"
+                            ></i>
+                          ) : (
+                            <i
+                              data-testid="headerDropDownChevDown"
+                              className="fa fa-chevron-down"
+                              aria-hidden="true"
+                            ></i>
+                          )}
+                        </button>
+                      </li>
+                    </ul>
                     {isMenuOpen && (
                       <ul
                         data-testid="headerDropDownLinks"
                         className="menu-block open"
-                        id="header-menu"
-                        role="menu"
+                        id="menu-block"
                       >
                         <li className="contact-us">
-                          <Link role="menuitem" to="/get-help">
+                          <a href="/get-help">
                             {release2025 ? "FAQ" : "Contact Us"}
-                          </Link>
+                          </a>
                         </li>
                         <li className="manage-account">
-                          <Link role="menuitem" to="/user/profile">
-                            Manage Account
-                          </Link>
+                          <Link to="/user/profile">Manage Account</Link>
                         </li>
                         <li
                           className="logout"

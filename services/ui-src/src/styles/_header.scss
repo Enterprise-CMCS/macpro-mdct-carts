@@ -101,33 +101,51 @@
     ul {
       list-style-type: none;
       margin: 0;
-    }
 
-    .nav-user > button {
-      font-weight: variables.$font-weight-bold;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      &.user-email-button {
+        font-weight: variables.$font-weight-bold;
+        margin: 0;
+        position: relative;
+        height: 100%;
 
-      @media only screen and (min-width: 768px) {
-        justify-content: flex-end;
-      }
+        @media only screen and (max-width: 767px) {
+          display: flex;
+          justify-content: center;
+          padding-left: 0;
+        }
 
-      &:hover {
-        color: #8ed2e5;
-      }
+        @media only screen and (min-width: 768px) {
+          text-align: right;
+        }
 
-      svg {
-        padding-right: variables.$padding;
-      }
+        li {
+          height: 100%;
+        }
 
-      &:focus {
-        background-color: initial;
-      }
+        button {
+          padding-left: 0;
+          padding-right: 0;
+          height: 100%;
+          cursor: pointer;
+          text-decoration: none;
+          color: #fff;
 
-      i {
-        padding-left: variables.$padding;
+          &:hover {
+            color: #8ed2e5;
+          }
+
+          svg {
+            padding-right: variables.$padding;
+          }
+
+          &:focus {
+            background-color: initial;
+          }
+
+          i {
+            padding-left: variables.$padding;
+          }
+        }
       }
     }
 
@@ -145,7 +163,7 @@
         left: 50%;
         -webkit-transform: translateX(-50%);
         transform: translateX(-50%);
-        top: (variables.$padding * 12);
+        top: (variables.$padding * 16);
         gap: 0;
         z-index: 100;
 
@@ -154,7 +172,7 @@
           -webkit-transform: unset;
           transform: unset;
           right: 0;
-          top: (variables.$padding * 7);
+          top: (variables.$padding * 9);
         }
       }
 
