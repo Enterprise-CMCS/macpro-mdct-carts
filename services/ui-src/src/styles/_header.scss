@@ -101,52 +101,6 @@
     ul {
       list-style-type: none;
       margin: 0;
-
-      &.user-email-button {
-        font-weight: variables.$font-weight-bold;
-        margin: 0;
-        position: relative;
-        height: 100%;
-
-        @media only screen and (max-width: 767px) {
-          display: flex;
-          justify-content: center;
-          padding-left: 0;
-        }
-
-        @media only screen and (min-width: 768px) {
-          text-align: right;
-        }
-
-        li {
-          height: 100%;
-        }
-
-        button {
-          padding-left: 0;
-          padding-right: 0;
-          height: 100%;
-          cursor: pointer;
-          text-decoration: none;
-          color: #fff;
-
-          &:hover {
-            color: #8ed2e5;
-          }
-
-          svg {
-            padding-right: variables.$padding;
-          }
-
-          &:focus {
-            background-color: initial;
-          }
-
-          i {
-            padding-left: variables.$padding;
-          }
-        }
-      }
     }
 
     .nav-user > button {
@@ -191,7 +145,7 @@
         left: 50%;
         -webkit-transform: translateX(-50%);
         transform: translateX(-50%);
-        top: (variables.$padding * 16);
+        top: (variables.$padding * 12);
         gap: 0;
         z-index: 100;
 
@@ -200,7 +154,7 @@
           -webkit-transform: unset;
           transform: unset;
           right: 0;
-          top: (variables.$padding * 9);
+          top: (variables.$padding * 7);
         }
       }
 
