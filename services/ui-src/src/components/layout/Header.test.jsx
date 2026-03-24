@@ -157,14 +157,16 @@ describe("<Header />", () => {
     expect(menu).toHaveAttribute("id", "header-menu");
   });
 
-  test("should have role=none on list items and role=menuitem on links", () => {
+  test("should have no role on list items and role=menuitem on links", () => {
     const { container } = render(header);
     const menuButton = screen.getByTestId("headerDropDownMenuButton");
     fireEvent.click(menuButton);
     const menuItems = screen.getAllByRole("menuitem");
     expect(menuItems).toHaveLength(2);
-    const listItems = container.querySelectorAll('[role="none"]');
-    expect(listItems).toHaveLength(3);
+    const listItems = container.querySelectorAll("li");
+    listItems.forEach((item) => {
+      expect(item).not.toHaveAttribute("role");
+    });
   });
 
   test("should close menu and return focus to button on ESC key", () => {

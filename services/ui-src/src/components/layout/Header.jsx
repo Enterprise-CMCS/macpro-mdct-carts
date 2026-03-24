@@ -157,18 +157,17 @@ export const Header = () => {
                         id="header-menu"
                         role="menu"
                       >
-                        <li role="none" className="contact-us">
-                          <a role="menuitem" href="/get-help">
+                        <li className="contact-us">
+                          <Link role="menuitem" to="/get-help">
                             {release2025 ? "FAQ" : "Contact Us"}
-                          </a>
+                          </Link>
                         </li>
-                        <li role="none" className="manage-account">
+                        <li className="manage-account">
                           <Link role="menuitem" to="/user/profile">
                             Manage Account
                           </Link>
                         </li>
                         <li
-                          role="none"
                           className="logout"
                           data-testid="header-menu-option-log-out"
                         >
