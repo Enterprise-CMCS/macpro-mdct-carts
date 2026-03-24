@@ -73,7 +73,7 @@ const Integer = ({
   const lastYearFormData = useSelector((state) => state.lastYearFormData);
 
   const change = ({ target: { name, value } }) => {
-    const stripped = value.replace(/[^0-9]+/g, "");
+    const stripped = value.replaceAll(/[^0-9]+/g, "");
     const parsed = parseFloat(stripped);
 
     if (!Number.isNaN(parsed)) {

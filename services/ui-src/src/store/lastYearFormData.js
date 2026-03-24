@@ -4,6 +4,7 @@ import idLetterMarkers from "../util/idLetterMarkers";
 
 const initialState = [];
 
+// oxlint-disable-next-line no-anonymous-default-export
 export default (state = initialState, action) => {
   switch (action.type) {
     case LOAD_LASTYEAR_SECTIONS:
@@ -91,7 +92,7 @@ export const selectFragmentById = (state, id) => {
  */
 export const selectFragmentFromTarget = (target, expr) => {
   const results = jsonpath.query(target, expr);
-  return results.length ? results[0] : null;
+  return results.length > 0 ? results[0] : null;
 };
 
 /**

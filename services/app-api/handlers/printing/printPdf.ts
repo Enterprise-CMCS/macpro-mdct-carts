@@ -20,7 +20,7 @@ export const print = handler(async (event, _context) => {
   if (!encodedHtml) {
     throw new Error("Missing required html string");
   }
-  const rawHtml = Buffer.from(encodedHtml, "base64").toString("utf-8");
+  const rawHtml = Buffer.from(encodedHtml, "base64").toString("utf8");
 
   let sanitizedHtml;
   if (DOMPurify.isSupported) {

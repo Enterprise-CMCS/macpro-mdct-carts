@@ -32,6 +32,10 @@ const DataGrid = ({ question, printView }) => {
     // Even years get inputs, odd years get previous year data
     const shouldGetPriorYear = splitID[0] % 2;
 
+    const temp = {
+      hideNumber: true,
+      question: item,
+    };
     // Custom handling for -03-c-05 and -03-c-06
     if (
       shouldGetPriorYear &&
@@ -71,24 +75,14 @@ const DataGrid = ({ question, printView }) => {
           type: FINISH_CALCULATION,
         });
       }
-      // Add new entry to questionsToSet Array
-      const temp = questionsToSet.push({
-        hideNumber: true,
-        question: item,
-        prevYear: { value: prevYearValue },
-      });
 
-      // Set cumulative array of questions to local state
-      setQuestionsToSet(temp);
-    } else {
-      // Add values to render array
-      const temp = questionsToSet.push({
-        hideNumber: true,
-        question: item,
-      });
-
-      setQuestionsToSet(temp);
+      temp.prevYear = { value: prevYearValue };
     }
+
+    // Add new entry to questionsToSet Array
+    questionsToSet.push(temp);
+    // Set cumulative array of questions to local state
+    setQuestionsToSet(temp);
 
     // Don't add empty arrays
     if (questionsToSet.length > 0) {
@@ -105,19 +99,19 @@ const DataGrid = ({ question, printView }) => {
       data.contents.section.subsections[2].parts[partIndex].questions;
 
     // Filter down to specific question
-    let matchingQuestion = questions.filter(
+    let matchingQuestion = questions.find(
       (question) => fieldsetId === question?.fieldset_info?.id
     );
 
     // The first will always be correct
-    if (matchingQuestion[0]) {
+    if (matchingQuestion) {
       /*
        * Since these always go in order we get the subquestion ID, convert to lowercase letter, get the char code (a = 97)
        * and subtract 97 to get the question index number
        */
-      const index = itemId.toLowerCase().charCodeAt(0) - 97;
+      const index = itemId.toLowerCase().codePointAt(0) - 97;
       lastYearAnswer =
-        matchingQuestion[0].questions[1].questions[index].answer.entry;
+        matchingQuestion.questions[1].questions[index].answer.entry;
     }
     return lastYearAnswer ?? null;
   };
@@ -132,7 +126,7 @@ const DataGrid = ({ question, printView }) => {
     generateRenderQuestions();
   }, [dispatch]);
 
-  return renderQuestions.length ? (
+  return renderQuestions.length > 0 ? (
     <div className={`ds-l-row input-grid__group`}>
       {renderQuestions.map((question, index) => {
         return (

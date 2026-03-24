@@ -8,7 +8,7 @@ const PhoneNumber = ({ onChange, question, ...props }) => {
 
   const change = ({ target: { name, value } }) => {
     if (value.length > 0) {
-      const digits = value.replace(/[()-. ]/g, "");
+      const digits = value.replaceAll(/[()-. ]/g, "");
       if (digits.length > 10) {
         setError("Please limit to 10 digits");
       } else {

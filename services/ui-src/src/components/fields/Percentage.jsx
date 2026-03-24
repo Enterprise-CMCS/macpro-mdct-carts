@@ -32,7 +32,7 @@ const Percentage = ({
 
     const numericString = `${value}`;
     // This strips everything but numbers and decimals
-    const stripped = numericString.replace(/[^0-9.]/g, "");
+    const stripped = numericString.replaceAll(/[^0-9.]/g, "");
 
     //This regex allows for numbers with ONLY a single decimal
     const regexTest = /^\d*[0-9]?(|.\d*[0-9]?|,\d*[0-9])?$/;
@@ -57,8 +57,8 @@ const Percentage = ({
        */
       const wrapper = document.createElement("div");
       wrapper.setAttribute("class", "input-holder__percent");
-      ref.parentNode.appendChild(wrapper);
-      wrapper.appendChild(ref);
+      ref.parentNode.append(wrapper);
+      wrapper.append(ref);
     }
   }, []);
 

@@ -8,7 +8,7 @@ export const selectById = (state, id) => {
   const jspath = `$..formData[*].contents..*[?(@ && @.id==='${id}')]`;
   const item = jsonpath.query(state, jspath);
 
-  if (item.length) {
+  if (item.length > 0) {
     return item[0];
   }
   return null;
@@ -18,7 +18,7 @@ export const selectSectionTitle = (state, sectionId) => {
   const jspath = `$..formData[*].contents.section[?(@ && @.id=='${sectionId}')].title`;
   const sectionTitles = jsonpath.query(state, jspath);
 
-  if (sectionTitles.length) {
+  if (sectionTitles.length > 0) {
     return sectionTitles[0];
   }
   return null;
@@ -40,7 +40,7 @@ export const selectSubsectionTitleAndPartIDs = (formData, subsectionId) => {
 export const selectQuestion = (state, id) => {
   const jp = `$..[*].contents.section.subsections[*].parts[*]..questions[?(@ && @.id=='${id}')]`;
   const questions = jsonpath.query(state, jp);
-  if (questions.length) {
+  if (questions.length > 0) {
     return questions[0];
   }
 
