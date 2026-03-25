@@ -155,5 +155,18 @@ describe("<Header />", () => {
     expect(menuButton).toHaveAttribute("aria-expanded", "true");
   });
 
+  test("should close menu and return focus to button on Escape key", async () => {
+    render(header);
+    const menuButton = screen.getByTestId("headerDropDownMenuButton");
+
+    await userEvent.click(menuButton);
+    expect(menuButton).toHaveAttribute("aria-expanded", "true");
+
+    await userEvent.keyboard("{Escape}");
+
+    expect(menuButton).toHaveAttribute("aria-expanded", "false");
+    expect(menuButton).toHaveFocus();
+  });
+
   testA11y(header);
 });
