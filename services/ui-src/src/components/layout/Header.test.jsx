@@ -142,5 +142,18 @@ describe("<Header />", () => {
     expect(headerDropDownMenuButton).toContainElement(chevDown);
   });
 
+  test("should have correct ARIA attributes on the menu button", async () => {
+    render(header);
+    const menuButton = screen.getByTestId("headerDropDownMenuButton");
+
+    expect(menuButton).toHaveAttribute("aria-expanded", "false");
+    expect(menuButton).toHaveAttribute("aria-haspopup", "true");
+    expect(menuButton).toHaveAttribute("aria-controls", "header-menu");
+
+    await userEvent.click(menuButton);
+
+    expect(menuButton).toHaveAttribute("aria-expanded", "true");
+  });
+
   testA11y(header);
 });
