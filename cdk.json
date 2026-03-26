@@ -8,7 +8,8 @@
     "include": [
       "deployment/**",
       "services/app-api/**",
-      "services/carts-bigmac-streams/**"
+      "services/carts-bigmac-streams/**",
+      "services/shared/**"
     ],
     "exclude": ["services/app-api/coverage/**"]
   },
