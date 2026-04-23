@@ -730,6 +730,29 @@ describe("synthesize()", () => {
       // numerator = 1 + 6 (from lastYearFormData) = 7, denominator = 4, percent = 175%
       expect(out).toEqual({ contents: "7 (175%)" });
     });
+
+    test("sumAndPercentage uses lastYearFormData for odd year and missing denominator values", () => {
+      const out = synthesize(
+        {
+          targets: [
+            "$..*[?(@ && @.id==='2025-01-a-01-01-b')].answer.entry", // 1
+            "$..*[?(@ && @.id==='2025-01-a-01-01-d')].answer.entry", // 3
+          ],
+          additional_targets: [
+            "$..*[?(@ && @.id==='2025-01-a-01-01-g')].answer.entry", // null, should pull from lastYearFormData as 6
+          ],
+          actions: ["sumAndPercentage"],
+        },
+        state.allStatesData,
+        state.global.stateName,
+        state.stateUser.abbr,
+        state.enrollmentCounts.chipEnrollments,
+        state.formData,
+        state.lastYearFormData
+      );
+
+      expect(out).toEqual({ contents: "4 (66.67%)" });
+    });
   });
 
   describe("handles RPNs", () => {
