@@ -19,6 +19,7 @@ import { useFlags } from "launchdarkly-react-client-sdk";
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
+  const menuButtonRef = useRef(null);
 
   const release2025 = useFlags().release2025;
 
@@ -66,7 +67,7 @@ export const Header = () => {
 
   useEffect(() => {
     const handler = (event) => {
-      if (open && menuRef.current && !menuRef.current.contains(event.target)) {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
         setIsMenuOpen(false);
       }
     };
@@ -75,6 +76,21 @@ export const Header = () => {
     return () => {
       document.removeEventListener("mousedown", handler);
       document.removeEventListener("touchstart", handler);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleEscKey = (event) => {
+      if (event.key === "Escape" && isMenuOpen) {
+        setIsMenuOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+    if (isMenuOpen) {
+      document.addEventListener("keydown", handleEscKey);
+    }
+    return () => {
+      document.removeEventListener("keydown", handleEscKey);
     };
   }, [isMenuOpen]);
 
@@ -114,6 +130,11 @@ export const Header = () => {
                           data-testid={"headerDropDownMenuButton"}
                           className="ds-c-button ds-c-button--ghost"
                           onClick={() => setIsMenuOpen(!isMenuOpen)}
+                          type="button"
+                          aria-expanded={isMenuOpen}
+                          aria-haspopup="true"
+                          aria-controls="header-menu"
+                          ref={menuButtonRef}
                         >
                           <FontAwesomeIcon icon={faUser} size="lg" />
                           My Account
@@ -137,18 +158,22 @@ export const Header = () => {
                       <ul
                         data-testid="headerDropDownLinks"
                         className="menu-block open"
-                        id="menu-block"
+                        id="header-menu"
+                        role="menu"
                       >
-                        <li className="contact-us">
-                          <a href="/get-help">
+                        <li className="contact-us" role="none">
+                          <Link to="/get-help" role="menuitem">
                             {release2025 ? "FAQ" : "Contact Us"}
-                          </a>
+                          </Link>
                         </li>
-                        <li className="manage-account">
-                          <Link to="/user/profile">Manage Account</Link>
+                        <li className="manage-account" role="none">
+                          <Link to="/user/profile" role="menuitem">
+                            Manage Account
+                          </Link>
                         </li>
                         <li
                           className="logout"
+                          role="none"
                           data-testid="header-menu-option-log-out"
                         >
                           <Logout />

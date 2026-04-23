@@ -1,5 +1,6 @@
 import React from "react";
-import { screen, render, fireEvent } from "@testing-library/react";
+import { screen, render } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "../../util/testing/mockRouter";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
@@ -112,31 +113,59 @@ describe("<Header />", () => {
     expect(headerDropDownMenuButton).toContainElement(chevDown);
   });
 
-  test("should render the dropdownmenu on click with a chevron pointed up and items underneath", () => {
+  test("should render the dropdownmenu on click with a chevron pointed up and items underneath", async () => {
     render(header);
     const headerDropDownMenuButton = screen.getByTestId(
       "headerDropDownMenuButton"
     );
-    fireEvent.click(headerDropDownMenuButton);
+    await userEvent.click(headerDropDownMenuButton);
     const chevUp = screen.getByTestId("headerDropDownChevUp");
     const headerDropDownMenu = screen.getByTestId("headerDropDownMenu");
     const headerDropDownLinks = screen.getByTestId("headerDropDownLinks");
     expect(headerDropDownMenuButton).toContainElement(chevUp);
     expect(headerDropDownMenu).toContainElement(headerDropDownLinks);
-    expect(screen.getByRole("link", { name: "Manage Account" })).toBeVisible();
+    expect(
+      screen.getByRole("menuitem", { name: "Manage Account" })
+    ).toBeVisible();
   });
 
-  test("should open and close the dropdown menu on click", () => {
+  test("should open and close the dropdown menu on click", async () => {
     render(header);
     const headerDropDownMenuButton = screen.getByTestId(
       "headerDropDownMenuButton"
     );
-    fireEvent.click(headerDropDownMenuButton);
+    await userEvent.click(headerDropDownMenuButton);
     const chevUp = screen.getByTestId("headerDropDownChevUp");
     expect(headerDropDownMenuButton).toContainElement(chevUp);
-    fireEvent.click(headerDropDownMenuButton);
+    await userEvent.click(headerDropDownMenuButton);
     const chevDown = screen.getByTestId("headerDropDownChevDown");
     expect(headerDropDownMenuButton).toContainElement(chevDown);
+  });
+
+  test("should have correct ARIA attributes on the menu button", async () => {
+    render(header);
+    const menuButton = screen.getByTestId("headerDropDownMenuButton");
+
+    expect(menuButton).toHaveAttribute("aria-expanded", "false");
+    expect(menuButton).toHaveAttribute("aria-haspopup", "true");
+    expect(menuButton).toHaveAttribute("aria-controls", "header-menu");
+
+    await userEvent.click(menuButton);
+
+    expect(menuButton).toHaveAttribute("aria-expanded", "true");
+  });
+
+  test("should close menu and return focus to button on Escape key", async () => {
+    render(header);
+    const menuButton = screen.getByTestId("headerDropDownMenuButton");
+
+    await userEvent.click(menuButton);
+    expect(menuButton).toHaveAttribute("aria-expanded", "true");
+
+    await userEvent.keyboard("{Escape}");
+
+    expect(menuButton).toHaveAttribute("aria-expanded", "false");
+    expect(menuButton).toHaveFocus();
   });
 
   testA11y(header);

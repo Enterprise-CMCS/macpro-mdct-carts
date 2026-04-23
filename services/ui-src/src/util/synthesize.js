@@ -130,7 +130,11 @@ const sumAndPercentage = (
   let denominator, numerator;
 
   // If its an odd year, we can try and grab last years value for missing data
-  if (isOddYear && values.some((element) => element === null)) {
+  const valuesContainsNull = values.some((element) => element === null);
+  const additionalValuesContainsNull = additionalValues.some(
+    (element) => element === null
+  );
+  if (isOddYear && (valuesContainsNull || additionalValuesContainsNull)) {
     const foundValues = targets.map((target, index) => {
       if (values[index] !== null) {
         return values[index];
