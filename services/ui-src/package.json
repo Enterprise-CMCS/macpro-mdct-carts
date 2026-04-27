@@ -104,6 +104,9 @@
     "setupFilesAfterEnv": [
       "<rootDir>/src/setupTests.js"
     ],
-    "testEnvironment": "jsdom"
+    "testEnvironment": "jsdom",
+    "transformIgnorePatterns": [
+      "/node_modules/(?!(uuid|@redux-devtools/extension)/)"
+    ]
   }
 }
