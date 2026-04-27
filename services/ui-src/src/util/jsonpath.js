@@ -28,6 +28,29 @@ const toNode = ({ path, value }) => ({
   value,
 });
 
+const setValueAtPath = (obj, path, value) => {
+  const tokens = toPathArray(path).slice(1);
+
+  if (tokens.length === 0) {
+    return undefined;
+  }
+
+  let current = obj;
+  for (let index = 0; index < tokens.length - 1; index += 1) {
+    const token = tokens[index];
+    const nextToken = tokens[index + 1];
+
+    if (current[token] === undefined) {
+      current[token] = /^\d+$/.test(String(nextToken)) ? [] : {};
+    }
+
+    current = current[token];
+  }
+
+  current[tokens.at(-1)] = value;
+  return value;
+};
+
 const fullPathFromIDPath = (originalPath) => {
   const idMatch = /\[\?\(@\.id===?['"]([^'"]+)['"]\)\](.*)$/.exec(originalPath);
 
@@ -179,17 +202,15 @@ const wrappers = methodsToWrap.reduce((current, methodName) => {
           return nextValue;
         }
 
-        return undefined;
+        return setValueAtPath(obj, exactPath, nextValue);
       }
-      default:
-        return undefined;
     }
   };
   return current;
 }, {});
 
 // These methods don't do lookups, so we can just pass them straight through.
-wrappers.parse = toPathArray;
-wrappers.stringify = toPathString;
+wrappers.parse = JSONPath.toPathArray;
+wrappers.stringify = JSONPath.toPathString;
 
 export default wrappers;
