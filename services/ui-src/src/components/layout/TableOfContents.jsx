@@ -7,7 +7,7 @@ import StateHeader from "./StateHeader";
 //types
 import { AppRoles } from "../../types";
 
-const SkipAndState = () => (
+const SkipContentAndStateHeader = () => (
   <>
     <div className="skip-content">
       <a href="#main-content">Skip to main content</a>
@@ -121,7 +121,7 @@ const TableOfContents = () => {
   // Add skip link and state header as the first item
   items.unshift({
     id: "skip-and-state",
-    component: SkipAndState,
+    component: SkipContentAndStateHeader,
   });
 
   const foundSelectedId = items.find((item) => item.selected)?.id;
