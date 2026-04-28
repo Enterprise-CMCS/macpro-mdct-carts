@@ -155,9 +155,9 @@ describe("<FormActions />", () => {
     render(formActions);
     const printShowButton = screen.getByTestId("print-show");
 
+    await userEvent.click(printShowButton);
     // Check clear
     act(() => {
-      userEvent.click(printShowButton);
       map.mousedown({
         target: document.body,
       });
