@@ -34,6 +34,7 @@ describe("<FormActions />", () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
+
   test("should add hrefs given a section and subsection", () => {
     render(formActions);
     window.history.pushState({}, "Title", "/sections/00");
@@ -73,9 +74,39 @@ describe("<FormActions />", () => {
       "/print?year=2021&state=AL"
     );
   });
+
+  test("should drop invalid route segments from the print url", () => {
+    const unsafeAdminFormActions = (
+      <Provider store={adminStore}>
+        <MemoryRouter initialEntries={["/views/sections/AL/2021/0%26/a"]}>
+          <FormActions />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    render(unsafeAdminFormActions);
+    const printShowButton = screen.getByTestId("print-show");
+    fireEvent.click(printShowButton);
+    const printFormButton = screen.getByTestId("print-form");
+    const printPageButton = screen.getByTestId("print-page");
+    expect(printPageButton).toHaveAttribute(
+      "href",
+      "/print?year=2021&state=AL"
+    );
+    expect(printFormButton).toHaveAttribute(
+      "href",
+      "/print?year=2021&state=AL"
+    );
+  });
+
   test("should build the component when looking at section 3 subsections", () => {
-    render(adminFormActions);
-    window.history.pushState({}, "Title", "/03/a");
+    render(
+      <Provider store={adminStore}>
+        <MemoryRouter initialEntries={["/views/sections/AL/2021/03/a"]}>
+          <FormActions />
+        </MemoryRouter>
+      </Provider>
+    );
     const printShowButton = screen.getByTestId("print-show");
     fireEvent.click(printShowButton);
     const printFormButton = screen.getByTestId("print-form");
