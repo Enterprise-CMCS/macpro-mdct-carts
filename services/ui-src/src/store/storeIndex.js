@@ -1,5 +1,5 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
-import thunkMiddleware from "redux-thunk";
+import { thunk } from "redux-thunk";
 import { composeWithDevTools } from "@redux-devtools/extension";
 import formData from "./formData";
 import lastYearFormData from "./lastYearFormData";
@@ -30,7 +30,7 @@ export const reducer = combineReducers({
 });
 
 // Consolidate middleware
-let middlewareArray = [thunkMiddleware, saveMiddleware];
+let middlewareArray = [thunk, saveMiddleware];
 // log redux only in dev environment
 if (MODE === "development") {
   middlewareArray = [...middlewareArray, logger];
