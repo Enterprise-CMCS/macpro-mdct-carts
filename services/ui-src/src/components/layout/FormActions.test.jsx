@@ -2,7 +2,8 @@ import React from "react";
 import { MemoryRouter } from "../../util/testing/mockRouter";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-import { act, screen, render, fireEvent } from "@testing-library/react";
+import { act, screen, render } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import FormActions from "./FormActions";
 import {
   adminUserWithReportInProgress,
@@ -34,11 +35,12 @@ describe("<FormActions />", () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
-  test("should add hrefs given a section and subsection", () => {
+
+  test("should add hrefs given a section and subsection", async () => {
     render(formActions);
     window.history.pushState({}, "Title", "/sections/00");
     const printShowButton = screen.getByTestId("print-show");
-    fireEvent.click(printShowButton);
+    await userEvent.click(printShowButton);
     const printFormButton = screen.getByTestId("print-form");
     const printPageButton = screen.getByTestId("print-page");
     expect(printPageButton).toHaveAttribute(
@@ -51,7 +53,7 @@ describe("<FormActions />", () => {
     );
   });
 
-  test("should add hrefs given a section and subsection for admin user", () => {
+  test("should add hrefs given a section and subsection for admin user", async () => {
     const setLocation = (path = "/") => {
       delete window.location;
       window.location = new URL("https://www.example.com" + path);
@@ -61,7 +63,7 @@ describe("<FormActions />", () => {
     render(adminFormActions);
     window.history.pushState({}, "Title", "/00/a");
     const printShowButton = screen.getByTestId("print-show");
-    fireEvent.click(printShowButton);
+    await userEvent.click(printShowButton);
     const printFormButton = screen.getByTestId("print-form");
     const printPageButton = screen.getByTestId("print-page");
     expect(printPageButton).toHaveAttribute(
@@ -73,11 +75,41 @@ describe("<FormActions />", () => {
       "/print?year=2021&state=AL"
     );
   });
-  test("should build the component when looking at section 3 subsections", () => {
-    render(adminFormActions);
-    window.history.pushState({}, "Title", "/03/a");
+
+  test("should drop invalid route segments from the print url", async () => {
+    const unsafeAdminFormActions = (
+      <Provider store={adminStore}>
+        <MemoryRouter initialEntries={["/views/sections/AL/2021/0%26/a"]}>
+          <FormActions />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    render(unsafeAdminFormActions);
     const printShowButton = screen.getByTestId("print-show");
-    fireEvent.click(printShowButton);
+    await userEvent.click(printShowButton);
+    const printFormButton = screen.getByTestId("print-form");
+    const printPageButton = screen.getByTestId("print-page");
+    expect(printPageButton).toHaveAttribute(
+      "href",
+      "/print?year=2021&state=AL"
+    );
+    expect(printFormButton).toHaveAttribute(
+      "href",
+      "/print?year=2021&state=AL"
+    );
+  });
+
+  test("should build the component when looking at section 3 subsections", async () => {
+    render(
+      <Provider store={adminStore}>
+        <MemoryRouter initialEntries={["/views/sections/AL/2021/03/a"]}>
+          <FormActions />
+        </MemoryRouter>
+      </Provider>
+    );
+    const printShowButton = screen.getByTestId("print-show");
+    await userEvent.click(printShowButton);
     const printFormButton = screen.getByTestId("print-form");
     const printPageButton = screen.getByTestId("print-page");
     expect(printPageButton).toHaveAttribute(
@@ -89,28 +121,31 @@ describe("<FormActions />", () => {
       "/print?year=2021&state=AL"
     );
   });
-  test("should display print section or page on click", () => {
+
+  test("should display print section or page on click", async () => {
     render(formActions);
     const printShowButton = screen.getByTestId("print-show");
-    fireEvent.click(printShowButton);
+    await userEvent.click(printShowButton);
     const printFormButton = screen.getByTestId("print-form");
     const printPageButton = screen.getByTestId("print-page");
     expect(printPageButton).toHaveTextContent("This Section");
     expect(printFormButton).toHaveTextContent("Entire Form");
   });
-  test("should clear on click", () => {
+
+  test("should clear on click", async () => {
     render(formActions);
     const printShowButton = screen.getByTestId("print-show");
-    fireEvent.click(printShowButton);
+    await userEvent.click(printShowButton);
     const printHideButton = screen.getByTestId("print-hide");
-    fireEvent.click(printHideButton);
+    await userEvent.click(printHideButton);
 
     const printFormButton = screen.queryByTestId("print-form");
     const printPageButton = screen.queryByTestId("print-page");
     expect(printPageButton).toBeNull();
     expect(printFormButton).toBeNull();
   });
-  test("should not clear on internal click, then clear on outside click", () => {
+
+  test("should not clear on internal click, then clear on outside click", async () => {
     const map = {};
 
     document.addEventListener = jest.fn((event, cb) => {
@@ -119,8 +154,8 @@ describe("<FormActions />", () => {
 
     render(formActions);
     const printShowButton = screen.getByTestId("print-show");
-    fireEvent.click(printShowButton);
 
+    await userEvent.click(printShowButton);
     // Check clear
     act(() => {
       map.mousedown({

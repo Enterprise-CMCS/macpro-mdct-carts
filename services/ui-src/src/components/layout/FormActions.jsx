@@ -1,11 +1,20 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, shallowEqual } from "react-redux";
+import { useLocation } from "react-router";
 // components
 import { Button } from "@cmsgov/design-system";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint, faWindowClose } from "@fortawesome/free-solid-svg-icons";
 //types
 import { AppRoles } from "../../types";
+import {
+  DEFAULT_SUBSECTION_MARKER,
+  SECTION_THREE_ORDINAL,
+  getPrintRouteContext,
+  parseStateId,
+  parseYear,
+  printFormUrl,
+} from "../utils/printUrlHelpers";
 
 /**
  * Display available options for form (print)
@@ -18,38 +27,36 @@ const FormActions = () => {
     (state) => [state.stateUser.currentUser, state.global.formYear],
     shallowEqual
   );
+  const { pathname } = useLocation();
 
   // Initialise printDialogeRef
   const printDialogeRef = useRef(null);
 
-  // Get section IDs and subsection IDs for printing single section
-  let searchParams = "";
-  let sectionId = "";
-
   const role = currentUser.role;
-  if (role == AppRoles.STATE_USER) {
-    searchParams = document.location.pathname
-      .toString()
-      .replace("/sections/", "")
-      .replace(formYear + "/", "");
+  const {
+    routeStateId,
+    routeYear,
+    routeSectionOrdinal,
+    routeSubsectionMarker,
+  } = getPrintRouteContext(role, pathname);
 
-    sectionId = formYear + "-" + searchParams.substring(0, 2);
-  } else {
-    const stateId = window.location.href.split("/")[5];
-    searchParams = document.location.pathname
-      .toString()
-      .replace(`views/sections/${stateId}/`, "")
-      .replace(formYear + "/", "");
+  const safeFormYear = parseYear(formYear) ?? routeYear;
+  const safeStateId =
+    role === AppRoles.STATE_USER
+      ? parseStateId(currentUser.state?.id)
+      : routeStateId;
 
-    sectionId = formYear + "-" + searchParams.substring(1, 3);
-  }
+  const sectionId =
+    safeFormYear && routeSectionOrdinal
+      ? `${safeFormYear}-${routeSectionOrdinal}`
+      : null;
 
-  let subsectionId = sectionId + "-";
-  if (sectionId.slice(-2) === "03") {
-    subsectionId += searchParams.slice(-1);
-  } else {
-    subsectionId += "a";
-  }
+  const subsectionMarker =
+    routeSectionOrdinal === SECTION_THREE_ORDINAL
+      ? (routeSubsectionMarker ?? DEFAULT_SUBSECTION_MARKER)
+      : DEFAULT_SUBSECTION_MARKER;
+
+  const subsectionId = sectionId ? `${sectionId}-${subsectionMarker}` : null;
 
   /**
    * Print dialogue box state
@@ -89,37 +96,9 @@ const FormActions = () => {
 
   /**
    * Generates the URL to print a form.
-   * @param {object} currentUser - the current user object
    * @param {string} formYear - the year associated with the report
    * @return {string} The URL string
    */
-  const printFormUrl = (
-    currentUser,
-    formYear,
-    sectionId = null,
-    subsectionId = null
-  ) => {
-    let stateId = "";
-
-    if (currentUser.role === AppRoles.STATE_USER) {
-      stateId = currentUser.state.id;
-    } else {
-      stateId = window.location.href.split("/")[5];
-    }
-
-    let urlString = `/print?year=${formYear}&state=${stateId}`;
-
-    if (sectionId) {
-      urlString += `&sectionId=${sectionId}`;
-    }
-
-    if (subsectionId) {
-      urlString += `&subsectionId=${subsectionId}`;
-    }
-
-    return urlString;
-  };
-
   return (
     <section className="action-buttons">
       <div className="print-button">
@@ -150,8 +129,8 @@ const FormActions = () => {
               <Button
                 className="ds-c-button--solid ds-c-button--small"
                 href={printFormUrl(
-                  currentUser,
-                  formYear,
+                  safeFormYear,
+                  safeStateId,
                   sectionId,
                   subsectionId
                 )}
@@ -166,7 +145,7 @@ const FormActions = () => {
             <div className="print-form">
               <Button
                 className="ds-c-button--solid ds-c-button--small"
-                href={printFormUrl(currentUser, formYear)}
+                href={printFormUrl(safeFormYear, safeStateId)}
                 title="Entire Form"
                 target="_blank"
                 onClick={togglePrintDialogue}

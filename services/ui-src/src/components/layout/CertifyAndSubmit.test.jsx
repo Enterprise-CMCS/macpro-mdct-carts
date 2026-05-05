@@ -68,7 +68,9 @@ const submit = (
 );
 const submitFinished = (
   <Provider store={submittedStore}>
-    <CertifyAndSubmit />
+    <MemoryRouter initialEntries={["/"]}>
+      <CertifyAndSubmit />
+    </MemoryRouter>
   </Provider>
 );
 
