@@ -1008,11 +1008,7 @@ describe("synthesize()", () => {
     });
 
     test("compares two ffys as admin user", () => {
-      Object.defineProperty(window, "location", {
-        value: {
-          pathname: "/views/sections/AL/2023/02",
-        },
-      });
+      window.history.replaceState({}, "", "/views/sections/AL/2023/02");
       const out = synthesize(
         {
           compareACS: {

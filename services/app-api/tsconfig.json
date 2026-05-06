@@ -5,6 +5,7 @@
     "esModuleInterop": true,
     "sourceMap": true,
     "strict": true,
+    "types": ["jest"],
     "allowJs": true,
     "target": "ES2023",
     "module": "esnext",

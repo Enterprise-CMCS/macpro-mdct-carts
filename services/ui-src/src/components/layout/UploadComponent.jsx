@@ -105,7 +105,7 @@ const UploadComponent = ({ question }) => {
   };
 
   const downloadFile = async (fileId) => {
-    window.location.href = await getFileDownloadUrl(year, stateCode, fileId);
+    window.open(await getFileDownloadUrl(year, stateCode, fileId), "_self");
   };
 
   const retrieveUploadedFiles = async () => {
