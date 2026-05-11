@@ -1,4 +1,4 @@
-import jsonpath from "jsonpath";
+import jsonpath from "../util/jsonpath";
 
 import { selectById } from "../store/selectors";
 

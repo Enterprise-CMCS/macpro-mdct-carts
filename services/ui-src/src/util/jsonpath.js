@@ -14,8 +14,42 @@
  * around jsonpath so that we can get the performance benefits everywhere
  * without having to change anything anywhere else.
  */
-import jsonpath from "jsonpath";
+import { JSONPath } from "jsonpath-plus";
 import idLetterMarkers from "./idLetterMarkers";
+
+const toPathArray = (path) => JSONPath.toPathArray(path);
+const toPathString = (path) => JSONPath.toPathString(path);
+
+const findMatches = (obj, path) =>
+  JSONPath({ json: obj, path, resultType: "all", wrap: true });
+
+const toNode = ({ path, value }) => ({
+  path: toPathArray(path),
+  value,
+});
+
+const setValueAtPath = (obj, path, value) => {
+  const tokens = toPathArray(path).slice(1);
+
+  if (tokens.length === 0) {
+    return undefined;
+  }
+
+  let current = obj;
+  for (let index = 0; index < tokens.length - 1; index += 1) {
+    const token = tokens[index];
+    const nextToken = tokens[index + 1];
+
+    if (current[token] === undefined) {
+      current[token] = /^\d+$/.test(String(nextToken)) ? [] : {};
+    }
+
+    current = current[token];
+  }
+
+  current[tokens.at(-1)] = value;
+  return value;
+};
 
 const fullPathFromIDPath = (originalPath) => {
   const idMatch = /\[\?\(@\.id===?['"]([^'"]+)['"]\)\](.*)$/.exec(originalPath);
@@ -71,7 +105,12 @@ const getExactPath = (data, path) => {
   // If we don't already have a matching exact path, we'll need to fetch it.
   if (!exact) {
     const pathShortCircuit = fullPathFromIDPath(path);
-    const paths = jsonpath.paths(data, pathShortCircuit);
+    const paths = JSONPath({
+      json: data,
+      path: pathShortCircuit,
+      resultType: "path",
+      wrap: true,
+    }).map(toPathArray);
 
     if (paths.length > 0) {
       /*
@@ -79,7 +118,7 @@ const getExactPath = (data, path) => {
        * we get back above are in array form, but we want to cache the string
        * form, so stringify it first.
        */
-      exact = jsonpath.stringify(paths[0]);
+      exact = toPathString(paths[0]);
 
       /*
        * If the incoming path ends with [*], the jsonpath.paths method will
@@ -113,13 +152,65 @@ const methodsToWrap = ["apply", "nodes", "parent", "paths", "query", "value"];
 const wrappers = methodsToWrap.reduce((current, methodName) => {
   current[methodName] = (obj, path, ...rest) => {
     const exactPath = getExactPath(obj, path);
-    return jsonpath[methodName](obj, exactPath, ...rest);
+
+    switch (methodName) {
+      case "apply": {
+        const [callback] = rest;
+        return findMatches(obj, exactPath).map((match) => {
+          const nextValue = callback(match.value);
+          if (
+            match.parent &&
+            match.parentProperty !== null &&
+            match.parentProperty !== undefined
+          ) {
+            match.parent[match.parentProperty] = nextValue;
+          }
+          return toNode({ ...match, value: nextValue });
+        });
+      }
+      case "nodes":
+        return findMatches(obj, exactPath).map(toNode);
+      case "parent":
+        return JSONPath({
+          json: obj,
+          path: exactPath,
+          resultType: "parent",
+          wrap: false,
+        });
+      case "paths":
+        return JSONPath({
+          json: obj,
+          path: exactPath,
+          resultType: "path",
+          wrap: true,
+        }).map(toPathArray);
+      case "query":
+        return JSONPath({ json: obj, path: exactPath, wrap: true });
+      case "value": {
+        const [nextValue] = rest;
+        if (nextValue === undefined) {
+          return JSONPath({ json: obj, path: exactPath, wrap: false });
+        }
+
+        const [match] = findMatches(obj, exactPath);
+        if (
+          match?.parent &&
+          match.parentProperty !== null &&
+          match.parentProperty !== undefined
+        ) {
+          match.parent[match.parentProperty] = nextValue;
+          return nextValue;
+        }
+
+        return setValueAtPath(obj, exactPath, nextValue);
+      }
+    }
   };
   return current;
 }, {});
 
 // These methods don't do lookups, so we can just pass them straight through.
-wrappers.parse = jsonpath.parse;
-wrappers.stringify = jsonpath.stringify;
+wrappers.parse = JSONPath.toPathArray;
+wrappers.stringify = JSONPath.toPathString;
 
 export default wrappers;

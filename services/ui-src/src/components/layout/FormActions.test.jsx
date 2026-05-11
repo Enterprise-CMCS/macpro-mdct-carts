@@ -31,6 +31,18 @@ const adminFormActions = (
   </Provider>
 );
 
+const renderAdminFormActions = (path) => (
+  <Provider store={adminStore}>
+    <MemoryRouter initialEntries={[path]}>
+      <FormActions />
+    </MemoryRouter>
+  </Provider>
+);
+
+const setLocation = (path = "/") => {
+  window.history.replaceState({}, "", path);
+};
+
 describe("<FormActions />", () => {
   afterEach(() => {
     jest.clearAllMocks();
@@ -54,14 +66,8 @@ describe("<FormActions />", () => {
   });
 
   test("should add hrefs given a section and subsection for admin user", async () => {
-    const setLocation = (path = "/") => {
-      delete window.location;
-      window.location = new URL("https://www.example.com" + path);
-    };
-
     setLocation(adminFirstLocation);
     render(adminFormActions);
-    window.history.pushState({}, "Title", "/00/a");
     const printShowButton = screen.getByTestId("print-show");
     await userEvent.click(printShowButton);
     const printFormButton = screen.getByTestId("print-form");
@@ -101,13 +107,9 @@ describe("<FormActions />", () => {
   });
 
   test("should build the component when looking at section 3 subsections", async () => {
-    render(
-      <Provider store={adminStore}>
-        <MemoryRouter initialEntries={["/views/sections/AL/2021/03/a"]}>
-          <FormActions />
-        </MemoryRouter>
-      </Provider>
-    );
+    const sectionThreeLocation = "/views/sections/AL/2021/03/a";
+    setLocation(sectionThreeLocation);
+    render(renderAdminFormActions(sectionThreeLocation));
     const printShowButton = screen.getByTestId("print-show");
     await userEvent.click(printShowButton);
     const printFormButton = screen.getByTestId("print-form");

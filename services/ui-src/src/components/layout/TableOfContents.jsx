@@ -7,6 +7,15 @@ import StateHeader from "./StateHeader";
 //types
 import { AppRoles } from "../../types";
 
+const SkipContentAndStateHeader = () => (
+  <>
+    <div className="skip-content">
+      <a href="#main-content">Skip to main content</a>
+    </div>
+    <StateHeader />
+  </>
+);
+
 const TableOfContents = () => {
   const [userRole, formYear, formData] = useSelector(
     (state) => [
@@ -112,14 +121,7 @@ const TableOfContents = () => {
   // Add skip link and state header as the first item
   items.unshift({
     id: "skip-and-state",
-    component: () => (
-      <>
-        <div className="skip-content">
-          <a href="#main-content">Skip to main content</a>
-        </div>
-        <StateHeader />
-      </>
-    ),
+    component: SkipContentAndStateHeader,
   });
 
   const foundSelectedId = items.find((item) => item.selected)?.id;

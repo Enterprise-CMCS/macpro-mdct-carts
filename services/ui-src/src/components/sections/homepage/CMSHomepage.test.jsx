@@ -3,7 +3,7 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import configureMockStore from "redux-mock-store";
 import { Provider } from "react-redux";
-import thunk from "redux-thunk";
+import { thunk } from "redux-thunk";
 import { MemoryRouter } from "../../../util/testing/mockRouter";
 // components
 import CMSHomepage from "./CMSHomepage";
