@@ -103,9 +103,10 @@ const Question = ({
   };
 
   const handleOnClick = (e) => {
+    if (e.target.type !== "checkbox" && e.target.type !== "radio") return;
     if (e.target.checked) {
       dispatch(setAnswerEntry(e.target.name, ""));
-    } else if (e.target.checked !== undefined) {
+    } else {
       dispatch(setAnswerEntry(e.target.name, e.target.value));
     }
   };
