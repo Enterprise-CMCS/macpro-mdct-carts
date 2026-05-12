@@ -8,12 +8,10 @@ const Radio = ({ question, ...props }) => {
   const [selected, setSelected] = useState(question.answer.entry);
   const dispatch = useDispatch();
 
-  const handleClick = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    const isDeselecting = selected === value;
-
-    setSelected(isDeselecting ? "" : value);
-    dispatch(setAnswerEntry(name, isDeselecting ? "" : value));
+    setSelected(value);
+    dispatch(setAnswerEntry(name, value));
   };
 
   const children =
@@ -39,7 +37,7 @@ const Radio = ({ question, ...props }) => {
               value={value}
               name={props.name}
               disabled={props.disabled}
-              onChange={handleClick}
+              onChange={handleChange}
               id={props.name + "-" + value}
             />
             <label className="label-radio" htmlFor={props.name + "-" + value}>

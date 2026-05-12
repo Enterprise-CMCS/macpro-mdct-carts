@@ -104,18 +104,6 @@ describe("Radio Component", () => {
     });
   });
 
-  it("dispatches empty string when deselecting the current option", async () => {
-    render(basicRadioProvider);
-    const option1 = screen.getByLabelText("Option 1");
-    await userEventLib.click(option1);
-    expect(option1).not.toBeChecked();
-    expect(store.getActions()).toContainEqual({
-      type: "QUESTION ANSWERED",
-      fragmentId: "test-radio",
-      data: "",
-    });
-  });
-
   it("renders children questions when an option is selected", async () => {
     render(basicRadioProvider);
     const option2 = screen.getByLabelText("Option 2");
