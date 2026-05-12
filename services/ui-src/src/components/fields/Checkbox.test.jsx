@@ -1,6 +1,7 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import Checkbox from "./Checkbox";
+import userEvent from "@testing-library/user-event";
 
 describe("Checkbox component", () => {
   const baseProps = {
@@ -76,6 +77,82 @@ describe("Checkbox component", () => {
     const { getByLabelText } = render(<Checkbox {...props} />);
     const bananaCheckbox = getByLabelText(/Banana/);
     fireEvent.click(bananaCheckbox);
+    expect(props.onChange).toHaveBeenCalledWith({
+      target: { name: "fruits", value: ["apple"] },
+    });
+  });
+
+  it("returns null when unchecking the last checked item", async () => {
+    const props = {
+      ...baseProps,
+      question: {
+        ...baseProps.question,
+        answer: {
+          ...baseProps.question.answer,
+          entry: ["apple"],
+        },
+      },
+    };
+    const { getByLabelText } = render(<Checkbox {...props} />);
+    const appleCheckbox = getByLabelText(/Apple/);
+    await userEvent.click(appleCheckbox);
+    expect(props.onChange).toHaveBeenCalledWith({
+      target: { name: "fruits", value: null },
+    });
+  });
+
+  it("handles null entry by creating a clean array on check", async () => {
+    const props = {
+      ...baseProps,
+      question: {
+        ...baseProps.question,
+        answer: {
+          ...baseProps.question.answer,
+          entry: null,
+        },
+      },
+    };
+    const { getByLabelText } = render(<Checkbox {...props} />);
+    const appleCheckbox = getByLabelText(/Apple/);
+    await userEvent.click(appleCheckbox);
+    expect(props.onChange).toHaveBeenCalledWith({
+      target: { name: "fruits", value: ["apple"] },
+    });
+  });
+
+  it("handles undefined entry by creating a clean array on check", async () => {
+    const props = {
+      ...baseProps,
+      question: {
+        ...baseProps.question,
+        answer: {
+          ...baseProps.question.answer,
+          entry: undefined,
+        },
+      },
+    };
+    const { getByLabelText } = render(<Checkbox {...props} />);
+    const bananaCheckbox = getByLabelText(/Banana/);
+    await userEvent.click(bananaCheckbox);
+    expect(props.onChange).toHaveBeenCalledWith({
+      target: { name: "fruits", value: ["banana"] },
+    });
+  });
+
+  it("filters out null values from an existing array entry", async () => {
+    const props = {
+      ...baseProps,
+      question: {
+        ...baseProps.question,
+        answer: {
+          ...baseProps.question.answer,
+          entry: [null],
+        },
+      },
+    };
+    const { getByLabelText } = render(<Checkbox {...props} />);
+    const appleCheckbox = getByLabelText(/Apple/);
+    await userEvent.click(appleCheckbox);
     expect(props.onChange).toHaveBeenCalledWith({
       target: { name: "fruits", value: ["apple"] },
     });

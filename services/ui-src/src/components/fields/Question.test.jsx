@@ -343,7 +343,7 @@ describe("<Question />", () => {
     });
   });
 
-  describe("handleOnClick only dispatches for checkbox and radio", () => {
+  describe("clicking fields only dispatches when appropriate", () => {
     beforeEach(() => {
       mockDispatch.mockClear();
       useDispatch.mockReturnValue(mockDispatch);
@@ -376,7 +376,7 @@ describe("<Question />", () => {
       expect(mockDispatch).not.toHaveBeenCalled();
     });
 
-    test("clicking a checkbox dispatches", async () => {
+    test("clicking a checkbox dispatches via onChange only", async () => {
       const props = {
         ...baseProps,
         question: {
@@ -393,7 +393,7 @@ describe("<Question />", () => {
       expect(mockDispatch).toHaveBeenCalledWith({
         type: "QUESTION ANSWERED",
         fragmentId: mockQuestions["checkbox"].id,
-        data: "",
+        data: ["mock-checkbox-answer"],
       });
     });
 
@@ -411,7 +411,7 @@ describe("<Question />", () => {
       expect(mockDispatch).toHaveBeenCalledWith({
         type: "QUESTION ANSWERED",
         fragmentId: mockQuestions["radio"].id,
-        data: "",
+        data: "mock-radio-answer",
       });
     });
   });
