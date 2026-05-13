@@ -82,7 +82,7 @@ describe("Checkbox component", () => {
     });
   });
 
-  it("returns null when unchecking the last checked item", async () => {
+  it("returns empty array when unchecking the last checked item", async () => {
     const props = {
       ...baseProps,
       question: {
