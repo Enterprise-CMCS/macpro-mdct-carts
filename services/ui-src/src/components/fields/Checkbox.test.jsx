@@ -97,7 +97,7 @@ describe("Checkbox component", () => {
     const appleCheckbox = getByLabelText(/Apple/);
     await userEvent.click(appleCheckbox);
     expect(props.onChange).toHaveBeenCalledWith({
-      target: { name: "fruits", value: null },
+      target: { name: "fruits", value: [] },
     });
   });
 

@@ -9,7 +9,7 @@ const Checkbox = ({ onChange, question, ...props }) => {
       ? selected.filter((v) => v !== value)
       : [...selected, value];
 
-    onChange({ target: { name, value: updated.length > 0 ? updated : null } });
+    onChange({ target: { name, value: updated.length > 0 ? updated : [] } });
   };
 
   const radioButttonList = question.answer.options.map(
