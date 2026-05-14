@@ -2,18 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const Checkbox = ({ onChange, question, ...props }) => {
-  const value = Array.isArray(question.answer.entry)
-    ? question.answer.entry
-    : [question.answer.entry];
+  const selected = [question.answer.entry].flat().filter((v) => v != null);
 
-  const change = ({ target: { name, value: newValue } }) => {
-    const index = value.indexOf(newValue);
-    if (index !== -1) {
-      value.splice(index, 1);
-      onChange({ target: { name, value } });
-    } else {
-      onChange({ target: { name, value: [...value, newValue] } });
-    }
+  const change = ({ target: { name, value } }) => {
+    const updated = selected.includes(value)
+      ? selected.filter((v) => v !== value)
+      : [...selected, value];
+
+    onChange({ target: { name, value: updated.length > 0 ? updated : [] } });
   };
 
   const radioButttonList = question.answer.options.map(
@@ -31,7 +27,7 @@ const Checkbox = ({ onChange, question, ...props }) => {
             type="checkbox"
             value={checkBoxValue}
             onChange={change}
-            checked={value.includes(checkBoxValue)}
+            checked={selected.includes(checkBoxValue)}
             name={props.name}
           />
           <label
