@@ -171,8 +171,6 @@ describe("<UploadComponent />", () => {
     const input = getUploadInput();
     await userEvent.upload(input, mockBigFile);
 
-    screen.debug(undefined, 1000000);
-
     expect(
       screen.queryByText(/exceeds .* file size maximum/)
     ).toBeInTheDocument();
@@ -304,14 +302,7 @@ describe("<UploadComponent />", () => {
   });
 
   test("Should allow users to download uploaded files", async () => {
-    /*
-     * Some funny business in here to test assignment to `window.location`.
-     * Without this, window.location stays at "http://localhost",
-     * probably due to jest dom tomfoolery.
-     */
-    const originalLocation = window.location;
-    delete window.location;
-    window.location = { href: "" };
+    const openSpy = jest.spyOn(window, "open").mockImplementation(() => {});
 
     fileApi.getUploadedFiles.mockReturnValue([
       {
@@ -325,9 +316,7 @@ describe("<UploadComponent />", () => {
     const downloadButton = await screen.findByText("Download");
     await userEvent.click(downloadButton);
 
-    expect(window.location.href).toBe("my/s3/path/1");
-
-    window.location = originalLocation;
+    expect(openSpy).toHaveBeenCalledWith("my/s3/path/1", "_self");
   });
 
   test("Should allow users to delete previously-uploaded files", async () => {

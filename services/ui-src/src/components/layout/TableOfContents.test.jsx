@@ -131,8 +131,7 @@ jest.mock("react-router", () => ({
 }));
 
 const setLocation = (path = "/") => {
-  delete window.location;
-  window.location = new URL("https://www.example.com" + path);
+  window.history.replaceState({}, "", path);
 };
 
 describe("<TableOfContents />", () => {

@@ -342,4 +342,77 @@ describe("<Question />", () => {
       expect(numberInput).toHaveValue("5555555555");
     });
   });
+
+  describe("clicking fields only dispatches when appropriate", () => {
+    beforeEach(() => {
+      mockDispatch.mockClear();
+      useDispatch.mockReturnValue(mockDispatch);
+    });
+
+    test("clicking a text input does not dispatch", async () => {
+      const props = {
+        ...baseProps,
+        question: mockQuestions["text"],
+      };
+      renderQuestion(props);
+
+      const input = screen.getByRole("textbox", { name: "Mock text question" });
+      await userEvent.click(input);
+      expect(mockDispatch).not.toHaveBeenCalled();
+    });
+
+    test("clicking an integer input does not dispatch", async () => {
+      const props = {
+        ...baseProps,
+        question: mockQuestions["integer"],
+      };
+      renderQuestion(props);
+
+      const group = screen.getByRole("group", {
+        name: /Mock integer question/,
+      });
+      const input = within(group).getByRole("textbox");
+      await userEvent.click(input);
+      expect(mockDispatch).not.toHaveBeenCalled();
+    });
+
+    test("clicking a checkbox dispatches via onChange only", async () => {
+      const props = {
+        ...baseProps,
+        question: {
+          ...mockQuestions["checkbox"],
+          questions: [],
+        },
+      };
+      renderQuestion(props);
+
+      const checkbox = screen.getByRole("checkbox", {
+        name: "Question: Mock checkbox question, Answer: Mock checkbox answer",
+      });
+      await userEvent.click(checkbox);
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: "QUESTION ANSWERED",
+        fragmentId: mockQuestions["checkbox"].id,
+        data: ["mock-checkbox-answer"],
+      });
+    });
+
+    test("clicking a radio button dispatches", async () => {
+      const props = {
+        ...baseProps,
+        question: mockQuestions["radio"],
+      };
+      renderQuestion(props);
+
+      const radio = screen.getByRole("radio", {
+        name: "Mock radio answer",
+      });
+      await userEvent.click(radio);
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: "QUESTION ANSWERED",
+        fragmentId: mockQuestions["radio"].id,
+        data: "mock-radio-answer",
+      });
+    });
+  });
 });

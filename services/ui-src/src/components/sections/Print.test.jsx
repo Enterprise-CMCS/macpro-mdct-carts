@@ -1,7 +1,7 @@
 import React from "react";
 import { screen, render } from "@testing-library/react";
 import { MemoryRouter } from "../../util/testing/mockRouter";
-import thunk from "redux-thunk";
+import { thunk } from "redux-thunk";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import { Print, getPdfFriendlyDocument } from "./Print";
@@ -150,10 +150,7 @@ describe("<Print />", () => {
       },
     });
 
-    Object.defineProperty(window, "location", {
-      writable: true,
-      value: { search: "/print?id=1&year=2020&state=AL" },
-    });
+    window.history.replaceState({}, "", "/print?id=1&year=2020&state=AL");
 
     const noStateCodeSetup = (path) => (
       <Provider store={noStateCode}>
