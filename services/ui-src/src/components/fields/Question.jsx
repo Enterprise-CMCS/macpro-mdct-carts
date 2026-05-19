@@ -68,7 +68,6 @@ const Question = ({
   label,
   name,
   onChange,
-  onClick,
   setAnswer,
   // eslint-enable no-unused-vars
   ...props
@@ -100,14 +99,6 @@ const Question = ({
 
   const handleOnChange = ({ target: { name: id, value } }) => {
     dispatch(setAnswerEntry(id, value));
-  };
-
-  const handleOnClick = (e) => {
-    if (e.target.checked) {
-      dispatch(setAnswerEntry(e.target.name, ""));
-    } else if (e.target.checked !== undefined) {
-      dispatch(setAnswerEntry(e.target.name, e.target.value));
-    }
   };
 
   const shouldRenderChildren =
@@ -160,7 +151,6 @@ const Question = ({
           question={question}
           name={question.id}
           onChange={handleOnChange}
-          onClick={handleOnClick}
           disabled={
             prevYearDisabled ||
             pageDisable ||
@@ -202,7 +192,6 @@ Question.propTypes = {
   label: PropTypes.string,
   name: PropTypes.string,
   onChange: PropTypes.func,
-  onClick: PropTypes.func,
   question: PropTypes.object.isRequired,
   prevYear: PropTypes.object,
   printView: PropTypes.bool,

@@ -70,18 +70,14 @@ const radioProvider = (props) => {
   );
 };
 
-const onChange = jest.fn();
-const onClick = jest.fn();
-
 const basicRadioProvider = radioProvider({
   question: mockQuestion,
-  onChange,
-  onClick,
 });
 
 describe("Radio Component", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    store.clearActions();
   });
 
   it("renders radio options", () => {
@@ -96,21 +92,23 @@ describe("Radio Component", () => {
     expect(screen.getByLabelText("Option 2")).not.toBeChecked();
   });
 
-  it("calls onChange and updates checked value when a radio is selected", async () => {
+  it("dispatches and updates checked value when a radio is selected", async () => {
     render(basicRadioProvider);
     const option2 = screen.getByLabelText("Option 2");
     await userEventLib.click(option2);
-    expect(onChange).toHaveBeenCalled();
     expect(option2).toBeChecked();
+    expect(store.getActions()).toContainEqual({
+      type: "QUESTION ANSWERED",
+      fragmentId: "test-radio",
+      data: "option2",
+    });
   });
 
   it("renders children questions when an option is selected", async () => {
     render(basicRadioProvider);
     const option2 = screen.getByLabelText("Option 2");
     await userEventLib.click(option2);
-    expect(onChange).toHaveBeenCalled();
     expect(option2).toBeChecked();
-    // Children should be rendered for the checked option
     expect(screen.getByText("childTextQuestion")).toBeInTheDocument();
   });
 
