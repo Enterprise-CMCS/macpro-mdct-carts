@@ -7,4 +7,5 @@ export const UserContext = createContext({
   loginWithIDM: () => {
     console.log("User Context failed to initialize IDM login functionality.");
   },
+  authError: false,
 });

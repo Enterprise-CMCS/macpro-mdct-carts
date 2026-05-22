@@ -12,10 +12,11 @@ import { fireTealiumPageView } from "./util/tealium";
 import "font-awesome/css/font-awesome.min.css";
 import "./styles/app.scss";
 import { LocalLogins } from "./components/sections/login/LocalLogins";
+import { Button } from "@cmsgov/design-system";
 
 function App() {
   const { pathname, key } = useLocation();
-  const { user, showLocalLogins, loginWithIDM } = useUser();
+  const { user, showLocalLogins, loginWithIDM, authError } = useUser();
 
   // fire tealium page view on route change
   useEffect(() => {
@@ -45,6 +46,18 @@ function App() {
       {!user && showLocalLogins && (
         <Main>
           <LocalLogins loginWithIDM={loginWithIDM} />
+        </Main>
+      )}
+      {!user && !showLocalLogins && authError && (
+        <Main>
+          <div style={{ textAlign: "center", padding: "3rem" }}>
+            <h1>We couldn&apos;t sign you in</h1>
+            <p>
+              Something went wrong while redirecting you to sign in. Please try
+              again.
+            </p>
+            <Button onClick={() => loginWithIDM()}>Try Again</Button>
+          </div>
         </Main>
       )}
     </>

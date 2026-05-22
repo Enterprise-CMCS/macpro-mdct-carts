@@ -19,6 +19,7 @@ export const UserProvider = ({ children }) => {
 
   const [user, setUser] = useState(null);
   const [showLocalLogins, setShowLocalLogins] = useState(false);
+  const [authError, setAuthError] = useState(false);
 
   const logout = useCallback(async () => {
     try {
@@ -61,7 +62,15 @@ export const UserProvider = ({ children }) => {
       dispatch(loadUser(currentUser));
     } catch {
       if (isProduction) {
-        await authenticateWithIDM();
+        try {
+          await authenticateWithIDM();
+        } catch (error) {
+          // signInWithRedirect failed before navigating away (network,
+          // config, etc.). Surface an error so the user isn't stuck on
+          // a blank spinner with no recovery path.
+          console.log("Error initiating IDM sign-in:", error);
+          setAuthError(true);
+        }
       } else {
         setShowLocalLogins(true);
       }
@@ -73,14 +82,25 @@ export const UserProvider = ({ children }) => {
     checkAuthState();
   }, [location, checkAuthState]);
 
+  const loginWithIDM = useCallback(async () => {
+    setAuthError(false);
+    try {
+      await authenticateWithIDM();
+    } catch (error) {
+      console.log("Error initiating IDM sign-in:", error);
+      setAuthError(true);
+    }
+  }, []);
+
   const values = useMemo(
     () => ({
       user,
       logout,
       showLocalLogins,
-      loginWithIDM: authenticateWithIDM,
+      authError,
+      loginWithIDM,
     }),
-    [user, logout, showLocalLogins]
+    [user, logout, showLocalLogins, authError, loginWithIDM]
   );
 
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
