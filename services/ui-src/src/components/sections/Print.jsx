@@ -30,9 +30,20 @@ export const getPdfFriendlyDocument = async () => {
   const html = document.querySelector("html");
   html.querySelector("noscript")?.remove();
 
+  // Save original styles before modifying
+  const inputStyles = [];
+
   document.querySelectorAll("input").forEach((element) => {
     if (element.type === "text") {
+      inputStyles.push({
+        element,
+        height: element.style.height,
+        width: element.style.width,
+        paddingLeft: element.style.paddingLeft,
+      });
       element.style.height = "50px";
+      element.style.width = "100%";
+      element.style.paddingLeft = "8px";
     }
   });
   document.querySelectorAll("button").forEach((element) => {
@@ -55,7 +66,12 @@ export const getPdfFriendlyDocument = async () => {
     .replaceAll(`“`, `"`)
     .replaceAll("\u2013", "-")
     .replaceAll("\u2014", "-");
-
+  // Restore original input styles
+  inputStyles.forEach(({ element, height, width, paddingLeft }) => {
+    element.style.height = height;
+    element.style.width = width;
+    element.style.paddingLeft = paddingLeft;
+  });
   const base64String = btoa(unescape(encodeURIComponent(htmlString)));
   const opts = {
     body: {
