@@ -50,8 +50,8 @@ export const getPdfFriendlyDocument = async () => {
     clonedHtml.querySelector("head").prepend(base);
   }
 
-  const htmlString = clonedHtml
-    .outerHTML.replaceAll(`’`, `'`)
+  const htmlString = clonedHtml.outerHTML
+    .replaceAll(`’`, `'`)
     .replaceAll(`‘`, `'`)
     .replaceAll(`”`, `"`)
     .replaceAll(`“`, `"`)
