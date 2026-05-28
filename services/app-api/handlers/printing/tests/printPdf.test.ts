@@ -1,23 +1,32 @@
 import { testEvent } from "../../../test-util/testEvents";
 import { APIGatewayProxyEvent } from "../../../types";
 import { print } from "../printPdf";
+import Prince from "prince";
 
 jest.spyOn(console, "error").mockImplementation();
 jest.spyOn(console, "warn").mockImplementation();
-global.fetch = jest.fn().mockImplementationOnce(() => {
-  return new Promise((resolve) => {
-    resolve({
-      status: 200,
-      headers: {
-        get: jest.fn().mockResolvedValue("3"),
-      },
-      arrayBuffer: jest.fn().mockResolvedValue(
-        // An ArrayBuffer containing `%PDF-1.7`
-        new Uint8Array([37, 80, 68, 70, 45, 49, 46, 55]).buffer
-      ),
-    });
-  });
+
+jest.mock("prince", () => {
+  const mockExecute = jest.fn().mockResolvedValue(undefined);
+  const mockOption = jest.fn().mockReturnThis();
+  const mockOutput = jest.fn().mockReturnThis();
+  const mockInputs = jest.fn().mockReturnThis();
+  const mockLicense = jest.fn().mockReturnThis();
+  const mockPrince = jest.fn(() => ({
+    license: mockLicense,
+    inputs: mockInputs,
+    output: mockOutput,
+    option: mockOption,
+    execute: mockExecute,
+  }));
+  return mockPrince;
 });
+
+jest.mock("fs", () => ({
+  writeFileSync: jest.fn(),
+  readFileSync: jest.fn(() => Buffer.from("%PDF-1.7")),
+  unlinkSync: jest.fn(),
+}));
 
 jest.mock("../../../libs/authorization", () => ({
   isAuthorized: jest.fn().mockReturnValue(true),
@@ -29,10 +38,10 @@ const base64EncodedHtml = Buffer.from(html).toString("base64");
 describe("Test Print PDF handler", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    process.env.docraptorApiKey = "mock api key"; // pragma: allowlist secret
+    process.env.princeLicense = "mock-license-content";
   });
 
-  test("should make a request to prince and return data", async () => {
+  test("should use Prince XML and return PDF data", async () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,
       body: `{"encodedHtml": "${base64EncodedHtml}"}`,
@@ -40,26 +49,16 @@ describe("Test Print PDF handler", () => {
 
     const res = await print(event, null);
 
-    expect(fetch).toHaveBeenCalled();
-    const [url, request] = (fetch as jest.Mock).mock.calls[0];
-    const body = JSON.parse(request.body);
-    expect(url).toBe("https://docraptor.com/docs");
-    expect(request).toEqual({
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: expect.stringMatching(/^\{.*\}$/),
-    });
-    expect(body).toEqual({
-      user_credentials: "mock api key", // pragma: allowlist secret
-      doc: expect.objectContaining({
-        document_content: html,
-        type: "pdf",
-        tag: expect.stringMatching("CARTS"),
-        prince_options: expect.objectContaining({
-          profile: "PDF/UA-1",
-        }),
-      }),
-    });
+    expect(Prince).toHaveBeenCalled();
+    const princeInstance = (Prince as jest.Mock).mock.results[0].value;
+    expect(princeInstance.license).toHaveBeenCalled();
+    expect(princeInstance.inputs).toHaveBeenCalled();
+    expect(princeInstance.output).toHaveBeenCalled();
+    expect(princeInstance.option).toHaveBeenCalledWith(
+      "pdf-profile",
+      "PDF/UA-1"
+    );
+    expect(princeInstance.execute).toHaveBeenCalled();
 
     expect(res.statusCode).toBe(200);
     expect(JSON.parse(res.body)).toEqual({
@@ -78,8 +77,8 @@ describe("Test Print PDF handler", () => {
     expect(res.statusCode).toBe(500);
   });
 
-  test("should throw an error if API key is missing", async () => {
-    delete process.env.docraptorApiKey;
+  test("should throw an error if license is missing", async () => {
+    delete process.env.princeLicense;
     const event: APIGatewayProxyEvent = {
       ...testEvent,
       body: `{"encodedHtml": "${base64EncodedHtml}"}`,
@@ -89,24 +88,27 @@ describe("Test Print PDF handler", () => {
     expect(res.statusCode).toBe(500);
   });
 
-  test("should handle errors from PDF API", async () => {
+  test("should handle errors from Prince XML", async () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,
       body: `{"encodedHtml": "${base64EncodedHtml}"}`,
     };
 
-    (fetch as jest.Mock).mockResolvedValueOnce({
-      status: 500,
-      text: jest.fn().mockResolvedValue("<error>It broke.</error>"),
+    const mockExecute = jest
+      .fn()
+      .mockRejectedValue(new Error("Prince conversion failed"));
+    (Prince as jest.Mock).mockReturnValueOnce({
+      license: jest.fn().mockReturnThis(),
+      inputs: jest.fn().mockReturnThis(),
+      output: jest.fn().mockReturnThis(),
+      option: jest.fn().mockReturnThis(),
+      execute: mockExecute,
     });
 
     const res = await print(event, null);
 
     expect(res.statusCode).toBe(500);
-    expect(console.warn).toHaveBeenCalledWith(
-      expect.any(Date),
-      expect.stringContaining("It broke.")
-    );
+    expect(console.warn).toHaveBeenCalled();
   });
 
   test("should preserve html, head, and body tags", async () => {
@@ -119,9 +121,9 @@ describe("Test Print PDF handler", () => {
 
     await print(event, null);
 
-    const request = (fetch as jest.Mock).mock.calls[0][1];
-    const body = JSON.parse(request.body);
-    const sentHtml = body.doc.document_content;
-    expect(sentHtml).toBe(inputHtml);
+    const fs = require("node:fs");
+    expect(fs.writeFileSync).toHaveBeenCalled();
+    const writtenHtml = (fs.writeFileSync as jest.Mock).mock.calls[0][1];
+    expect(writtenHtml).toBe(inputHtml);
   });
 });

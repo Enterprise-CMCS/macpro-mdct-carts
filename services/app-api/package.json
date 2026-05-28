@@ -23,7 +23,8 @@
     "happy-dom": "^20.9.0",
     "jsonpath-plus": "^10.4.0",
     "jsonschema": "^1.5.0",
-    "jwt-decode": "^4.0.0"
+    "jwt-decode": "^4.0.0",
+    "prince": "^1.12.4"
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
