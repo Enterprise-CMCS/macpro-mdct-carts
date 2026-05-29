@@ -65,9 +65,6 @@ export const UserProvider = ({ children }) => {
         try {
           await authenticateWithIDM();
         } catch (error) {
-          // signInWithRedirect failed before navigating away (network,
-          // config, etc.). Surface an error so the user isn't stuck on
-          // a blank spinner with no recovery path.
           console.log("Error initiating IDM sign-in:", error);
           setAuthError(true);
         }
