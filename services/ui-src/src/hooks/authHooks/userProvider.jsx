@@ -19,7 +19,6 @@ export const UserProvider = ({ children }) => {
 
   const [user, setUser] = useState(null);
   const [showLocalLogins, setShowLocalLogins] = useState(false);
-  const [authError, setAuthError] = useState(false);
 
   const logout = useCallback(async () => {
     try {
@@ -66,7 +65,6 @@ export const UserProvider = ({ children }) => {
           await authenticateWithIDM();
         } catch (error) {
           console.log("Error initiating IDM sign-in:", error);
-          setAuthError(true);
         }
       } else {
         setShowLocalLogins(true);
@@ -80,12 +78,10 @@ export const UserProvider = ({ children }) => {
   }, [location, checkAuthState]);
 
   const loginWithIDM = useCallback(async () => {
-    setAuthError(false);
     try {
       await authenticateWithIDM();
     } catch (error) {
       console.log("Error initiating IDM sign-in:", error);
-      setAuthError(true);
     }
   }, []);
 
@@ -94,10 +90,9 @@ export const UserProvider = ({ children }) => {
       user,
       logout,
       showLocalLogins,
-      authError,
       loginWithIDM,
     }),
-    [user, logout, showLocalLogins, authError, loginWithIDM]
+    [user, logout, showLocalLogins, loginWithIDM]
   );
 
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
