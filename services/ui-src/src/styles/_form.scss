@@ -21,6 +21,10 @@ input.ds-c-field {
   display: block;
 }
 
+.ds-c-field__before--currency {
+  padding-block-start: 0;
+}
+
 .ds-u-color--error {
   position: absolute;
   top: -24px;
