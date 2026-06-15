@@ -31,6 +31,15 @@ export async function getTokens() {
 }
 
 export async function authenticateWithIDM() {
+  // Clear any stale cached tokens before initiating the
+  // redirect. If a previous session left expired tokens or stale
+  // values in localStorage, signInWithRedirect can fail silently or
+  // produce an OAuth state mismatch when IDM redirects back.
+  try {
+    await signOut({ global: false });
+  } catch {
+    // Ignore — we only care about clearing local state, not server-side.
+  }
   await signInWithRedirect({ provider: { custom: "Okta" } });
 }
 
