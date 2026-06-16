@@ -192,7 +192,6 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     method: "POST",
     timeout: Duration.seconds(30),
     bundling: {
-      forceDockerBundling: true,
       nodeModules: ["prince"],
     },
     ...commonProps,

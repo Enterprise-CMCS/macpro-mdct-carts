@@ -61,8 +61,8 @@ export class Lambda extends Construct {
         assetHash: createHash("sha256")
           .update(`${Date.now()}-${id}`)
           .digest("hex"),
-        minify: bundling?.minify ?? true,
-        sourceMap: bundling?.sourceMap ?? true,
+        minify: true,
+        sourceMap: true,
         nodeModules: ["jsdom", ...(bundling?.nodeModules ?? [])],
       },
       logGroup,
