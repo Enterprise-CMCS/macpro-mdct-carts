@@ -191,6 +191,10 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     path: "/print_pdf",
     method: "POST",
     timeout: Duration.seconds(30),
+    bundling: {
+      forceDockerBundling: true,
+      nodeModules: ["prince"],
+    },
     ...commonProps,
   });
 

@@ -1,6 +1,7 @@
 import { testEvent } from "../../../test-util/testEvents";
 import { APIGatewayProxyEvent } from "../../../types";
 import { print } from "../printPdf";
+import { gzipSync } from "node:zlib";
 import Prince from "prince";
 
 jest.spyOn(console, "error").mockImplementation();
@@ -22,7 +23,7 @@ jest.mock("prince", () => {
   return mockPrince;
 });
 
-jest.mock("fs", () => ({
+jest.mock("node:fs", () => ({
   writeFileSync: jest.fn(),
   readFileSync: jest.fn(() => Buffer.from("%PDF-1.7")),
   unlinkSync: jest.fn(),
@@ -32,8 +33,12 @@ jest.mock("../../../libs/authorization", () => ({
   isAuthorized: jest.fn().mockReturnValue(true),
 }));
 
-const html = "<p>abc</p>";
-const base64EncodedHtml = Buffer.from(html).toString("base64");
+const dangerousHtml =
+  "<html><head></head><body><p>abc<iframe//src=jAva&Tab;script:alert(3)>def</p></body></html>";
+const compressedHtml = gzipSync(dangerousHtml);
+const sanitizedHtml = "<html><head></head><body><p>abcdef</p></body></html>";
+const base64EncodedDangerousHtml =
+  Buffer.from(compressedHtml).toString("base64");
 
 describe("Test Print PDF handler", () => {
   beforeEach(() => {
@@ -44,7 +49,7 @@ describe("Test Print PDF handler", () => {
   test("should use Prince XML and return PDF data", async () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,
-      body: `{"encodedHtml": "${base64EncodedHtml}"}`,
+      body: base64EncodedDangerousHtml,
     };
 
     const res = await print(event, null);
@@ -62,15 +67,19 @@ describe("Test Print PDF handler", () => {
 
     expect(res.statusCode).toBe(200);
     expect(JSON.parse(res.body)).toEqual({
-      // The string `%PDF-1.7`, base64-encoded
       data: "JVBERi0xLjc=",
     });
+
+    const fs = require("node:fs");
+    expect(fs.writeFileSync).toHaveBeenCalled();
+    const writtenHtml = (fs.writeFileSync as jest.Mock).mock.calls[0][1];
+    expect(writtenHtml).toBe(sanitizedHtml);
   });
 
   test("should throw an error if event body is empty", async () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,
-      body: `{}`,
+      body: null,
     };
 
     const res = await print(event, null);
@@ -81,7 +90,7 @@ describe("Test Print PDF handler", () => {
     delete process.env.princeLicense;
     const event: APIGatewayProxyEvent = {
       ...testEvent,
-      body: `{"encodedHtml": "${base64EncodedHtml}"}`,
+      body: base64EncodedDangerousHtml,
     };
 
     const res = await print(event, null);
@@ -91,7 +100,7 @@ describe("Test Print PDF handler", () => {
   test("should handle errors from Prince XML", async () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,
-      body: `{"encodedHtml": "${base64EncodedHtml}"}`,
+      body: base64EncodedDangerousHtml,
     };
 
     const mockExecute = jest
@@ -112,11 +121,10 @@ describe("Test Print PDF handler", () => {
   });
 
   test("should preserve html, head, and body tags", async () => {
-    const inputHtml = `<html lang="en"><head><title>My Page</title></head><body>Hello, world</body></html>`;
-    const b64html = Buffer.from(inputHtml).toString("base64");
+    const inputHtml = `<html lang="en"><head><title>My Page</title><meta name="author" content="CMS" /></head><body>Hello, world</body></html>`;
     const event = {
       ...testEvent,
-      body: JSON.stringify({ encodedHtml: b64html }),
+      body: Buffer.from(gzipSync(inputHtml)).toString("base64"),
     };
 
     await print(event, null);

@@ -34,8 +34,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc -w",
+    "build": "tsc -p deployment/tsconfig.json --incremental false",
+    "watch": "tsc -p deployment/tsconfig.json -w",
     "cdk": "cdk",
     "test": "cd tests/cypress && yarn test && cd -",
     "test:ci": "cd tests/cypress && yarn run test:ci",

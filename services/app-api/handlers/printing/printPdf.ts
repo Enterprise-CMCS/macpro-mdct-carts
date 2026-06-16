@@ -1,45 +1,29 @@
+import { gunzipSync } from "node:zlib";
 import handler from "../../libs/handler-lib";
-import * as logger from "../../libs/debug-lib";
-import createDOMPurify from "dompurify";
-import { Window } from "happy-dom";
+import { logger } from "../../libs/debug-lib";
+import sanitizeHtml from "sanitize-html";
 import Prince from "prince";
 import { writeFileSync, readFileSync, unlinkSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-declare module "dompurify" {
-  interface DOMPurify {
-    (root: Window): DOMPurify;
-  }
-}
-
-const DOMPurify = createDOMPurify(new Window());
-
 /**
  * Generates 508 compliant PDF using Prince XML for a given HTML block.
  */
 export const print = handler(async (event, _context) => {
-  const body = event.body ? JSON.parse(event.body) : {};
-  const { encodedHtml } = body;
-  if (!encodedHtml) {
-    throw new Error("Missing required html string");
+  const rawBody = event.body;
+  if (!rawBody) {
+    throw new Error("Missing request body");
   }
-  const rawHtml = Buffer.from(encodedHtml, "base64").toString("utf8");
 
-  let sanitizedHtml;
-  if (DOMPurify.isSupported) {
-    sanitizedHtml = DOMPurify.sanitize(rawHtml, {
-      WHOLE_DOCUMENT: true,
-      ADD_TAGS: ["head", "link", "base"],
-    });
-  }
-  if (!sanitizedHtml) {
-    throw new Error("Could not process request");
-  }
+  const compressedBuffer = Buffer.from(rawBody, "base64");
+  const decodedHtml = gunzipSync(compressedBuffer).toString();
+
+  const sanitizedHtml = sanitizeHtml(decodedHtml, buildSanitizationConfig());
 
   const { princeLicense } = process.env;
   if (!princeLicense) {
-    throw new Error("No config found for PDF generation");
+    throw new Error("No config found for Prince XML license");
   }
 
   const pdfBuffer = await generatePdfWithPrince(sanitizedHtml, princeLicense);
@@ -86,3 +70,81 @@ async function generatePdfWithPrince(
     }
   }
 }
+
+/*
+ * These settings are a best-effort to prevent attacks when processing the document.
+ * Since no one but the user making the request will see the resulting PDF,
+ * these settings are more relaxed than how we sanitize other API requests.
+ * Notably, we allow `style` (tags and attrs), which is normally forbidden.
+ * Some sanitization parameters explained:
+ *  - "head" - Add <head> to the tag allowlist. It's important.
+ *  - "html" - We want the entire <html> document returned.
+ *  - "link" - We use <link> tags to include some styles.
+ *  - "base" - The <base> tag tells the renderer to treat relative
+ *    URLs (such as <img src="/bar.jpg"/>) as absolute ones (such as
+ *    <img src="https://foo.com/bar.jpg"/>). Without this, Prince XML would
+ *    reject our documents; when processing the document, relative
+ *    URLs would appear as filesystem access attempts, which it disallows.
+ *  - "title" and "meta" - Preserve document metadata used by PDF renderers.
+ *  - "polyline" - This makes checkbox checkmarks visible.
+ *  - "style" - The print document needs embedded styles for visual fidelity.
+ */
+const buildSanitizationConfig = (): sanitizeHtml.IOptions => {
+  const defaults = sanitizeHtml.defaults;
+  const extraAttributes = {
+    a: [...defaults.allowedAttributes.a, "rel"],
+    html: ["lang"],
+    img: [...defaults.allowedAttributes.img, "class", "style"],
+    link: ["rel", "href", "type", "media"],
+    base: ["href", "target"],
+    meta: ["name", "content", "charset"],
+    input: [
+      "type",
+      "value",
+      "checked",
+      "disabled",
+      "placeholder",
+      "name",
+      "id",
+      "class",
+      "style",
+    ],
+    button: ["type", "name", "id", "class", "style"],
+    svg: [
+      "width",
+      "height",
+      "viewBox",
+      "xmlns",
+      "fill",
+      "stroke",
+      "class",
+      "style",
+    ],
+    path: ["d", "fill", "stroke", "class", "style"],
+    polyline: ["points"],
+  };
+  const extraTags = [
+    "html",
+    "body",
+    "head",
+    "title",
+    "meta",
+    "style",
+    "label",
+    "form",
+  ];
+  return {
+    // We must allowVulnerableTags in order to preserve `<style>` tags
+    allowVulnerableTags: true,
+    allowedAttributes: {
+      ...defaults.allowedAttributes,
+      ...extraAttributes,
+      "*": ["class", "style", "id", "data-*"],
+    },
+    allowedTags: [
+      ...defaults.allowedTags,
+      ...Object.keys(extraAttributes),
+      ...extraTags,
+    ],
+  };
+};
