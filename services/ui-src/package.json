@@ -30,7 +30,7 @@
     "react-helmet": "^6.1.0",
     "react-multi-select-component": "4.3.4",
     "react-redux": "^9.2.0",
-    "react-router": "^7.15.0",
+    "react-router": "^7.15.1",
     "redux": "5.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^3.1.0",
@@ -38,7 +38,7 @@
     "uuid": "^14.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.29.0",
+    "@babel/core": "^7.29.6",
     "@babel/preset-env": "^7.29.2",
     "@babel/preset-react": "^7.28.5",
     "@babel/preset-typescript": "^7.28.5",
