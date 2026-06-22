@@ -8746,7 +8746,7 @@ __metadata:
     "@aws-sdk/s3-request-presigner": "npm:~3.1037.0"
     "@types/jest": "npm:^30.0.0"
     aws-sdk-client-mock: "npm:~4.1.0"
-    dompurify: "npm:3.4.7"
+    dompurify: "npm:^3.4.7"
     happy-dom: "npm:^20.9.0"
     jest: "npm:^30.3.0"
     jsonpath-plus: "npm:^10.4.0"
