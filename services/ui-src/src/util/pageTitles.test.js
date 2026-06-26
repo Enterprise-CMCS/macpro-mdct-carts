@@ -1,4 +1,5 @@
-import { getPageTitle, selectFormRouteTitle } from "./pageTitles";
+import { getPageTitle, selectFormRouteTitle, titleRoutes } from "./pageTitles";
+import { ROUTE_PATHS } from "./routePaths";
 
 // Minimal formData mirroring the 2024 section JSON (only fields the
 // resolver reads: section ordinal/title and subsection id/title).
@@ -160,5 +161,16 @@ describe("selectFormRouteTitle()", () => {
     expect(selectFormRouteTitle(formData, 1, "a")).toBe(
       "Program Fees and Policy Changes"
     );
+  });
+});
+
+describe("title/route registry stays in sync", () => {
+  // Guards against drift: if a route is added to ROUTE_PATHS (and therefore the
+  // router) without a matching title entry — or vice versa — this fails, so a
+  // new route can't silently fall through to "Page not found".
+  test("every ROUTE_PATHS pattern has exactly one title entry and vice versa", () => {
+    const declared = Object.values(ROUTE_PATHS).sort();
+    const titled = titleRoutes.map((route) => route.path).sort();
+    expect(titled).toEqual(declared);
   });
 });

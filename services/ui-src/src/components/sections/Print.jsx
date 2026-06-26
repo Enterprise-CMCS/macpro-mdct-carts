@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@cmsgov/design-system";
 import { useLocation } from "react-router";
-import { Helmet } from "react-helmet";
 // components
 import Title from "../layout/Title";
 import Section from "../layout/Section";
@@ -13,6 +12,38 @@ import { Main } from "../layout/Main";
 import statesArray from "../utils/statesArray";
 import { loadEnrollmentCounts, loadSections } from "../../actions/initial";
 import { apiLib } from "../../util/apiLib";
+
+// Document <meta> tags carried into the generated PDF. These were previously
+// rendered via react-helmet, whose side-effect mechanism does not apply under
+// React 19 (the tags never reached the DOM), so the values were silently lost.
+// We set them directly on mount and remove them on unmount.
+const PRINT_META = [
+  { name: "author", content: "CMS" },
+  { name: "subject", content: "Annual CARTS Report" },
+];
+
+const setPrintMeta = () =>
+  PRINT_META.map(({ name, content }) => {
+    let el = document.head.querySelector(`meta[name="${name}"]`);
+    const created = !el;
+    if (!el) {
+      el = document.createElement("meta");
+      el.setAttribute("name", name);
+      document.head.append(el);
+    }
+    const prevContent = el.getAttribute("content");
+    el.setAttribute("content", content);
+    return { el, created, prevContent };
+  });
+
+const cleanupPrintMeta = (entries) =>
+  entries.forEach(({ el, created, prevContent }) => {
+    if (created) {
+      el.remove();
+    } else if (prevContent !== null) {
+      el.setAttribute("content", prevContent);
+    }
+  });
 
 const openPdf = (basePdf) => {
   const byteCharacters = atob(basePdf);
@@ -127,6 +158,13 @@ export const Print = () => {
     }
   }, [currentUser]);
 
+  // Author/subject metadata for the printed report. Set directly on the DOM
+  // because react-helmet is a no-op under React 19 (see PRINT_META above).
+  useEffect(() => {
+    const entries = setPrintMeta();
+    return () => cleanupPrintMeta(entries);
+  }, []);
+
   const sections = [];
 
   // Check if formData has values
@@ -189,11 +227,11 @@ export const Print = () => {
           <FontAwesomeIcon icon={faPrint} /> Print
         </Button>
       </div>
-      {/* The document <title> is set centrally in PageTitle.jsx (WCAG 2.4.2). */}
-      <Helmet>
-        <meta name="author" content="CMS" />
-        <meta name="subject" content="Annual CARTS Report" />
-      </Helmet>
+      {/*
+        The document <title> is set centrally in PageTitle.jsx and the
+        author/subject <meta> tags are set via effect above (WCAG 2.4.2;
+        react-helmet does not apply either under React 19).
+      */}
       <Main className="main">{sections}</Main>
       <Button
         className="ds-c-button--solid ds-c-button--large print-all-btn"
