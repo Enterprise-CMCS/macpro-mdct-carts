@@ -89,7 +89,6 @@ export const Print = () => {
   const stateInitials = searchParams.get("state");
   const stateName =
     name || statesArray.find(({ value }) => value === stateInitials)?.label;
-  const formYear = searchParams.get("year");
   const sectionId = searchParams.get("sectionId");
   const subsectionId = searchParams.get("subsectionId");
 
@@ -190,10 +189,8 @@ export const Print = () => {
           <FontAwesomeIcon icon={faPrint} /> Print
         </Button>
       </div>
+      {/* The document <title> is set centrally in PageTitle.jsx (WCAG 2.4.2). */}
       <Helmet>
-        <title>
-          {stateName} CARTS FY{formYear} Report
-        </title>
         <meta name="author" content="CMS" />
         <meta name="subject" content="Annual CARTS Report" />
       </Helmet>
