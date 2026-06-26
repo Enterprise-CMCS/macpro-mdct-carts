@@ -11,10 +11,28 @@
  */
 import { matchRoutes } from "react-router";
 import { ROUTE_PATHS } from "./routePaths";
+import statesArray from "../components/utils/statesArray";
 
 const BASE = "CARTS";
 // en dash with surrounding spaces, e.g. "User profile – CARTS"
 const SEP = " – ";
+
+const stateNameFromAbbr = (abbr) =>
+  statesArray.find(({ value }) => value === abbr)?.label || "";
+
+/**
+ * Resolve the full state name for form/print titles. State users get their own
+ * state from Redux; admins viewing another state get it from the matched
+ * `:state` route param (CARTS stores it as a two-letter abbr in the URL). This
+ * reads matched route params rather than re-parsing the pathname, so it stays
+ * aligned with the router.
+ */
+const routeStateName = (params, ctx) =>
+  params.state
+    ? ctx.globalStateName ||
+      stateNameFromAbbr(params.state) ||
+      ctx.stateUserName
+    : ctx.stateUserName || "";
 
 /**
  * Find the section/subsection title for a form route from the loaded formData.
@@ -56,7 +74,7 @@ export const selectFormRouteTitle = (formData, ordinal, subMarker) => {
 // Title builder shared by every form/section route (state + admin views).
 // `params` come straight from React Router (year, sectionOrdinal, etc.).
 const formSectionTitle = (params, ctx) => {
-  const stateYear = `${ctx.stateName} ${params.year}`.trim();
+  const stateYear = `${routeStateName(params, ctx)} ${params.year}`.trim();
   const sectionTitle = selectFormRouteTitle(
     ctx.formData,
     Number(params.sectionOrdinal),
@@ -103,8 +121,11 @@ export const titleRoutes = [
     // Print view: "[State] CARTS [Year] Report"
     path: ROUTE_PATHS.print,
     title: (_params, ctx) => {
-      const year = new URLSearchParams(ctx.search).get("year") || ctx.formYear;
-      return `${ctx.stateName} CARTS ${year || ""} Report`
+      const query = new URLSearchParams(ctx.search);
+      const stateName =
+        ctx.stateUserName || stateNameFromAbbr(query.get("state")) || "";
+      const year = query.get("year") || ctx.formYear;
+      return `${stateName} CARTS ${year || ""} Report`
         .replace(/\s+/g, " ")
         .trim();
     },
@@ -112,7 +133,7 @@ export const titleRoutes = [
   {
     path: ROUTE_PATHS.certifyAndSubmit,
     title: (params, ctx) =>
-      `Certify and Submit${SEP}${`${ctx.stateName} ${params.year}`.trim()}${SEP}${BASE}`,
+      `Certify and Submit${SEP}${`${routeStateName(params, ctx)} ${params.year}`.trim()}${SEP}${BASE}`,
   },
   { path: ROUTE_PATHS.sectionSubsection, title: formSectionTitle },
   { path: ROUTE_PATHS.section, title: formSectionTitle },
@@ -132,7 +153,8 @@ export const titleRoutes = [
  * @param {string} [ctx.search] - location.search (for /print)
  * @param {boolean} ctx.hasUser - whether a user is authenticated
  * @param {Array} [ctx.formData] - Redux formData (drives section titles)
- * @param {string} [ctx.stateName] - resolved full state name (e.g. "New York")
+ * @param {string} [ctx.stateUserName] - the signed-in state user's state name
+ * @param {string} [ctx.globalStateName] - state name for admin `/views/...` routes
  * @param {(string|number)} [ctx.formYear] - report year for form/print titles
  * @returns {string} the document title
  */
@@ -141,7 +163,8 @@ export const getPageTitle = ({
   search = "",
   hasUser = false,
   formData = [],
-  stateName = "",
+  stateUserName = "",
+  globalStateName = "",
   formYear = "",
 } = {}) => {
   const matches = matchRoutes(titleRoutes, { pathname }) || [];
@@ -156,7 +179,8 @@ export const getPageTitle = ({
     search,
     hasUser,
     formData,
-    stateName,
+    stateUserName,
+    globalStateName,
     formYear,
   });
 };

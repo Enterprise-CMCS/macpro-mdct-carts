@@ -43,7 +43,7 @@ const titleFor = (pathname, overrides = {}) =>
     pathname,
     hasUser: true,
     formData,
-    stateName: "New York",
+    stateUserName: "New York",
     formYear: 2024,
     ...overrides,
   });
@@ -81,15 +81,25 @@ describe("getPageTitle() - static routes", () => {
     expect(titleFor("/state-reports")).toBe("State reports – CARTS");
   });
 
-  test("print view", () => {
+  test("print view (state user)", () => {
     expect(
       getPageTitle({
         pathname: "/print",
         search: "?year=2024&state=NY",
         hasUser: true,
-        stateName: "New York",
+        stateUserName: "New York",
       })
     ).toBe("New York CARTS 2024 Report");
+  });
+
+  test("print view derives state from the ?state= abbr when no state user", () => {
+    expect(
+      getPageTitle({
+        pathname: "/print",
+        search: "?year=2024&state=CA",
+        hasUser: true,
+      })
+    ).toBe("California CARTS 2024 Report");
   });
 });
 
@@ -134,13 +144,38 @@ describe("getPageTitle() - form section routes (driven by JSON)", () => {
     );
   });
 
+  test("admin /views route derives the state name from the URL abbr", () => {
+    // No state user; the admin is viewing California's report. The state name
+    // must come from the :state route param, not from stateUserName.
+    expect(
+      getPageTitle({
+        pathname: "/views/sections/CA/2024/03/a",
+        hasUser: true,
+        formData,
+        formYear: 2024,
+      })
+    ).toBe("Program Outreach – California 2024 – CARTS");
+  });
+
+  test("admin /views route prefers globalStateName when set", () => {
+    expect(
+      getPageTitle({
+        pathname: "/views/sections/CA/2024/03/a",
+        hasUser: true,
+        formData,
+        globalStateName: "California",
+        formYear: 2024,
+      })
+    ).toBe("Program Outreach – California 2024 – CARTS");
+  });
+
   test("falls back to state + year while formData is still loading", () => {
     expect(
       getPageTitle({
         pathname: "/sections/2024/01",
         hasUser: true,
         formData: [],
-        stateName: "New York",
+        stateUserName: "New York",
       })
     ).toBe("New York 2024 – CARTS");
   });
