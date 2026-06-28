@@ -13,10 +13,8 @@ import statesArray from "../utils/statesArray";
 import { loadEnrollmentCounts, loadSections } from "../../actions/initial";
 import { apiLib } from "../../util/apiLib";
 
-// Document <meta> tags carried into the generated PDF. These were previously
-// rendered via react-helmet, whose side-effect mechanism does not apply under
-// React 19 (the tags never reached the DOM), so the values were silently lost.
-// We set them directly on mount and remove them on unmount.
+// <meta> tags carried into the generated PDF. Set directly on mount and removed
+// on unmount because react-helmet's side effects don't apply under React 19.
 const PRINT_META = [
   { name: "author", content: "CMS" },
   { name: "subject", content: "Annual CARTS Report" },
@@ -158,8 +156,6 @@ export const Print = () => {
     }
   }, [currentUser]);
 
-  // Author/subject metadata for the printed report. Set directly on the DOM
-  // because react-helmet is a no-op under React 19 (see PRINT_META above).
   useEffect(() => {
     const entries = setPrintMeta();
     return () => cleanupPrintMeta(entries);
@@ -227,11 +223,6 @@ export const Print = () => {
           <FontAwesomeIcon icon={faPrint} /> Print
         </Button>
       </div>
-      {/*
-        The document <title> is set centrally in PageTitle.jsx and the
-        author/subject <meta> tags are set via effect above (WCAG 2.4.2;
-        react-helmet does not apply either under React 19).
-      */}
       <Main className="main">{sections}</Main>
       <Button
         className="ds-c-button--solid ds-c-button--large print-all-btn"

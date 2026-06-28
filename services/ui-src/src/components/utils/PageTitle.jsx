@@ -4,19 +4,8 @@ import { shallowEqual, useSelector } from "react-redux";
 import { useUser } from "../../hooks/authHooks";
 import { getPageTitle } from "../../util/pageTitles";
 
-/**
- * Sets a unique, descriptive document.title for every route (WCAG 2.4.2).
- * Rendered once near the app root; reads the current location and Redux
- * form data so section titles stay in sync with the underlying JSON.
- *
- * This component only forwards raw location/user/Redux values — all routing
- * and title logic (including which state name to show) lives in the pure
- * resolver in util/pageTitles.js.
- *
- * Note: we set document.title directly in an effect rather than via
- * react-helmet, whose side-effect mechanism does not apply titles under
- * React 19.
- */
+// Sets document.title for every route (WCAG 2.4.2). Mounted once near the app
+// root; forwards raw location/user/Redux values to the resolver in pageTitles.js.
 export const PageTitle = () => {
   const { pathname, search } = useLocation();
   const { user } = useUser();
@@ -41,6 +30,7 @@ export const PageTitle = () => {
     formYear,
   });
 
+  // Set directly: react-helmet's side effects don't apply titles under React 19.
   useEffect(() => {
     document.title = title;
   }, [title]);

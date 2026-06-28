@@ -1,15 +1,6 @@
-/**
- * Single source of truth for the app's route path patterns.
- *
- * Both the router (`AppRoutes.jsx`) and the document-title resolver
- * (`pageTitles.js`) import these constants, so a path can only be defined or
- * renamed in one place. `pageTitles.test.js` asserts that every entry here has
- * a corresponding title, which fails the build if the two ever drift apart.
- *
- * Patterns use React Router syntax (`:param`, `*`). Order does not matter:
- * React Router ranks matches by specificity, so e.g. the static
- * `certify-and-submit` segment always wins over `:sectionOrdinal`.
- */
+// Single source of route path patterns, shared by AppRoutes.jsx and
+// pageTitles.js so a path is defined once. React Router syntax (:param, *);
+// order doesn't matter since matches are ranked by specificity.
 export const ROUTE_PATHS = {
   home: "/",
   userProfile: "/user/profile",
