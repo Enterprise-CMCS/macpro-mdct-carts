@@ -29,8 +29,7 @@ export const PageTitle = () => {
     globalStateName,
     formYear,
   });
-
-  // Set directly: react-helmet's side effects don't apply titles under React 19.
+  
   useEffect(() => {
     document.title = title;
   }, [title]);
