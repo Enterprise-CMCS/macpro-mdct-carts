@@ -1,6 +1,5 @@
 // Single source of route path patterns, shared by AppRoutes.jsx and
-// pageTitles.js so a path is defined once. React Router syntax (:param, *);
-// order doesn't matter since matches are ranked by specificity.
+// pageTitles.js so a path is defined once.
 export const ROUTE_PATHS = {
   home: "/",
   userProfile: "/user/profile",

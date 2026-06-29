@@ -1,8 +1,6 @@
 import { getPageTitle, selectFormRouteTitle, titleRoutes } from "./pageTitles";
 import { ROUTE_PATHS } from "./routePaths";
 
-// Minimal formData mirroring the 2024 section JSON (only fields the
-// resolver reads: section ordinal/title and subsection id/title).
 const section = (ordinal, title, subsections = []) => ({
   contents: { section: { ordinal, title, subsections } },
 });
@@ -145,8 +143,6 @@ describe("getPageTitle() - form section routes (driven by JSON)", () => {
   });
 
   test("admin /views route derives the state name from the URL abbr", () => {
-    // No state user; the admin is viewing California's report. The state name
-    // must come from the :state route param, not from stateUserName.
     expect(
       getPageTitle({
         pathname: "/views/sections/CA/2024/03/a",
@@ -200,9 +196,9 @@ describe("selectFormRouteTitle()", () => {
 });
 
 describe("title/route registry stays in sync", () => {
-  // Guards against drift: if a route is added to ROUTE_PATHS (and therefore the
-  // router) without a matching title entry — or vice versa — this fails, so a
-  // new route can't silently fall through to "Page not found".
+  // This test helps guard against drift: if a route is added to ROUTE_PATHS 
+  // (and therefore the router) without a matching title entry this fails, 
+  // so a new route can't silently fall through to "Page not found".
   test("every ROUTE_PATHS pattern has exactly one title entry and vice versa", () => {
     const declared = Object.values(ROUTE_PATHS).sort();
     const titled = titleRoutes.map((route) => route.path).sort();
