@@ -13,36 +13,6 @@ import statesArray from "../utils/statesArray";
 import { loadEnrollmentCounts, loadSections } from "../../actions/initial";
 import { apiLib } from "../../util/apiLib";
 
-// <meta> tags carried into the generated PDF. Set directly on mount and removed
-// on unmount because react-helmet's side effects don't apply under React 19.
-const PRINT_META = [
-  { name: "author", content: "CMS" },
-  { name: "subject", content: "Annual CARTS Report" },
-];
-
-const setPrintMeta = () =>
-  PRINT_META.map(({ name, content }) => {
-    let el = document.head.querySelector(`meta[name="${name}"]`);
-    const created = !el;
-    if (!el) {
-      el = document.createElement("meta");
-      el.setAttribute("name", name);
-      document.head.append(el);
-    }
-    const prevContent = el.getAttribute("content");
-    el.setAttribute("content", content);
-    return { el, created, prevContent };
-  });
-
-const cleanupPrintMeta = (entries) =>
-  entries.forEach(({ el, created, prevContent }) => {
-    if (created) {
-      el.remove();
-    } else if (prevContent !== null) {
-      el.setAttribute("content", prevContent);
-    }
-  });
-
 const openPdf = (basePdf) => {
   const byteCharacters = atob(basePdf);
   let byteNumbers = Array.from({ length: byteCharacters.length });
@@ -156,11 +126,6 @@ export const Print = () => {
     }
   }, [currentUser]);
 
-  useEffect(() => {
-    const entries = setPrintMeta();
-    return () => cleanupPrintMeta(entries);
-  }, []);
-
   const sections = [];
 
   // Check if formData has values
@@ -213,6 +178,9 @@ export const Print = () => {
   // Return sections with wrapper div and print dialogue box
   return (
     <div className="print-all">
+      {/* React 19 hoists these into <head>; carried into the generated PDF. */}
+      <meta name="author" content="CMS" />
+      <meta name="subject" content="Annual CARTS Report" />
       <div className="print-directions">
         <p>Click below to print full CARTS report shown here</p>
         <Button
