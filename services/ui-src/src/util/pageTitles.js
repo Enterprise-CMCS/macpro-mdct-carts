@@ -102,7 +102,7 @@ export const titleRoutes = [
         context.stateUserName || stateNameFromAbbr(query.get("state")) || "";
       const year = query.get("year") || context.formYear;
       return `${stateName} CARTS ${year || ""} Report`
-        .replace(/\s+/g, " ")
+        .replace(/\s+/, " ")
         .trim();
     },
   },
@@ -125,7 +125,7 @@ export const titleRoutes = [
 export const getPageTitle = (context = {}) => {
   const { pathname = "/" } = context;
   const matches = matchRoutes(titleRoutes, { pathname }) || [];
-  const match = matches[matches.length - 1];
+  const match = matches.at(-1);
 
   if (!match) {
     return appTitle("Page not found");

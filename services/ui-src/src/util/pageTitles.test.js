@@ -178,8 +178,8 @@ describe("title/route registry stays in sync", () => {
   // (and therefore the router) without a matching title entry this fails,
   // so a new route can't silently fall through to "Page not found".
   test("every ROUTE_PATHS pattern has exactly one title entry and vice versa", () => {
-    const declared = Object.values(ROUTE_PATHS).sort();
-    const titled = titleRoutes.map((route) => route.path).sort();
+    const declared = Object.values(ROUTE_PATHS).toSorted();
+    const titled = titleRoutes.map((route) => route.path).toSorted();
     expect(titled).toEqual(declared);
   });
 });
