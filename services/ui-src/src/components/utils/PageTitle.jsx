@@ -4,8 +4,7 @@ import { shallowEqual, useSelector } from "react-redux";
 import { useUser } from "../../hooks/authHooks";
 import { getPageTitle } from "../../util/pageTitles";
 
-// Sets document.title for every route (WCAG 2.4.2). Mounted once near the app
-// root; forwards raw location/user/Redux values to the resolver in pageTitles.js.
+// Sets document.title for every route. Mounted once near the app root
 export const PageTitle = () => {
   const { pathname, search } = useLocation();
   const { user } = useUser();
@@ -29,7 +28,7 @@ export const PageTitle = () => {
     globalStateName,
     formYear,
   });
-  
+
   useEffect(() => {
     document.title = title;
   }, [title]);
