@@ -6,11 +6,13 @@ import statesArray from "../components/utils/statesArray";
 const APP_SUFFIX = "CARTS";
 const TITLE_SEPARATOR = " – ";
 
+const appTitle = (text) => `${text}${TITLE_SEPARATOR}${APP_SUFFIX}`;
+
 const stateNameFromAbbr = (abbr) =>
   statesArray.find(({ value }) => value === abbr)?.label || "";
 
 // State name for form/print titles: admins viewing another state get it from the
-// matched :state param. State users get their own from Redux.
+// matched :state param. State users get their own from the store.
 const routeStateName = (params, context) =>
   params.state
     ? context.globalStateName ||
@@ -47,19 +49,26 @@ export const selectFormRouteTitle = (formData, ordinal, subsectionMarker) => {
   return section.title || null;
 };
 
-// Title builder shared by every form/section route (state + admin views).
-const buildSectionTitle = (params, context) => {
-  const stateYear = `${routeStateName(params, context)} ${params.year}`.trim();
-  const sectionTitle = selectFormRouteTitle(
-    context.formData,
-    Number(params.sectionOrdinal),
-    params.subsectionMarker
+// "[lead –] [State] [Year] – CARTS". A null/empty lead (e.g. formData still
+// loading) drops out, leaving "[State] [Year] – CARTS".
+const stateYearTitle = (lead, params, context) =>
+  appTitle(
+    [lead, `${routeStateName(params, context)} ${params.year}`.trim()]
+      .filter(Boolean)
+      .join(TITLE_SEPARATOR)
   );
 
-  return sectionTitle
-    ? `${sectionTitle}${TITLE_SEPARATOR}${stateYear}${TITLE_SEPARATOR}${APP_SUFFIX}`
-    : `${stateYear}${TITLE_SEPARATOR}${APP_SUFFIX}`;
-};
+// Title builder shared by every form/section route (state + admin views).
+const buildSectionTitle = (params, context) =>
+  stateYearTitle(
+    selectFormRouteTitle(
+      context.formData,
+      Number(params.sectionOrdinal),
+      params.subsectionMarker
+    ),
+    params,
+    context
+  );
 
 export const titleRoutes = [
   {
@@ -67,23 +76,23 @@ export const titleRoutes = [
     title: (_params, context) =>
       context.hasUser
         ? "CHIP Annual Reporting Template System (CARTS)"
-        : `Login${TITLE_SEPARATOR}${APP_SUFFIX}`,
+        : appTitle("Login"),
   },
   {
     path: ROUTE_PATHS.userProfile,
-    title: () => `User profile${TITLE_SEPARATOR}${APP_SUFFIX}`,
+    title: () => appTitle("User profile"),
   },
   {
     path: ROUTE_PATHS.getHelp,
-    title: () => `How can we help you?${TITLE_SEPARATOR}${APP_SUFFIX}`,
+    title: () => appTitle("How can we help you?"),
   },
   {
     path: ROUTE_PATHS.templates,
-    title: () => `Generate form base templates${TITLE_SEPARATOR}${APP_SUFFIX}`,
+    title: () => appTitle("Generate form base templates"),
   },
   {
     path: ROUTE_PATHS.stateReports,
-    title: () => `State reports${TITLE_SEPARATOR}${APP_SUFFIX}`,
+    title: () => appTitle("State reports"),
   },
   {
     path: ROUTE_PATHS.print,
@@ -100,7 +109,7 @@ export const titleRoutes = [
   {
     path: ROUTE_PATHS.certifyAndSubmit,
     title: (params, context) =>
-      `Certify and Submit${TITLE_SEPARATOR}${`${routeStateName(params, context)} ${params.year}`.trim()}${TITLE_SEPARATOR}${APP_SUFFIX}`,
+      stateYearTitle("Certify and Submit", params, context),
   },
   { path: ROUTE_PATHS.sectionSubsection, title: buildSectionTitle },
   { path: ROUTE_PATHS.section, title: buildSectionTitle },
@@ -108,7 +117,7 @@ export const titleRoutes = [
   { path: ROUTE_PATHS.viewsSection, title: buildSectionTitle },
   {
     path: ROUTE_PATHS.notFound,
-    title: () => `Page not found${TITLE_SEPARATOR}${APP_SUFFIX}`,
+    title: () => appTitle("Page not found"),
   },
 ];
 
@@ -119,7 +128,7 @@ export const getPageTitle = (context = {}) => {
   const match = matches[matches.length - 1];
 
   if (!match) {
-    return `Page not found${TITLE_SEPARATOR}${APP_SUFFIX}`;
+    return appTitle("Page not found");
   }
 
   return match.route.title(match.params, context);

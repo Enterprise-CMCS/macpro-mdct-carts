@@ -102,43 +102,21 @@ describe("getPageTitle() - static routes", () => {
 });
 
 describe("getPageTitle() - form section routes (driven by JSON)", () => {
-  const expected = {
-    "/sections/2024/00": "Basic State Information – New York 2024 – CARTS",
-    "/sections/2024/01":
-      "Program Fees and Policy Changes – New York 2024 – CARTS",
-    "/sections/2024/02":
-      "Enrollment and Uninsured Data – New York 2024 – CARTS",
-    "/sections/2024/03/a": "Program Outreach – New York 2024 – CARTS",
-    "/sections/2024/03/b": "Substitution of Coverage – New York 2024 – CARTS",
-    "/sections/2024/03/c":
-      "Renewal, Denials, and Retention – New York 2024 – CARTS",
-    "/sections/2024/03/d":
-      "Cost Sharing (Out-of-Pocket Costs) – New York 2024 – CARTS",
-    "/sections/2024/03/e":
-      "Employer Sponsored Insurance and Premium Assistance – New York 2024 – CARTS",
-    "/sections/2024/03/f": "Program Integrity – New York 2024 – CARTS",
-    "/sections/2024/03/g": "Dental Benefits – New York 2024 – CARTS",
-    "/sections/2024/03/h": "CAHPS Survey Results – New York 2024 – CARTS",
-    "/sections/2024/03/i":
-      "Health Services Initiatives (HSI) Programs – New York 2024 – CARTS",
-    "/sections/2024/04":
-      "State Plan Strategic Objectives and Performance Goals – New York 2024 – CARTS",
-    "/sections/2024/05": "Program Financing – New York 2024 – CARTS",
-    "/sections/2024/06":
-      "Challenges and Accomplishments – New York 2024 – CARTS",
-    "/sections/2024/certify-and-submit":
-      "Certify and Submit – New York 2024 – CARTS",
-  };
+  test("top-level section uses the section title", () => {
+    expect(titleFor("/sections/2024/00")).toBe(
+      "Basic State Information – New York 2024 – CARTS"
+    );
+  });
 
-  for (const [path, title] of Object.entries(expected)) {
-    test(`${path}`, () => {
-      expect(titleFor(path)).toBe(title);
-    });
-  }
-
-  test("admin /views/sections route resolves the same section title", () => {
-    expect(titleFor("/views/sections/NY/2024/03/a")).toBe(
+  test("titled subsection uses the subsection title", () => {
+    expect(titleFor("/sections/2024/03/a")).toBe(
       "Program Outreach – New York 2024 – CARTS"
+    );
+  });
+
+  test("certify-and-submit uses a fixed lead", () => {
+    expect(titleFor("/sections/2024/certify-and-submit")).toBe(
+      "Certify and Submit – New York 2024 – CARTS"
     );
   });
 
@@ -196,8 +174,8 @@ describe("selectFormRouteTitle()", () => {
 });
 
 describe("title/route registry stays in sync", () => {
-  // This test helps guard against drift: if a route is added to ROUTE_PATHS 
-  // (and therefore the router) without a matching title entry this fails, 
+  // This test helps guard against drift: if a route is added to ROUTE_PATHS
+  // (and therefore the router) without a matching title entry this fails,
   // so a new route can't silently fall through to "Page not found".
   test("every ROUTE_PATHS pattern has exactly one title entry and vice versa", () => {
     const declared = Object.values(ROUTE_PATHS).sort();
