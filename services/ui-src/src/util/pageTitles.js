@@ -1,4 +1,3 @@
-// Resolves a unique, descriptive document title for every route (WCAG 2.4.2).
 import { matchRoutes } from "react-router";
 import { ROUTE_PATHS } from "./routePaths";
 import statesArray from "../components/utils/statesArray";
@@ -49,8 +48,7 @@ export const selectFormRouteTitle = (formData, ordinal, subsectionMarker) => {
   return section.title || null;
 };
 
-// "[lead –] [State] [Year] – CARTS". A null/empty lead (e.g. formData still
-// loading) drops out, leaving "[State] [Year] – CARTS".
+// "[lead –] [State] [Year] – CARTS".
 const stateYearTitle = (lead, params, context) =>
   appTitle(
     [lead, `${routeStateName(params, context)} ${params.year}`.trim()]
@@ -121,7 +119,7 @@ export const titleRoutes = [
   },
 ];
 
-// Resolve the document title for the current route from a context object
+// Resolve the document title for the current route
 export const getPageTitle = (context = {}) => {
   const { pathname = "/" } = context;
   const matches = matchRoutes(titleRoutes, { pathname }) || [];
