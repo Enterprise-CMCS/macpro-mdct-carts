@@ -192,7 +192,15 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     method: "POST",
     timeout: Duration.seconds(30),
     bundling: {
+      forceDockerBundling: true,
       nodeModules: ["prince"],
+      commandHooks: {
+        beforeBundling: () => [],
+        beforeInstall: () => [],
+        afterBundling: (_inputDir, outputDir) => [
+          `cd "${outputDir}/node_modules/prince" && node prince-npm.js install`,
+        ],
+      },
     },
     ...commonProps,
   });
