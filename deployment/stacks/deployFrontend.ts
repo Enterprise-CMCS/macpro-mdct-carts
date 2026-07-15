@@ -57,17 +57,40 @@ export function deployFrontend(props: DeployFrontendProps) {
     scope,
     "DeployWebsite",
     {
-      sources: [s3_deployment.Source.asset(buildOutputPath)],
+      sources: [
+        s3_deployment.Source.asset(buildOutputPath, {
+          exclude: ["index.html"],
+        }),
+      ],
       destinationBucket: uiBucket,
       distribution,
-      distributionPaths: ["/*"],
       prune: true,
+      exclude: ["index.html"],
       cacheControl: [
         s3_deployment.CacheControl.setPublic(),
         s3_deployment.CacheControl.maxAge(Duration.days(365)),
       ],
     }
   );
+
+  const deployIndex = new s3_deployment.BucketDeployment(scope, "DeployIndex", {
+    sources: [
+      s3_deployment.Source.asset(buildOutputPath, {
+        exclude: ["*", ".*", "!index.html"],
+      }),
+    ],
+    destinationBucket: uiBucket,
+    distribution,
+    distributionPaths: ["/", "/index.html", "/env-config.js"],
+    prune: false,
+    cacheControl: [
+      s3_deployment.CacheControl.noStore(),
+      s3_deployment.CacheControl.maxAge(Duration.seconds(0)),
+      s3_deployment.CacheControl.mustRevalidate(),
+    ],
+  });
+
+  deployIndex.node.addDependency(deployWebsite);
 
   const deployTimeConfig = new s3_deployment.DeployTimeSubstitutedFile(
     scope,
@@ -93,6 +116,7 @@ export function deployFrontend(props: DeployFrontendProps) {
   );
 
   deployTimeConfig.node.addDependency(deployWebsite);
+  deployIndex.node.addDependency(deployTimeConfig);
 
   if (isDev) {
     const denyLogs = new iam.PolicyStatement({
