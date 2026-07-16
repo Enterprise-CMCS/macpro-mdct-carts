@@ -66,7 +66,7 @@ export const getPdfFriendlyDocument = async () => {
     .replaceAll(`“`, `"`)
     .replaceAll("\u2013", "-")
     .replaceAll("\u2014", "-");
-  const base64String = btoa(unescape(encodeURIComponent(htmlString)));
+  const base64String = btoa(uint8ToString(gzip(htmlString)));
   const opts = {
     body: base64String,
   };

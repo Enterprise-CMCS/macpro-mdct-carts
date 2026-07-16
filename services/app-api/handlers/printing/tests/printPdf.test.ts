@@ -3,7 +3,7 @@ import { APIGatewayProxyEvent } from "../../../types";
 import { print } from "../printPdf";
 import { gzipSync } from "node:zlib";
 import Prince from "prince";
-import { EventEmitter } from "node:events";
+import { PassThrough } from "node:stream";
 import { spawn } from "node:child_process";
 
 jest.spyOn(console, "error").mockImplementation();
@@ -50,10 +50,10 @@ const createMockPrinceProcess = ({
   stderr?: Buffer | string;
   code?: number | null;
 } = {}) => {
-  const child = new EventEmitter() as any;
-  child.stdout = new EventEmitter();
-  child.stderr = new EventEmitter();
-  child.stdin = new EventEmitter() as any;
+  const child = new PassThrough() as any;
+  child.stdout = new PassThrough();
+  child.stderr = new PassThrough();
+  child.stdin = new PassThrough() as any;
   child.stdin.end = jest.fn((data: string) => {
     writtenStdin = data;
     process.nextTick(() => {
