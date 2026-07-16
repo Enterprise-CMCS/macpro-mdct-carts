@@ -31,15 +31,15 @@
     "react-helmet": "^6.1.0",
     "react-multi-select-component": "4.3.4",
     "react-redux": "^9.2.0",
-    "react-router": "^7.14.2",
+    "react-router": "^7.15.1",
     "redux": "5.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^3.1.0",
     "sass": "^1.99.0",
-    "uuid": "^14.0.0"
+    "uuid": "^14.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.29.0",
+    "@babel/core": "^7.29.7",
     "@babel/preset-env": "^7.29.2",
     "@babel/preset-react": "^7.28.5",
     "@babel/preset-typescript": "^7.28.5",
@@ -56,7 +56,7 @@
     "redux-mock-store": "^1.5.5",
     "ts-jest": "^29.4.9",
     "typescript": "^6.0.3",
-    "vite": "8.0.10",
+    "vite": "8.0.16",
     "vite-tsconfig-paths": "^6.1.1"
   },
   "browserslist": {

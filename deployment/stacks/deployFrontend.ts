@@ -81,11 +81,10 @@ export function deployFrontend(props: DeployFrontendProps) {
     ],
     destinationBucket: uiBucket,
     distribution,
-    distributionPaths: ["/", "/index.html", "/env-config.js"],
+    distributionPaths: ["/index.html"],
     prune: false,
     cacheControl: [
-      s3_deployment.CacheControl.noStore(),
-      s3_deployment.CacheControl.maxAge(Duration.seconds(0)),
+      s3_deployment.CacheControl.noCache(),
       s3_deployment.CacheControl.mustRevalidate(),
     ],
   });
