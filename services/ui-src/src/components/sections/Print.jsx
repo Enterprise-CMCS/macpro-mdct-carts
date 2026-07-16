@@ -5,6 +5,7 @@ import { faPrint } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@cmsgov/design-system";
 import { useLocation } from "react-router";
 import { Helmet } from "react-helmet";
+import { gzip } from "pako";
 // components
 import Title from "../layout/Title";
 import Section from "../layout/Section";
@@ -25,6 +26,14 @@ const openPdf = (basePdf) => {
   const fileURL = URL.createObjectURL(file);
   window.open(fileURL);
 };
+
+function uint8ToString(uint8) {
+  let result = "";
+  for (let i = 0; i < uint8.length; i++) {
+    result += String.fromCodePoint(uint8[i]);
+  }
+  return result;
+}
 
 export const getPdfFriendlyDocument = async () => {
   // Clone the document so live DOM mutations don't affect the page
@@ -57,11 +66,9 @@ export const getPdfFriendlyDocument = async () => {
     .replaceAll(`“`, `"`)
     .replaceAll("\u2013", "-")
     .replaceAll("\u2014", "-");
-  const base64String = btoa(unescape(encodeURIComponent(htmlString)));
+  const base64String = btoa(uint8ToString(gzip(htmlString)));
   const opts = {
-    body: {
-      encodedHtml: base64String,
-    },
+    body: base64String,
   };
 
   const res = await apiLib.post("/print_pdf", opts);

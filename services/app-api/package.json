@@ -23,10 +23,14 @@
     "happy-dom": "^20.9.0",
     "jsonpath-plus": "^10.4.0",
     "jsonschema": "^1.5.0",
-    "jwt-decode": "^4.0.0"
+    "jwt-decode": "^4.0.0",
+    "prince": "^1.12.4",
+    "sanitize-html": "^2.17.0"
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
+    "@types/node": "^22.18.13",
+    "@types/sanitize-html": "^2.16.0",
     "aws-sdk-client-mock": "~4.1.0",
     "jest": "^30.3.0",
     "ts-jest": "^29.4.9",
@@ -65,9 +69,6 @@
     "transform": {
       "^.+\\.[tj]s$": "ts-jest"
     },
-    "transformIgnorePatterns": [
-      "node_modules/(?!happy-dom/)"
-    ],
     "verbose": true
   }
 }

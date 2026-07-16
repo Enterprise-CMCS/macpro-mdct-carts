@@ -14,8 +14,8 @@ import { isLocalStack } from "../local/util.ts";
 import { DynamoDBTable } from "../constructs/dynamodb-table.ts";
 
 interface CreateApiComponentsProps {
-  docraptorApiKey: string;
   isDev: boolean;
+  princeLicense: string;
   project: string;
   scope: Construct;
   stage: string;
@@ -25,8 +25,8 @@ interface CreateApiComponentsProps {
 
 export function createApiComponents(props: CreateApiComponentsProps) {
   const {
-    docraptorApiKey,
     isDev,
+    princeLicense,
     project,
     scope,
     stage,
@@ -78,7 +78,7 @@ export function createApiComponents(props: CreateApiComponentsProps) {
 
   const environment = {
     STAGE: stage,
-    docraptorApiKey,
+    princeLicense,
     attachmentsBucketName: attachmentsBucket.bucketName,
     NODE_OPTIONS: "--enable-source-maps",
     ...Object.fromEntries(
@@ -191,6 +191,17 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     path: "/print_pdf",
     method: "POST",
     timeout: Duration.seconds(30),
+    bundling: {
+      forceDockerBundling: true,
+      nodeModules: ["prince"],
+      commandHooks: {
+        beforeBundling: () => [],
+        beforeInstall: () => [],
+        afterBundling: (_inputDir, outputDir) => [
+          `cd "${outputDir}/node_modules/prince" && node prince-npm.js install`,
+        ],
+      },
+    },
     ...commonProps,
   });
 
