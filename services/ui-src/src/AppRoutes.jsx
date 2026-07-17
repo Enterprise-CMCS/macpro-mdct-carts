@@ -17,6 +17,7 @@ import SaveError from "./components/layout/SaveError";
 import ScrollToTop from "./components/utils/ScrollToTop";
 import { NotFoundPage } from "./components/layout/NotFoundPage";
 import { AppRoles } from "./types.js";
+import { ROUTE_PATHS } from "./util/routePaths";
 
 const CertifyPage = () => (
   <>
@@ -65,7 +66,7 @@ const AppRoutes = () => {
       <Routes>
         {/* General Routes */}
         <Route
-          path="/"
+          path={ROUTE_PATHS.home}
           element={
             isStateUser ? (
               <StateHome />
@@ -73,36 +74,27 @@ const AppRoutes = () => {
             isCMSUser | isAdminUser ? (
               <CMSHomepage />
             ) : (
-              <Navigate to="/user/profile" />
+              <Navigate to={ROUTE_PATHS.userProfile} />
             )
           }
         />
-        <Route path="/user/profile" element={<UserProfile />} />
-        <Route path="/print" element={<Print />} />
-        <Route path="/get-help" element={<GetHelp />} />
-        // State User Form URLS
+        <Route path={ROUTE_PATHS.userProfile} element={<UserProfile />} />
+        <Route path={ROUTE_PATHS.print} element={<Print />} />
+        <Route path={ROUTE_PATHS.getHelp} element={<GetHelp />} />
+        {/* State user form URLs */}
+        <Route path={ROUTE_PATHS.sectionSubsection} element={<Section />} />
+        <Route path={ROUTE_PATHS.section} element={<Section />} />
+        <Route path={ROUTE_PATHS.certifyAndSubmit} element={<CertifyPage />} />
+        {/* Admin & CMS user form URLs */}
         <Route
-          path="/sections/:year/:sectionOrdinal/:subsectionMarker"
+          path={ROUTE_PATHS.viewsSectionSubsection}
           element={<Section />}
         />
-        <Route path="sections/:year/:sectionOrdinal" element={<Section />} />
-        <Route
-          path="/sections/:year/certify-and-submit"
-          element={<CertifyPage />}
-        />
-        //Admin & CMS User Form URLS
-        <Route
-          path="/views/sections/:state/:year/:sectionOrdinal/:subsectionMarker"
-          element={<Section />}
-        />
-        <Route
-          path="/views/sections/:state/:year/:sectionOrdinal"
-          element={<Section />}
-        />
-        <Route path="/state-reports" element={<CMSHomepage />} />
-        <Route path="/templates" element={<FormTemplates />} />
-        //If path not found
-        <Route path="*" element={<NotFoundPage />} />
+        <Route path={ROUTE_PATHS.viewsSection} element={<Section />} />
+        <Route path={ROUTE_PATHS.stateReports} element={<CMSHomepage />} />
+        <Route path={ROUTE_PATHS.templates} element={<FormTemplates />} />
+        {/* If path not found */}
+        <Route path={ROUTE_PATHS.notFound} element={<NotFoundPage />} />
       </Routes>
     </>
   );
