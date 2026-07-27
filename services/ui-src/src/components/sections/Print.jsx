@@ -66,12 +66,6 @@ export const getPdfFriendlyDocument = async () => {
     .replaceAll(`“`, `"`)
     .replaceAll("\u2013", "-")
     .replaceAll("\u2014", "-");
-  // Restore original input styles
-  inputStyles.forEach(({ element, height, width, paddingLeft }) => {
-    element.style.height = height;
-    element.style.width = width;
-    element.style.paddingLeft = paddingLeft;
-  });
   const gzipped = gzip(htmlString);
   const base64String = btoa(uint8ToString(gzipped));
   const opts = {
