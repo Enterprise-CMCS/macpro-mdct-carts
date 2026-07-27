@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@cmsgov/design-system";
 import { useLocation } from "react-router";
-import { Helmet } from "react-helmet";
 import { gzip } from "pako";
+
 // components
 import Title from "../layout/Title";
 import Section from "../layout/Section";
@@ -36,40 +36,31 @@ function uint8ToString(uint8) {
 }
 
 export const getPdfFriendlyDocument = async () => {
-  const html = document.querySelector("html");
-  html.querySelector("noscript")?.remove();
+  // Clone the document so live DOM mutations don't affect the page
+  const clonedHtml = document.querySelector("html").cloneNode(true);
+  clonedHtml.querySelector("noscript")?.remove();
 
-  // Save original styles before modifying
-  const inputStyles = [];
-
-  document.querySelectorAll("input").forEach((element) => {
+  clonedHtml.querySelectorAll("input").forEach((element) => {
     if (element.type === "text") {
-      inputStyles.push({
-        element,
-        height: element.style.height,
-        width: element.style.width,
-        paddingLeft: element.style.paddingLeft,
-      });
       element.style.height = "50px";
       element.style.width = "100%";
       element.style.paddingLeft = "8px";
     }
   });
-  document.querySelectorAll("button").forEach((element) => {
+  clonedHtml.querySelectorAll("button").forEach((element) => {
     if (element.title !== "Print") {
       element.remove();
     }
   });
 
-  if (!document.querySelector("base")) {
+  if (!clonedHtml.querySelector("base")) {
     const base = document.createElement("base");
     base.href = `https://${window.location.host}`;
-    document.querySelector("head").prepend(base);
+    clonedHtml.querySelector("head").prepend(base);
   }
 
-  const htmlString = document
-    .querySelector("html")
-    .outerHTML.replaceAll(`’`, `'`)
+  const htmlString = clonedHtml.outerHTML
+    .replaceAll(`’`, `'`)
     .replaceAll(`‘`, `'`)
     .replaceAll(`”`, `"`)
     .replaceAll(`“`, `"`)
@@ -112,7 +103,6 @@ export const Print = () => {
   const stateInitials = searchParams.get("state");
   const stateName =
     name || statesArray.find(({ value }) => value === stateInitials)?.label;
-  const formYear = searchParams.get("year");
   const sectionId = searchParams.get("sectionId");
   const subsectionId = searchParams.get("subsectionId");
 
@@ -203,6 +193,9 @@ export const Print = () => {
   // Return sections with wrapper div and print dialogue box
   return (
     <div className="print-all">
+      {/* React 19 hoists these into <head>; carried into the generated PDF. */}
+      <meta name="author" content="CMS" />
+      <meta name="subject" content="Annual CARTS Report" />
       <div className="print-directions">
         <p>Click below to print full CARTS report shown here</p>
         <Button
@@ -213,13 +206,6 @@ export const Print = () => {
           <FontAwesomeIcon icon={faPrint} /> Print
         </Button>
       </div>
-      <Helmet>
-        <title>
-          {stateName} CARTS FY{formYear} Report
-        </title>
-        <meta name="author" content="CMS" />
-        <meta name="subject" content="Annual CARTS Report" />
-      </Helmet>
       <Main className="main">{sections}</Main>
       <Button
         className="ds-c-button--solid ds-c-button--large print-all-btn"

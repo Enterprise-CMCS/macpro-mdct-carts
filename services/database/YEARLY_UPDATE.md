@@ -173,3 +173,38 @@ CARTS uses a separate handler to seed the FMAP and ACS Data. FMAP follows a simi
 7. Open up an associated year's report
 8. Navigate to Section 5, Part 2 Table 3 (Federal and State Shares Table)
 9. Using the seed-fmap.json file, ensure that the table here displays the same numbers as the seed-fmap.json file.
+
+## Releasing the Form
+
+Once the `services/database/data/seed/seed-section-base-{year}` form is created and ready to go, and you've updated the other areas to take note of it (Like `services/database/handlers/seed/tables/sectionBase.ts` and `/services/ui-src/src/store/globalVariables.js`), the time comes to release the form and test it generated correctly! To do that you will
+
+1. Load up the PR's deployed branch (Or [mdctcartsdev.cms.gov](https://mdctcartsdev.cms.gov/) or other environment if its been merged)
+2. Sign into CARTS as cms.admin@test.com
+3. Click on the "Generate Form Base Templates" link on the homepage.
+4. Select 2026 in the drop down. (If you don't see 2026, you missed a step!).
+5. Click Generate New Section Forms
+6. You'll likely see it sit there for 20 seconds. Don't worry! It is taking the template you created and distributing it out to all the states and territories we support.
+7. You should received a "Task Complete" alert. If you do not, you'll need to investigate what went wrong
+8. Assuming you did get a Task complete alert, head over to cloudtamer.cms.gov, sign into the mdct-carts-{env} environment, and double check in s3 that all of the reports have been generated. You can now also go to the homepage and see all the new reports listed out and scroll through them there.
+
+## Updating the local seed
+
+If you've generated the new form, you likely want a premade version that auto deploys in dev every single time you load up the dev environment. To do this,
+
+1. Copy the seed-section-base-2026 file and put it into `services/database/data/seed-local/seed-section`.
+2. Double check that the format is accurate (The keys "pk" and "stateId" need to be in each section. These values are not used in the seed-section-base file.. Search for "pk": "AL-2025" and "stateId": "AL" for reference.) Make sure everything references Alabama
+3. After importing into seed-section, copy and paste the following into seed-status:
+
+```json
+  {
+    "stateId": "AL",
+    "status": "not_started",
+    "year": 2025,
+    "programType": "user",
+    "username": "al@test.com",
+    "lastChanged": "2025-09-30 09:30:00.000000+00"
+  },
+```
+
+4. Make sure you update year and last changed to be your newly made year.
+5. (Optional) Update the seed-acs and seed-fmap numbers with the new values as well.

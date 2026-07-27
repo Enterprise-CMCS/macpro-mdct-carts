@@ -50,10 +50,12 @@ const createMockPrinceProcess = ({
   stderr?: Buffer | string;
   code?: number | null;
 } = {}) => {
+  // oxlint-disable unicorn/prefer-event-target
   const child = new EventEmitter() as any;
   child.stdout = new EventEmitter();
   child.stderr = new EventEmitter();
   child.stdin = new EventEmitter() as any;
+  // oxlint-enable unicorn/prefer-event-target
   child.stdin.end = jest.fn((data: string) => {
     writtenStdin = data;
     process.nextTick(() => {
@@ -170,7 +172,9 @@ describe("Test Print PDF handler", () => {
 
   test("should preserve html, head, and body tags", async () => {
     const inputHtml = `<html lang="en"><head><title>My Page</title><meta name="author" content="CMS" /></head><body>Hello, world</body></html>`;
-    const event = buildEvent(Buffer.from(gzipSync(inputHtml)).toString("base64"));
+    const event = buildEvent(
+      Buffer.from(gzipSync(inputHtml)).toString("base64")
+    );
 
     await print(event, null);
 
@@ -184,7 +188,9 @@ describe("Test Print PDF handler", () => {
 
   test("should replace document base tags with a safe origin base href", async () => {
     const inputHtml = `<html><head><base href="file:///etc/" /></head><body><img src="/logo.svg" /></body></html>`;
-    const event = buildEvent(Buffer.from(gzipSync(inputHtml)).toString("base64"));
+    const event = buildEvent(
+      Buffer.from(gzipSync(inputHtml)).toString("base64")
+    );
 
     await print(event, null);
 

@@ -1,0 +1,38 @@
+name: Update Deployment PR
+
+on:
+  pull_request:
+    types: [synchronize]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-pr:
+    if: |
+      contains(github.event.pull_request.labels.*.name, 'prod release') ||
+      contains(github.event.pull_request.labels.*.name, 'val release') ||
+      contains(github.event.pull_request.labels.*.name, 'keep updated')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
+        with:
+          node-version-file: ".nvmrc"
+      - name: Enable Corepack
+        run: corepack enable
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock', 'plugins/**') }}
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Update a PR
+        run: .github/update-pr.ts
+        env:
+          GITHUB_REPO: ${{ github.repository }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          APP_NAME_UPPER: ${{ vars.APP_NAME_UPPER }}
