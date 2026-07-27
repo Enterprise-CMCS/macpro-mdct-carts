@@ -38,8 +38,8 @@ export class LocalPrerequisiteStack extends Stack {
         oktaMetadataUrl: SecretValue.unsafePlainText("localstack"),
         launchDarklyClient: SecretValue.unsafePlainText("localstack"),
         redirectSignout: SecretValue.unsafePlainText("localstack"),
-        docraptorApiKey: SecretValue.unsafePlainText(
-          process.env.docraptorApiKey!
+        princeLicense: SecretValue.unsafePlainText(
+          process.env.princeLicense ?? "localstack"
         ),
       },
     });

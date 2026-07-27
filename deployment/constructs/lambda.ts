@@ -41,6 +41,7 @@ export class Lambda extends Construct {
       buckets = [],
       stackName,
       isDev,
+      bundling,
       ...restProps
     } = props;
 
@@ -56,12 +57,13 @@ export class Lambda extends Construct {
       timeout,
       memorySize,
       bundling: {
+        ...bundling,
         assetHash: createHash("sha256")
           .update(`${Date.now()}-${id}`)
           .digest("hex"),
         minify: true,
         sourceMap: true,
-        nodeModules: ["jsdom"],
+        nodeModules: ["jsdom", ...(bundling?.nodeModules ?? [])],
       },
       logGroup,
       ...restProps,

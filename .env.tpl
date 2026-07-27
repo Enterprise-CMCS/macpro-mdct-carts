@@ -6,7 +6,7 @@ COGNITO_USER_POOL_CLIENT_DOMAIN=op://mdct_devs/carts_secrets/COGNITO_USER_POOL_C
 COGNITO_IDENTITY_POOL_ID=op://mdct_devs/carts_secrets/COGNITO_IDENTITY_POOL_ID
 POST_SIGNOUT_REDIRECT=op://mdct_devs/carts_secrets/POST_SIGNOUT_REDIRECT
 REACT_APP_LD_SDK_CLIENT=op://mdct_devs/carts_secrets/REACT_APP_LD_SDK_CLIENT
-docraptorApiKey=op://mdct_devs/carts_secrets/docraptorApiKey # pragma: allowlist secret
+princeLicense=op://mdct_devs/carts_secrets/princeLicense # pragma: allowlist secret
 
 # Used by scripts
 dynamoPrefix="localstack"

@@ -195,9 +195,7 @@ describe("getPdfFriendlyDocument", () => {
     expect(apiLib.post).toHaveBeenCalledWith(
       "/print_pdf",
       expect.objectContaining({
-        body: expect.objectContaining({
-          encodedHtml: expect.any(String),
-        }),
+        body: expect.any(String),
       })
     );
     expect(window.open).toHaveBeenCalledWith("https://mockFileURL.com");

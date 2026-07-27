@@ -5,11 +5,11 @@ export interface DeploymentConfigProperties {
   brokerString: string;
   cloudfrontCertificateArn?: string;
   cloudfrontDomainName?: string;
-  docraptorApiKey: string;
   isDev: boolean;
   kafkaAuthorizedSubnetIds: string;
   launchDarklyClient: string;
   oktaMetadataUrl: string;
+  princeLicense: string;
   project: string;
   redirectSignout: string;
   secureCloudfrontDomainName?: string;
@@ -70,10 +70,10 @@ function validateConfig(config: {
 }): asserts config is DeploymentConfigProperties {
   const expectedKeys = [
     "brokerString",
-    "docraptorApiKey",
     "kafkaAuthorizedSubnetIds",
     "launchDarklyClient",
     "oktaMetadataUrl",
+    "princeLicense",
     "project",
     "redirectSignout",
     "stage",
