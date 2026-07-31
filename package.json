@@ -71,6 +71,7 @@
     "yargs": "^17.7.2"
   },
   "resolutions": {
+    "@cypress/request/uuid": "^11.1.1",
     "@jest/reporters/glob": "^13.0.0",
     "@jest/transform/babel-plugin-istanbul": "^8.0.0",
     "aws-sdk/uuid": "^11.1.1",
