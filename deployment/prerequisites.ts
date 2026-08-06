@@ -15,7 +15,7 @@ import { Construct } from "constructs";
 import { CloudWatchLogsResourcePolicy } from "./constructs/cloudwatch-logs-resource-policy.ts";
 import { loadDefaultSecret } from "./deployment-config.ts";
 import { isLocalStack } from "./local/util.ts";
-import { tryImport } from "./utils/misc.ts";
+import { addAdditionalPrerequisites } from "./prerequisites-additional.ts";
 
 interface PrerequisiteConfigProps {
   project: string;
@@ -55,9 +55,8 @@ export class PrerequisiteStack extends Stack {
       vpc.addGatewayEndpoint("S3Endpoint", {
         service: ec2.GatewayVpcEndpointAwsService.S3,
       });
-
-      // add optional app-specific prerequisites
-      this.addAdditionalPrerequisitesAsync(vpc);
+      // App-specific prerequisites (Prince assets bucket + VPC endpoints).
+      addAdditionalPrerequisites(this, vpc);
     }
 
     new CloudWatchLogsResourcePolicy(this, "logPolicy", { project });
@@ -119,15 +118,6 @@ export class PrerequisiteStack extends Stack {
         iam.ManagedPolicy.fromAwsManagedPolicyName("AdministratorAccess"),
       ],
     });
-  }
-
-  async addAdditionalPrerequisitesAsync(vpc: ec2.IVpc) {
-    const module = await tryImport<{
-      addAdditionalPrerequisites: (stack: Stack, vpc: ec2.IVpc) => void;
-    }>("../prerequisites-additional");
-    if (module?.addAdditionalPrerequisites) {
-      module.addAdditionalPrerequisites(this, vpc);
-    }
   }
 }
 

@@ -68,3 +68,19 @@ awslocal --version
 # example of something you'd pop in as YOUR_FUNCTION_NAME => app-api-localstack-getUserById
 awslocal lambda get-function-configuration --function-name YOUR_FUNCTION_NAME --query "Environment.Variables"
 ```
+
+### Prince PDF
+
+LocalStack PDF print uses the Linux AWS Lambda Prince package under `services/app-api/bin/prince/` (auto-fetched on CDK synth). Refresh with:
+
+```sh
+./scripts/fetch-prince-linux.sh
+```
+
+macOS Apple Silicon tree (for future ministack; unused by LocalStack today):
+
+```sh
+./scripts/fetch-prince-macos.sh
+```
+
+Vendor binaries are large and gitignored; run the fetch scripts after cloning if `bin/prince*` is missing.
