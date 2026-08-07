@@ -46,6 +46,10 @@ Before starting the project install some tools
 2. In the root of the project run `./run local --update-env` or if you do not have a 1Password account you can simply run `./run local` to use a static .env file
    note: the `./run local --update-env` pulls secret values using the 1Password CLI and populates a local .env file that is gitignored.
 
+LocalStack PDF print needs the YesLogic **Linux** AWS Lambda Prince package (gitignored under `services/app-api/bin/prince/`). CDK synth downloads it automatically on first local deploy (SHA-256 pinned in `deployment/utils/prince-asset.ts`); refresh manually with `./scripts/fetch-prince-linux.sh`.
+
+Cloud accounts (once per account): `./run deploy-prerequisites` to create the Prince assets bucket, then `PROJECT=carts ./scripts/publish-prince-asset.sh` to upload the pinned zip. Optional paid license: add a `princeLicense` string (license.dat XML) to the `carts-default` Secrets Manager secret; otherwise the demo license is used. After cutover, remove `docraptorApiKey` from 1Password/`carts_secrets` if still present.
+
 ### Logging in
 
 For local development there is a list of users that can be found at services/ui-auth/libs/users.json.

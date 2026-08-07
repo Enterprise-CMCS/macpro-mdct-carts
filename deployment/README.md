@@ -22,3 +22,12 @@ The AWS account will be bootstrapped with the custom bootstrap template and read
 
 For further details on AWS CDK bootstrapping, refer to the [AWS CDK documentation](https://docs.aws.amazon.com/cdk/latest/guide/bootstrapping.html).
 ````
+
+### Prequisites
+
+This project has several common prequisites likes VPC and API GW that are dependencies for the app to work. The prequisites are checked/deployed using
+
+```bash
+PROJECT=carts yarn cdk diff --app ./deployment/prerequisites.ts # useful if making changes and you want to confirm what infra will be changed before deploying with the below command
+./run deploy-prerequisites
+```
