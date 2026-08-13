@@ -25,7 +25,7 @@ const TemplateDownload = ({ getTemplate }) => {
           <p>
             Completing the Children’s Health Insurance Program (CHIP) Annual
             Report is required under sections 2108(a) and 2108(e) of the Social
-            Security Act, and regulations at 42 CFR 457.750.
+            Security Act (the Act), and regulations at 42 CFR 457.750.
           </p>
           <p>
             Each state must assess their CHIP operations and overall progress in
