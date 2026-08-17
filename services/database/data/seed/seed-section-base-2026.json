@@ -649,7 +649,6 @@
                   },
                   {
                     "id": "2026-01-a-02-05",
-                    "hint": "Select all that apply.",
                     "type": "checkbox",
                     "label": "Which delivery system(s) do you use? Select all that apply.",
                     "answer": {
@@ -975,7 +974,7 @@
                   {
                     "id": "2026-01-a-03-12",
                     "type": "radio",
-                    "label": "Have you made any changes to the methods and procedures for preventing, investigating, or referring fraud or abuse cases?",
+                    "label": "Have you made any changes to the methods/procedures for preventing, investigating, or referring fraud or abuse cases?",
                     "answer": {
                       "entry": null,
                       "options": [
@@ -1103,8 +1102,7 @@
                             "$..[?(@ && @.id=='2026-01-a-03-11')].answer.entry",
                             "$..[?(@ && @.id=='2026-01-a-03-12')].answer.entry",
                             "$..[?(@ && @.id=='2026-01-a-03-13')].answer.entry",
-                            "$..[?(@ && @.id=='2026-01-a-03-14')].answer.entry",
-                            "$..[?(@ && @.id=='2026-01-a-03-15')].answer.entry"
+                            "$..[?(@ && @.id=='2026-01-a-03-14')].answer.entry"
                           ]
                         }
                       },
@@ -1513,7 +1511,7 @@
                   },
                   {
                     "id": "2026-01-a-04-16",
-                    "hint": "For example: expanding eligibility or changing this population’s benefit package.",
+                    "hint": "For example: expanding eligibility or changing this population's benefit package.",
                     "type": "radio",
                     "label": "Have you made any changes to coverage for your CHIP pregnant women eligibility group?",
                     "answer": {
@@ -3213,12 +3211,13 @@
               },
               {
                 "id": "2026-03-c-05",
-                "text": "Tracking a cohort of children enrolled in CHIP (Title XXI) will indicate how long a specific group of children stays enrolled over an 18-month period. This information is required by Section 402(a) of CHIPRA. \n\nTo track your cohort, identify a group of children ages 0 to 16 years who are newly enrolled in CHIP and/or Medicaid as of January through March 2026 (the second quarter of FFY 2026). Children in this cohort must be 16 years and 0 months or younger when they enroll to ensure they don't age out of the program by the end of the 18-month tracking period. \n\nYou’ll identify a new cohort every two years. This year, you will report on the number of children at the start of the cohort (Jan–Mar 2026) and six months later (July–Sept 2026). Next year, you will report on the *same cohort* for their enrollment status at 12 months (Jan–Mar 2027) and 18 months later (July–Sept 2027). If data are unknown or unavailable, leave it blank — don’t enter a zero unless these data are known to be zero.",
+                "text": "Tracking a cohort of children enrolled in CHIP (Title XXI) will indicate how long a specific group of children stays enrolled over an 18-month period. This information is required by Section 402(a) of CHIPRA. \n\nTo track your cohort, identify a group of children ages 0 to 16 years who are newly enrolled in CHIP and/or Medicaid as of January through March 2026 (the second quarter of FFY 2026). Children in this cohort must be 16 years and 0 months or younger when they enroll to ensure they don't age out of the program by the end of the 18-month tracking period. \n\nYou’ll identify a new cohort every two years. This year, you will report on the number of children at the start of the cohort (Jan–Mar 2026) and six months later (July–Sept 2026). Next year, you will report on the same cohort for their enrollment status at 12 months (Jan–Mar 2027) and 18 months later (July–Sept 2027). If data are unknown or unavailable, leave it blank — don’t enter a zero unless these data are known to be zero.",
                 "type": "part",
                 "title": "Tracking a CHIP cohort over 18 months",
                 "questions": [
                   {
                     "hint": "Children should be in age groups based on their age at the start of the cohort, when they’re identified as newly enrolled in January, February, or March of 2026. For example, if a child is four years old at the start of the cohort, they should continue to be reported in the “ages 1-5” group at 6 months, 12 months, and 18 months later as well.\n\nThe oldest children in the cohort must be no older than 16 years (and 0 months) to ensure they don’t age out of the program at the end of the 18-month tracking period. That means children in the “ages 13–16” group who are newly enrolled in January 2026 must be born after January 2010. Similarly, children who are newly enrolled in February 2026 must be born after February 2010, and children newly enrolled in March 2026 must be born after March 2010.",
+                    "type": "fieldset",
                     "label": "Helpful hints on age groups",
                     "questions": []
                   },
@@ -3617,7 +3616,7 @@
                     "fieldset_type": "marked"
                   },
                   {
-                    "hint": "Possible reasons for no longer being enrolled:\n• Transferred to another health insurance program other than CHIP\n• Didn’t meet eligibility criteria anymore\n• Didn’t complete documentation\n• Didn’t pay a premium or enrollment fee",
+                    "hint": "",
                     "type": "fieldset",
                     "label": "How many children were no longer enrolled in CHIP six months later?",
                     "questions": [
@@ -5991,7 +5990,7 @@
               },
               {
                 "id": "2026-03-c-06",
-                "text": "Tracking a cohort of children enrolled in Medicaid (Title XIX) will indicate how long a specific group of children stays enrolled over an 18-month period. This information is required by Section 402(a) of CHIPRA. \n\nTo track your cohort, identify a group of children ages 0 to 16 years, who are newly enrolled in Medicaid and/or CHIP as of January through March 2026 (the second quarter of FFY 2026). Children in this cohort must be 16 years and 0 months or younger when they enroll to ensure they don’t age out of the program by the end of the 18-month tracking period. \n\nYou’ll identify a new cohort every two years. This year, you will report on the number of children at the start of the cohort (Jan–Mar 2026) and six months later (July–Sept 2026). Next year, you will report on the *same cohort* for their enrollment status at 12 months (Jan–Mar 2027) and 18 months later (July–Sept 2027). If data are unknown or unavailable, leave it blank — don’t enter a zero unless these data are known to be zero.",
+                "text": "Tracking a cohort of children enrolled in Medicaid (Title XIX) will indicate how long a specific group of children stays enrolled over an 18-month period. This information is required by Section 402(a) of CHIPRA. \n\nTo track your cohort, identify a group of children ages 0 to 16 years, who are newly enrolled in Medicaid and/or CHIP as of January through March 2026 (the second quarter of FFY 2026). Children in this cohort must be 16 years and 0 months or younger when they enroll to ensure they don’t age out of the program by the end of the 18-month tracking period. \n\nYou’ll identify a new cohort every two years. This year, you will report on the number of children at the start of the cohort (Jan–Mar 2026) and six months later (July–Sept 2026). Next year, you will report on the same cohort for their enrollment status at 12 months (Jan–Mar 2027) and 18 months later (July–Sept 2027). If data are unknown or unavailable, leave it blank — don’t enter a zero unless these data are known to be zero.",
                 "type": "part",
                 "title": "Tracking a Medicaid Cohort over 18 months",
                 "questions": [
@@ -9162,19 +9161,19 @@
                       {
                         "id": "2026-03-e-02-08",
                         "type": "money",
-                        "label": "What’s the average monthly contribution the **state** pays towards coverage of a child?",
+                        "label": "What’s the average monthly contribution the state pays towards coverage of a child?",
                         "answer": { "entry": null }
                       },
                       {
                         "id": "2026-03-e-02-09",
                         "type": "text",
-                        "label": "What’s the average monthly contribution the **employer** pays towards coverage of a child?",
+                        "label": "What’s the average monthly contribution the employer pays towards coverage of a child?",
                         "answer": { "entry": null }
                       },
                       {
                         "id": "2026-03-e-02-10",
                         "type": "text",
-                        "label": "What’s the average monthly contribution the **employee** pays towards coverage of a child?",
+                        "label": "What’s the average monthly contribution the employee pays towards coverage of a child?",
                         "answer": { "entry": null }
                       }
                     ]
@@ -9327,7 +9326,7 @@
                   {
                     "id": "2026-03-f-01-01",
                     "type": "radio",
-                    "label": "Do you have a written plan with safeguards and procedures in place for the **prevention** of fraud and abuse cases?",
+                    "label": "Do you have a written plan with safeguards and procedures in place for the prevention of fraud and abuse cases?",
                     "answer": {
                       "entry": null,
                       "options": [
@@ -9339,7 +9338,7 @@
                   {
                     "id": "2026-03-f-01-02",
                     "type": "radio",
-                    "label": "Do you have a written plan with safeguards and procedures in place for the **investigation** of fraud and abuse cases? ",
+                    "label": "Do you have a written plan with safeguards and procedures in place for the investigation of fraud and abuse cases? ",
                     "answer": {
                       "entry": null,
                       "options": [
@@ -9351,7 +9350,7 @@
                   {
                     "id": "2026-03-f-01-03",
                     "type": "radio",
-                    "label": "Do you have a written plan with safeguards and procedures in place for the **referral** of fraud and abuse cases?",
+                    "label": "Do you have a written plan with safeguards and procedures in place for the referral of fraud and abuse cases?",
                     "answer": {
                       "entry": null,
                       "options": [
@@ -9581,7 +9580,7 @@
                 "type": "part",
                 "questions": [
                   {
-                    "hint": "Children should be in age groups based on their age on September 30th, the end of the federal fiscal year (FFY). For example, if a child turns three years old on September 15th, the child should be included in the “ages 3–5' group. Even if the child received dental services on September 1st while they were still two years old, all dental services should be counted as their age at the end of the FFY.",
+                    "hint": "Children should be in age groups based on their age on September 30th, the end of the federal fiscal year (FFY). For example, if a child turns three years old on September 15th, the child should be included in the “ages 3-5” group. Even if the child received dental services on September 1st while they were still two years old, all dental services should be counted as their age at the end of the FFY.",
                     "type": "fieldset",
                     "label": "Helpful hint on age groups",
                     "questions": []
@@ -10294,7 +10293,7 @@
           },
           {
             "id": "2026-03-i",
-            "text": "All states with approved HSI program(s) should complete this section.\n\nStates can use up to 10% of the total computable amount of their fiscal year allotment to develop HSIs that provide direct services and other public health initiatives for low-income children. [See Section 2105(a)(1)(D)(ii) of the Social Security Act, 42 CFR 457.10 and 457.618.] States may only claim HSI expenditures after funding other costs to administer their CHIP State Plan.",
+            "text": "All states with approved HSI program(s) should complete this section.\n\nStates can use up to 10 percent of the total computable amount of their fiscal year allotment to develop HSIs that provide direct services and other public health initiatives for low-income children. [See section 2105(a)(1)(D)(ii) of the Act, 42 CFR 457.10 and 457.618.] States may only claim HSI expenditures after funding other costs to administer their CHIP State Plan.",
             "type": "subsection",
             "parts": [
               {
@@ -10513,7 +10512,7 @@
                           {
                             "id": "2026-03-i-02-01-01-08",
                             "type": "text_multiline",
-                            "label": "Is there anything else you'd like to add about this HSI program?",
+                            "label": "Is there anything else you'd like to add about this HSI program(s)?",
                             "answer": { "entry": null },
                             "context_data": {
                               "conditional_display": {
