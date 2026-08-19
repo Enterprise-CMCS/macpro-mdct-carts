@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Button } from "@cmsgov/design-system";
 import { useNavigate } from "react-router";
 import { apiLib } from "../../util/apiLib";
-import { useFlags } from "launchdarkly-react-client-sdk";
 
 const FormTemplates = () => {
   const navigate = useNavigate();
