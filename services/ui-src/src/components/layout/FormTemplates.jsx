@@ -25,9 +25,6 @@ const FormTemplates = () => {
     setInprogress(false);
   };
 
-  const release2025 = useFlags().release2025;
-  const defaultYear = release2025 ? "2025" : "2024";
-
   return (
     <div className="ds-l-container">
       <div className="ds-l-row ds-u-padding-left--2">
@@ -41,7 +38,8 @@ const FormTemplates = () => {
             data-testid="generate-forms-options"
             defaultValue={defaultYear}
           >
-            {release2025 && <option value="2025">2025</option>}
+            <option value="2026">2026</option>
+            <option value="2025">2025</option>
             <option value="2024">2024</option>
             <option value="2023">2023</option>
             <option value="2022">2022</option>
