@@ -36,7 +36,7 @@ const FormTemplates = () => {
             name="selectedYear"
             id="selectedYear"
             data-testid="generate-forms-options"
-            defaultValue={defaultYear}
+            defaultValue="2026"
           >
             <option value="2026">2026</option>
             <option value="2025">2025</option>
