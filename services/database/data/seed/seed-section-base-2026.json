@@ -8962,7 +8962,7 @@
                       {
                         "id": "2026-03-d-01-07",
                         "type": "text_multiline",
-                        "label": "If you indicated in Section 1 that you changed your cost sharing requirements in the past federal fiscal year. How are you monitoring the impact of these changes on whether families apply, enroll, disenroll, and use CHIP health services? What have you found when monitoring the impact?",
+                        "label": "If you indicated in Section 1 that you changed your cost sharing requirements in the past federal fiscal year: How are you monitoring the impact of these changes on whether families apply, enroll, disenroll, and use CHIP health services? What have you found when monitoring the impact?",
                         "answer": { "entry": null },
                         "context_data": {
                           "conditional_display": {
