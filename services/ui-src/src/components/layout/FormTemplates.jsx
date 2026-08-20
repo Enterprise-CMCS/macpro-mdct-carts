@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button } from "@cmsgov/design-system";
 import { useNavigate } from "react-router";
 import { apiLib } from "../../util/apiLib";
+import { useFlags } from "launchdarkly-react-client-sdk";
 
 const FormTemplates = () => {
   const navigate = useNavigate();
@@ -24,6 +25,9 @@ const FormTemplates = () => {
     setInprogress(false);
   };
 
+  const release2026 = useFlags().release2026;
+  const defaultYear = release2026 ? "2026" : "2025";
+
   return (
     <div className="ds-l-container">
       <div className="ds-l-row ds-u-padding-left--2">
@@ -35,9 +39,9 @@ const FormTemplates = () => {
             name="selectedYear"
             id="selectedYear"
             data-testid="generate-forms-options"
-            defaultValue="2026"
+            defaultValue={defaultYear}
           >
-            <option value="2026">2026</option>
+            {release2026 && <option value="2026">2026</option>}
             <option value="2025">2025</option>
             <option value="2024">2024</option>
             <option value="2023">2023</option>

@@ -11,7 +11,7 @@ import {
 import PropTypes from "prop-types";
 
 const TemplateDownload = ({ getTemplate }) => {
-  const currentYear = useFlags().release2025 ? "2025" : "2024";
+  const currentYear = useFlags().release2026 ? "2026" : "2025";
 
   const handleDownload = () => {
     window.location.href = getTemplate(currentYear);
@@ -44,7 +44,7 @@ const TemplateDownload = ({ getTemplate }) => {
         </div>
         <div>
           <h2 className="update-date">
-            {useFlags().release2025 ? "Oct 2025" : "Oct 2024"}
+            {useFlags().release2026 ? "Oct 2026" : "Oct 2025"}
           </h2>
         </div>
         <div className="update ds-l-row">

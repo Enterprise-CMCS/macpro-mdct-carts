@@ -3,10 +3,8 @@ import techIcon from "../../assets/images/noun-technical-support-1873885-D5DEE4.
 import ActionCard from "../utils/ActionCard";
 import FaqAccordion from "../layout/FaqAccordion";
 import { Main } from "../layout/Main";
-import { useFlags } from "launchdarkly-react-client-sdk";
 
 const GetHelp = () => {
-  const release2025 = useFlags().release2025;
   return (
     <Main className="help-page ds-l-container">
       <div className="ds-l-col--12">
@@ -25,12 +23,8 @@ const GetHelp = () => {
               </strong>
             </p>
           </ActionCard>
-          {release2025 && (
-            <>
               <h2 className="help-page-faq">Frequently Asked Questions</h2>
               <FaqAccordion />
-            </>
-          )}
         </div>
       </div>
     </Main>

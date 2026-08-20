@@ -2,10 +2,8 @@ import React from "react";
 import cartsLogoGrey from "../../assets/images/MDCT_CARTS_gray_2x.png";
 import deptHealthLogo from "../../assets/images/depthealthhumanservices_usa_2x.png";
 import medicaidLogo from "../../assets/images/logo-MedicaidGov_2x.png";
-import { useFlags } from "launchdarkly-react-client-sdk";
 
 const Footer = () => {
-  const release2025 = useFlags().release2025;
   return (
     <footer className="footer" data-test="component-footer">
       <div className="adverts">
@@ -60,7 +58,7 @@ const Footer = () => {
         <div className="ds-l-container">
           <div className="ds-l-row">
             <div className="help ds-l-col--6">
-              <a href="/get-help">{release2025 ? "FAQ" : "Contact Us"}</a>
+              <a href="/get-help">FAQ</a>
 
               <a href="https://www.cms.gov/About-CMS/Agency-Information/Aboutwebsite/CMSNondiscriminationNotice">
                 Accessibility Statement

@@ -2014,15 +2014,15 @@
                         [
                           {
                             "compareACS": {
-                              "ffy1": "2023",
-                              "ffy2": "2024",
+                              "ffy1": "2024",
+                              "ffy2": "2025",
                               "acsProperty": "numberUninsured"
                             }
                           },
                           {
                             "compareACS": {
-                              "ffy1": "2023",
-                              "ffy2": "2024",
+                              "ffy1": "2024",
+                              "ffy2": "2025",
                               "acsProperty": "percentUninsured"
                             }
                           }
@@ -3616,7 +3616,6 @@
                     "fieldset_type": "marked"
                   },
                   {
-                    "hint": "",
                     "type": "fieldset",
                     "label": "How many children were no longer enrolled in CHIP six months later?",
                     "questions": [
@@ -4707,7 +4706,7 @@
                       "rows": [
                         [
                           {
-                            "contents": "3. Total number of children newly enrolled in CHIP between January and March 2024"
+                            "contents": "3. Total number of children newly enrolled in CHIP between January and March 2026"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -4747,7 +4746,7 @@
                       "rows": [
                         [
                           {
-                            "contents": "3. Total number of children newly enrolled in CHIP between January and March 2024"
+                            "contents": "3. Total number of children newly enrolled in CHIP between January and March 2026"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -7485,7 +7484,7 @@
                       "rows": [
                         [
                           {
-                            "contents": "3. Total number of children newly enrolled in title XIX between January and March 2024"
+                            "contents": "3. Total number of children newly enrolled in title XIX between January and March 2026"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -7525,7 +7524,7 @@
                       "rows": [
                         [
                           {
-                            "contents": "3. Total number of children newly enrolled in title XIX between January and March 2024"
+                            "contents": "3. Total number of children newly enrolled in title XIX between January and March 2026"
                           },
                           {
                             "mask": "lessThanEleven",
@@ -12464,17 +12463,17 @@
                           {
                             "actions": ["identity"],
                             "targets": [{ "lookupFmapFy": "2026" }],
-                            "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY25)"
-                          },
-                          {
-                            "actions": ["identity"],
-                            "targets": [{ "lookupFmapFy": "2027" }],
                             "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY26)"
                           },
                           {
                             "actions": ["identity"],
-                            "targets": [{ "lookupFmapFy": "2028" }],
+                            "targets": [{ "lookupFmapFy": "2027" }],
                             "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY27)"
+                          },
+                          {
+                            "actions": ["identity"],
+                            "targets": [{ "lookupFmapFy": "2028" }],
+                            "$comment": "This should pull the FMAP data from the API for this state and plug it in (FY28)"
                           }
                         ],
                         [
