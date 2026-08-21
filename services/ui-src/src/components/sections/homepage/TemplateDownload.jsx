@@ -43,9 +43,7 @@ const TemplateDownload = ({ getTemplate }) => {
           </p>
         </div>
         <div>
-          <h2 className="update-date">
-            {useFlags().release2026 ? "Oct 2026" : "Oct 2025"}
-          </h2>
+          <h2 className="update-date">{`Oct ${currentYear}`}</h2>
         </div>
         <div className="update ds-l-row">
           <div className="icon ds-l-col--2">
