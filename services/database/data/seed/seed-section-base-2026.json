@@ -4245,9 +4245,9 @@
                     "fieldset_type": "marked"
                   },
                   {
-                    "hint": "This year, please report data about your cohort for this section.",
+                    "hint": "Next year, please report data about your cohort for this section.",
                     "type": "fieldset",
-                    "label": "July - September of 2026 (18 months later): to be completed this year.",
+                    "label": "July - September of 2027 (18 months later): to be completed next year.",
                     "questions": []
                   },
                   {
@@ -6576,9 +6576,9 @@
                     "answer": { "entry": null }
                   },
                   {
-                    "hint": "This year, please report data about your cohort for this section.",
+                    "hint": "Next year, please report data about your cohort for this section.",
                     "type": "fieldset",
-                    "label": "January - March 2026 (12 months later): to be completed next year.",
+                    "label": "January - March 2027 (12 months later): to be completed next year.",
                     "questions": []
                   },
                   {
@@ -7023,9 +7023,9 @@
                     "fieldset_type": "marked"
                   },
                   {
-                    "hint": "This year, please report data about your cohort for this section.",
+                    "hint": "Next year, please report data about your cohort for this section.",
                     "type": "fieldset",
-                    "label": "July - September of 2026 (18 months later): to be completed next year",
+                    "label": "July - September of 2027 (18 months later): to be completed next year.",
                     "questions": []
                   },
                   {
