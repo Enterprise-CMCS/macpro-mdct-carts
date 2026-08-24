@@ -26,6 +26,6 @@ describe("Objective component", () => {
         <Objective {...props} />
       </Accordion>
     );
-    expect(screen.getByText("Objective 1")).toBeInTheDocument();
+    expect(screen.getByText("Objective 1 (required)")).toBeInTheDocument();
   });
 });
