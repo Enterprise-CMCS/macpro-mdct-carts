@@ -9,6 +9,7 @@ export const Objective = ({ objective, objectiveNumber, printView }) => {
   let children = [];
   let name = "";
   let suggested = false;
+  let required = false;
 
   if (firstQuestion) {
     const firstQuestionIsReadOnly = firstQuestion.answer.readonly === true;
@@ -18,17 +19,22 @@ export const Objective = ({ objective, objectiveNumber, printView }) => {
       : firstQuestion.answer.entry;
 
     suggested = firstQuestion?.suggested;
+    required = firstQuestionIsReadOnly;
 
     children = firstQuestionIsReadOnly
       ? objective.questions.slice(1)
       : objective.questions;
   }
 
-  const objectiveName = (number, name, suggested) => {
+  const objectiveName = (number, name, suggested, required) => {
     let createdName = `Objective ${number}`;
 
     if (suggested) {
       createdName = `${createdName} (suggested)`;
+    }
+
+    if (required) {
+      createdName = `${createdName} (required)`;
     }
 
     if (name) {
@@ -41,7 +47,7 @@ export const Objective = ({ objective, objectiveNumber, printView }) => {
   return (
     <AccordionItem
       defaultOpen
-      heading={objectiveName(objectiveNumber, name, suggested)}
+      heading={objectiveName(objectiveNumber, name, suggested, required)}
       isControlledOpen={printView ? true : undefined}
       closeIcon={<span aria-hidden="true">–</span>}
       openIcon={<span aria-hidden="true">+</span>}

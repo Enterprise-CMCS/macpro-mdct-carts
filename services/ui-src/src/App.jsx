@@ -12,6 +12,7 @@ import { fireTealiumPageView } from "./util/tealium";
 import "font-awesome/css/font-awesome.min.css";
 import "./styles/app.scss";
 import { LocalLogins } from "./components/sections/login/LocalLogins";
+import { PageTitle } from "./components/utils/PageTitle";
 
 function App() {
   const { pathname, key } = useLocation();
@@ -52,6 +53,7 @@ function App() {
 
   return (
     <div id="app-wrapper">
+      <PageTitle />
       <Routes>
         <Route path="*" element={authenticatedRoutes} />
         <Route path="/postLogout" element={<PostLogoutRedirect />} />

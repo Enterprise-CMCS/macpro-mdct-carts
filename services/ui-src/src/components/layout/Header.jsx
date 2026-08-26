@@ -14,14 +14,10 @@ import { REPORT_STATUS, AppRoles } from "../../types";
 // assets
 import appLogo from "../../assets/images/MDCT_CARTS_2x.png";
 
-import { useFlags } from "launchdarkly-react-client-sdk";
-
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const menuButtonRef = useRef(null);
-
-  const release2025 = useFlags().release2025;
 
   const [stateUser, formData, formYear, reportStatus] = useSelector(
     (state) => [
@@ -163,7 +159,7 @@ export const Header = () => {
                       >
                         <li className="contact-us" role="none">
                           <Link to="/get-help" role="menuitem">
-                            {release2025 ? "FAQ" : "Contact Us"}
+                            FAQ
                           </Link>
                         </li>
                         <li className="manage-account" role="none">

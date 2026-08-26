@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@cmsgov/design-system";
 import { useLocation } from "react-router";
-import { Helmet } from "react-helmet";
 // components
 import Title from "../layout/Title";
 import Section from "../layout/Section";
@@ -89,7 +88,6 @@ export const Print = () => {
   const stateInitials = searchParams.get("state");
   const stateName =
     name || statesArray.find(({ value }) => value === stateInitials)?.label;
-  const formYear = searchParams.get("year");
   const sectionId = searchParams.get("sectionId");
   const subsectionId = searchParams.get("subsectionId");
 
@@ -180,6 +178,9 @@ export const Print = () => {
   // Return sections with wrapper div and print dialogue box
   return (
     <div className="print-all">
+      {/* React 19 hoists these into <head>; carried into the generated PDF. */}
+      <meta name="author" content="CMS" />
+      <meta name="subject" content="Annual CARTS Report" />
       <div className="print-directions">
         <p>Click below to print full CARTS report shown here</p>
         <Button
@@ -190,13 +191,6 @@ export const Print = () => {
           <FontAwesomeIcon icon={faPrint} /> Print
         </Button>
       </div>
-      <Helmet>
-        <title>
-          {stateName} CARTS FY{formYear} Report
-        </title>
-        <meta name="author" content="CMS" />
-        <meta name="subject" content="Annual CARTS Report" />
-      </Helmet>
       <Main className="main">{sections}</Main>
       <Button
         className="ds-c-button--solid ds-c-button--large print-all-btn"

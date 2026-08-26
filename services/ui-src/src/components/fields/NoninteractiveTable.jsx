@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { v4 as uuidv4 } from "uuid";
 
 const NoninteractiveTable = ({ question }) => {
   const columnWidth = 100 / question.fieldset_info.headers.length;
@@ -36,7 +35,7 @@ const NoninteractiveTable = ({ question }) => {
             count = -1;
             let rowLabel = "";
             return (
-              <tr key={uuidv4()}>
+              <tr key={crypto.randomUUID()}>
                 {row.map((value, index) => {
                   count += 1;
                   // adds % to any element that has percent in the header and adds commas via toLocaleString
