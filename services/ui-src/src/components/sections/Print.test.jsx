@@ -171,15 +171,21 @@ describe("<Print />", () => {
 describe("getPdfFriendlyDocument", () => {
   beforeEach(() => {
     document.body.innerHTML = `
-      <html>
-        <head></head>
-        <body>
-          <input type="text" />
-          <input type="date" />
-          <button title="Print"></button>
-          <button title="Other"></button>
-        </body>
-      </html>
+      <div class="print-directions">
+        <p>Click below to print</p>
+        <button class="print-all-btn" title="Print">Print</button>
+      </div>
+      <header class="header">
+        <img alt="Logo for Medicaid Data Collection Tool (MDCT): CHIP Annual Reporting Template System (CARTS)" />
+      </header>
+      <div class="ds-c-usa-banner__guidance">
+        <div class="ds-c-usa-banner__guidance-container">
+          Official websites use .gov
+        </div>
+      </div>
+      <div role="dialog" class="no-print">You are about to be logged out.</div>
+      <input type="text" />
+      <main>Report body</main>
     `;
     window.open = jest.fn();
     window.URL.createObjectURL = jest.fn(() => "https://mockFileURL.com");
@@ -195,11 +201,23 @@ describe("getPdfFriendlyDocument", () => {
     expect(apiLib.post).toHaveBeenCalledWith(
       "/print_pdf",
       expect.objectContaining({
-        body: expect.objectContaining({
-          encodedHtml: expect.any(String),
-        }),
+        body: expect.any(String),
       })
     );
     expect(window.open).toHaveBeenCalledWith("https://mockFileURL.com");
+  });
+
+  test("strips app chrome from the HTML sent to the PDF API", async () => {
+    const { ungzip } = await import("pako");
+    await getPdfFriendlyDocument();
+    const body = apiLib.post.mock.calls[0][1].body;
+    const compressed = Uint8Array.from(atob(body), (c) => c.codePointAt(0));
+    const html = String.fromCodePoint(...ungzip(compressed));
+
+    expect(html).toContain("Report body");
+    expect(html).not.toContain("Click below to print");
+    expect(html).not.toContain("You are about to be logged out");
+    expect(html).not.toContain("Official websites use .gov");
+    expect(html).not.toContain("Logo for Medicaid Data Collection Tool");
   });
 });

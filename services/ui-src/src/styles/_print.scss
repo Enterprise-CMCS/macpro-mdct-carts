@@ -58,14 +58,21 @@
 
   .action-buttons,
   .ds-c-alert,
+  .ds-c-dialog,
+  .ds-c-skip-nav,
+  .ds-c-usa-banner__guidance,
+  .ds-c-usa-banner__button,
+  .ds-c-usa-banner__action,
   .footer,
   .header,
   .nav-buttons,
   .print-all-btn,
   .print-directions,
+  .save-container,
   .screen-only,
-  .sidebar {
-    display: none;
+  .sidebar,
+  #skip-nav-main {
+    display: none !important;
   }
 
   .print-only,

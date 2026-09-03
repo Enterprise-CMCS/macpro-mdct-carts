@@ -27,3 +27,6 @@ cdk.context.json
 **/.yarn/*
 services/ui-src/public/env-config.ts
 .vscode/settings.json
+services/app-api/bin/.generated/
+services/app-api/bin/prince/
+services/app-api/bin/prince-arm64/

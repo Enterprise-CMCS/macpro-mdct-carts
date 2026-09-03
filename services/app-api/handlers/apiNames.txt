@@ -21,5 +21,5 @@ POST /psUrlUpload/{year}/{state} - get a presigned url to upload a file
 DELETE /uploads/{year}/{state} - delete an upload on a question
 POST /uploads/{year}/{state} - get a list of uploads matching the request body
 
--- printing (Prince)
-POST /print_pdf -- produces a Prince-generated PDF
+-- printing (Prince on Lambda)
+POST /print_pdf -- produces a PDF via the vendored Prince binary (PDF/UA-1)
