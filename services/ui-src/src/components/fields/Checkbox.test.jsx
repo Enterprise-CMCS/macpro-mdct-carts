@@ -201,9 +201,7 @@ describe("Checkbox component", () => {
         ...baseProps.question,
         answer: {
           ...baseProps.question.answer,
-          options: [
-            { label: "Strawberry", value: "strawberry" },
-          ],
+          options: [{ label: "Strawberry", value: "strawberry" }],
         },
       },
     };
