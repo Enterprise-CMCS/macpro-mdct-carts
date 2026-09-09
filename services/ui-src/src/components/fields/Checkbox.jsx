@@ -14,6 +14,8 @@ const Checkbox = ({ onChange, question, ...props }) => {
 
   const radioButttonList = question.answer.options.map(
     ({ label, value: checkBoxValue }, idx) => {
+      // HTML id attributes must not contain ASCII whitespace
+      const inputId = `${props.name}-${checkBoxValue}`.replaceAll(/\s+/g, "-");
       return (
         <div
           className="radio-container"
@@ -22,7 +24,7 @@ const Checkbox = ({ onChange, question, ...props }) => {
           <input
             {...props}
             aria-label={`Question: ${question.label}, Answer: ${label}`}
-            id={`${props.name}-${checkBoxValue}`}
+            id={inputId}
             key={checkBoxValue}
             type="checkbox"
             value={checkBoxValue}
@@ -30,10 +32,7 @@ const Checkbox = ({ onChange, question, ...props }) => {
             checked={selected.includes(checkBoxValue)}
             name={props.name}
           />
-          <label
-            className="label-radio"
-            htmlFor={`${props.name}-${checkBoxValue}`}
-          >
+          <label className="label-radio" htmlFor={inputId}>
             {label}
           </label>
         </div>
