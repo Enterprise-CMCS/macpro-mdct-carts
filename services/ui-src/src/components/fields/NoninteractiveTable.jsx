@@ -94,7 +94,9 @@ const NoninteractiveTable = ({ question }) => {
                         {value.toLocaleString()}
                       </th>
                     ) : (
-                      <td width={`${columnWidth}%`}>{value.toLocaleString()}</td>
+                      <td width={`${columnWidth}%`}>
+                        {value.toLocaleString()}
+                      </td>
                     );
                   }
                 })}

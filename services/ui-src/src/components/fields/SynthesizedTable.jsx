@@ -100,9 +100,7 @@ const SynthesizedTable = ({ question, printView }) => {
                       </th>
                     );
                   } else {
-                    return (
-                      <td key={index}>{cell.contents}</td>
-                    );
+                    return <td key={index}>{cell.contents}</td>;
                   }
                 })}
               </tr>

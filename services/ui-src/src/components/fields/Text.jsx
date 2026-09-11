@@ -84,9 +84,7 @@ const Text = ({
       <label htmlFor={question.id}>{`${generateQuestionNumber(question.id)} ${
         question.label
       }`}</label>
-      {question.hint && (
-        <p className="ds-c-field__hint">{question.hint}</p>
-      )}
+      {question.hint && <p className="ds-c-field__hint">{question.hint}</p>}
       <div className="non-print-textarea">
         <TextField
           aria-label={`${question.label}${
