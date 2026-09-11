@@ -215,4 +215,26 @@ describe("Checkbox component", () => {
     expect(label).toBeInTheDocument();
     expect(label.textContent).toBe("Strawberry");
   });
+
+  test("replaces whitespace in a value with hyphens for the input id", () => {
+    const props = {
+      ...baseProps,
+      question: {
+        ...baseProps.question,
+        answer: {
+          ...baseProps.question.answer,
+          options: [{ label: "Dragon fruit", value: "dragon fruit" }],
+        },
+      },
+    };
+    const { getByLabelText } = render(<Checkbox {...props} />);
+    const input = getByLabelText(
+      "Question: Favorite Fruits, Answer: Dragon fruit"
+    );
+    expect(input.id).toBe("fruits-dragon-fruit");
+    expect(input.id).not.toMatch(/\s/);
+    const label = document.querySelector(`label[for="${input.id}"]`);
+    expect(label).toBeInTheDocument();
+    expect(label.textContent).toBe("Dragon fruit");
+  });
 });
