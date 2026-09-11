@@ -67,9 +67,7 @@ const Repeatables = ({
         </span>
 
         {!question.hideOptionalHint && (
-          <div className="ds-c-field__hint" aria-label="Hint">
-            Optional
-          </div>
+          <div className="ds-c-field__hint">Optional</div>
         )}
         <button
           disabled={disabled}

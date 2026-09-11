@@ -85,9 +85,7 @@ const Text = ({
         question.label
       }`}</label>
       {question.hint && (
-        <p aria-label={`${question.label} hint`} className="ds-c-field__hint">
-          {question.hint}
-        </p>
+        <p className="ds-c-field__hint">{question.hint}</p>
       )}
       <div className="non-print-textarea">
         <TextField

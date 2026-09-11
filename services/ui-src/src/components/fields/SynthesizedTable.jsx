@@ -89,27 +89,19 @@ const SynthesizedTable = ({ question, printView }) => {
         </thead>
         <tbody>
           {rows.map((row, index) => {
-            let rowLabel;
             return (
               <tr key={index}>
                 {row.map((cell, index) => {
                   if (index === 0 && !question.all_columns_have_data) {
-                    rowLabel = cell.contents;
                     return (
-                      <th
-                        className="row-header"
-                        aria-label={`Row Header:`}
-                        key={index}
-                      >
+                      <th className="row-header" key={index}>
                         {" "}
                         {cell.contents}
                       </th>
                     );
                   } else {
                     return (
-                      <td key={index} aria-label={`Row: ${rowLabel}, `}>
-                        {cell.contents}
-                      </td>
+                      <td key={index}>{cell.contents}</td>
                     );
                   }
                 })}
