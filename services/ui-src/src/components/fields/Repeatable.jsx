@@ -8,12 +8,14 @@ const Repeatable = ({ number, question, type = null, printView }) => {
   const children = question.questions ?? [];
 
   const title = type ? `${type} ${number}` : `${number}`;
- // add wrapper ref to set attribute on the accordion button in print view
+  // add wrapper ref to set attribute on the accordion button in print view
   const wrapperRef = useRef(null);
 
   useEffect(() => {
     if (printView && wrapperRef.current) {
-      const button = wrapperRef.current.querySelector(".ds-c-accordion__button");
+      const button = wrapperRef.current.querySelector(
+        ".ds-c-accordion__button"
+      );
       button?.setAttribute("aria-disabled", "true");
     }
   }, [printView]);

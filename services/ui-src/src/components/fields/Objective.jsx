@@ -49,7 +49,9 @@ export const Objective = ({ objective, objectiveNumber, printView }) => {
 
   useEffect(() => {
     if (printView && wrapperRef.current) {
-      const button = wrapperRef.current.querySelector(".ds-c-accordion__button");
+      const button = wrapperRef.current.querySelector(
+        ".ds-c-accordion__button"
+      );
       button?.setAttribute("aria-disabled", "true");
     }
   }, [printView]);
