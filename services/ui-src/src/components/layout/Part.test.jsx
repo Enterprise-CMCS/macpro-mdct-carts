@@ -148,6 +148,6 @@ describe("<Part />", () => {
     render(buildPart("2020-00-a-03"));
     const alert = screen.getByTestId("part-alert").closest(".ds-c-alert");
     expect(alert).toHaveClass("skip-text-alert");
-    expect(alert).toHaveTextContent("This question was skipped");
+    expect(alert).toHaveTextContent("This question doesn’t apply to your state since you answered NO to the previous question.");
   });
 });
