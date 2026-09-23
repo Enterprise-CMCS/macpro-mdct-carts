@@ -81,7 +81,8 @@ const store = mockStore({
                   type: "part",
                   title: "Skipped question",
                   context_data: {
-                    skip_text: "This question doesn’t apply to your state since you answered NO to the previous question.",
+                    skip_text:
+                      "This question doesn’t apply to your state since you answered NO to the previous question.",
                     conditional_display: {
                       type: "conditional_display",
                       hide_if: {
@@ -148,6 +149,8 @@ describe("<Part />", () => {
     render(buildPart("2020-00-a-03"));
     const alert = screen.getByTestId("part-alert").closest(".ds-c-alert");
     expect(alert).toHaveClass("skip-text-alert");
-    expect(alert).toHaveTextContent("This question doesn’t apply to your state since you answered NO to the previous question.");
+    expect(alert).toHaveTextContent(
+      "This question doesn’t apply to your state since you answered NO to the previous question."
+    );
   });
 });
