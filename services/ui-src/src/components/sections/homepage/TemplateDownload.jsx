@@ -37,8 +37,8 @@ const TemplateDownload = ({ getTemplate }) => {
             Template System (CARTS) and certify their report by January 1st.
             After review and acceptance by CMS, CHIP annual reports are
             published at{" "}
-            <a href="https://www.medicaid.gov/chip/reports-evaluations/index.html">
-              https://www.medicaid.gov/chip/reports-evaluations/index.html
+            <a href="https://www.medicaid.gov/chip/reports-evaluations">
+              https://www.medicaid.gov/chip/reports-evaluations
             </a>
           </p>
         </div>
