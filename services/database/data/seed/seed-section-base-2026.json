@@ -1716,6 +1716,7 @@
                 "questions": [
                   {
                     "type": "fieldset",
+                    "label": "Number of Children Enrolled in CHIP",
                     "questions": [],
                     "fieldset_id": "synthesized-table-2-1",
                     "fieldset_info": {
@@ -1834,7 +1835,7 @@
                   {
                     "hint": "",
                     "type": "fieldset",
-                    "label": "",
+                    "label": "Number of Uninsured Children in Your State",
                     "questions": [],
                     "fieldset_id": "synthesized-table-2-2",
                     "fieldset_info": {
@@ -2007,6 +2008,7 @@
                   },
                   {
                     "type": "fieldset",
+                    "label": "Change in Number of Uninsured Children In Your State",
                     "questions": [],
                     "fieldset_id": "synthesized-table-2-3",
                     "fieldset_info": {
@@ -12875,6 +12877,7 @@
                   },
                   {
                     "type": "fieldset",
+                    "label": "Managed Care Costs",
                     "questions": [],
                     "fieldset_info": {
                       "rows": [
@@ -13132,6 +13135,7 @@
                   },
                   {
                     "type": "fieldset",
+                    "label": "Fee-for-Service Costs",
                     "questions": [],
                     "fieldset_info": {
                       "rows": [
