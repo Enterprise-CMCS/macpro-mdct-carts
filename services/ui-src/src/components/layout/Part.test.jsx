@@ -58,13 +58,12 @@ const store = mockStore({
                   ],
                 },
                 {
-                  id: "2020-00-a-01",
+                  id: "2020-00-a-02",
                   text: "We already have some information about your state from our records. If any information is incorrect, please contact the [mdct_help@cms.hhs.gov](mailto:mdct_help@cms.hhs.gov).",
                   type: "part",
-                  title: "Welcome!",
                   questions: [
                     {
-                      id: "2020-00-a-01-01",
+                      id: "2020-00-a-02-01",
                       type: "text",
                       label: "State or territory name:",
                       answer: {
@@ -85,6 +84,45 @@ const store = mockStore({
       },
       stateId: "AL",
     },
+    {
+      pk: "AL-2020",
+      sectionId: 1,
+      year: 2020,
+      contents: {
+        section: {
+          id: "2020-01",
+          ordinal: 1,
+          title: "my other section",
+          subsections: [
+            {
+              type: "subsection",
+              id: "2020-01-a",
+              parts: [
+                {
+                  id: "2020-01-a-01",
+                  type: "part",
+                  title: "first part title",
+                  questions: [],
+                },
+                {
+                  id: "2020-01-a-02",
+                  type: "part",
+                  questions: [],
+                },
+                {
+                  id: "2020-01-a-03",
+                  type: "part",
+                  title: " ",
+                  questions: [],
+                },
+              ],
+            },
+          ],
+          context_data: {},
+        },
+      },
+      stateId: "AL",
+    },
   ],
   enrollmentCounts: {
     chipEnrollments: {},
@@ -93,10 +131,10 @@ const store = mockStore({
     isFetching: false,
   },
 });
-const buildPart = (partId) => {
+const buildPart = (partId, partNumber) => {
   return (
     <Provider store={store}>
-      <Part partId={partId} />
+      <Part partId={partId} partNumber={partNumber} />
     </Provider>
   );
 };
@@ -118,8 +156,34 @@ describe("<Part />", () => {
 
   test("When no title is provided, no header is rendered", () => {
     render(buildPart("2020-00-a-02"));
-    const title = screen.queryByTestId("part-header");
-    screen.conta;
+    const title = screen.queryByTestId("part-h2-header");
     expect(title).toBeNull();
+  });
+
+  test("renders a numbered part with a title", () => {
+    render(buildPart("2020-01-a-01", 1));
+    const title = screen.getByTestId("part-h2-header");
+    expect(title).toHaveTextContent("Part 1: first part title");
+  });
+
+  test("renders a numbered part with no title", () => {
+    render(buildPart("2020-01-a-02", 2));
+    const title = screen.getByTestId("part-h2-header");
+    expect(title).toHaveTextContent("Part 2");
+    expect(title.textContent).not.toContain(":");
+  });
+
+  test("renders a numbered part with a whitespace-only title", () => {
+    render(buildPart("2020-01-a-03", 3));
+    const title = screen.getByTestId("part-h2-header");
+    expect(title).toHaveTextContent("Part 3");
+    expect(title.textContent).not.toContain(":");
+  });
+
+  test("does not render 'Part N' for section 0, even with a partNumber", () => {
+    render(buildPart("2020-00-a", 1));
+    const title = screen.getByTestId("part-h2-header");
+    expect(title).toHaveTextContent("my title");
+    expect(title.textContent).not.toContain("Part");
   });
 });

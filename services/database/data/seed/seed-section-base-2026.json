@@ -9024,7 +9024,6 @@
             "parts": [
               {
                 "id": "2026-03-e-01",
-                "title": " ",
                 "type": "part",
                 "questions": [
                   {
@@ -9044,7 +9043,6 @@
               },
               {
                 "id": "2026-03-e-02",
-                "title": " ",
                 "type": "part",
                 "questions": [
                   {
@@ -10299,7 +10297,6 @@
             "parts": [
               {
                 "id": "2026-03-i-01",
-                "title": " ",
                 "type": "part",
                 "questions": [
                   {
@@ -10319,7 +10316,6 @@
               },
               {
                 "id": "2026-03-i-02",
-                "title": " ",
                 "text": "Please answer the following questions for all of the state's approved HSIs as listed in section 2.2 of the CHIP state plan.",
                 "type": "part",
                 "questions": [
