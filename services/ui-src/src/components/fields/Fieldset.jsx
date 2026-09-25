@@ -19,7 +19,13 @@ export const Fieldset = ({ question, ...props }) => {
     case "datagrid":
       return <DataGrid question={question} {...props} />;
     case "synthesized_table":
-      return <SynthesizedTable question={question} {...props} />;
+      return (
+        <SynthesizedTable
+          question={question}
+          caption={question.caption}
+          {...props}
+        />
+      );
     case "synthesized_value":
       return <SynthesizedValue question={question} {...props} />;
     case "noninteractive_table":
