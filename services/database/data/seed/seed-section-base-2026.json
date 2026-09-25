@@ -10155,7 +10155,7 @@
             "parts": [
               {
                 "id": "2026-03-h-01",
-                "title": "CAHPS Survey Results",
+                "title": "Did you collect the CAHPS survey?",
                 "type": "part",
                 "questions": [
                   {
@@ -10288,7 +10288,8 @@
                   }
                 }
               }
-            ]
+            ],
+            "title": "CAHPS Survey Results"
           },
           {
             "id": "2026-03-i",
