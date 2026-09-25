@@ -75,6 +75,28 @@ const store = mockStore({
                     },
                   ],
                 },
+                {
+                  id: "2020-00-a-03",
+                  text: "This question may be skipped.",
+                  type: "part",
+                  title: "Skipped question",
+                  context_data: {
+                    skip_text:
+                      "This question doesn’t apply to your state since you answered NO to the previous question.",
+                    conditional_display: {
+                      type: "conditional_display",
+                      hide_if: {
+                        target:
+                          "$..*[?(@ && @.id=='2020-00-a-01-01')].answer.entry",
+                        values: {
+                          interactive: ["Alabama"],
+                          noninteractive: ["Alabama"],
+                        },
+                      },
+                    },
+                  },
+                  questions: [],
+                },
               ],
               id: "2020-00-a",
               title: "my title",
@@ -121,5 +143,14 @@ describe("<Part />", () => {
     const title = screen.queryByTestId("part-header");
     screen.conta;
     expect(title).toBeNull();
+  });
+
+  test("skipped part alert has the skip-text-alert class so it prints", () => {
+    render(buildPart("2020-00-a-03"));
+    const alert = screen.getByTestId("part-alert").closest(".ds-c-alert");
+    expect(alert).toHaveClass("skip-text-alert");
+    expect(alert).toHaveTextContent(
+      "This question doesn’t apply to your state since you answered NO to the previous question."
+    );
   });
 });
