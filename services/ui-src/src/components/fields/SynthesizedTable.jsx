@@ -76,7 +76,9 @@ const SynthesizedTable = ({ question, printView, caption }) => {
     <div className="synthesized-table">
       <table className="ds-c-table">
         <caption className="ds-u-visibility--screen-reader">
-          {caption || question.label || "This is a table for the CARTS Application"}
+          {caption ||
+            question.label ||
+            "This is a table for the CARTS Application"}
         </caption>
         <thead>
           <tr>
