@@ -1,5 +1,3 @@
-import jsonpath from "../util/jsonpath";
-
 import { selectById } from "../store/selectors";
 
 export const SET_FRAGMENT = "set fragment";
@@ -31,16 +29,15 @@ const createNewRepeatableItem = (parentId, getState) => {
    */
   newItem = newItem.replaceAll(
     new RegExp(`("|')${previousId}("|'|-)`, "g"),
-    `$1${newId}$2`
+    `$1${newId}$2`,
   );
 
-  newItem = JSON.parse(newItem);
-
-  // Set all the answers throughout the new item to null.
-  jsonpath.apply(
-    newItem,
-    "$..questions[?(@ && @.ans && @.answer.entry)].answer.entry",
-    () => null
+  // Parse back to an object, nulling out every answer entry so nothing
+  // carries over from the copied item to the new one.
+  newItem = JSON.parse(newItem, (key, value) =>
+    key === "answer" && value && "entry" in value
+      ? { ...value, entry: null }
+      : value,
   );
 
   return { parent, newItem };
