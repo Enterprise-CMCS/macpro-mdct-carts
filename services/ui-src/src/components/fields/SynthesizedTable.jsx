@@ -74,10 +74,12 @@ const SynthesizedTable = ({ question, printView }) => {
 
   return (
     <div className="synthesized-table">
-      <table
-        className="ds-c-table"
-        summary={question.label || "This is a table for the CARTS Application"}
-      >
+      <table className="ds-c-table">
+        <caption className="ds-u-visibility--screen-reader">
+          {question.caption ||
+            question.label ||
+            "This is a table for the CARTS Application"}
+        </caption>
         <thead>
           <tr>
             {headers.map((header, index) => (

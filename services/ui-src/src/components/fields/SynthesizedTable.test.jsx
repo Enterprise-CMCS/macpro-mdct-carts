@@ -135,4 +135,21 @@ describe("<SynthesizedTable />", () => {
     expect(screen.queryByText("FFY 2024")).not.toBeInTheDocument();
     expect(screen.queryByText("Eligible children")).not.toBeInTheDocument();
   });
+
+  test("should render the caption as the table caption", () => {
+    render(
+      SynthesizedTableComponentWithProps({
+        question: {
+          ...defaultProps.question,
+          caption: "Number of Uninsured Children in Your State",
+        },
+      })
+    );
+
+    const caption = screen.getByText(
+      "Number of Uninsured Children in Your State"
+    );
+    expect(caption).toBeInTheDocument();
+    expect(caption.tagName).toBe("CAPTION");
+  });
 });
