@@ -1,15 +1,18 @@
 import { isLocalStack } from "./local/util.ts";
+import { resolvePrincePackageDir } from "./utils/prince-asset.ts";
 import { getSecret } from "./utils/secrets-manager.ts";
 
 export interface DeploymentConfigProperties {
   brokerString: string;
   cloudfrontCertificateArn?: string;
   cloudfrontDomainName?: string;
-  docraptorApiKey: string;
   isDev: boolean;
   kafkaAuthorizedSubnetIds: string;
   launchDarklyClient: string;
   oktaMetadataUrl: string;
+  /** Raw Prince license.dat XML; demo license used if absent. */
+  princeLicense?: string;
+  princePackageDir?: string;
   project: string;
   redirectSignout: string;
   secureCloudfrontDomainName?: string;
@@ -33,6 +36,10 @@ export const determineDeploymentConfig = async (stage: string) => {
     stage,
     isDev,
     ...secretConfigOptions,
+    princePackageDir:
+      stage === "bootstrap"
+        ? undefined
+        : await resolvePrincePackageDir(project),
   };
   if (config.cloudfrontDomainName) {
     config.secureCloudfrontDomainName = `https://${config.cloudfrontDomainName}/`;
@@ -70,7 +77,6 @@ function validateConfig(config: {
 }): asserts config is DeploymentConfigProperties {
   const expectedKeys = [
     "brokerString",
-    "docraptorApiKey",
     "kafkaAuthorizedSubnetIds",
     "launchDarklyClient",
     "oktaMetadataUrl",

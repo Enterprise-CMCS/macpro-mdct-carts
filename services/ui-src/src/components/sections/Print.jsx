@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@cmsgov/design-system";
 import { useLocation } from "react-router";
+import { gzip } from "pako";
 // components
 import Title from "../layout/Title";
 import Section from "../layout/Section";
@@ -25,10 +26,41 @@ const openPdf = (basePdf) => {
   window.open(fileURL);
 };
 
+function uint8ToString(uint8) {
+  let result = "";
+  for (let i = 0; i < uint8.length; i++) {
+    result += String.fromCodePoint(uint8[i]);
+  }
+  return result;
+}
+
 export const getPdfFriendlyDocument = async () => {
   // Clone the document so live DOM mutations don't affect the page
   const clonedHtml = document.querySelector("html").cloneNode(true);
   clonedHtml.querySelector("noscript")?.remove();
+
+  const chromeSelectors = [
+    "#skip-nav-main",
+    ".ds-c-skip-nav",
+    ".no-print",
+    ".ds-c-dialog",
+    "[role='dialog']",
+    ".header",
+    ".print-directions",
+    ".print-all-btn",
+    ".footer",
+    ".save-container",
+    // Keep the grey USA banner strip; drop "here's how you know" guidance body.
+    // (DS v13 uses __guidance, not the older __content class.)
+    ".ds-c-usa-banner__guidance",
+    ".ds-c-usa-banner__button",
+    ".ds-c-usa-banner__action",
+  ];
+  for (const selector of chromeSelectors) {
+    clonedHtml
+      .querySelectorAll(selector)
+      .forEach((element) => element.remove());
+  }
 
   clonedHtml.querySelectorAll("input").forEach((element) => {
     if (element.type === "text") {
@@ -38,9 +70,7 @@ export const getPdfFriendlyDocument = async () => {
     }
   });
   clonedHtml.querySelectorAll("button").forEach((element) => {
-    if (element.title !== "Print") {
-      element.remove();
-    }
+    element.remove();
   });
 
   if (!clonedHtml.querySelector("base")) {
@@ -56,11 +86,10 @@ export const getPdfFriendlyDocument = async () => {
     .replaceAll(`“`, `"`)
     .replaceAll("\u2013", "-")
     .replaceAll("\u2014", "-");
-  const base64String = btoa(unescape(encodeURIComponent(htmlString)));
+  const gzipped = gzip(htmlString);
+  const base64String = btoa(uint8ToString(gzipped));
   const opts = {
-    body: {
-      encodedHtml: base64String,
-    },
+    body: base64String,
   };
 
   const res = await apiLib.post("/print_pdf", opts);

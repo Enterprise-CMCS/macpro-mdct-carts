@@ -1,0 +1,4 @@
+# Vendored YesLogic Prince packages (fetched by scripts/fetch-prince-*.sh).
+# oxlint respects .eslintignore by default.
+services/app-api/bin/prince/**
+services/app-api/bin/prince-arm64/**
