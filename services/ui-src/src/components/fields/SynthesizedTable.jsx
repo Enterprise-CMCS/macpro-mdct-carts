@@ -6,7 +6,7 @@ import { lteMask } from "../../util/constants";
 //types
 import PropTypes from "prop-types";
 
-const SynthesizedTable = ({ question, printView, caption }) => {
+const SynthesizedTable = ({ question, printView }) => {
   const [
     allStatesData,
     stateName,
@@ -76,7 +76,7 @@ const SynthesizedTable = ({ question, printView, caption }) => {
     <div className="synthesized-table">
       <table className="ds-c-table">
         <caption className="ds-u-visibility--screen-reader">
-          {caption ||
+          {question.caption ||
             question.label ||
             "This is a table for the CARTS Application"}
         </caption>
@@ -115,7 +115,6 @@ const SynthesizedTable = ({ question, printView, caption }) => {
 };
 SynthesizedTable.propTypes = {
   question: PropTypes.object.isRequired,
-  caption: PropTypes.string,
 };
 
 export default SynthesizedTable;

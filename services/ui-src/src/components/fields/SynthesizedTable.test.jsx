@@ -136,10 +136,13 @@ describe("<SynthesizedTable />", () => {
     expect(screen.queryByText("Eligible children")).not.toBeInTheDocument();
   });
 
-  test("should render the caption prop as the table caption", () => {
+  test("should render the caption as the table caption", () => {
     render(
       SynthesizedTableComponentWithProps({
-        caption: "Number of Uninsured Children in Your State",
+        question: {
+          ...defaultProps.question,
+          caption: "Number of Uninsured Children in Your State",
+        },
       })
     );
 
