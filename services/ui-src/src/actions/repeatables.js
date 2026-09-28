@@ -29,7 +29,7 @@ const createNewRepeatableItem = (parentId, getState) => {
    */
   newItem = newItem.replaceAll(
     new RegExp(`("|')${previousId}("|'|-)`, "g"),
-    `$1${newId}$2`,
+    `$1${newId}$2`
   );
 
   // Parse back to an object, nulling out every answer entry so nothing
@@ -37,7 +37,7 @@ const createNewRepeatableItem = (parentId, getState) => {
   newItem = JSON.parse(newItem, (key, value) =>
     key === "answer" && value && "entry" in value
       ? { ...value, entry: null }
-      : value,
+      : value
   );
 
   return { parent, newItem };
