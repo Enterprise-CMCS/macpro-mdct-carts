@@ -301,27 +301,28 @@ const Ranges = ({
       <div className="print-only">
         <Table>
           <TableHead>
-            <TableRow>
+            <TableRow key={`${id}-head-row-0`}>
               {categories
-                .flatMap((group, groupIdx) =>
-                  group.map((category, itemIdx) => ({
+                .flatMap((group, groupIndex) =>
+                  group.map((category) => ({
                     category,
-                    groupIdx,
-                    itemIdx,
+                    groupIndex,
                   }))
                 )
-                .map(({ category, groupIdx, itemIdx }, flatIndex) => (
-                  <TableCell key={flatIndex}>
-                    {getCategoryLabel(category, groupIdx, itemIdx)}
+                .map(({ category, groupIndex }, index) => (
+                  <TableCell key={`${id}-head-cell-0-${index}`}>
+                    {getCategoryLabel(category, groupIndex)}
                   </TableCell>
                 ))}
             </TableRow>
           </TableHead>
           <TableBody>
             {values.map((row, rowIndex) => (
-              <TableRow key={rowIndex}>
+              <TableRow key={`${id}-body-row-${rowIndex}`}>
                 {row.flat().map((val, cellIndex) => (
-                  <TableCell key={cellIndex}>{val}</TableCell>
+                  <TableCell key={`${id}-body-cell-${rowIndex}-${cellIndex}`}>
+                    {val}
+                  </TableCell>
                 ))}
               </TableRow>
             ))}
