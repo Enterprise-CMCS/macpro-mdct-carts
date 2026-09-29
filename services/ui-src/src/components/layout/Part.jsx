@@ -54,7 +54,7 @@ const Part = ({ partId, partNumber, printView }) => {
     partContextData
   );
   const text = part ? part.text : null;
-  const title = part ? part.title : null;
+  const title = part?.title?.trim() || null;
 
   const getPartContent = () => {
     if (show) {
@@ -74,7 +74,7 @@ const Part = ({ partId, partNumber, printView }) => {
     } else {
       if (contextData) {
         return (
-          <Alert role="">
+          <Alert role="" className="skip-text-alert">
             <div className="ds-c-alert__text" data-testid="part-alert">
               {contextData.skip_text && <p>{contextData.skip_text}</p>}
             </div>
@@ -84,12 +84,20 @@ const Part = ({ partId, partNumber, printView }) => {
     }
   };
 
+  const headerParts = [];
+  if (Number(section) !== 0 && partNumber) {
+    headerParts.push(`Part ${partNumber}`);
+  }
+  if (title) {
+    headerParts.push(title);
+  }
+  const headerText = headerParts.join(": ");
+
   return (
     <div id={partId} data-testid="part">
-      {title && (
+      {headerText && (
         <h2 className="h2-pdf-bookmark" data-testid="part-h2-header">
-          {+section !== 0 && partNumber && `Part ${partNumber}: `}
-          {title}
+          {headerText}
         </h2>
       )}
       {getPartContent()}

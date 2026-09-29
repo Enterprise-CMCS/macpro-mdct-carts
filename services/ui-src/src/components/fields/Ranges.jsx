@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Button } from "@cmsgov/design-system";
+import {
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from "@cmsgov/design-system";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 
@@ -233,53 +240,96 @@ const Ranges = ({
     }
   };
 
+  const getCategoryLabel = (label, index) => {
+    const labelText = [label];
+
+    if (types[index] === "money") labelText.push("$");
+    if (types[index] === "percentage") labelText.push("%");
+
+    return labelText.join(" ");
+  };
+
   return (
-    <div className="cmsranges">
-      {header && <span className="span-pdf-no-bookmark">{header}</span>}
+    <>
+      <div className="cmsranges">
+        {header && <span className="span-pdf-no-bookmark">{header}</span>}
+        <div className="screen-only">
+          {values.map((rowValues, row) =>
+            rowValues.map((categoryValues, index) => (
+              <Range
+                category={categories[index]}
+                data-testid={dataTestId}
+                disabled={disabled}
+                hint={hint}
+                key={`${row}.${index}`}
+                id={question.id || id}
+                index={index}
+                label={label}
+                name={name}
+                onChange={rowChange}
+                onClick={onClick}
+                row={row}
+                type={types[index]}
+                values={categoryValues}
+                {...props}
+              />
+            ))
+          )}
 
-      {values.map((rowValues, row) =>
-        rowValues.map((categoryValues, index) => (
-          <Range
-            category={categories[index]}
-            data-testid={dataTestId}
-            disabled={disabled}
-            hint={hint}
-            key={`${row}.${index}`}
-            id={question.id || id}
-            index={index}
-            label={label}
-            name={name}
-            onChange={rowChange}
-            onClick={onClick}
-            row={row}
-            type={types[index]}
-            values={categoryValues}
-            {...props}
-          />
-        ))
-      )}
-
-      {values.length < max || max === 0 ? (
-        <Button
-          onClick={addRow}
-          type="button"
-          variation="solid"
-          disabled={disabled}
-        >
-          Add another? <FontAwesomeIcon icon={faPlus} />
-        </Button>
-      ) : null}
-      {values.length > min || min === 0 ? (
-        <Button
-          onClick={removeRow}
-          type="button"
-          variation="solid"
-          disabled={disabled}
-        >
-          Remove Last Entry <FontAwesomeIcon icon={faMinusCircle} />
-        </Button>
-      ) : null}
-    </div>
+          {values.length < max || max === 0 ? (
+            <Button
+              onClick={addRow}
+              type="button"
+              variation="solid"
+              disabled={disabled}
+            >
+              Add another? <FontAwesomeIcon icon={faPlus} />
+            </Button>
+          ) : null}
+          {values.length > min || min === 0 ? (
+            <Button
+              onClick={removeRow}
+              type="button"
+              variation="solid"
+              disabled={disabled}
+            >
+              Remove Last Entry <FontAwesomeIcon icon={faMinusCircle} />
+            </Button>
+          ) : null}
+        </div>
+      </div>
+      <div className="print-only">
+        <Table>
+          <TableHead>
+            <TableRow key={`${id}-head-row-0`}>
+              {categories
+                .flatMap((group, groupIndex) =>
+                  group.map((category) => ({
+                    category,
+                    groupIndex,
+                  }))
+                )
+                .map(({ category, groupIndex }, index) => (
+                  <TableCell key={`${id}-head-cell-0-${index}`}>
+                    {getCategoryLabel(category, groupIndex)}
+                  </TableCell>
+                ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {values.map((row, rowIndex) => (
+              <TableRow key={`${id}-body-row-${rowIndex}`}>
+                {row.flat().map((val, cellIndex) => (
+                  <TableCell key={`${id}-body-cell-${rowIndex}-${cellIndex}`}>
+                    {val}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+    </>
   );
 };
 Ranges.propTypes = {

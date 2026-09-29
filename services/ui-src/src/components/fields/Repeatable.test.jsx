@@ -36,4 +36,28 @@ describe("Repeatable component", () => {
       })
     );
   });
+
+  test("marks the accordion button as aria-disabled in print view", () => {
+    const props = {
+      headerRef: { current: {} },
+      number: 1,
+      type: "mock repeatable",
+      question: {
+        questions: [
+          {
+            id: "mock q 1",
+          },
+        ],
+      },
+      printView: true,
+    };
+    render(
+      <Accordion>
+        <Repeatable {...props} />
+      </Accordion>
+    );
+    expect(
+      screen.getByRole("button", { name: "mock repeatable 1" })
+    ).toHaveAttribute("aria-disabled", "true");
+  });
 });

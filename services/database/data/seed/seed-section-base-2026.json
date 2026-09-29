@@ -237,10 +237,10 @@
                               "header": "Premiums for one child, tiered by FPL",
                               "entry_max": 0,
                               "entry_min": 1,
-                              "range_type": ["percentage", "money"],
+                              "range_type": ["money", "percentage"],
                               "range_categories": [
-                                ["FPL starts at", "FPL ends at"],
-                                ["Premium starts at", "Premium ends at"]
+                                ["Premium starts at", "Premium ends at"],
+                                ["FPL starts at", "FPL ends at"]
                               ]
                             },
                             "context_data": {
@@ -323,10 +323,10 @@
                           "header": "Maximum premiums for a family, tiered by FPL",
                           "entry_max": 0,
                           "entry_min": 1,
-                          "range_type": ["percentage", "money"],
+                          "range_type": ["money", "percentage"],
                           "range_categories": [
-                            ["FPL starts at", "FPL ends at"],
-                            ["Premium starts at", "Premium ends at"]
+                            ["Premium starts at", "Premium ends at"],
+                            ["FPL starts at", "FPL ends at"]
                           ]
                         },
                         "context_data": {
@@ -509,10 +509,10 @@
                               "header": "Premiums for one child, tiered by FPL",
                               "entry_max": 0,
                               "entry_min": 1,
-                              "range_type": ["percentage", "money"],
+                              "range_type": ["money", "percentage"],
                               "range_categories": [
-                                ["FPL starts at", "FPL ends at"],
-                                ["Premium starts at", "Premium ends at"]
+                                ["Premium starts at", "Premium ends at"],
+                                ["FPL starts at", "FPL ends at"]
                               ]
                             },
                             "context_data": {
@@ -595,10 +595,10 @@
                           "header": "Maximum premiums for a family, tiered by FPL",
                           "entry_max": 0,
                           "entry_min": 1,
-                          "range_type": ["percentage", "money"],
+                          "range_type": ["money", "percentage"],
                           "range_categories": [
-                            ["FPL starts at", "FPL ends at"],
-                            ["Premium starts at", "Premium ends at"]
+                            ["Premium starts at", "Premium ends at"],
+                            ["FPL starts at", "FPL ends at"]
                           ]
                         },
                         "context_data": {
@@ -1716,6 +1716,7 @@
                 "questions": [
                   {
                     "type": "fieldset",
+                    "caption": "Number of Children Enrolled in CHIP",
                     "questions": [],
                     "fieldset_id": "synthesized-table-2-1",
                     "fieldset_info": {
@@ -1834,7 +1835,7 @@
                   {
                     "hint": "",
                     "type": "fieldset",
-                    "label": "",
+                    "caption": "Number of Uninsured Children in Your State",
                     "questions": [],
                     "fieldset_id": "synthesized-table-2-2",
                     "fieldset_info": {
@@ -2007,6 +2008,7 @@
                   },
                   {
                     "type": "fieldset",
+                    "caption": "Change in Number of Uninsured Children In Your State",
                     "questions": [],
                     "fieldset_id": "synthesized-table-2-3",
                     "fieldset_info": {
@@ -10155,6 +10157,7 @@
             "parts": [
               {
                 "id": "2026-03-h-01",
+                "title": "Did you collect the CAHPS survey?",
                 "type": "part",
                 "questions": [
                   {
@@ -10297,7 +10300,6 @@
             "parts": [
               {
                 "id": "2026-03-i-01",
-                "title": " ",
                 "type": "part",
                 "questions": [
                   {
@@ -10317,7 +10319,6 @@
               },
               {
                 "id": "2026-03-i-02",
-                "title": " ",
                 "text": "Please answer the following questions for all of the state's approved HSIs as listed in section 2.2 of the CHIP state plan.",
                 "type": "part",
                 "questions": [

@@ -185,9 +185,7 @@ const DateRange = ({
         <span className="question-inner-header span-inner-label">
           {question.answer.labels[0] ?? "Start"}
         </span>
-        <div className="ds-c-field__hint" aria-label="Date range hint">
-          mm/yyyy
-        </div>
+        <div className="ds-c-field__hint">mm/yyyy</div>
         <div className="errors">
           {startErrorMessage.map((e) => {
             if (e !== undefined) {
@@ -226,9 +224,7 @@ const DateRange = ({
         <span className="question-inner-header span-inner-label">
           {question.answer.labels[1] ?? "End"}{" "}
         </span>
-        <div className="ds-c-field__hint" aria-label="Date range hint">
-          mm/yyyy
-        </div>
+        <div className="ds-c-field__hint">mm/yyyy</div>
         <div className="errors">
           {endErrorMessage.map((e) => {
             if (e !== undefined) {
