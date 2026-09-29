@@ -48,7 +48,13 @@ const Percentage = ({
 
   let ref;
   useEffect(() => {
-    if (ref) {
+    if (ref && ref.parentNode) {
+      const wrapperClass = "input-holder__percent";
+      // Wrapper already exists
+      if (ref.parentNode.classList.contains(wrapperClass)) {
+        return;
+      }
+
       /*
        * Wrap the inner input element with a div. That wrapper div will get
        * an :after pseudo-style. We can't apply it to the input element directly
@@ -56,8 +62,8 @@ const Percentage = ({
        * HTML is funky.
        */
       const wrapper = document.createElement("div");
-      wrapper.setAttribute("class", "input-holder__percent");
-      ref.parentNode.append(wrapper);
+      wrapper.setAttribute("class", wrapperClass);
+      ref.parentNode.insertBefore(wrapper, ref);
       wrapper.append(ref);
     }
   }, []);

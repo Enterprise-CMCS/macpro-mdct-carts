@@ -237,10 +237,10 @@
                               "header": "Premiums for one child, tiered by FPL",
                               "entry_max": 0,
                               "entry_min": 1,
-                              "range_type": ["percentage", "money"],
+                              "range_type": ["money", "percentage"],
                               "range_categories": [
-                                ["FPL starts at", "FPL ends at"],
-                                ["Premium starts at", "Premium ends at"]
+                                ["Premium starts at", "Premium ends at"],
+                                ["FPL starts at", "FPL ends at"]
                               ]
                             },
                             "context_data": {
@@ -323,10 +323,10 @@
                           "header": "Maximum premiums for a family, tiered by FPL",
                           "entry_max": 0,
                           "entry_min": 1,
-                          "range_type": ["percentage", "money"],
+                          "range_type": ["money", "percentage"],
                           "range_categories": [
-                            ["FPL starts at", "FPL ends at"],
-                            ["Premium starts at", "Premium ends at"]
+                            ["Premium starts at", "Premium ends at"],
+                            ["FPL starts at", "FPL ends at"]
                           ]
                         },
                         "context_data": {
@@ -509,10 +509,10 @@
                               "header": "Premiums for one child, tiered by FPL",
                               "entry_max": 0,
                               "entry_min": 1,
-                              "range_type": ["percentage", "money"],
+                              "range_type": ["money", "percentage"],
                               "range_categories": [
-                                ["FPL starts at", "FPL ends at"],
-                                ["Premium starts at", "Premium ends at"]
+                                ["Premium starts at", "Premium ends at"],
+                                ["FPL starts at", "FPL ends at"]
                               ]
                             },
                             "context_data": {
@@ -595,10 +595,10 @@
                           "header": "Maximum premiums for a family, tiered by FPL",
                           "entry_max": 0,
                           "entry_min": 1,
-                          "range_type": ["percentage", "money"],
+                          "range_type": ["money", "percentage"],
                           "range_categories": [
-                            ["FPL starts at", "FPL ends at"],
-                            ["Premium starts at", "Premium ends at"]
+                            ["Premium starts at", "Premium ends at"],
+                            ["FPL starts at", "FPL ends at"]
                           ]
                         },
                         "context_data": {
