@@ -17,6 +17,7 @@ const dynamoClientMock = mockClient(DynamoDBDocumentClient);
 describe("DynamoDB Library", () => {
   beforeEach(() => {
     dynamoClientMock.reset();
+    jest.restoreAllMocks();
   });
 
   test("Can query", async () => {
@@ -99,7 +100,31 @@ describe("DynamoDB Library", () => {
     expect(mockBatchWrite).toHaveBeenCalled();
   });
 
+  test("Retries unprocessed items in a batch write", async () => {
+    jest
+      .spyOn(global, "setTimeout")
+      .mockImplementation((callback: any) => callback());
+    const fooPut1 = { PutRequest: { Item: { id: "foo 1" } } };
+    const fooPut2 = { PutRequest: { Item: { id: "foo 2" } } };
+    const mockInput: BatchWriteCommandInput = {
+      RequestItems: { foos: [fooPut1, fooPut2] },
+    };
+    dynamoClientMock
+      .on(BatchWriteCommand)
+      .resolvesOnce({ UnprocessedItems: { foos: [fooPut2] } })
+      .resolvesOnce({ UnprocessedItems: {} });
+
+    await dynamoLib.batchWriteItem(mockInput);
+
+    const calls = dynamoClientMock.commandCalls(BatchWriteCommand);
+    expect(calls).toHaveLength(2);
+    expect(calls[1].args[0].input.RequestItems).toEqual({ foos: [fooPut2] });
+  });
+
   test("Throws an error for a failed batch write", async () => {
+    jest
+      .spyOn(global, "setTimeout")
+      .mockImplementation((callback: any) => callback());
     const fooPut1 = { PutRequest: { Item: { id: "foo 1" } } };
     const barPut1 = { PutRequest: { Item: { id: "bar 1" } } };
     const barPut2 = { PutRequest: { Item: { id: "bar 1" } } };
@@ -132,6 +157,7 @@ describe("DynamoDB Library", () => {
     } catch (error: any) {
       expect(error).toHaveProperty("message", expectedMessage);
     }
+    expect(dynamoClientMock.commandCalls(BatchWriteCommand)).toHaveLength(8);
   });
 
   test("Uses AWS config", () => {
