@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { AccordionItem } from "@cmsgov/design-system";
 
@@ -9,6 +9,7 @@ export const Objective = ({ objective, objectiveNumber, printView }) => {
   let children = [];
   let name = "";
   let suggested = false;
+  let required = false;
 
   if (firstQuestion) {
     const firstQuestionIsReadOnly = firstQuestion.answer.readonly === true;
@@ -18,17 +19,22 @@ export const Objective = ({ objective, objectiveNumber, printView }) => {
       : firstQuestion.answer.entry;
 
     suggested = firstQuestion?.suggested;
+    required = firstQuestionIsReadOnly;
 
     children = firstQuestionIsReadOnly
       ? objective.questions.slice(1)
       : objective.questions;
   }
 
-  const objectiveName = (number, name, suggested) => {
+  const objectiveName = (number, name, suggested, required) => {
     let createdName = `Objective ${number}`;
 
     if (suggested) {
       createdName = `${createdName} (suggested)`;
+    }
+
+    if (required) {
+      createdName = `${createdName} (required)`;
     }
 
     if (name) {
@@ -38,23 +44,37 @@ export const Objective = ({ objective, objectiveNumber, printView }) => {
     return createdName;
   };
 
+  // add wrapper ref to set attribute on the accordion button in print view
+  const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    if (printView && wrapperRef.current) {
+      const button = wrapperRef.current.querySelector(
+        ".ds-c-accordion__button"
+      );
+      button?.setAttribute("aria-disabled", "true");
+    }
+  }, [printView]);
+
   return (
-    <AccordionItem
-      defaultOpen
-      heading={objectiveName(objectiveNumber, name, suggested)}
-      isControlledOpen={printView ? true : undefined}
-      closeIcon={<span aria-hidden="true">–</span>}
-      openIcon={<span aria-hidden="true">+</span>}
-    >
-      {children.map((q) => (
-        <div
-          className="ds-c-choice__checkedChild ds-u-padding-top--0 ds-u-display--flex"
-          key={q.id}
-        >
-          <Question question={q} printView={printView} />
-        </div>
-      ))}
-    </AccordionItem>
+    <div ref={wrapperRef}>
+      <AccordionItem
+        defaultOpen
+        heading={objectiveName(objectiveNumber, name, suggested, required)}
+        isControlledOpen={printView ? true : undefined}
+        closeIcon={<span aria-hidden="true">–</span>}
+        openIcon={<span aria-hidden="true">+</span>}
+      >
+        {children.map((q) => (
+          <div
+            className="ds-c-choice__checkedChild ds-u-padding-top--0 ds-u-display--flex"
+            key={q.id}
+          >
+            <Question question={q} printView={printView} />
+          </div>
+        ))}
+      </AccordionItem>
+    </div>
   );
 };
 

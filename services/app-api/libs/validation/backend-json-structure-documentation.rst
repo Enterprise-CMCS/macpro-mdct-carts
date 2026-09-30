@@ -1053,8 +1053,8 @@ The ``answer`` construct would be:
     ..  code:: javascript
 
         {
-            "range_categories": [["FPL starts at", "FPL ends at"], ["Premium fee starts at", "Premium fee ends at"]],
-            "range_types": ["percentage", "money"],
+            "range_categories": [["Premium fee starts at", "Premium fee ends at"], ["FPL starts at", "FPL ends at"]],
+            "range_types": ["money", "percentage"],
             "entry_min": 1
             "entry_max": 0
         }
@@ -1064,8 +1064,8 @@ If the user entered data stating that answer was the same as our example, i.e. e
     ..  code:: javascript
 
         {
-            "range_categories": [["FPL starts at", "FPL ends at"], ["Premium fee starts at", "Premium fee ends at"]],
-            "range_types": ["percentage", "money"],
+            "range_categories": [["Premium fee starts at", "Premium fee ends at"], ["FPL starts at", "FPL ends at"]],
+            "range_types": ["money", "percentage"],
             "entry_min": 1
             "entry_max": 0
             "entry": [

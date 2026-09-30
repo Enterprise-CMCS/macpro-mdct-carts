@@ -24,7 +24,7 @@ describe("Checkbox component", () => {
     jest.clearAllMocks();
   });
 
-  it("renders all checkbox options", () => {
+  test("renders all checkbox options", () => {
     const { getByLabelText } = render(<Checkbox {...baseProps} />);
     expect(
       getByLabelText("Question: Favorite Fruits, Answer: Apple")
@@ -37,7 +37,7 @@ describe("Checkbox component", () => {
     ).toBeInTheDocument();
   });
 
-  it("checks the correct checkboxes based on value", () => {
+  test("checks the correct checkboxes based on value", () => {
     const props = {
       ...baseProps,
       question: {
@@ -54,7 +54,7 @@ describe("Checkbox component", () => {
     expect(getByLabelText(/Cherry/).checked).toBe(false);
   });
 
-  it("calls onChange with correct value when a checkbox is checked", () => {
+  test("calls onChange with correct value when a checkbox is checked", () => {
     const { getByLabelText } = render(<Checkbox {...baseProps} />);
     const appleCheckbox = getByLabelText(/Apple/);
     fireEvent.click(appleCheckbox);
@@ -63,7 +63,7 @@ describe("Checkbox component", () => {
     });
   });
 
-  it("calls onChange with correct value when a checkbox is unchecked", () => {
+  test("calls onChange with correct value when a checkbox is unchecked", () => {
     const props = {
       ...baseProps,
       question: {
@@ -82,7 +82,7 @@ describe("Checkbox component", () => {
     });
   });
 
-  it("returns empty array when unchecking the last checked item", async () => {
+  test("returns empty array when unchecking the last checked item", async () => {
     const props = {
       ...baseProps,
       question: {
@@ -101,7 +101,7 @@ describe("Checkbox component", () => {
     });
   });
 
-  it("handles null entry by creating a clean array on check", async () => {
+  test("handles null entry by creating a clean array on check", async () => {
     const props = {
       ...baseProps,
       question: {
@@ -120,7 +120,7 @@ describe("Checkbox component", () => {
     });
   });
 
-  it("handles undefined entry by creating a clean array on check", async () => {
+  test("handles undefined entry by creating a clean array on check", async () => {
     const props = {
       ...baseProps,
       question: {
@@ -139,7 +139,7 @@ describe("Checkbox component", () => {
     });
   });
 
-  it("filters out null values from an existing array entry", async () => {
+  test("filters out null values from an existing array entry", async () => {
     const props = {
       ...baseProps,
       question: {
@@ -158,7 +158,7 @@ describe("Checkbox component", () => {
     });
   });
 
-  it("handles single string entry as value", () => {
+  test("handles single string entry as value", () => {
     const props = {
       ...baseProps,
       question: {
@@ -173,13 +173,13 @@ describe("Checkbox component", () => {
     expect(getByLabelText(/Cherry/).checked).toBe(true);
   });
 
-  it("renders with custom name prop", () => {
+  test("renders with custom name prop", () => {
     const props = { ...baseProps, name: "customName" };
     const { getByLabelText } = render(<Checkbox {...props} />);
     expect(getByLabelText(/Apple/).name).toBe("customName");
   });
 
-  it("renders nothing if options are empty", () => {
+  test("renders nothing if options are empty", () => {
     const props = {
       ...baseProps,
       question: {
@@ -192,5 +192,49 @@ describe("Checkbox component", () => {
     };
     const { container } = render(<Checkbox {...props} />);
     expect(container.querySelectorAll("input[type='checkbox']").length).toBe(0);
+  });
+
+  test("sanitizes whitespace out of the input id and keeps the label associated", () => {
+    const props = {
+      ...baseProps,
+      question: {
+        ...baseProps.question,
+        answer: {
+          ...baseProps.question.answer,
+          options: [{ label: "Strawberry", value: "strawberry" }],
+        },
+      },
+    };
+    const { getByLabelText } = render(<Checkbox {...props} />);
+    const input = getByLabelText(
+      "Question: Favorite Fruits, Answer: Strawberry"
+    );
+    expect(input.id).toBe("fruits-strawberry");
+    expect(input.id).not.toMatch(/\s/);
+    const label = document.querySelector(`label[for="${input.id}"]`);
+    expect(label).toBeInTheDocument();
+    expect(label.textContent).toBe("Strawberry");
+  });
+
+  test("replaces whitespace in a value with hyphens for the input id", () => {
+    const props = {
+      ...baseProps,
+      question: {
+        ...baseProps.question,
+        answer: {
+          ...baseProps.question.answer,
+          options: [{ label: "Dragon fruit", value: "dragon fruit" }],
+        },
+      },
+    };
+    const { getByLabelText } = render(<Checkbox {...props} />);
+    const input = getByLabelText(
+      "Question: Favorite Fruits, Answer: Dragon fruit"
+    );
+    expect(input.id).toBe("fruits-dragon-fruit");
+    expect(input.id).not.toMatch(/\s/);
+    const label = document.querySelector(`label[for="${input.id}"]`);
+    expect(label).toBeInTheDocument();
+    expect(label.textContent).toBe("Dragon fruit");
   });
 });

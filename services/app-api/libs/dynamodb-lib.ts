@@ -73,9 +73,44 @@ const buildBatchRequestErrorMessage = (
   return errorMessage;
 };
 
+const BATCH_WRITE_MAX_ATTEMPTS = 8;
+const BATCH_WRITE_BASE_DELAY_MS = 100;
+const BATCH_WRITE_MAX_DELAY_MS = 2000;
+
+/**
+ * Following AWS' guide which strongly recommends exponential backoff when retrying UnprocessedItems:
+ * https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Programming.Errors.html#Programming.Errors.BatchOperations
+ */
+const backoff = (attempt: number) => {
+  const cap = Math.min(
+    BATCH_WRITE_MAX_DELAY_MS,
+    BATCH_WRITE_BASE_DELAY_MS * 2 ** attempt
+  );
+  return new Promise((resolve) => setTimeout(resolve, Math.random() * cap));
+};
+
 export default {
+  /**
+   * DynamoDB may return UnprocessedItems when a batch exceeds the table's
+   * throughput (large items like Section 3 make this likely), so retry
+   * those items with backoff before giving up.
+   */
   batchWriteItem: async (params: BatchWriteCommandInput) => {
-    const result = await client.send(new BatchWriteCommand(params));
+    let result = await client.send(new BatchWriteCommand(params));
+
+    for (
+      let attempt = 1;
+      attempt < BATCH_WRITE_MAX_ATTEMPTS && batchRequestHadAnyFailures(result);
+      attempt++
+    ) {
+      await backoff(attempt);
+      result = await client.send(
+        new BatchWriteCommand({
+          ...params,
+          RequestItems: result.UnprocessedItems,
+        })
+      );
+    }
 
     if (batchRequestHadAnyFailures(result)) {
       throw new Error(buildBatchRequestErrorMessage(params, result));

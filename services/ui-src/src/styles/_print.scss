@@ -12,6 +12,11 @@
     display: none;
   }
 
+  // Keep skipped-question indicators visible in the printed report
+  .ds-c-alert.skip-text-alert {
+    display: flex;
+  }
+
   .print-only,
   .print-helper {
     display: block;
@@ -66,6 +71,11 @@
   .screen-only,
   .sidebar {
     display: none;
+  }
+
+  // Keep skipped-question indicators visible when printing
+  .ds-c-alert.skip-text-alert {
+    display: flex;
   }
 
   .print-only,
@@ -134,5 +144,16 @@
     display: block;
     padding: 10px;
     border: black solid 1px;
+  }
+
+  .ds-c-table {
+    th {
+      background-color: #ddd;
+    }
+    td,
+    th {
+      border: 1px solid #000;
+      padding: 5px;
+    }
   }
 }

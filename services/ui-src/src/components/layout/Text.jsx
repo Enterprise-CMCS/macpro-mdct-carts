@@ -1,5 +1,4 @@
 import React, { useMemo } from "react";
-import { v4 as uuidv4 } from "uuid";
 
 const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
 
@@ -23,11 +22,11 @@ const parseLinks = (str) => {
       const [precedingText] = remainingStr.split(fullMatch);
 
       if (precedingText) {
-        parts.push(<span key={uuidv4()}>{precedingText}</span>);
+        parts.push(<span key={crypto.randomUUID()}>{precedingText}</span>);
       }
 
       parts.push(
-        <a key={uuidv4()} href={href}>
+        <a key={crypto.randomUUID()} href={href}>
           {text}
         </a>
       );
@@ -47,14 +46,14 @@ const parseLinks = (str) => {
      * that follows the last link.
      */
     if (remainingStr) {
-      parts.push(<span key={uuidv4()}>{remainingStr}</span>);
+      parts.push(<span key={crypto.randomUUID()}>{remainingStr}</span>);
     }
 
     return parts;
   }
 
   // If there aren't any links, return the original string in an array.
-  return [<span key={uuidv4()}>{str}</span>];
+  return [<span key={crypto.randomUUID()}>{str}</span>];
 };
 
 const Text = ({ children }) => {
@@ -65,11 +64,14 @@ const Text = ({ children }) => {
 
         const brokenLines = [...parseLinks(lines[0])];
         for (let i = 1; i < lines.length; i += 1) {
-          brokenLines.push(<br key={uuidv4()} />, ...parseLinks(lines[i]));
+          brokenLines.push(
+            <br key={crypto.randomUUID()} />,
+            ...parseLinks(lines[i])
+          );
         }
 
         if (index > 0) {
-          return <p key={uuidv4()}>{brokenLines}</p>;
+          return <p key={crypto.randomUUID()}>{brokenLines}</p>;
         }
         return brokenLines;
       });

@@ -11,7 +11,7 @@ import {
 import PropTypes from "prop-types";
 
 const TemplateDownload = ({ getTemplate }) => {
-  const currentYear = useFlags().release2025 ? "2025" : "2024";
+  const currentYear = useFlags().release2026 ? "2026" : "2025";
 
   const handleDownload = () => {
     window.location.href = getTemplate(currentYear);
@@ -25,7 +25,7 @@ const TemplateDownload = ({ getTemplate }) => {
           <p>
             Completing the Children’s Health Insurance Program (CHIP) Annual
             Report is required under sections 2108(a) and 2108(e) of the Social
-            Security Act, and regulations at 42 CFR 457.750.
+            Security Act (the Act), and regulations at 42 CFR 457.750.
           </p>
           <p>
             Each state must assess their CHIP operations and overall progress in
@@ -37,15 +37,13 @@ const TemplateDownload = ({ getTemplate }) => {
             Template System (CARTS) and certify their report by January 1st.
             After review and acceptance by CMS, CHIP annual reports are
             published at{" "}
-            <a href="https://www.medicaid.gov/chip/reports-evaluations/index.html">
-              https://www.medicaid.gov/chip/reports-evaluations/index.html
+            <a href="https://www.medicaid.gov/chip/reports-evaluations">
+              https://www.medicaid.gov/chip/reports-evaluations
             </a>
           </p>
         </div>
         <div>
-          <h2 className="update-date">
-            {useFlags().release2025 ? "Oct 2025" : "Oct 2024"}
-          </h2>
+          <h2 className="update-date">{`Oct ${currentYear}`}</h2>
         </div>
         <div className="update ds-l-row">
           <div className="icon ds-l-col--2">

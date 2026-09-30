@@ -430,5 +430,30 @@
         "Value": "mdctcarts-project-officer"
       }
     ]
+  },
+  {
+    "username": "carts.admin@test.com",
+    "attributes": [
+      {
+        "Name": "email",
+        "Value": "carts.admin@test.com"
+      },
+      {
+        "Name": "given_name",
+        "Value": "BO"
+      },
+      {
+        "Name": "family_name",
+        "Value": "Admin"
+      },
+      {
+        "Name": "email_verified",
+        "Value": "true"
+      },
+      {
+        "Name": "custom:cms_roles",
+        "Value": "mdctcarts-project-officer"
+      }
+    ]
   }
 ]

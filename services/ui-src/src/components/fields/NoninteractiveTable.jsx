@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { v4 as uuidv4 } from "uuid";
 
 const NoninteractiveTable = ({ question }) => {
   const columnWidth = 100 / question.fieldset_info.headers.length;
@@ -34,9 +33,8 @@ const NoninteractiveTable = ({ question }) => {
         <tbody>
           {question.fieldset_info.rows.map((row) => {
             count = -1;
-            let rowLabel = "";
             return (
-              <tr key={uuidv4()}>
+              <tr key={crypto.randomUUID()}>
                 {row.map((value, index) => {
                   count += 1;
                   // adds % to any element that has percent in the header and adds commas via toLocaleString
@@ -60,75 +58,43 @@ const NoninteractiveTable = ({ question }) => {
                       if (row[1] === 0 && row[2] > 0) {
                         returnValue = "-";
                         return index === 0 ? (
-                          <th
-                            className="row-header"
-                            aria-label="Row header:"
-                            width={`${columnWidth}%`}
-                          >
+                          <th className="row-header" width={`${columnWidth}%`}>
                             {returnValue.toLocaleString()}
                           </th>
                         ) : (
-                          <td
-                            aria-label={`Row: ${rowLabel}, `}
-                            width={`${columnWidth}%`}
-                          >
+                          <td width={`${columnWidth}%`}>
                             {returnValue.toLocaleString()}
                           </td>
                         );
                       }
                       returnValue = Math.round(returnValue * 1000) / 1000;
                       return index === 0 ? (
-                        <th
-                          className="row-header"
-                          aria-label="Row header:"
-                          width={`${columnWidth}%`}
-                        >
+                        <th className="row-header" width={`${columnWidth}%`}>
                           {returnValue.toLocaleString()}%
                         </th>
                       ) : (
-                        <td
-                          aria-label={`Row: ${rowLabel}, `}
-                          width={`${columnWidth}%`}
-                        >
+                        <td width={`${columnWidth}%`}>
                           {returnValue.toLocaleString()}%
                         </td>
                       );
                     }
                     //End of the custom logic, that should really never have been done in the first place
                     return index === 0 ? (
-                      <th
-                        className="row-header"
-                        aria-label="Row header:"
-                        width={`${columnWidth}%`}
-                      >
+                      <th className="row-header" width={`${columnWidth}%`}>
                         {value.toLocaleString()}%
                       </th>
                     ) : (
-                      <td
-                        aria-label={`Row: ${rowLabel}, `}
-                        width={`${columnWidth}%`}
-                      >
+                      <td width={`${columnWidth}%`}>
                         {value.toLocaleString()}%
                       </td>
                     );
                   } else {
-                    if (index === 0) {
-                      value.toLocaleString();
-                      rowLabel = `${value.toLocaleString()}`;
-                    }
                     return index === 0 ? (
-                      <th
-                        className="row-header"
-                        aria-label="Row header:"
-                        width={`${columnWidth}%`}
-                      >
+                      <th className="row-header" width={`${columnWidth}%`}>
                         {value.toLocaleString()}
                       </th>
                     ) : (
-                      <td
-                        aria-label={`Row: ${rowLabel}, `}
-                        width={`${columnWidth}%`}
-                      >
+                      <td width={`${columnWidth}%`}>
                         {value.toLocaleString()}
                       </td>
                     );

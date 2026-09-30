@@ -395,6 +395,10 @@ export const sectionSchema = {
         label: {
           type: "string",
         },
+        // Screen reader caption for synthesized tables
+        caption: {
+          type: "string",
+        },
         hint: {
           type: "string",
         },

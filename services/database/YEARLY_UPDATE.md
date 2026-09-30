@@ -48,7 +48,7 @@ CHIP lookups are defined as follows
 
 ## Apply Content Changes
 
-Other copy changes will need to be made to update instances of prior year in questions, or any requested changes. After the above changes were made about 100 instaces of the past year remain. Which include:
+Other copy changes will need to be made to update instances of prior year in questions, or any requested changes. After the above changes were made about 100 instances of the past year remain. Which include:
 
 - labels / text
 - Section 5 tables:

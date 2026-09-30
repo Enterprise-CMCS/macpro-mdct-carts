@@ -163,6 +163,7 @@ export const ReportPdfs: ReportPdfsInterface = {
   2023: "FFY_2023_CARTS_Template.pdf",
   2024: "FFY_2024_CARTS_Template.pdf",
   2025: "FFY_2025_CARTS_Template.pdf",
+  2026: "FFY_2026_CARTS_Template.pdf",
 };
 
 /**
