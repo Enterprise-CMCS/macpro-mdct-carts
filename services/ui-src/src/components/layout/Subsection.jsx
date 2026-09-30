@@ -8,6 +8,32 @@ import { selectSubsectionTitleAndPartIDs } from "../../store/selectors";
 //types
 import PropTypes from "prop-types";
 
+/*
+ * Print view renders every subsection back to back, so label them the same
+ * way the sidebar does ("Section 3: ...", "Section 3A: ...").
+ */
+const getPrintHeadings = (formData, subsectionId, title) => {
+  const sectionId = subsectionId.split("-").slice(0, 2).join("-");
+  const section = formData?.find(
+    (item) => item?.contents?.section?.id === sectionId
+  )?.contents.section;
+  if (!section) return { sectionHeading: null, subsectionHeading: title };
+
+  const { ordinal, subsections = [] } = section;
+  const isFirstSubsection = subsections[0]?.id === subsectionId;
+  const sectionTitle =
+    ordinal > 0 ? `Section ${ordinal}: ${section.title}` : section.title;
+  const sectionHeading = isFirstSubsection ? sectionTitle : null;
+
+  const marker = subsectionId.split("-").pop().toUpperCase();
+  const subsectionHeading =
+    title && subsections.length > 1
+      ? `Section ${ordinal}${marker}: ${title}`
+      : title;
+
+  return { sectionHeading, subsectionHeading };
+};
+
 const Subsection = ({ subsectionId, printView }) => {
   const formData = useSelector((state) => state.formData);
 
@@ -17,9 +43,20 @@ const Subsection = ({ subsectionId, printView }) => {
   const title = subsection ? subsection.title : null;
   const text = subsection ? subsection.text : null;
 
+  const { sectionHeading, subsectionHeading } = printView
+    ? getPrintHeadings(formData, subsectionId, title)
+    : { sectionHeading: null, subsectionHeading: title };
+
   return (
     <div id={subsectionId}>
-      {title && <h2 className="h2-pdf-bookmark">{title}</h2>}
+      {sectionHeading && (
+        <h2 className="h2-pdf-bookmark" data-testid="print-section-header">
+          {sectionHeading}
+        </h2>
+      )}
+      {subsectionHeading && (
+        <h2 className="h2-pdf-bookmark">{subsectionHeading}</h2>
+      )}
       {text ? (
         <div className="helper-text">
           <Text>{text}</Text>
