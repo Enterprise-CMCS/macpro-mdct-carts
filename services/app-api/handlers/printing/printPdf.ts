@@ -25,8 +25,8 @@ export const print = handler(async (event, _context) => {
   let sanitizedHtml;
   if (DOMPurify.isSupported) {
     sanitizedHtml = DOMPurify.sanitize(rawHtml, {
-      WHOLE_DOCUMENT: true,
-      ADD_TAGS: ["head", "link", "base"],
+      FORCE_BODY: true,
+      ADD_TAGS: ["html", "head", "link", "base"],
     });
   }
   if (!sanitizedHtml) {
