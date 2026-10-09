@@ -1,34 +1,53 @@
 import { request } from "@playwright/test";
 import fs from "node:fs";
 import path from "node:path";
+import * as aws4 from "aws4";
 import { STATE_USER_AUTH } from "./constants";
 
-let cachedApiUrl: string | undefined;
+interface EnvConfig {
+  apiUrl: string;
+  region: string;
+}
+
+let cachedEnvConfig: EnvConfig | undefined;
 
 /**
- * Resolves the API base URL.
+ * Reads the UI env-config over HTTP from BASE_URL.
  *
  * `env-config.js` is served as a static asset by both the local dev server and
- * the deployed site (the filesystem copy only exists locally), so we read it
- * over HTTP from BASE_URL. A pre-set API_URL env var takes precedence.
+ * the deployed site (the filesystem copy only exists locally). A pre-set
+ * API_URL env var takes precedence for the URL.
  */
-export async function getApiUrl(): Promise<string> {
-  if (process.env.API_URL) return process.env.API_URL;
-  if (cachedApiUrl) return cachedApiUrl;
+async function loadEnvConfig(): Promise<EnvConfig> {
+  if (cachedEnvConfig) return cachedEnvConfig;
 
-  const baseUrl = process.env.BASE_URL || "http://localhost:3000";
-  const envConfigUrl = `${baseUrl.replace(/\/$/, "")}/env-config.js`;
+  const baseUrl = (process.env.BASE_URL || "http://localhost:3000").replace(
+    /\/$/,
+    "",
+  );
+  const envConfigUrl = `${baseUrl}/env-config.js`;
   const context = await request.newContext();
   const response = await context.get(envConfigUrl);
   const contents = await response.text();
   await context.dispose();
 
-  const match = contents.match(/API_URL:\s*"([^"]+)"/);
-  if (!match) {
+  const read = (key: string) =>
+    contents.match(new RegExp(`${key}:\\s*"([^"]+)"`))?.[1];
+
+  const apiUrl = process.env.API_URL || read("API_URL");
+  if (!apiUrl) {
     throw new Error(`Could not find API_URL in ${envConfigUrl}`);
   }
-  cachedApiUrl = match[1];
-  return cachedApiUrl;
+
+  cachedEnvConfig = {
+    apiUrl,
+    region: read("API_REGION") || read("COGNITO_REGION") || "us-east-1",
+  };
+  return cachedEnvConfig;
+}
+
+export async function getApiUrl(): Promise<string> {
+  return (await loadEnvConfig()).apiUrl;
 }
 
 /**
@@ -54,23 +73,77 @@ export function getIdToken(storageStatePath: string = STATE_USER_AUTH): string {
 
 type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
 
+/**
+ * Signs a request with AWS SigV4. Deployed API Gateway methods use IAM
+ * authorization, so requests must be signed with the CI job's AWS credentials.
+ */
+function signHeaders(
+  endpoint: string,
+  region: string,
+  method: HttpMethod,
+  headers: Record<string, string>,
+  body?: string,
+): Record<string, string> {
+  const url = new URL(endpoint);
+  const signed = aws4.sign(
+    {
+      service: "execute-api",
+      region,
+      method,
+      host: url.host,
+      path: url.pathname + url.search,
+      headers: { ...headers, Host: url.host },
+      body: body ?? "",
+    },
+    {
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+      sessionToken: process.env.AWS_SESSION_TOKEN,
+    },
+  );
+
+  const result: Record<string, string> = {};
+  for (const [key, value] of Object.entries(signed.headers ?? {})) {
+    result[key] = String(value);
+  }
+  return result;
+}
+
 async function authenticatedRequest(
   method: HttpMethod,
   apiPath: string,
   body?: unknown,
   storageStatePath: string = STATE_USER_AUTH,
 ): Promise<any> {
-  const endpoint = (await getApiUrl()) + apiPath;
-  const context = await request.newContext({
-    extraHTTPHeaders: { "x-api-key": getIdToken(storageStatePath) },
-  });
+  const { apiUrl, region } = await loadEnvConfig();
+  const endpoint = apiUrl + apiPath;
 
-  const options = body !== undefined ? { data: body } : {};
+  const bodyString =
+    (method === "POST" || method === "PUT") && body !== undefined
+      ? JSON.stringify(body)
+      : undefined;
+
+  let headers: Record<string, string> = {
+    "x-api-key": getIdToken(storageStatePath),
+  };
+  if (bodyString !== undefined) {
+    headers["Content-Type"] = "application/json";
+  }
+
+  // LocalStack doesn't enforce IAM auth; the deployed API Gateway does.
+  const isLocalStack = new URL(apiUrl).host.includes("localstack");
+  if (!isLocalStack) {
+    headers = signHeaders(endpoint, region, method, headers, bodyString);
+  }
+
+  const context = await request.newContext({ extraHTTPHeaders: headers });
+  const options =
+    bodyString !== undefined ? { headers, data: bodyString } : { headers };
 
   let response;
   switch (method) {
     case "GET":
-      response = await context.get(endpoint);
+      response = await context.get(endpoint, { headers });
       break;
     case "POST":
       response = await context.post(endpoint, options);
@@ -79,7 +152,7 @@ async function authenticatedRequest(
       response = await context.put(endpoint, options);
       break;
     case "DELETE":
-      response = await context.delete(endpoint);
+      response = await context.delete(endpoint, { headers });
       break;
   }
 
