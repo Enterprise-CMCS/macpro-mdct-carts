@@ -3,28 +3,32 @@ import fs from "node:fs";
 import path from "node:path";
 import { STATE_USER_AUTH } from "./constants";
 
-/**
- * Resolves the local API base URL.
- *
- * When running against LocalStack the API id changes on every deploy, so we
- * read it from the UI env-config file that `./run local` generates. A
- * pre-set API_URL env var (e.g. in CI) takes precedence.
- */
-export function getApiUrl(): string {
-  if (process.env.API_URL) return process.env.API_URL;
+let cachedApiUrl: string | undefined;
 
-  const envConfigPath = path.resolve(
-    __dirname,
-    "../../../services/ui-src/public/env-config.js",
-  );
-  const contents = fs.readFileSync(envConfigPath, "utf8");
+/**
+ * Resolves the API base URL.
+ *
+ * `env-config.js` is served as a static asset by both the local dev server and
+ * the deployed site (the filesystem copy only exists locally), so we read it
+ * over HTTP from BASE_URL. A pre-set API_URL env var takes precedence.
+ */
+export async function getApiUrl(): Promise<string> {
+  if (process.env.API_URL) return process.env.API_URL;
+  if (cachedApiUrl) return cachedApiUrl;
+
+  const baseUrl = process.env.BASE_URL || "http://localhost:3000";
+  const envConfigUrl = `${baseUrl.replace(/\/$/, "")}/env-config.js`;
+  const context = await request.newContext();
+  const response = await context.get(envConfigUrl);
+  const contents = await response.text();
+  await context.dispose();
+
   const match = contents.match(/API_URL:\s*"([^"]+)"/);
   if (!match) {
-    throw new Error(
-      `Could not find API_URL in ${envConfigPath}. Start the app with "./run local" first.`,
-    );
+    throw new Error(`Could not find API_URL in ${envConfigUrl}`);
   }
-  return match[1];
+  cachedApiUrl = match[1];
+  return cachedApiUrl;
 }
 
 /**
@@ -56,7 +60,7 @@ async function authenticatedRequest(
   body?: unknown,
   storageStatePath: string = STATE_USER_AUTH,
 ): Promise<any> {
-  const endpoint = getApiUrl() + apiPath;
+  const endpoint = (await getApiUrl()) + apiPath;
   const context = await request.newContext({
     extraHTTPHeaders: { "x-api-key": getIdToken(storageStatePath) },
   });
