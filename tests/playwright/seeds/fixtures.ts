@@ -21,7 +21,7 @@ const walk = (node: unknown, visit: Visitor) => {
 export const setAnswerById = (
   sections: ReportSection[],
   idSuffix: string,
-  value: unknown,
+  value: unknown
 ): ReportSection[] => {
   let found = false;
   walk(sections, (node) => {
@@ -43,7 +43,7 @@ export const setAnswerById = (
 /** Sets the Basic State Information program type (e.g. "combo"). */
 export const setProgramType = (
   sections: ReportSection[],
-  value: "combo" | "medicaid_exp_chip" | "separate_chip" = "combo",
+  value: "combo" | "medicaid_exp_chip" | "separate_chip" = "combo"
 ): ReportSection[] => {
   return setAnswerById(sections, "-00-a-01-02", value);
 };
@@ -53,7 +53,7 @@ export const setProgramType = (
  * UI can be asserted against pre-populated data.
  */
 export const seedSection1Answers = (
-  sections: ReportSection[],
+  sections: ReportSection[]
 ): ReportSection[] => {
   setProgramType(sections, "combo");
   setAnswerById(sections, "-01-a-01-01", "no"); // Charge an enrollment fee? No

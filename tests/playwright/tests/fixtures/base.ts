@@ -23,7 +23,7 @@ const resolveReportYear = async (state: string): Promise<number> => {
       (status) =>
         status.stateId === state &&
         status.status === "in_progress" &&
-        !status.archived,
+        !status.archived
     )
     .map((status) => status.year);
 

@@ -11,7 +11,7 @@ test.describe("State user report", () => {
     await statePage.openReport(comboReport.year);
     // Assert
     await expect(statePage.reportTitle).toHaveText(
-      new RegExp(`CARTS FY${comboReport.year} Report`),
+      new RegExp(`CARTS FY${comboReport.year} Report`)
     );
   });
 
@@ -35,7 +35,7 @@ test.describe("State user report", () => {
       })
       .last();
     await expect(
-      enrollmentFee.getByRole("radio", { name: "No" }),
+      enrollmentFee.getByRole("radio", { name: "No" })
     ).toBeChecked();
 
     const premiums = part
@@ -47,11 +47,11 @@ test.describe("State user report", () => {
       })
       .last();
     await expect(
-      premiums.getByRole("radio", { name: "Yes" }).first(),
+      premiums.getByRole("radio", { name: "Yes" }).first()
     ).toBeChecked();
 
     await expect(
-      part.getByRole("checkbox", { name: /Managed Care/ }),
+      part.getByRole("checkbox", { name: /Managed Care/ })
     ).toBeChecked();
   });
 
@@ -69,7 +69,7 @@ test.describe("State user report", () => {
     await statePage.page.reload();
     await statePage.waitForReportLoad();
     await expect(statePage.fieldByLabel("CHIP program name(s):")).toHaveValue(
-      newValue,
+      newValue
     );
   });
 

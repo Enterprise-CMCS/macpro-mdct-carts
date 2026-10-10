@@ -77,12 +77,12 @@ export class StatePage extends BasePage {
     await selectRadioOption(
       part,
       "Does your program charge an enrollment fee",
-      "Yes",
+      "Yes"
     );
     await selectRadioOption(
       part,
       "Does your program charge an enrollment fee",
-      "No",
+      "No"
     );
 
     // Question 2 - premiums
@@ -92,7 +92,7 @@ export class StatePage extends BasePage {
     await selectRadioOption(
       part,
       "Are your premiums for one child tiered",
-      "Yes",
+      "Yes"
     );
 
     // Question 2b - premium / FPL ranges for one child
@@ -109,19 +109,19 @@ export class StatePage extends BasePage {
     await selectRadioOption(
       part,
       "Is the maximum premium a family would be charged each year tiered",
-      "Yes",
+      "Yes"
     );
     await selectRadioOption(
       part,
       "Is the maximum premium a family would be charged each year tiered",
-      "No",
+      "No"
     );
 
     // Question 3b - maximum family premium amount
     await fillQuestionTextbox(
       part,
       "What's the maximum premium a family would be charged each year",
-      "123",
+      "123"
     );
 
     // Question 4 - premium differences explanation (text questions have no

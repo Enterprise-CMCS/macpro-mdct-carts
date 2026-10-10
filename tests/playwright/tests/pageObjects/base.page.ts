@@ -18,13 +18,13 @@ export class BasePage {
   async waitForResponse(
     endpoint: string,
     method: "GET" | "POST" | "PUT" | "DELETE",
-    status: number,
+    status: number
   ) {
     return this.page.waitForResponse(
       (response) =>
         response.url().includes(endpoint) &&
         response.request().method() === method &&
-        response.status() === status,
+        response.status() === status
     );
   }
 }

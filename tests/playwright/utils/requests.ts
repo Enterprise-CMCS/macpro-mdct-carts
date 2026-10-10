@@ -23,7 +23,7 @@ async function loadEnvConfig(): Promise<EnvConfig> {
 
   const baseUrl = (process.env.BASE_URL || "http://localhost:3000").replace(
     /\/$/,
-    "",
+    ""
   );
   const envConfigUrl = `${baseUrl}/env-config.js`;
   const context = await request.newContext();
@@ -61,11 +61,11 @@ export function getIdToken(storageStatePath: string = STATE_USER_AUTH): string {
   const session = JSON.parse(fs.readFileSync(resolvedPath, "utf8"));
   const localStorage = session.origins?.[0]?.localStorage ?? [];
   const idToken = localStorage.find((item: { name: string }) =>
-    item.name.endsWith(".idToken"),
+    item.name.endsWith(".idToken")
   );
   if (!idToken) {
     throw new Error(
-      `No Cognito ID token found in ${resolvedPath}. Run the auth setup first.`,
+      `No Cognito ID token found in ${resolvedPath}. Run the auth setup first.`
     );
   }
   return idToken.value;
@@ -82,7 +82,7 @@ function signHeaders(
   region: string,
   method: HttpMethod,
   headers: Record<string, string>,
-  body?: string,
+  body?: string
 ): Record<string, string> {
   const url = new URL(endpoint);
   const signed = aws4.sign(
@@ -99,7 +99,7 @@ function signHeaders(
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
       sessionToken: process.env.AWS_SESSION_TOKEN,
-    },
+    }
   );
 
   const result: Record<string, string> = {};
@@ -113,7 +113,7 @@ async function authenticatedRequest(
   method: HttpMethod,
   apiPath: string,
   body?: unknown,
-  storageStatePath: string = STATE_USER_AUTH,
+  storageStatePath: string = STATE_USER_AUTH
 ): Promise<any> {
   const { apiUrl, region } = await loadEnvConfig();
   const endpoint = apiUrl + apiPath;
@@ -160,7 +160,7 @@ async function authenticatedRequest(
     const text = await response.text();
     await context.dispose();
     throw new Error(
-      `API request failed: ${method} ${endpoint} -> ${response.status()} ${response.statusText()} ${text}`,
+      `API request failed: ${method} ${endpoint} -> ${response.status()} ${response.statusText()} ${text}`
     );
   }
 
@@ -188,13 +188,13 @@ export type ReportSection = {
 };
 
 export async function getReportStatuses(
-  storageStatePath?: string,
+  storageStatePath?: string
 ): Promise<ReportStatus[]> {
   const response = await authenticatedRequest(
     "GET",
     "/state_status",
     undefined,
-    storageStatePath,
+    storageStatePath
   );
   return response?.Items ?? [];
 }
@@ -202,13 +202,13 @@ export async function getReportStatuses(
 export async function getReport(
   year: number,
   state: string,
-  storageStatePath?: string,
+  storageStatePath?: string
 ): Promise<ReportSection[]> {
   return authenticatedRequest(
     "GET",
     `/section/${year}/${state}`,
     undefined,
-    storageStatePath,
+    storageStatePath
   );
 }
 
@@ -216,12 +216,12 @@ export async function saveReport(
   year: number,
   state: string,
   sections: ReportSection[],
-  storageStatePath?: string,
+  storageStatePath?: string
 ): Promise<void> {
   await authenticatedRequest(
     "PUT",
     `/save_report/${year}/${state}`,
     sections,
-    storageStatePath,
+    storageStatePath
   );
 }

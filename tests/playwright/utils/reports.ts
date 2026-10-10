@@ -21,7 +21,7 @@ export async function enterFirstReport(page: Page) {
 export async function fillReportTextField(
   page: Page,
   label: string | RegExp,
-  value: string,
+  value: string
 ) {
   const field = page.getByRole("textbox", { name: label });
   await field.waitFor({ state: "visible" });
@@ -42,7 +42,7 @@ export async function expectReportSaved(page: Page) {
  */
 export function questionByLegend(
   scope: Page | Locator,
-  legend: string | RegExp,
+  legend: string | RegExp
 ): Locator {
   const page = "page" in scope ? scope.page() : scope;
   return scope
@@ -76,7 +76,7 @@ export async function goToSection1(page: Page) {
 export async function selectRadioOption(
   scope: Page | Locator,
   legend: string | RegExp,
-  option: string | RegExp,
+  option: string | RegExp
 ) {
   // A question's own options precede any nested (conditionally revealed)
   // child questions in the DOM, so target the first match.
@@ -89,7 +89,7 @@ export async function selectRadioOption(
 export async function checkDeliveryOption(
   scope: Page | Locator,
   legend: string | RegExp,
-  option: string | RegExp,
+  option: string | RegExp
 ) {
   await questionByLegend(scope, legend)
     .getByRole("checkbox", { name: option })
@@ -100,7 +100,7 @@ export async function fillQuestionTextbox(
   scope: Page | Locator,
   legend: string | RegExp,
   value: string,
-  name?: string | RegExp,
+  name?: string | RegExp
 ) {
   const textbox = questionByLegend(scope, legend).getByRole("textbox", {
     name,
@@ -112,7 +112,7 @@ export async function fillQuestionTextbox(
 export async function clickQuestionButton(
   scope: Page | Locator,
   legend: string | RegExp,
-  name: string | RegExp,
+  name: string | RegExp
 ) {
   await questionByLegend(scope, legend).getByRole("button", { name }).click();
 }
