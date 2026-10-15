@@ -102,8 +102,8 @@ export class StatePage extends BasePage {
     await fillQuestionTextbox(part, oneChildRange, "10", "FPL ends at");
     await fillQuestionTextbox(part, oneChildRange, "22", "Premium starts at");
     await fillQuestionTextbox(part, oneChildRange, "44", "Premium ends at");
-    await clickQuestionButton(part, oneChildRange, /Add another/);
-    await clickQuestionButton(part, oneChildRange, /Remove Last/);
+    await clickQuestionButton(part, oneChildRange, "Add another");
+    await clickQuestionButton(part, oneChildRange, "Remove Last");
 
     // Question 3 - maximum family premium: toggle Yes then No to reveal 3b
     await selectRadioOption(
@@ -126,13 +126,13 @@ export class StatePage extends BasePage {
 
     // Question 4 - premium differences explanation (text questions have no
     // legend, so target the textarea by its accessible name)
-    const q4 = part.getByRole("textbox", { name: /Do premiums differ/ });
+    const q4 = part.getByRole("textbox", { name: "Do premiums differ" });
     await q4.fill("The premium differences are simply inexplicable.");
     await q4.blur();
 
     // Question 5 - delivery systems
     const deliveryLegend = "Which delivery system(s) does your state use";
-    await checkDeliveryOption(part, deliveryLegend, /Managed Care/);
-    await checkDeliveryOption(part, deliveryLegend, /Primary Care Case/);
+    await checkDeliveryOption(part, deliveryLegend, "Managed Care");
+    await checkDeliveryOption(part, deliveryLegend, "Primary Care Case");
   }
 }

@@ -5,7 +5,10 @@ test.describe("State user report", () => {
   // autosave collisions from concurrent edits.
   test.describe.configure({ mode: "serial" });
 
-  test("opens a combo report", async ({ statePage, comboReport }) => {
+  test("combo reports created by State Users should have valid titles based on report year", async ({
+    statePage,
+    comboReport,
+  }) => {
     // Arrange: comboReport fixture set the program type via the API.
     // Act
     await statePage.openReport(comboReport.year);
@@ -55,7 +58,7 @@ test.describe("State user report", () => {
     ).toBeChecked();
   });
 
-  test("edits a report field and autosaves", async ({
+  test("edits to a report field are autosaved and persist after reloading the page", async ({
     statePage,
     comboReport,
   }) => {
@@ -73,7 +76,10 @@ test.describe("State user report", () => {
     );
   });
 
-  test("fills out Section 1 in the UI", async ({ statePage, comboReport }) => {
+  test("fills out and autosaves all Section 1 enrollment fee questions through the UI", async ({
+    statePage,
+    comboReport,
+  }) => {
     // This test makes many sequential edits, each triggering an autosave.
     test.slow();
 
