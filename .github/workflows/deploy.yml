@@ -113,5 +113,5 @@ jobs:
         if: ${{ failure() }}
         with:
           name: playwright-html-report-${{ github.run_number }}
-          path: tests/playwright-report
+          path: tests/playwright/playwright-report
           retention-days: 30

@@ -36,6 +36,61 @@ export class StatePage extends BasePage {
     await this.reportTitle.waitFor({ state: "visible" });
   }
 
+  /** The home page table row for a report, identified by its Print link. */
+  reportRow(state: string, year: number): Locator {
+    return this.page
+      .getByRole("table", { name: "All Reports" })
+      .getByRole("row")
+      .filter({
+        has: this.page.getByRole("link", {
+          name: `Print ${state} ${year} report`,
+        }),
+      });
+  }
+
+  /** Opens a report from the home page, the way a state user would. */
+  async editReportFromHome(state: string, year: number) {
+    await this.goToHome();
+    await this.reportRow(state, year)
+      .getByRole("link", { name: `Edit ${state} ${year} report` })
+      .click();
+    await this.waitForReportLoad();
+    await this.reportTitle.waitFor({ state: "visible" });
+  }
+
+  get certifySubmitButton(): Locator {
+    return this.page.getByTestId("certifySubmit");
+  }
+
+  get certifyThankYou(): Locator {
+    return this.page.getByTestId("certifyThankYou");
+  }
+
+  async goToCertifyAndSubmit() {
+    await this.page.getByRole("link", { name: "Certify and Submit" }).click();
+    await this.certifySubmitButton.waitFor({ state: "visible" });
+  }
+
+  /** Certifies and submits the open report, confirming in the dialog. */
+  async certifyAndSubmit() {
+    await this.certifySubmitButton.click();
+    const dialog = this.page.getByRole("dialog", {
+      name: "Certify and Submit this Report?",
+    });
+    const certified = this.waitForResponse("/state_status/", "POST", 200);
+    await dialog
+      .getByRole("button", { name: "Confirm Certify and Submit" })
+      .click();
+    await certified;
+  }
+
+  async returnHome() {
+    await this.page.getByRole("button", { name: "Return Home" }).click();
+    await this.page
+      .getByRole("heading", { name: STATE_USER_HOME_HEADING })
+      .waitFor({ state: "visible" });
+  }
+
   async goToSection1() {
     await this.page.getByRole("link", { name: /^Section 1:/ }).click();
     await this.waitForReportLoad();

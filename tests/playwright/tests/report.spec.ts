@@ -1,4 +1,5 @@
 import { expect, test } from "./fixtures/base";
+import { getReportStatuses } from "../utils/requests";
 
 test.describe("State user report", () => {
   // These tests edit the same seeded report, so run them in order to avoid
@@ -90,5 +91,37 @@ test.describe("State user report", () => {
 
     // Assert
     await statePage.expectSaved();
+  });
+
+  // Runs last because submitting locks the report; the fixture unlocks it
+  // afterward.
+  test("state user can certify and submit a report", async ({
+    statePage,
+    submittableReport,
+  }) => {
+    const { state, year } = submittableReport;
+
+    // Act
+    await statePage.editReportFromHome(state, year);
+    await statePage.goToCertifyAndSubmit();
+    await statePage.certifyAndSubmit();
+
+    // Assert
+    await expect(statePage.certifyThankYou).toHaveText(
+      "Thank you for submitting your CARTS report!"
+    );
+
+    await statePage.returnHome();
+    const row = statePage.reportRow(state, year);
+    await expect(row).toContainText("Certified and Submitted");
+    await expect(
+      row.getByRole("link", { name: `View ${state} ${year} report` })
+    ).toBeVisible();
+
+    const statuses = await getReportStatuses();
+    const status = statuses.find(
+      (item) => item.stateId === state && item.year === year
+    );
+    expect(status?.status).toBe("certified");
   });
 });
