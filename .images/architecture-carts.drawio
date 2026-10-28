@@ -1,6 +1,6 @@
 <mxfile host="Electron">
   <diagram name="Page-1" id="FcpD_ZQTF1CWN_QaWHfa">
-    <mxGraphModel dx="2467" dy="2624" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="light-dark(#ffffff, #121212)" math="0" shadow="0">
+    <mxGraphModel dx="1811" dy="2219" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="light-dark(#ffffff, #121212)" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -98,14 +98,6 @@
         </mxCell>
         <mxCell id="qzq5eA6xc7-ko63zMoYZ-45" parent="1" style="image;aspect=fixed;html=1;align=center;shadow=0;dashed=0;image=img/lib/allied_telesis/computer_and_terminals/Personal_Computer.svg;points=[[0.5,0.102,0],[0.5,0.932,0],[0.172,0.5,0],[0.997,0.576,0],[0.993,0.323,0],[0.993,0.832,0],[0,0.782,0],[0.173,0.033,0]];labelPerimeter=1;" value="Client&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="81.32" width="60" x="36.39" y="369.68" as="geometry" />
-        </mxCell>
-        <mxCell id="qzq5eA6xc7-ko63zMoYZ-49" edge="1" parent="1" source="qzq5eA6xc7-ko63zMoYZ-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="qzq5eA6xc7-ko63zMoYZ-13">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="460" y="861" />
-              <mxPoint x="460" y="639" />
-            </Array>
-          </mxGeometry>
         </mxCell>
         <mxCell id="qzq5eA6xc7-ko63zMoYZ-51" edge="1" parent="1" source="qzq5eA6xc7-ko63zMoYZ-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;startArrow=classic;startFill=1;" target="qzq5eA6xc7-ko63zMoYZ-13">
           <mxGeometry relative="1" as="geometry" />
