@@ -199,6 +199,25 @@ export async function getReportStatuses(
   return response?.Items ?? [];
 }
 
+/**
+ * Sets the status of a report. State users may update their own state's
+ * reports, which lets tests reset a certified report back to in progress.
+ */
+export async function updateReportStatus(
+  year: number,
+  state: string,
+  status: string,
+  username: string,
+  storageStatePath?: string
+): Promise<void> {
+  await authenticatedRequest(
+    "POST",
+    `/state_status/${year}/${state}`,
+    { status, username },
+    storageStatePath
+  );
+}
+
 export async function getReport(
   year: number,
   state: string,
