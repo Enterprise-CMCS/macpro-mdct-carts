@@ -11,7 +11,6 @@ import {
 } from "aws-cdk-lib";
 import { WafConstruct } from "../constructs/waf.ts";
 import { isLocalStack } from "../local/util.ts";
-import { SupportCaseCustomResource } from "../constructs/support-case-cr.ts";
 
 interface CreateUiComponentsProps {
   scope: Construct;
@@ -162,12 +161,6 @@ export function createUiComponents(props: CreateUiComponentsProps) {
   if (!isLocalStack) {
     const waf = setupWaf(scope, stage, project); // vpnIpSetArn, vpnIpv6SetArn
     distribution.attachWebAclId(waf.webAcl.attrArn);
-    new SupportCaseCustomResource(scope, "support-case", {
-      cloudfrontId: distribution.distributionId,
-      cloudfrontUrl: `https://${distribution.distributionDomainName}`,
-      stackName: `${project}-${stage}`,
-      isDev,
-    });
   }
 
   const applicationEndpointUrl = `https://${distribution.distributionDomainName}/`;
