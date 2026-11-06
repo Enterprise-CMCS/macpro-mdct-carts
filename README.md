@@ -82,7 +82,7 @@ Each year, the FMAP and ACS data needs to be updated. Updates to the Federal Reg
 
 FMAP numbers can be found on the [federal register website](https://www.federalregister.gov/) and will resemble [this document](https://www.federalregister.gov/documents/2023/11/21/2023-25636/federal-financial-participation-in-state-assistance-expenditures-federal-matching-shares-for). You can search for the latest update by grabbing the title of the document, "Federal Financial Participation in State Assistance Expenditures", and using the search feature on the site to find the latest updates. In the document you'll find a long table with 3 columns: State, Federal medical assistance percentages (FMAP), and Enhanced federal medical assistance percentages (EFMAP). CARTS uses this rightmost column, Enhanced federal medical assistance percentages.
 
-ACS Data can be found in a similar way. The census website posts updated numbers every year [here](https://www.census.gov/data/tables/time-series/demo/health-insurance/acs-hi.html). Under the heading "HI-10_ACS" download "Table HI10_ACS Number and Percent of Children Under 19 Below 200% of Poverty by Health Insurance Coverage and State". CARTS uses data from columns D-G of this document.
+ACS Data can be found in a similar way. The census website posts updated numbers every year [here](https://www.census.gov/data/tables/time-series/demo/health-insurance/acs-hi.html). Under the heading "HI-10_ACS" download the "Table HI10_ACS" spreadsheet. Its title has changed over the years; in 2024 it was "Number and Percent of Children Under 19 Below 200% of Poverty by Health Insurance Coverage and State". CARTS uses data from columns H-K of this document, which are the "Uninsured" columns under "Below 200% poverty". The numbers in the document are in thousands, so the number of uninsured and its margin of error get multiplied by 1,000.
 
 ### How its used
 
@@ -160,13 +160,6 @@ npx jest src/components --watch  # run all component tests and watch for changes
 #### Accessibility Tests
 
 Frontend accessibility (a11y) unit tests are being done using Jest with [axe-core](https://github.com/dequelabs/axe-core) and [jest-axe](https://github.com/nickcolley/jest-axe). To test a component's accessibility, import `axe` from `jest-axe` and pass the rendered component to `axe()`, then check for a11y issues using `toHaveNoViolations()`.
-
-To test the accessibility of an endpoint, [pa11y](https://github.com/pa11y/pa11y) is being used in combination with [aXe](https://www.axe-core.org/) and [HTML CodeSniffer](https://squizlabs.github.io/HTML_CodeSniffer/) as test runners.
-
-```
-cd services/ui-src/
-yarn pa11y <url-endpoint>
-```
 
 Cypress `a11y` tests use [cypress-axe](https://github.com/component-driven/cypress-axe)
 

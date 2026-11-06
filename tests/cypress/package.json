@@ -12,8 +12,8 @@
   },
   "devDependencies": {
     "axe-core": "^4.11.0",
-    "concurrently": "^10.0.3",
-    "cypress": "^15.10.0",
+    "concurrently": "^10.0.5",
+    "cypress": "^15.21.1",
     "cypress-axe": "^1.7.0",
     "cypress-file-upload": "^5.0.8",
     "dotenv": "^17.2.3"
