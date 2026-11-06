@@ -76,7 +76,7 @@ CARTS uses a separate handler to seed the FMAP and ACS Data. You'll need to do t
 
 1. Navigate to the services/database/data/seed folder
 2. Create a seed-acs-{enterYearHere}.json file (For example, you'd put seed-acs-2023)
-3. In the seed-acs-2023 file, you will add the data from columns D-G in the ACS file (See [the readme](../../README.md) on how to find this). It will go in an array of object format that looks like this:
+3. In the seed-acs-2023 file, you will add the data from columns H-K in the ACS file (See [the readme](../../README.md) on how to find this). The ACS file lists numbers in thousands, so multiply the number of uninsured and its margin of error by 1,000. The percents are used as they are. It will go in an array of object format that looks like this:
 
 ```
 [
