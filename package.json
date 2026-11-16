@@ -58,6 +58,7 @@
   "devDependencies": {
     "@octokit/auth-action": "^6.0.1",
     "@octokit/rest": "^22.0.0",
+    "@playwright/test": "1.61.0",
     "@types/flat": "^5.0.5",
     "@types/node": "^22.18.13",
     "@types/yargs": "^17.0.33",
@@ -67,6 +68,7 @@
     "esbuild": "^0.28.1",
     "oxfmt": "^0.72.0",
     "oxlint": "^1.41.0",
+    "playwright-core": "1.61.0",
     "tsx": "^4.23.15",
     "typescript": "^5.9.3",
     "yargs": "^17.7.2"
