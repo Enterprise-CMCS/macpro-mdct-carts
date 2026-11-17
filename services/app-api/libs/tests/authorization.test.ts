@@ -359,6 +359,45 @@ describe("Authorization Lib", () => {
     });
   });
 
+  describe("issuer format", () => {
+    test("a global-format issuer is rejected (401) without downloading keys", async () => {
+      await jest.isolateModulesAsync(async () => {
+        // A stand-in for Cognito that behaves like ours: the regional key
+        // URL works, the global-format one returns 403
+        const { tokens, auth, errors, isolatedLogger, download, jwksBody } =
+          await loadFreshContainer();
+        download.mockImplementation(async (uri: string) => {
+          if (uri.includes("issuer-cognito-idp")) {
+            throw new errors.NonRetryableFetchError(uri, "403 Forbidden");
+          }
+          return jwksBody();
+        });
+
+        const globalIssuer = `https://issuer-cognito-idp.us-east-1.amazonaws.com/${tokens.USER_POOL_ID}`;
+        for (let i = 0; i < 3; i++) {
+          await expect(
+            auth.authenticateUser(
+              tokens.eventWithToken(
+                tokens.signToken(tokens.idTokenClaims({ iss: globalIssuer }))
+              )
+            )
+          ).rejects.toThrow("Invalid authentication token");
+        }
+        expect(download).not.toHaveBeenCalled();
+        expect(isolatedLogger.error).not.toHaveBeenCalled();
+        expect(isolatedLogger.warn).toHaveBeenCalledWith(
+          "Rejected token: wrong issuer, client, or token type"
+        );
+
+        await expect(
+          auth.authenticateUser(
+            tokens.eventWithToken(tokens.signToken(tokens.idTokenClaims()))
+          )
+        ).resolves.toEqual(expect.objectContaining({ state: "AL" }));
+      });
+    });
+  });
+
   describe("isAuthorized", () => {
     const stateUser = new UserCredentials({
       "custom:cms_roles": IdmRoles.STATE,

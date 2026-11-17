@@ -1,6 +1,7 @@
 import { CognitoJwtVerifier } from "aws-jwt-verify";
 import { SimpleJwksCache } from "aws-jwt-verify/jwk";
 import { SimpleFetcher } from "aws-jwt-verify/https";
+import { decomposeUnverifiedJwt } from "aws-jwt-verify/jwt";
 import {
   FetchError,
   JwkInvalidKtyError,
@@ -10,6 +11,7 @@ import {
   JwtBaseError,
   JwtExpiredError,
   JwtInvalidClaimError,
+  JwtInvalidIssuerError,
   JwtInvalidSignatureAlgorithmError,
   JwtInvalidSignatureError,
   JwtParseError,
@@ -96,6 +98,21 @@ const cannotVerifyRightNow = (error: unknown) =>
   error instanceof JwkInvalidKtyError ||
   error instanceof WaitPeriodNotYetEndedJwkError;
 
+/**
+ * aws-jwt-verify also accepts a global issuer format, and picks the key URL
+ * from the unverified `iss`. Our pool's global-format URL returns 403, so
+ * without this anyone could force failing downloads, error logs and 503s.
+ */
+const assertRegionalIssuer = (token: string) => {
+  const userPoolId = process.env.COGNITO_USER_POOL_ID!;
+  const region = userPoolId.split("_")[0];
+  const expected = `https://cognito-idp.${region}.amazonaws.com/${userPoolId}`;
+  const { iss } = decomposeUnverifiedJwt(token).payload;
+  if (iss !== expected) {
+    throw new JwtInvalidIssuerError("Issuer not allowed", iss, expected);
+  }
+};
+
 const describeRejection = (error: JwtBaseError) => {
   if (error instanceof JwtExpiredError) return "expired";
   if (
@@ -131,6 +148,7 @@ export const authenticateUser = async (event: APIGatewayProxyEvent) => {
   const jwtVerifier = getVerifier();
   let payload: DecodedToken;
   try {
+    assertRegionalIssuer(token);
     payload = (await jwtVerifier.verify(token)) as unknown as DecodedToken;
   } catch (error) {
     if (cannotVerifyRightNow(error)) {
