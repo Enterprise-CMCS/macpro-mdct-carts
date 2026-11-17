@@ -89,6 +89,16 @@ let verifier: ReturnType<typeof createVerifier> | undefined;
 
 export const getVerifier = () => (verifier ??= createVerifier());
 
+if (process.env.AWS_LAMBDA_FUNCTION_NAME) {
+  try {
+    getVerifier()
+      .hydrate()
+      .catch(() => logger.warn("Could not prefetch Cognito signing keys"));
+  } catch {
+    // Missing config: already logged by createVerifier
+  }
+}
+
 /** Throw a 503 for these as its token related */
 const cannotVerifyRightNow = (error: unknown) =>
   error instanceof FetchError ||

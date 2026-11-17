@@ -48,6 +48,10 @@ describe("Authorization Lib", () => {
     setUpTestVerifier();
   });
 
+  afterEach(() => {
+    delete process.env.AWS_LAMBDA_FUNCTION_NAME;
+  });
+
   describe("authenticateUser", () => {
     test("accepts a valid Cognito-signed ID token", async () => {
       const user = await authenticateUser(
@@ -276,6 +280,52 @@ describe("Authorization Lib", () => {
         });
       }
     );
+  });
+
+  describe("prefetching Cognito's signing keys at startup", () => {
+    const loadIsolated = async (hydrate: jest.Mock) => {
+      let isolatedLogger: any;
+      await jest.isolateModulesAsync(async () => {
+        const { CognitoJwtVerifier } = await import("aws-jwt-verify");
+        jest
+          .spyOn(CognitoJwtVerifier.prototype, "hydrate")
+          .mockImplementation(hydrate);
+        ({ logger: isolatedLogger } = await import("../debug-lib"));
+        await import("../authorization");
+      });
+      await new Promise(setImmediate); // let a rejected prefetch settle
+      return isolatedLogger;
+    };
+
+    test("starts the download when running in Lambda", async () => {
+      process.env.AWS_LAMBDA_FUNCTION_NAME = "carts-getSections";
+      const hydrate = jest.fn().mockResolvedValue(undefined);
+      await loadIsolated(hydrate);
+      expect(hydrate).toHaveBeenCalledTimes(1);
+    });
+
+    test("does nothing outside Lambda", async () => {
+      const hydrate = jest.fn().mockResolvedValue(undefined);
+      await loadIsolated(hydrate);
+      expect(hydrate).not.toHaveBeenCalled();
+    });
+
+    test("a failed prefetch is only a warning, not a crash", async () => {
+      process.env.AWS_LAMBDA_FUNCTION_NAME = "carts-getSections";
+      const hydrate = jest.fn().mockRejectedValue(new Error("down"));
+      const isolatedLogger = await loadIsolated(hydrate);
+      expect(isolatedLogger.warn).toHaveBeenCalledWith(
+        "Could not prefetch Cognito signing keys"
+      );
+    });
+
+    test("missing config doesn't crash startup", async () => {
+      process.env.AWS_LAMBDA_FUNCTION_NAME = "carts-getSections";
+      delete process.env.COGNITO_USER_POOL_ID;
+      const hydrate = jest.fn();
+      await expect(loadIsolated(hydrate)).resolves.toBeDefined();
+      expect(hydrate).not.toHaveBeenCalled();
+    });
   });
 
   /** A new container (nothing cached) with Cognito's key download stubbed.
