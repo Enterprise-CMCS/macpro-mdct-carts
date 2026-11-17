@@ -96,103 +96,94 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     buckets: [attachmentsBucket],
   };
 
-  new Lambda(scope, "getStates", {
-    entry: "services/app-api/handlers/state/get.ts",
-    handler: "getStates",
-    path: "/state",
-    method: "GET",
-    ...commonProps,
-  });
-
-  new Lambda(scope, "getEnrollmentCounts", {
-    entry: "services/app-api/handlers/enrollmentCounts/get.ts",
-    handler: "getEnrollmentCounts",
-    path: "/enrollment_counts/{year}/{state}",
-    method: "GET",
-    ...commonProps,
-  });
-
-  new Lambda(scope, "getStateStatus", {
-    entry: "services/app-api/handlers/stateStatus/get.ts",
-    handler: "getStateStatus",
-    path: "/state_status",
-    method: "GET",
-    ...commonProps,
-  });
-
-  new Lambda(scope, "updateStateStatus", {
-    entry: "services/app-api/handlers/stateStatus/update.ts",
-    handler: "updateStateStatus",
-    path: "/state_status/{year}/{state}",
-    method: "POST",
-    ...commonProps,
-  });
-
-  new Lambda(scope, "getSections", {
-    entry: "services/app-api/handlers/section/get.ts",
-    handler: "getSections",
-    path: "/section/{year}/{state}",
-    method: "GET",
-    ...commonProps,
-  });
-
-  new Lambda(scope, "updateSections", {
-    entry: "services/app-api/handlers/section/update.ts",
-    handler: "updateSections",
-    path: "/save_report/{year}/{state}",
-    method: "PUT",
-    ...commonProps,
-  });
-
-  new Lambda(scope, "generateFormTemplates", {
-    entry: "services/app-api/handlers/formTemplates/post.ts",
-    handler: "post",
-    path: "/formTemplates",
-    method: "POST",
-    timeout: Duration.seconds(30),
-    ...commonProps,
-  });
-
-  new Lambda(scope, "postUpload", {
-    entry: "services/app-api/handlers/uploads/createUploadPsUrl.ts",
-    handler: "psUpload",
-    path: "/psUrlUpload/{year}/{state}",
-    method: "POST",
-    ...commonProps,
-  });
-
-  new Lambda(scope, "postDownload", {
-    entry: "services/app-api/handlers/uploads/createDownloadPsUrl.ts",
-    handler: "getSignedFileUrl",
-    path: "/psUrlDownload/{year}/{state}",
-    method: "POST",
-    ...commonProps,
-  });
-
-  new Lambda(scope, "deleteUpload", {
-    entry: "services/app-api/handlers/uploads/delete.ts",
-    handler: "deleteUpload",
-    path: "/uploads/{year}/{state}/{fileId}",
-    method: "DELETE",
-    ...commonProps,
-  });
-
-  new Lambda(scope, "viewUploads", {
-    entry: "services/app-api/handlers/uploads/viewUploaded.ts",
-    handler: "viewUploaded",
-    path: "/uploads/{year}/{state}",
-    method: "POST",
-    ...commonProps,
-  });
-
-  new Lambda(scope, "printPdf", {
-    entry: "services/app-api/handlers/printing/printPdf.ts",
-    handler: "print",
-    path: "/print_pdf",
-    method: "POST",
-    timeout: Duration.seconds(30),
-    ...commonProps,
-  });
+  const apiLambdas = [
+    new Lambda(scope, "getStates", {
+      entry: "services/app-api/handlers/state/get.ts",
+      handler: "getStates",
+      path: "/state",
+      method: "GET",
+      ...commonProps,
+    }),
+    new Lambda(scope, "getEnrollmentCounts", {
+      entry: "services/app-api/handlers/enrollmentCounts/get.ts",
+      handler: "getEnrollmentCounts",
+      path: "/enrollment_counts/{year}/{state}",
+      method: "GET",
+      ...commonProps,
+    }),
+    new Lambda(scope, "getStateStatus", {
+      entry: "services/app-api/handlers/stateStatus/get.ts",
+      handler: "getStateStatus",
+      path: "/state_status",
+      method: "GET",
+      ...commonProps,
+    }),
+    new Lambda(scope, "updateStateStatus", {
+      entry: "services/app-api/handlers/stateStatus/update.ts",
+      handler: "updateStateStatus",
+      path: "/state_status/{year}/{state}",
+      method: "POST",
+      ...commonProps,
+    }),
+    new Lambda(scope, "getSections", {
+      entry: "services/app-api/handlers/section/get.ts",
+      handler: "getSections",
+      path: "/section/{year}/{state}",
+      method: "GET",
+      ...commonProps,
+    }),
+    new Lambda(scope, "updateSections", {
+      entry: "services/app-api/handlers/section/update.ts",
+      handler: "updateSections",
+      path: "/save_report/{year}/{state}",
+      method: "PUT",
+      ...commonProps,
+    }),
+    new Lambda(scope, "generateFormTemplates", {
+      entry: "services/app-api/handlers/formTemplates/post.ts",
+      handler: "post",
+      path: "/formTemplates",
+      method: "POST",
+      timeout: Duration.seconds(30),
+      ...commonProps,
+    }),
+    new Lambda(scope, "postUpload", {
+      entry: "services/app-api/handlers/uploads/createUploadPsUrl.ts",
+      handler: "psUpload",
+      path: "/psUrlUpload/{year}/{state}",
+      method: "POST",
+      ...commonProps,
+    }),
+    new Lambda(scope, "postDownload", {
+      entry: "services/app-api/handlers/uploads/createDownloadPsUrl.ts",
+      handler: "getSignedFileUrl",
+      path: "/psUrlDownload/{year}/{state}",
+      method: "POST",
+      ...commonProps,
+    }),
+    new Lambda(scope, "deleteUpload", {
+      entry: "services/app-api/handlers/uploads/delete.ts",
+      handler: "deleteUpload",
+      path: "/uploads/{year}/{state}/{fileId}",
+      method: "DELETE",
+      ...commonProps,
+    }),
+    new Lambda(scope, "viewUploads", {
+      entry: "services/app-api/handlers/uploads/viewUploaded.ts",
+      handler: "viewUploaded",
+      path: "/uploads/{year}/{state}",
+      method: "POST",
+      ...commonProps,
+    }),
+    new Lambda(scope, "printPdf", {
+      entry: "services/app-api/handlers/printing/printPdf.ts",
+      handler: "print",
+      path: "/print_pdf",
+      method: "POST",
+      timeout: Duration.seconds(30),
+      ...commonProps,
+    }),
+  ];
 
   if (!isLocalStack) {
     const waf = new WafConstruct(
@@ -211,6 +202,26 @@ export function createApiComponents(props: CreateApiComponentsProps) {
     });
   }
 
+  const setCognitoEnvironment = (
+    userPoolId: string,
+    userPoolClientId: string
+  ) => {
+    for (const { lambda } of apiLambdas) {
+      lambda.addEnvironment("COGNITO_USER_POOL_ID", userPoolId);
+      lambda.addEnvironment("COGNITO_USER_POOL_CLIENT_ID", userPoolClientId);
+    }
+  };
+
+  if (isLocalStack) {
+    const { COGNITO_USER_POOL_ID, COGNITO_USER_POOL_CLIENT_ID } = process.env;
+    if (!COGNITO_USER_POOL_ID || !COGNITO_USER_POOL_CLIENT_ID) {
+      throw new Error(
+        "COGNITO_USER_POOL_ID and COGNITO_USER_POOL_CLIENT_ID must be set in .env"
+      );
+    }
+    setCognitoEnvironment(COGNITO_USER_POOL_ID, COGNITO_USER_POOL_CLIENT_ID);
+  }
+
   const apiGatewayRestApiUrl = api.url.slice(0, -1);
 
   new CfnOutput(scope, "ApiUrl", {
@@ -220,5 +231,6 @@ export function createApiComponents(props: CreateApiComponentsProps) {
   return {
     restApiId: api.restApiId,
     apiGatewayRestApiUrl,
+    setCognitoEnvironment,
   };
 }
