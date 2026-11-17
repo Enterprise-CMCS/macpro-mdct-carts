@@ -34,6 +34,7 @@ interface DecodedToken {
 export class UserCredentials {
   role?: AppRoles;
   state?: string;
+  name?: string;
   email?: string;
 
   constructor(decoded: DecodedToken) {
@@ -45,6 +46,10 @@ export class UserCredentials {
       logger.warn("Token has an unrecognized CARTS role");
     }
     this.state = decoded["custom:cms_state"];
+    this.name =
+      decoded.given_name && decoded.family_name
+        ? `${decoded.given_name} ${decoded.family_name}`
+        : decoded.email;
     this.email = decoded.email;
   }
 }

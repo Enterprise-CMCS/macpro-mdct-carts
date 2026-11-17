@@ -8,16 +8,14 @@ import { convertToDynamoExpression } from "../dynamoUtils/convertToDynamoExpress
  */
 export const updateStateStatus = handler(async (event, _context, user) => {
   const { body } = event;
-  const { status, username } = JSON.parse(body || "{}");
+  const { status } = JSON.parse(body || "{}");
 
   if (!event.pathParameters) throw new Error("No Path Parameters Object");
   if (!event.pathParameters.state || !event.pathParameters.year) {
     throw new Error("Be sure to include state, year in the path");
   }
-  if (!status || !username) {
-    throw new Error(
-      "Cannot update State Status without a new status and username"
-    );
+  if (!status) {
+    throw new Error("Cannot update State Status without a new status");
   }
 
   const { year, state } = event.pathParameters;
@@ -33,7 +31,7 @@ export const updateStateStatus = handler(async (event, _context, user) => {
       ...convertToDynamoExpression(
         {
           status: status,
-          username: username,
+          username: user.name,
           lastChanged: new Date().toString(),
         },
         "post"

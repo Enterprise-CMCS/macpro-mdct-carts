@@ -507,6 +507,25 @@ describe("Authorization Lib", () => {
     });
   });
 
+  describe("UserCredentials name", () => {
+    test("uses the verified first and last name", () => {
+      const user = new UserCredentials({
+        given_name: "Ada",
+        family_name: "Lovelace",
+        email: "ada@example.com",
+      });
+      expect(user.name).toBe("Ada Lovelace");
+    });
+
+    test("falls back to email when a name is missing", () => {
+      const user = new UserCredentials({
+        given_name: "Ada",
+        email: "ada@example.com",
+      });
+      expect(user.name).toBe("ada@example.com");
+    });
+  });
+
   describe("mapIdmRoleToAppRole", () => {
     test("should return AppRole if IdmRole exists", () => {
       const result = mapIdmRoleToAppRole(IdmRoles.APPROVER);
