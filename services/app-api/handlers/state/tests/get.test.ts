@@ -21,6 +21,7 @@ jest.mock("../../../libs/dynamodb-lib", () => ({
 }));
 
 jest.mock("../../../libs/authorization", () => ({
+  authenticateUser: jest.fn().mockResolvedValue({}),
   isAuthorized: jest.fn().mockReturnValue(true),
 }));
 

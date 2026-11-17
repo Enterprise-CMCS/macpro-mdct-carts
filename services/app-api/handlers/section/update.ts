@@ -1,7 +1,6 @@
 import { JSONPath } from "jsonpath-plus";
 import handler from "../../libs/handler-lib";
 import dynamoDb from "../../libs/dynamodb-lib";
-import { getUserCredentialsFromJwt } from "../../libs/authorization";
 import { AppRoles, StateStatus } from "../../types";
 import { convertToDynamoExpression } from "../dynamoUtils/convertToDynamoExpressionVars";
 import { UnauthorizedError } from "../../libs/httpErrors";
@@ -11,7 +10,7 @@ import { sectionSchema } from "../../libs/validation/backend-section.schema";
 /**
  * Updates the Sections associated with a given year and state
  */
-export const updateSections = handler(async (event, _context) => {
+export const updateSections = handler(async (event, _context, user) => {
   const { body } = event;
   const reportData = JSON.parse(body || "{}");
 
@@ -20,7 +19,6 @@ export const updateSections = handler(async (event, _context) => {
     throw new Error("Be sure to include state, year in the path");
   }
 
-  const user = getUserCredentialsFromJwt(event);
   const { year, state } = event.pathParameters;
   // only state users can update reports associated with their assigned state
   if (

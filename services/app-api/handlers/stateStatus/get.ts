@@ -1,11 +1,9 @@
-import { getUserCredentialsFromJwt } from "../../libs/authorization";
 import handler from "../../libs/handler-lib";
 import dynamoDb from "../../libs/dynamodb-lib";
 import { AppRoles, StateStatus } from "../../types";
 import { convertToDynamoExpression } from "../dynamoUtils/convertToDynamoExpressionVars";
 
-export const getStateStatus = handler(async (event, _context) => {
-  const user = getUserCredentialsFromJwt(event);
+export const getStateStatus = handler(async (event, _context, user) => {
   if (user.role === AppRoles.STATE_USER && !!user.state) {
     // Return only the user's state
     const params = {

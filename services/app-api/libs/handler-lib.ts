@@ -1,12 +1,22 @@
 import * as logger from "./debug-lib";
 import { APIGatewayProxyEvent } from "../types";
-import { isAuthorized } from "./authorization";
+import {
+  authenticateUser,
+  isAuthorized,
+  UserCredentials,
+} from "./authorization";
 import { failure, success, buildResponse } from "./response-lib";
-import { NotFoundError, UnauthorizedError } from "./httpErrors";
+import {
+  NotFoundError,
+  ServiceUnavailableError,
+  UnauthenticatedError,
+  UnauthorizedError,
+} from "./httpErrors";
 
 type LambdaFunction = (
   event: APIGatewayProxyEvent,
-  context: any
+  context: any,
+  user: UserCredentials
 ) => Promise<any>;
 
 export default function handler(lambda: LambdaFunction) {
@@ -18,30 +28,41 @@ export default function handler(lambda: LambdaFunction) {
       queryStringParameters: event.queryStringParameters,
     });
 
-    if (await isAuthorized(event)) {
-      try {
-        // Run the Lambda
-        const body = await lambda(event, context);
-        return success(body);
-      } catch (error: any) {
-        // Print debug messages
-        logger.error("Error: %O", error);
+    try {
+      const user = await authenticateUser(event);
 
-        const body = { error: error.message };
-        switch (error.constructor) {
-          case UnauthorizedError:
-            return buildResponse(403, body);
-          case NotFoundError:
-            return buildResponse(404, body);
-          default:
-            return failure(body);
-        }
-      } finally {
-        logger.flush();
+      if (!isAuthorized(event, user)) {
+        return buildResponse(403, {
+          error: "User is not authorized to access this resource.",
+        });
       }
-    } else {
-      const body = { error: "User is not authorized to access this resource." };
-      return buildResponse(403, body);
+
+      const body = await lambda(event, context, user);
+      return success(body);
+    } catch (error: any) {
+      // authorization.ts already logged these at the right level
+      if (
+        !(error instanceof UnauthenticatedError) &&
+        !(error instanceof ServiceUnavailableError)
+      ) {
+        logger.error("Error: %O", error);
+      }
+
+      const body = { error: error.message };
+      switch (error.constructor) {
+        case UnauthenticatedError:
+          return buildResponse(401, body);
+        case UnauthorizedError:
+          return buildResponse(403, body);
+        case ServiceUnavailableError:
+          return buildResponse(503, body);
+        case NotFoundError:
+          return buildResponse(404, body);
+        default:
+          return failure(body);
+      }
+    } finally {
+      logger.flush();
     }
   };
 }

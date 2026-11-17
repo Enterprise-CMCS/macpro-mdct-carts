@@ -1,13 +1,12 @@
 import handler from "../../libs/handler-lib";
 import dynamoDb from "../../libs/dynamodb-lib";
-import { getUserCredentialsFromJwt } from "../../libs/authorization";
 import { AppRoles } from "../../types";
 import { convertToDynamoExpression } from "../dynamoUtils/convertToDynamoExpressionVars";
 
 /**
  * Updates the State Status associated with a given year and state
  */
-export const updateStateStatus = handler(async (event, _context) => {
+export const updateStateStatus = handler(async (event, _context, user) => {
   const { body } = event;
   const { status, username } = JSON.parse(body || "{}");
 
@@ -21,7 +20,6 @@ export const updateStateStatus = handler(async (event, _context) => {
     );
   }
 
-  const user = getUserCredentialsFromJwt(event);
   const { year, state } = event.pathParameters;
 
   // state users can only update a state status associated with their assigned state
