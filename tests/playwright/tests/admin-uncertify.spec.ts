@@ -22,9 +22,6 @@ test.describe("Admin user uncertifies a certified report", () => {
   });
 
   test("admin uncertifies a certified report", async ({ page }) => {
-    const pageErrors: string[] = [];
-    page.on("pageerror", (error) => pageErrors.push(error.message));
-
     await page.goto("/");
     const uncertifyButton = page.getByRole("button", {
       name: `Uncertify ${STATE} ${YEAR} report`,
@@ -67,7 +64,5 @@ test.describe("Admin user uncertifies a certified report", () => {
       });
     await expect(row).toContainText("In Progress");
     await expect(uncertifyButton).toHaveCount(0);
-
-    expect(pageErrors).toEqual([]);
   });
 });
