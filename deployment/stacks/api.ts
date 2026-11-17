@@ -51,7 +51,8 @@ export function createApiComponents(props: CreateApiComponentsProps) {
       loggingLevel: isDev
         ? apigateway.MethodLoggingLevel.OFF
         : apigateway.MethodLoggingLevel.INFO,
-      dataTraceEnabled: true,
+      // This boolean is used to log full request headers/bodies. Don't allow it in production
+      dataTraceEnabled: stage !== "production",
       accessLogDestination: new apigateway.LogGroupLogDestination(logGroup),
     },
     defaultCorsPreflightOptions: {
