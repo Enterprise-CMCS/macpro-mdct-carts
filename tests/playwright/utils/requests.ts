@@ -50,131 +50,25 @@ export async function getApiUrl(): Promise<string> {
   return (await loadEnvConfig()).apiUrl;
 }
 
-const TOKEN_EXPIRY_BUFFER_SECONDS = 60;
-
 /**
- * Refreshes by session file. Storing the promise lets parallel requests share
- * one.
+ * Extracts the Cognito ID token from a stored auth session. The backend reads
+ * this JWT from the "x-api-key" header to identify the user.
  */
-const tokenRefreshes = new Map<string, Promise<string>>();
-
-interface StoredSession {
-  idToken: string;
-  refreshToken?: string;
-  clientId: string;
-}
-
-/**
- * Reads the Cognito tokens Amplify saved to localStorage during auth setup.
- * Keys look like "CognitoIdentityServiceProvider.<clientId>.<username>.idToken".
- */
-function readStoredSession(storageStatePath: string): StoredSession {
+export function getIdToken(storageStatePath: string = STATE_USER_AUTH): string {
   const resolvedPath = path.isAbsolute(storageStatePath)
     ? storageStatePath
     : path.resolve(__dirname, "..", storageStatePath);
   const session = JSON.parse(fs.readFileSync(resolvedPath, "utf8"));
-  const items: { name: string; value: string }[] =
-    session.origins?.[0]?.localStorage ?? [];
-  const idTokenItem = items.find((item) => item.name.endsWith(".idToken"));
-  if (!idTokenItem) {
+  const localStorage = session.origins?.[0]?.localStorage ?? [];
+  const idToken = localStorage.find((item: { name: string }) =>
+    item.name.endsWith(".idToken")
+  );
+  if (!idToken) {
     throw new Error(
       `No Cognito ID token found in ${resolvedPath}. Run the auth setup first.`
     );
   }
-  const keyPrefix = idTokenItem.name.slice(0, -".idToken".length);
-  return {
-    idToken: idTokenItem.value,
-    refreshToken: items.find(
-      (item) => item.name === `${keyPrefix}.refreshToken`
-    )?.value,
-    clientId: keyPrefix.split(".")[1],
-  };
-}
-
-/** Unverified decode is fine for our own token; unreadable = expired */
-function isExpiringSoon(jwt: string): boolean {
-  let exp: unknown;
-  try {
-    const payload = Buffer.from(jwt.split(".")[1] ?? "", "base64url");
-    exp = JSON.parse(payload.toString("utf8")).exp;
-  } catch {
-    // Unreadable: treated as expired below
-  }
-  return (
-    typeof exp !== "number" ||
-    exp - Date.now() / 1000 < TOKEN_EXPIRY_BUFFER_SECONDS
-  );
-}
-
-/** Trades the stored refresh token for a new ID token, as Amplify would */
-async function refreshIdToken(
-  session: StoredSession,
-  region: string
-): Promise<string> {
-  if (!session.refreshToken) {
-    throw new Error(
-      "Stored ID token is expired or unreadable, and there is no refresh token. Run the auth setup again."
-    );
-  }
-  const response = await fetch(`https://cognito-idp.${region}.amazonaws.com/`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-amz-json-1.1",
-      "X-Amz-Target": "AWSCognitoIdentityProviderService.InitiateAuth",
-    },
-    body: JSON.stringify({
-      AuthFlow: "REFRESH_TOKEN_AUTH",
-      ClientId: session.clientId,
-      AuthParameters: { REFRESH_TOKEN: session.refreshToken },
-    }),
-  });
-  if (!response.ok) {
-    throw new Error(
-      `Cognito token refresh failed: ${response.status} ${await response.text()}`
-    );
-  }
-  const body = await response.json();
-  const idToken = body.AuthenticationResult?.IdToken;
-  if (typeof idToken !== "string") {
-    const challenge = body.ChallengeName
-      ? ` (challenge: ${body.ChallengeName})`
-      : "";
-    throw new Error(
-      `Cognito token refresh returned no ID token${challenge}. Run the auth setup again.`
-    );
-  }
-  return idToken;
-}
-
-/** An unexpired ID token for the session; the API rejects expired ones */
-export async function getIdToken(
-  storageStatePath: string = STATE_USER_AUTH
-): Promise<string> {
-  for (;;) {
-    const existing = tokenRefreshes.get(storageStatePath);
-    if (existing) {
-      const token = await existing;
-      if (!isExpiringSoon(token)) return token;
-      // Another caller may have started a newer refresh meanwhile
-      if (tokenRefreshes.get(storageStatePath) !== existing) continue;
-    }
-
-    const session = readStoredSession(storageStatePath);
-    if (!isExpiringSoon(session.idToken)) return session.idToken;
-
-    // Register before awaiting so parallel callers share it
-    const refresh = loadEnvConfig().then(({ region }) =>
-      refreshIdToken(session, region)
-    );
-    tokenRefreshes.set(storageStatePath, refresh);
-    // Forget failures so the next call retries
-    refresh.catch(() => {
-      if (tokenRefreshes.get(storageStatePath) === refresh) {
-        tokenRefreshes.delete(storageStatePath);
-      }
-    });
-    return refresh;
-  }
+  return idToken.value;
 }
 
 type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
@@ -230,7 +124,7 @@ async function authenticatedRequest(
       : undefined;
 
   let headers: Record<string, string> = {
-    "x-api-key": await getIdToken(storageStatePath),
+    "x-api-key": getIdToken(storageStatePath),
   };
   if (bodyString !== undefined) {
     headers["Content-Type"] = "application/json";
@@ -313,12 +207,13 @@ export async function updateReportStatus(
   year: number,
   state: string,
   status: string,
+  username: string,
   storageStatePath?: string
 ): Promise<void> {
   await authenticatedRequest(
     "POST",
     `/state_status/${year}/${state}`,
-    { status },
+    { status, username },
     storageStatePath
   );
 }
