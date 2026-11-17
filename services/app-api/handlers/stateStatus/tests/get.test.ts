@@ -2,6 +2,7 @@ import { getStateStatus } from "../get";
 import { testEvent } from "../../../test-util/testEvents";
 import { AppRoles, APIGatewayProxyEvent } from "../../../types";
 import dynamodbLib from "../../../libs/dynamodb-lib";
+import { authenticateUser } from "../../../libs/authorization";
 
 jest.mock("../../../libs/dynamodb-lib", () => ({
   __esModule: true,
@@ -56,5 +57,18 @@ describe("Test Get State Status Handlers", () => {
     expect(dynamodbLib.scanSome).toHaveBeenCalledWith({
       TableName: undefined,
     });
+  });
+
+  test("a state user with no assigned state gets an empty list in the usual shape", async () => {
+    (authenticateUser as jest.Mock).mockReturnValueOnce({
+      role: AppRoles.STATE_USER,
+    });
+    (dynamodbLib.scanSome as jest.Mock).mockClear();
+
+    const res = await getStateStatus({ ...testEvent }, null);
+
+    expect(res.statusCode).toBe(200);
+    expect(JSON.parse(res.body)).toEqual({ Items: [] });
+    expect(dynamodbLib.scanSome).not.toHaveBeenCalled();
   });
 });

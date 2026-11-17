@@ -26,6 +26,6 @@ export const getStateStatus = handler(async (event, _context, user) => {
     const queryValue = await dynamoDb.scanSome<StateStatus>(params);
     return queryValue;
   } else {
-    return [];
+    return { Items: [] };
   }
 });
