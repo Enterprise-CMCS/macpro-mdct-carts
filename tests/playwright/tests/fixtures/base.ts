@@ -21,8 +21,6 @@ type CustomFixtures = {
   submittableReport: SeededReport;
 };
 
-const TEST_USERNAME = "Playwright E2E";
-
 /** Finds the most recent in-progress report for a state. */
 const resolveReportYear = async (state: string): Promise<number> => {
   const statuses = await getReportStatuses();
@@ -60,7 +58,7 @@ const resolveSubmittableReportYear = async (state: string): Promise<number> => {
   }
   const latest = candidates.reduce((a, b) => (b.year > a.year ? b : a));
   if (latest.status !== "in_progress") {
-    await updateReportStatus(latest.year, state, "in_progress", TEST_USERNAME);
+    await updateReportStatus(latest.year, state, "in_progress");
   }
   return latest.year;
 };
@@ -101,7 +99,7 @@ export const test = base.extend<CustomFixtures>({
     const state = STATE_ABBREVIATION;
     const year = await resolveSubmittableReportYear(state);
     await use({ year, state });
-    await updateReportStatus(year, state, "in_progress", TEST_USERNAME);
+    await updateReportStatus(year, state, "in_progress");
   },
 });
 

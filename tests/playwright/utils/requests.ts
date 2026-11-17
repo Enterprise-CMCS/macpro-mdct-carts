@@ -313,13 +313,12 @@ export async function updateReportStatus(
   year: number,
   state: string,
   status: string,
-  username: string,
   storageStatePath?: string
 ): Promise<void> {
   await authenticatedRequest(
     "POST",
     `/state_status/${year}/${state}`,
-    { status, username },
+    { status },
     storageStatePath
   );
 }
