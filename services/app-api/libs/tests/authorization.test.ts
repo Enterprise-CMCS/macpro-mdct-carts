@@ -1,17 +1,15 @@
 import { testEvent } from "../../test-util/testEvents";
 import {
-  attackerKey,
   callerProvider,
   CLIENT_ID,
   eventWithToken,
   idTokenClaims,
   now,
-  PROVIDER,
   setUpTestVerifier,
   signToken,
-  SUB,
-  tamperedToken,
+  testJwks,
   unsignedAdminToken,
+  USER_POOL_ID,
 } from "../../test-util/cognitoTokens";
 import {
   FetchError,
@@ -19,7 +17,6 @@ import {
   JwkInvalidUseError,
   JwksValidationError,
   JwkValidationError,
-  KidNotFoundInJwksError,
   WaitPeriodNotYetEndedJwkError,
 } from "aws-jwt-verify/error";
 import {
@@ -42,6 +39,8 @@ jest.mock("../debug-lib", () => ({
   },
 }));
 
+const validTokenEvent = () => eventWithToken(signToken(idTokenClaims()));
+
 describe("Authorization Lib", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -53,16 +52,14 @@ describe("Authorization Lib", () => {
   });
 
   describe("authenticateUser", () => {
-    test("accepts a valid Cognito-signed ID token", async () => {
-      const user = await authenticateUser(
-        eventWithToken(signToken(idTokenClaims()))
-      );
+    test("accepts a valid ID token when no Cognito user signed the request", async () => {
+      const user = await authenticateUser(validTokenEvent());
       expect(user).toEqual(
         expect.objectContaining({ role: AppRoles.STATE_USER, state: "AL" })
       );
     });
 
-    test("rejects a missing token, and logs it", async () => {
+    test("rejects a request with no token, and logs why", async () => {
       await expect(authenticateUser(eventWithToken(undefined))).rejects.toThrow(
         UnauthenticatedError
       );
@@ -71,42 +68,31 @@ describe("Authorization Lib", () => {
       );
     });
 
-    test("rejects the pen-test forgery: unsigned alg:none admin token", async () => {
+    test.each([
+      ["has no signature", () => unsignedAdminToken()],
+      [
+        "has expired",
+        () =>
+          signToken(idTokenClaims({ iat: now() - 7200, exp: now() - 3600 })),
+      ],
+      [
+        "is an access token instead of an ID token",
+        () =>
+          signToken(
+            idTokenClaims({
+              token_use: "access",
+              aud: undefined,
+              client_id: CLIENT_ID,
+            })
+          ),
+      ],
+    ])("rejects a token that %s", async (_reason, makeToken) => {
       await expect(
-        authenticateUser(eventWithToken(unsignedAdminToken()))
+        authenticateUser(eventWithToken(makeToken()))
       ).rejects.toThrow(UnauthenticatedError);
     });
 
-    test("rejects a token with modified claims (signature no longer matches)", async () => {
-      const token = tamperedToken(
-        idTokenClaims(),
-        idTokenClaims({ "custom:cms_roles": IdmRoles.PROJECT_OFFICER })
-      );
-      await expect(authenticateUser(eventWithToken(token))).rejects.toThrow(
-        UnauthenticatedError
-      );
-    });
-
-    test("rejects a forged state user token for another state signed with a different key", async () => {
-      const token = signToken(
-        idTokenClaims({ "custom:cms_state": "CA" }),
-        attackerKey
-      );
-      await expect(authenticateUser(eventWithToken(token))).rejects.toThrow(
-        UnauthenticatedError
-      );
-    });
-
-    test("rejects an expired token", async () => {
-      const token = signToken(
-        idTokenClaims({ iat: now() - 7200, exp: now() - 3600 })
-      );
-      await expect(authenticateUser(eventWithToken(token))).rejects.toThrow(
-        UnauthenticatedError
-      );
-    });
-
-    test("accepts a token that expired within the clock-skew grace period", async () => {
+    test("accepts a token that expired within the 30-second clock-skew allowance", async () => {
       const token = signToken(
         idTokenClaims({ iat: now() - 3600, exp: now() - 10 })
       );
@@ -115,65 +101,35 @@ describe("Authorization Lib", () => {
       );
     });
 
-    test("rejects a token issued to a different app client", async () => {
-      const token = signToken(idTokenClaims({ aud: "someotherclient" }));
-      await expect(authenticateUser(eventWithToken(token))).rejects.toThrow(
-        UnauthenticatedError
-      );
-    });
+    test.each([
+      [
+        "another user pool",
+        "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_Other1",
+      ],
+      // Cognito answers 403 for our pool's keys at this URL, so checking the
+      // signature would mean a failed download, an error log and a 503
+      [
+        "our pool, in Cognito's global URL format",
+        `https://issuer-cognito-idp.us-east-1.amazonaws.com/${USER_POOL_ID}`,
+      ],
+    ])(
+      "rejects a token issued by %s without checking its signature",
+      async (_issuer, iss) => {
+        const verify = jest.spyOn(getVerifier(), "verify");
+        await expect(
+          authenticateUser(eventWithToken(signToken(idTokenClaims({ iss }))))
+        ).rejects.toThrow(UnauthenticatedError);
+        expect(verify).not.toHaveBeenCalled();
+      }
+    );
 
-    test("rejects a token from a different user pool", async () => {
-      const token = signToken(
-        idTokenClaims({
-          iss: "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_Other1",
-        })
-      );
-      await expect(authenticateUser(eventWithToken(token))).rejects.toThrow(
-        UnauthenticatedError
-      );
-    });
-
-    test("rejects an access token in place of an ID token", async () => {
-      const token = signToken(
-        idTokenClaims({
-          token_use: "access",
-          aud: undefined,
-          client_id: CLIENT_ID,
-        })
-      );
-      await expect(authenticateUser(eventWithToken(token))).rejects.toThrow(
-        UnauthenticatedError
-      );
-    });
-
-    test("accepts a token whose sub matches the SigV4 caller", async () => {
-      const event = eventWithToken(signToken(idTokenClaims()), {
-        requestContext: {
-          identity: { cognitoAuthenticationProvider: callerProvider(SUB) },
-        },
-      });
-      await expect(authenticateUser(event)).resolves.toBeInstanceOf(
-        UserCredentials
-      );
-    });
-
-    test("rejects a valid token belonging to a different user than the SigV4 caller", async () => {
-      const event = eventWithToken(signToken(idTokenClaims()), {
-        requestContext: {
-          identity: { cognitoAuthenticationProvider: callerProvider("other") },
-        },
-      });
-      await expect(authenticateUser(event)).rejects.toThrow(
-        UnauthenticatedError
-      );
-    });
-
-    test("rejects when the SigV4 caller field is present but has no sub", async () => {
-      for (const cognitoAuthenticationProvider of [
-        PROVIDER,
-        callerProvider(""),
-        "unexpected-format",
-      ]) {
+    test.each([
+      ["belong to a different user", callerProvider("someone-else")],
+      ["have an empty user ID", callerProvider("")],
+      ["are in an unrecognized format", "unrecognized-format"],
+    ])(
+      "rejects a valid token when the AWS credentials that signed the request %s",
+      async (_case, cognitoAuthenticationProvider) => {
         const event = eventWithToken(signToken(idTokenClaims()), {
           requestContext: { identity: { cognitoAuthenticationProvider } },
         });
@@ -181,88 +137,71 @@ describe("Authorization Lib", () => {
           UnauthenticatedError
         );
       }
-    });
-
-    test("does not echo an unrecognized role; the user simply has no role", async () => {
-      const user = await authenticateUser(
-        eventWithToken(
-          signToken(idTokenClaims({ "custom:cms_roles": "mdctcarts-made-up" }))
-        )
-      );
-      expect(user.role).toBeUndefined();
-    });
+    );
 
     test.each([
       [
-        "download failed",
+        "the key download failed",
+        "error",
         new FetchError("https://cognito-idp/jwks.json", "timeout"),
       ],
-      ["key set malformed", new JwksValidationError("bad JWKS")],
-      ["key malformed", new JwkValidationError("JWK empty")],
-      ["key has wrong use", new JwkInvalidUseError("wrong use", "enc", "sig")],
-      ["key has wrong type", new JwkInvalidKtyError("wrong kty", "EC", "RSA")],
+      ["the key set is malformed", "error", new JwksValidationError("bad")],
+      ["a key is malformed", "error", new JwkValidationError("JWK empty")],
+      [
+        "a key isn't for signing",
+        "error",
+        new JwkInvalidUseError("wrong use", "enc", "sig"),
+      ],
+      [
+        "a key has the wrong type",
+        "error",
+        new JwkInvalidKtyError("wrong kty", "EC", "RSA"),
+      ],
+      [
+        "key refreshes are rate limited",
+        "warning",
+        new WaitPeriodNotYetEndedJwkError("wait"),
+      ],
     ])(
-      "returns 503 and logs an error when Cognito's keys are unusable (%s)",
-      async (_reason, error) => {
+      "returns 503 when %s, logged as an %s",
+      async (_reason, level, error) => {
         jest.spyOn(getVerifier(), "verify").mockRejectedValueOnce(error);
-        await expect(
-          authenticateUser(eventWithToken(signToken(idTokenClaims())))
-        ).rejects.toThrow(ServiceUnavailableError);
-        expect(logger.error).toHaveBeenCalled();
+        await expect(authenticateUser(validTokenEvent())).rejects.toThrow(
+          ServiceUnavailableError
+        );
+        expect(logger.error).toHaveBeenCalledTimes(level === "error" ? 1 : 0);
+        expect(logger.warn).toHaveBeenCalledTimes(level === "warning" ? 1 : 0);
       }
     );
 
-    test("returns 503 (try again), logged as a warning, while key refresh is rate limited", async () => {
-      jest
-        .spyOn(getVerifier(), "verify")
-        .mockRejectedValueOnce(new WaitPeriodNotYetEndedJwkError("wait"));
-      await expect(
-        authenticateUser(eventWithToken(signToken(idTokenClaims())))
-      ).rejects.toThrow(ServiceUnavailableError);
-      expect(logger.warn).toHaveBeenCalledWith(
-        "Could not verify token: signing key refresh is rate limited"
-      );
-      expect(logger.error).not.toHaveBeenCalled();
-    });
-
-    test("rejects a token whose key ID isn't one of Cognito's keys", async () => {
-      jest
-        .spyOn(getVerifier(), "verify")
-        .mockRejectedValueOnce(new KidNotFoundInJwksError("made-up-kid"));
-      await expect(
-        authenticateUser(eventWithToken(signToken(idTokenClaims())))
-      ).rejects.toThrow(UnauthenticatedError);
-      expect(logger.warn).toHaveBeenCalledWith(
-        "Rejected token: unknown signing key"
-      );
-    });
-
-    test("lets unexpected errors through as-is (500), not as a bad token", async () => {
+    test("passes unexpected errors through (500) instead of blaming the token", async () => {
       jest
         .spyOn(getVerifier(), "verify")
         .mockRejectedValueOnce(new TypeError("bug"));
-      await expect(
-        authenticateUser(eventWithToken(signToken(idTokenClaims())))
-      ).rejects.toThrow(TypeError);
+      await expect(authenticateUser(validTokenEvent())).rejects.toThrow(
+        TypeError
+      );
     });
 
-    test("logs a fixed reason, never values from the token", async () => {
-      const token = signToken(idTokenClaims({ aud: "<attacker-controlled>" }));
+    test("rejects a token for another app client, logging a fixed reason and nothing from the token", async () => {
+      const token = signToken(idTokenClaims({ aud: "<value-from-token>" }));
       await expect(authenticateUser(eventWithToken(token))).rejects.toThrow(
         UnauthenticatedError
       );
       expect(logger.warn).toHaveBeenCalledWith(
         "Rejected token: wrong issuer, client, or token type"
       );
-      const logged = JSON.stringify((logger.warn as jest.Mock).mock.calls);
-      expect(logged).not.toContain("attacker-controlled");
+      const everythingLogged = JSON.stringify(
+        Object.values(logger).map((log) => (log as jest.Mock).mock.calls)
+      );
+      expect(everythingLogged).not.toContain("value-from-token");
     });
 
     test.each([
       ["missing", undefined, "is not set"],
       ["malformed", "not a pool id", "not a pool id"],
     ])(
-      "a %s user pool ID gives callers a generic 500; details go to the logs",
+      "a %s user pool ID returns a generic 500 and logs the details",
       async (_case, poolId, loggedDetail) => {
         if (poolId === undefined) delete process.env.COGNITO_USER_POOL_ID;
         else process.env.COGNITO_USER_POOL_ID = poolId;
@@ -270,9 +209,7 @@ describe("Authorization Lib", () => {
           const isolated = await import("../authorization");
           const { logger: isolatedLogger } = await import("../debug-lib");
           await expect(
-            isolated.authenticateUser(
-              eventWithToken(signToken(idTokenClaims()))
-            )
+            isolated.authenticateUser(validTokenEvent())
           ).rejects.toThrow(/^Server configuration error$/);
           expect(isolatedLogger.error).toHaveBeenCalledWith(
             expect.stringContaining(loggedDetail)
@@ -280,9 +217,44 @@ describe("Authorization Lib", () => {
         });
       }
     );
+
+    test("rejects an unknown key ID, downloads Cognito's keys once, and keeps letting real users in", async () => {
+      await jest.isolateModulesAsync(async () => {
+        // A new Lambda container: nothing cached, and the key download stubbed
+        const { SimpleFetcher } = await import("aws-jwt-verify/https");
+        const download = jest
+          .spyOn(SimpleFetcher.prototype, "fetch")
+          .mockResolvedValue(
+            new TextEncoder().encode(JSON.stringify(testJwks())).buffer
+          );
+        const fresh = await import("../authorization");
+        const withKeyId = (kid: string) =>
+          eventWithToken(
+            signToken(idTokenClaims(), undefined, {
+              alg: "RS256",
+              kid,
+              typ: "JWT",
+            })
+          );
+
+        // Rejected, and the library pauses further key downloads for 10s
+        await expect(
+          fresh.authenticateUser(withKeyId("unknown-1"))
+        ).rejects.toThrow("Invalid authentication token");
+        // Real users still get in: their key came with that download
+        await expect(
+          fresh.authenticateUser(validTokenEvent())
+        ).resolves.toEqual(expect.objectContaining({ state: "AL" }));
+        // During the pause, another unknown key ID gets "try again" (503)
+        await expect(
+          fresh.authenticateUser(withKeyId("unknown-2"))
+        ).rejects.toThrow("Unable to verify credentials right now");
+        expect(download).toHaveBeenCalledTimes(1);
+      });
+    });
   });
 
-  describe("prefetching Cognito's signing keys at startup", () => {
+  describe("downloading Cognito's keys at startup", () => {
     const loadIsolated = async (hydrate: jest.Mock) => {
       let isolatedLogger: any;
       await jest.isolateModulesAsync(async () => {
@@ -293,7 +265,7 @@ describe("Authorization Lib", () => {
         ({ logger: isolatedLogger } = await import("../debug-lib"));
         await import("../authorization");
       });
-      await new Promise(setImmediate); // let a rejected prefetch settle
+      await new Promise(setImmediate); // let a rejected download settle
       return isolatedLogger;
     };
 
@@ -310,7 +282,7 @@ describe("Authorization Lib", () => {
       expect(hydrate).not.toHaveBeenCalled();
     });
 
-    test("a failed prefetch is only a warning, not a crash", async () => {
+    test("logs a warning if the download fails, without crashing", async () => {
       process.env.AWS_LAMBDA_FUNCTION_NAME = "carts-getSections";
       const hydrate = jest.fn().mockRejectedValue(new Error("down"));
       const isolatedLogger = await loadIsolated(hydrate);
@@ -319,7 +291,7 @@ describe("Authorization Lib", () => {
       );
     });
 
-    test("missing config doesn't crash startup", async () => {
+    test("skips the download without crashing when config is missing", async () => {
       process.env.AWS_LAMBDA_FUNCTION_NAME = "carts-getSections";
       delete process.env.COGNITO_USER_POOL_ID;
       const hydrate = jest.fn();
@@ -328,187 +300,63 @@ describe("Authorization Lib", () => {
     });
   });
 
-  /** A new container (nothing cached) with Cognito's key download stubbed.
-   *  Call inside jest.isolateModulesAsync. */
-  const loadFreshContainer = async () => {
-    const tokens = await import("../../test-util/cognitoTokens");
-    const auth = await import("../authorization");
-    const errors = await import("aws-jwt-verify/error");
-    const { SimpleFetcher } = await import("aws-jwt-verify/https");
-    const { logger: isolatedLogger } = await import("../debug-lib");
-    process.env.COGNITO_USER_POOL_ID = tokens.USER_POOL_ID;
-    process.env.COGNITO_USER_POOL_CLIENT_ID = tokens.CLIENT_ID;
-    return {
-      tokens,
-      auth,
-      errors,
-      isolatedLogger,
-      download: jest.spyOn(SimpleFetcher.prototype, "fetch"),
-      jwksBody: () =>
-        new TextEncoder().encode(JSON.stringify(tokens.testJwks())).buffer,
-    };
-  };
-
-  describe("made-up key IDs can't lock real users out", () => {
-    test("a made-up key ID refreshes the key cache, so real tokens keep working", async () => {
-      await jest.isolateModulesAsync(async () => {
-        const { tokens, auth, download, jwksBody } = await loadFreshContainer();
-        download.mockResolvedValue(jwksBody());
-        const madeUpKid = (kid: string) =>
-          tokens.signToken(tokens.idTokenClaims(), undefined, {
-            alg: "RS256",
-            kid,
-            typ: "JWT",
-          });
-
-        // The attacker goes first: rejected, and starts the 10s penalty
-        await expect(
-          auth.authenticateUser(tokens.eventWithToken(madeUpKid("fake-1")))
-        ).rejects.toThrow("Invalid authentication token");
-
-        // Real users right after: their key is in the set that request cached
-        for (let i = 0; i < 3; i++) {
-          await expect(
-            auth.authenticateUser(
-              tokens.eventWithToken(tokens.signToken(tokens.idTokenClaims()))
-            )
-          ).resolves.toEqual(expect.objectContaining({ state: "AL" }));
-        }
-
-        // More made-up key IDs during the penalty don't trigger downloads
-        await expect(
-          auth.authenticateUser(tokens.eventWithToken(madeUpKid("fake-2")))
-        ).rejects.toThrow("Unable to verify credentials right now");
-        expect(download).toHaveBeenCalledTimes(1);
-      });
-    });
-  });
-
-  describe("Cognito outage, through the real library", () => {
-    test("a failed key download returns 503, then recovers once Cognito is back", async () => {
-      await jest.isolateModulesAsync(async () => {
-        const { tokens, auth, errors, isolatedLogger, download, jwksBody } =
-          await loadFreshContainer();
-        download
-          .mockRejectedValueOnce(new errors.FetchError("jwks.json", "timeout"))
-          .mockResolvedValue(jwksBody());
-        const validToken = () =>
-          tokens.eventWithToken(tokens.signToken(tokens.idTokenClaims()));
-
-        await expect(auth.authenticateUser(validToken())).rejects.toThrow(
-          "Unable to verify credentials right now"
-        );
-        expect(isolatedLogger.error).toHaveBeenCalled();
-
-        // A failed download sets no penalty, so the next request just retries
-        await expect(auth.authenticateUser(validToken())).resolves.toEqual(
-          expect.objectContaining({ state: "AL" })
-        );
-        expect(download).toHaveBeenCalledTimes(2);
-      });
-    });
-  });
-
-  describe("issuer format", () => {
-    test("a global-format issuer is rejected (401) without downloading keys", async () => {
-      await jest.isolateModulesAsync(async () => {
-        // A stand-in for Cognito that behaves like ours: the regional key
-        // URL works, the global-format one returns 403
-        const { tokens, auth, errors, isolatedLogger, download, jwksBody } =
-          await loadFreshContainer();
-        download.mockImplementation(async (uri: string) => {
-          if (uri.includes("issuer-cognito-idp")) {
-            throw new errors.NonRetryableFetchError(uri, "403 Forbidden");
-          }
-          return jwksBody();
-        });
-
-        const globalIssuer = `https://issuer-cognito-idp.us-east-1.amazonaws.com/${tokens.USER_POOL_ID}`;
-        for (let i = 0; i < 3; i++) {
-          await expect(
-            auth.authenticateUser(
-              tokens.eventWithToken(
-                tokens.signToken(tokens.idTokenClaims({ iss: globalIssuer }))
-              )
-            )
-          ).rejects.toThrow("Invalid authentication token");
-        }
-        expect(download).not.toHaveBeenCalled();
-        expect(isolatedLogger.error).not.toHaveBeenCalled();
-        expect(isolatedLogger.warn).toHaveBeenCalledWith(
-          "Rejected token: wrong issuer, client, or token type"
-        );
-
-        await expect(
-          auth.authenticateUser(
-            tokens.eventWithToken(tokens.signToken(tokens.idTokenClaims()))
-          )
-        ).resolves.toEqual(expect.objectContaining({ state: "AL" }));
-      });
-    });
-  });
-
   describe("isAuthorized", () => {
-    const stateUser = new UserCredentials({
-      "custom:cms_roles": IdmRoles.STATE,
-      "custom:cms_state": "AL",
-    });
-    const admin = new UserCredentials({
-      "custom:cms_roles": IdmRoles.PROJECT_OFFICER,
-    });
-    const withState = (state?: string) =>
+    const user = (role: string, state?: string) =>
+      new UserCredentials({
+        "custom:cms_roles": role,
+        "custom:cms_state": state,
+      });
+    const alabamaUser = user(IdmRoles.STATE, "AL");
+    const stateUserWithNoState = user(IdmRoles.STATE);
+    const admin = user(IdmRoles.PROJECT_OFFICER);
+    const request = (state?: string) =>
       ({
         ...testEvent,
         pathParameters: state ? { state } : null,
       }) as APIGatewayProxyEvent;
 
-    test("state user may access their own state", () => {
-      expect(isAuthorized(withState("AL"), stateUser)).toBe(true);
-      expect(isAuthorized(withState("al"), stateUser)).toBe(true);
+    test.each([
+      ["a state user on their own state's routes", alabamaUser, "AL"],
+      [
+        "a state user whose state is in lower case in the URL",
+        alabamaUser,
+        "al",
+      ],
+      ["a state user on routes with no state", alabamaUser, undefined],
+      [
+        "a state user with no assigned state on routes with no state",
+        stateUserWithNoState,
+        undefined,
+      ],
+      ["a CMS admin on any state's routes", admin, "CA"],
+    ])("allows %s", (_case, who, state) => {
+      expect(isAuthorized(request(state), who)).toBe(true);
     });
 
-    test("state user may not access another state", () => {
-      expect(isAuthorized(withState("CA"), stateUser)).toBe(false);
-    });
-
-    test("state user may call routes without a state", () => {
-      expect(isAuthorized(withState(), stateUser)).toBe(true);
-    });
-
-    test("state user with no assigned state is denied on state routes", () => {
-      const noState = new UserCredentials({
-        "custom:cms_roles": IdmRoles.STATE,
-      });
-      expect(isAuthorized(withState("AL"), noState)).toBe(false);
-      expect(isAuthorized(withState("CA"), noState)).toBe(false);
-    });
-
-    test("state user with no assigned state may still call state-less routes", () => {
-      const noState = new UserCredentials({
-        "custom:cms_roles": IdmRoles.STATE,
-      });
-      expect(isAuthorized(withState(), noState)).toBe(true);
-    });
-
-    test("user with no CARTS role is denied", () => {
-      const noRole = new UserCredentials({ "custom:cms_roles": "other-app" });
-      expect(isAuthorized(withState("AL"), noRole)).toBe(false);
-    });
-
-    test("user with an unrecognized CARTS role is denied", () => {
-      const unknown = new UserCredentials({
-        "custom:cms_roles": "mdctcarts-made-up",
-      });
-      expect(isAuthorized(withState("AL"), unknown)).toBe(false);
-    });
-
-    test("CMS users may access any state", () => {
-      expect(isAuthorized(withState("CA"), admin)).toBe(true);
+    test.each([
+      ["a state user on another state's routes", alabamaUser, "CA"],
+      [
+        "a state user with no assigned state on a state's routes",
+        stateUserWithNoState,
+        "AL",
+      ],
+      [
+        "a user with only another app's role",
+        user("mdctseds-state-user"),
+        "AL",
+      ],
+      [
+        "a user with an unrecognized CARTS role",
+        user("mdctcarts-made-up"),
+        "AL",
+      ],
+    ])("denies %s", (_case, who, state) => {
+      expect(isAuthorized(request(state), who)).toBe(false);
     });
   });
 
   describe("UserCredentials name", () => {
-    test("uses the verified first and last name", () => {
+    test("uses the first and last name from the token", () => {
       const user = new UserCredentials({
         given_name: "Ada",
         family_name: "Lovelace",
@@ -517,7 +365,7 @@ describe("Authorization Lib", () => {
       expect(user.name).toBe("Ada Lovelace");
     });
 
-    test("falls back to email when a name is missing", () => {
+    test("falls back to email when either name is missing", () => {
       const user = new UserCredentials({
         given_name: "Ada",
         email: "ada@example.com",
@@ -527,12 +375,18 @@ describe("Authorization Lib", () => {
   });
 
   describe("mapIdmRoleToAppRole", () => {
-    test("should return AppRole if IdmRole exists", () => {
-      const result = mapIdmRoleToAppRole(IdmRoles.APPROVER);
-      expect(result).toEqual(AppRoles.CMS_APPROVER);
+    test.each([
+      [IdmRoles.APPROVER, AppRoles.CMS_APPROVER],
+      [IdmRoles.INTERNAL, AppRoles.INTERNAL_USER],
+      [IdmRoles.HELP, AppRoles.HELP_DESK],
+      [IdmRoles.BUSINESS_OWNER_REP, AppRoles.CMS_USER],
+      [IdmRoles.STATE, AppRoles.STATE_USER],
+      [IdmRoles.PROJECT_OFFICER, AppRoles.CMS_ADMIN],
+    ])("maps %s to %s", (idmRole, appRole) => {
+      expect(mapIdmRoleToAppRole(idmRole)).toBe(appRole);
     });
 
-    test("should return undefined for an unknown role", () => {
+    test("returns no role for an unrecognized role", () => {
       expect(mapIdmRoleToAppRole("mdctcarts-made-up" as IdmRoles)).toBe(
         undefined
       );

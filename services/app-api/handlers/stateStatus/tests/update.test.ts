@@ -57,11 +57,10 @@ describe("Test Update State Status Handlers", () => {
     );
   });
 
-  test("update state status as a state user records the verified user's name", async () => {
+  test("sets the signed-in user's name when updating a report status", async () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,
       pathParameters: { year: "2022", state: "AL" },
-
       body: `{"status": "certified", "username": "Someone Else"}`,
     };
 

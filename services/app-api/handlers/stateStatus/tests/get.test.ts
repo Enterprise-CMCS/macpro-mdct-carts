@@ -14,19 +14,17 @@ jest.mock("../../../libs/dynamodb-lib", () => ({
 
 jest.mock("../../../libs/authorization", () => ({
   isAuthorized: jest.fn().mockReturnValue(true),
-  authenticateUser: jest
-    .fn()
-    .mockReturnValueOnce({
-      role: AppRoles.STATE_USER,
-      state: "AL",
-    })
-    .mockReturnValueOnce({
-      role: AppRoles.CMS_USER,
-    }),
+  authenticateUser: jest.fn(),
 }));
 
+const signInAs = (user: object) =>
+  (authenticateUser as jest.Mock).mockReturnValueOnce(user);
+
 describe("Test Get State Status Handlers", () => {
+  beforeEach(() => jest.clearAllMocks());
+
   test("fetching state status should return only a state user's state", async () => {
+    signInAs({ role: AppRoles.STATE_USER, state: "AL" });
     const event: APIGatewayProxyEvent = {
       ...testEvent,
     };
@@ -47,6 +45,7 @@ describe("Test Get State Status Handlers", () => {
   });
 
   test("fetching state status should return everything for business owner rep", async () => {
+    signInAs({ role: AppRoles.CMS_USER });
     const event: APIGatewayProxyEvent = {
       ...testEvent,
     };
@@ -59,11 +58,8 @@ describe("Test Get State Status Handlers", () => {
     });
   });
 
-  test("a state user with no assigned state gets an empty list in the usual shape", async () => {
-    (authenticateUser as jest.Mock).mockReturnValueOnce({
-      role: AppRoles.STATE_USER,
-    });
-    (dynamodbLib.scanSome as jest.Mock).mockClear();
+  test("a state user with no assigned state gets an empty list", async () => {
+    signInAs({ role: AppRoles.STATE_USER });
 
     const res = await getStateStatus({ ...testEvent }, null);
 

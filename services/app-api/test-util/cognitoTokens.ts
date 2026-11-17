@@ -15,12 +15,12 @@ const { privateKey, publicKey } = generateKeyPairSync("rsa", {
   modulusLength: 2048,
 });
 
-/** A key Cognito never issued, for forging otherwise well-formed tokens */
-export const { privateKey: attackerKey } = generateKeyPairSync("rsa", {
+/** This is a key Cognito never issued used to test fake tokens */
+export const { privateKey: nonCognitoKey } = generateKeyPairSync("rsa", {
   modulusLength: 2048,
 });
 
-export const b64url = (obj: object) =>
+const b64url = (obj: object) =>
   Buffer.from(JSON.stringify(obj)).toString("base64url");
 
 export const signToken = (
@@ -37,12 +37,12 @@ export const signToken = (
   return `${data}.${signature}`;
 };
 
-/** The CCIC report's forged token: alg "none", no signature */
+/** A token with no signature that claims the admin role */
 export const unsignedAdminToken = (extraClaims: object = {}) =>
   `${b64url({ alg: "none", typ: "JWT" })}.${b64url({
     "custom:cms_roles": IdmRoles.PROJECT_OFFICER,
     "custom:cms_state": "TX",
-    email: "attacker@test.com",
+    email: "someone@test.com",
     ...extraClaims,
   })}.`;
 
@@ -60,6 +60,12 @@ export const idTokenClaims = (overrides: object = {}) => ({
   ...overrides,
 });
 
+/** A real token with `changes` written into its claims afterwards */
+export const tamperedToken = (changes: object) => {
+  const [header, , signature] = signToken(idTokenClaims()).split(".");
+  return `${header}.${b64url(idTokenClaims(changes))}.${signature}`;
+};
+
 export const eventWithToken = (
   token: string | undefined,
   extra: Partial<APIGatewayProxyEvent> = {}
@@ -70,17 +76,11 @@ export const eventWithToken = (
   ...extra,
 });
 
-/** The issuer without its scheme, as API Gateway reports the SigV4 caller */
-export const PROVIDER = ISSUER.slice("https://".length);
+const PROVIDER = ISSUER.slice("https://".length);
 
+/** How API Gateway names the Cognito user whose AWS credentials signed a request */
 export const callerProvider = (sub: string) =>
   `${PROVIDER},${PROVIDER}:CognitoSignIn:${sub}`;
-
-/** A real token for `signed` claims, with its payload swapped for `forged` */
-export const tamperedToken = (signed: object, forged: object) => {
-  const [header, , signature] = signToken(signed).split(".");
-  return `${header}.${b64url(forged)}.${signature}`;
-};
 
 /** A JWKS containing the test public key */
 export const testJwks = () => ({
