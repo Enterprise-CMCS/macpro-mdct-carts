@@ -3,6 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import * as aws4 from "aws4";
 import { STATE_USER_AUTH } from "./constants";
+import * as crypto from "node:crypto";
 
 interface EnvConfig {
   apiUrl: string;
@@ -109,12 +110,19 @@ function signHeaders(
   return result;
 }
 
-async function authenticatedRequest(
+export interface RawApiResponse<T = any> {
+  status: number;
+  statusText: string;
+  body: T;
+  rawText: string;
+}
+
+async function executeSignedRequest<T = any>(
   method: HttpMethod,
   apiPath: string,
-  body?: unknown,
-  storageStatePath: string = STATE_USER_AUTH
-): Promise<any> {
+  token: string,
+  body?: unknown
+): Promise<RawApiResponse<T>> {
   const { apiUrl, region } = await loadEnvConfig();
   const endpoint = apiUrl + apiPath;
 
@@ -123,50 +131,128 @@ async function authenticatedRequest(
       ? JSON.stringify(body)
       : undefined;
 
+  // Token is set BEFORE SigV4 signing so API Gateway includes x-api-key in SignedHeaders
   let headers: Record<string, string> = {
-    "x-api-key": getIdToken(storageStatePath),
+    "x-api-key": token,
   };
   if (bodyString !== undefined) {
     headers["Content-Type"] = "application/json";
   }
 
-  // LocalStack doesn't enforce IAM auth; the deployed API Gateway does.
+  // LocalStack doesn't enforce IAM auth but the deployed API Gateway does
   const isLocalStack = new URL(apiUrl).host.includes("localstack");
   if (!isLocalStack) {
     headers = signHeaders(endpoint, region, method, headers, bodyString);
   }
 
   const context = await request.newContext({ extraHTTPHeaders: headers });
-  const options =
-    bodyString !== undefined ? { headers, data: bodyString } : { headers };
+  try {
+    const response = await context.fetch(endpoint, {
+      method,
+      headers,
+      data: bodyString,
+    });
 
-  let response;
-  switch (method) {
-    case "GET":
-      response = await context.get(endpoint, { headers });
-      break;
-    case "POST":
-      response = await context.post(endpoint, options);
-      break;
-    case "PUT":
-      response = await context.put(endpoint, options);
-      break;
-    case "DELETE":
-      response = await context.delete(endpoint, { headers });
-      break;
-  }
+    const rawText = await response.text();
+    let parsedBody: any = null;
+    if (rawText.length > 0) {
+      try {
+        parsedBody = JSON.parse(rawText);
+      } catch {
+        parsedBody = rawText;
+      }
+    }
 
-  if (!response.ok()) {
-    const text = await response.text();
+    return {
+      status: response.status(),
+      statusText: response.statusText(),
+      body: parsedBody,
+      rawText,
+    };
+  } finally {
     await context.dispose();
+  }
+}
+
+export async function authenticatedRawRequest<T = any>(
+  method: HttpMethod,
+  apiPath: string,
+  body?: unknown,
+  storageStatePath: string = STATE_USER_AUTH
+): Promise<RawApiResponse<T>> {
+  const validToken = getIdToken(storageStatePath);
+  return executeSignedRequest<T>(method, apiPath, validToken, body);
+}
+
+export function buildForgedJwt(
+  state: string = "TX",
+  role: string = "mdctcarts-project-officer",
+  storageStatePath: string = STATE_USER_AUTH,
+  expiration: number = 9999999999
+): string {
+  // Pulls the real issuer for the active test environment from the saved token
+  const realToken = getIdToken(storageStatePath);
+  const realPayload = JSON.parse(
+    Buffer.from(realToken.split(".")[1], "base64url").toString("utf8")
+  );
+
+  const header = {
+    alg: "HS256",
+    typ: "JWT",
+  };
+
+  const payload = {
+    "cognito:username": "retest-forge-user",
+    "custom:cms_roles": role,
+    "custom:cms_state": state,
+    email: "retest-user@example.com",
+    iss: realPayload.iss,
+    exp: expiration,
+  };
+
+  const encodedHeader = Buffer.from(JSON.stringify(header)).toString(
+    "base64url"
+  );
+  const encodedPayload = Buffer.from(JSON.stringify(payload)).toString(
+    "base64url"
+  );
+  const fakeSignature = crypto
+    .createHash("sha256")
+    .update("fake_secret")
+    .digest("base64url");
+
+  return `${encodedHeader}.${encodedPayload}.${fakeSignature}`;
+}
+
+export async function requestWithCustomToken<T = any>(
+  method: HttpMethod,
+  apiPath: string,
+  customToken: string,
+  body?: unknown
+): Promise<RawApiResponse<T>> {
+  return executeSignedRequest<T>(method, apiPath, customToken, body);
+}
+
+export async function authenticatedRequest<T = any>(
+  method: HttpMethod,
+  apiPath: string,
+  body?: unknown,
+  storageStatePath: string = STATE_USER_AUTH
+): Promise<T> {
+  const res = await authenticatedRawRequest<T>(
+    method,
+    apiPath,
+    body,
+    storageStatePath
+  );
+
+  if (res.status < 200 || res.status >= 300) {
     throw new Error(
-      `API request failed: ${method} ${endpoint} -> ${response.status()} ${response.statusText()} ${text}`
+      `API request failed: ${method} ${apiPath} -> ${res.status} ${res.statusText} ${res.rawText}`
     );
   }
 
-  const text = await response.text();
-  await context.dispose();
-  return text.length > 0 ? JSON.parse(text) : null;
+  return res.body;
 }
 
 export interface ReportStatus {
