@@ -17,7 +17,7 @@ test.describe("Admin user uncertifies a certified report", () => {
       STATE,
       "certified",
       process.env.CYPRESS_STATE_USER_EMAIL!,
-      STATE_USER_AUTH,
+      STATE_USER_AUTH
     );
   });
 
@@ -37,7 +37,7 @@ test.describe("Admin user uncertifies a certified report", () => {
     const uncertifyResponse = page.waitForResponse(
       (response) =>
         response.request().method() === "POST" &&
-        response.url().endsWith(`/state_status/${YEAR}/${STATE}`),
+        response.url().endsWith(`/state_status/${YEAR}/${STATE}`)
     );
     await dialog
       .getByRole("button", { name: `Uncertify ${STATE} ${YEAR} report` })
@@ -50,7 +50,7 @@ test.describe("Admin user uncertifies a certified report", () => {
         status: "in_progress",
         state: STATE,
         year: YEAR,
-      }),
+      })
     );
 
     // The UI reloads after uncertifying, so the report should now be In Progress
