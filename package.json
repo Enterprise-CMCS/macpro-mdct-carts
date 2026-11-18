@@ -73,14 +73,17 @@
   },
   "resolutions": {
     "@cypress/request/uuid": "^11.1.1",
-    "@jest/reporters/glob": "^13.0.0",
+    "@jest/reporters/glob": "^14.0.6",
     "@jest/transform/babel-plugin-istanbul": "^8.0.0",
+    "aws-cdk-lib/minimatch": "^11.0.5",
     "aws-sdk/uuid": "^11.1.1",
     "babel-jest/babel-plugin-istanbul": "^8.0.0",
     "babel-plugin-istanbul/test-exclude": "^8.0.0",
     "concurrently/shell-quote": "^1.12.0",
-    "jest-config/glob": "^13.0.0",
-    "jest-runtime/glob": "^13.0.0"
+    "jest-config/glob": "^14.0.6",
+    "jest-runtime/glob": "^14.0.6",
+    "test-exclude/glob": "^14.0.6",
+    "test-exclude/minimatch": "^11.0.5"
   },
   "packageManager": "yarn@4.12.0"
 }

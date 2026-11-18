@@ -175,16 +175,9 @@ export function createUiAuthComponents(props: CreateUiAuthComponentsProps) {
     ),
     inlinePolicies: {
       CognitoAuthorizedPolicy: new iam.PolicyDocument({
+        // Every logged-in user gets this role. Don't add cognito-identity:*:
+        // any user could then manage or delete the account's identity pools.
         statements: [
-          new iam.PolicyStatement({
-            actions: [
-              "mobileanalytics:PutEvents",
-              "cognito-sync:*",
-              "cognito-identity:*",
-            ],
-            resources: ["*"],
-            effect: iam.Effect.ALLOW,
-          }),
           new iam.PolicyStatement({
             actions: ["execute-api:Invoke"],
             resources: [

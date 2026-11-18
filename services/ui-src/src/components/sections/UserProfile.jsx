@@ -31,6 +31,10 @@ const UserProfile = () => {
                 <dt>Role:</dt>
                 <dd>{currentUser.role}</dd>
               </div>
+              <div>
+                <dt>State:</dt>
+                <dd>{currentUser.state?.id || "N/A"}</dd>
+              </div>
             </dl>
           </Main>
         </div>

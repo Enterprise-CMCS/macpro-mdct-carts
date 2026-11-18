@@ -1,18 +1,16 @@
 import handler from "../../libs/handler-lib";
 import dynamoDb from "../../libs/dynamodb-lib";
-import { getUserCredentialsFromJwt } from "../../libs/authorization";
 import { State, StateStatus, AppRoles, Section } from "../../types";
 import { NotFoundError, UnauthorizedError } from "../../libs/httpErrors";
 
 /**
  * Updates the State Status associated with a given year and state
  */
-export const post = handler(async (event, _context) => {
+export const post = handler(async (event, _context, user) => {
   const { body } = event;
   const { year } = JSON.parse(body || "{}");
 
   // Validate user
-  const user = getUserCredentialsFromJwt(event);
   if (user.role != AppRoles.CMS_ADMIN) {
     throw new UnauthorizedError("Unauthorized Request");
   }

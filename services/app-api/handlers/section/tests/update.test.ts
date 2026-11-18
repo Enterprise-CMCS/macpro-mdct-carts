@@ -16,7 +16,7 @@ jest.mock("../../../libs/dynamodb-lib", () => ({
 jest.mock("../../../libs/authorization", () => ({
   __esModule: true,
   isAuthorized: jest.fn().mockReturnValue(true),
-  getUserCredentialsFromJwt: jest.fn().mockReturnValue({
+  authenticateUser: jest.fn().mockReturnValue({
     role: AppRoles.STATE_USER,
     state: "AL",
   }),

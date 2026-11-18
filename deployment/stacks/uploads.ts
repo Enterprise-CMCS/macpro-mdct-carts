@@ -57,9 +57,14 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
         S3MalwareProtectionPolicy: new iam.PolicyDocument({
           statements: [
             new iam.PolicyStatement({
-              sid: "AllowEventBridgeManagement",
+              sid: "AllowManagedRuleToSendS3EventsToGuardDuty",
               effect: iam.Effect.ALLOW,
-              actions: ["events:*"],
+              actions: [
+                "events:PutRule",
+                "events:DeleteRule",
+                "events:PutTargets",
+                "events:RemoveTargets",
+              ],
               resources: [
                 `arn:aws:events:us-east-1:${Aws.ACCOUNT_ID}:rule/DO-NOT-DELETE-AmazonGuardDutyMalwareProtectionS3*`,
               ],
@@ -71,18 +76,35 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
               },
             }),
             new iam.PolicyStatement({
+              sid: "AllowGuardDutyToMonitorEventBridgeManagedRule",
+              effect: iam.Effect.ALLOW,
+              actions: ["events:DescribeRule", "events:ListTargetsByRule"],
+              resources: [
+                `arn:aws:events:us-east-1:${Aws.ACCOUNT_ID}:rule/DO-NOT-DELETE-AmazonGuardDutyMalwareProtectionS3*`,
+              ],
+            }),
+            new iam.PolicyStatement({
               sid: "AllowS3Operations",
               effect: iam.Effect.ALLOW,
               actions: [
                 "s3:GetObject*",
                 "s3:PutObject*",
                 "s3:ListBucket",
+                "s3:GetBucketLocation",
                 "s3:*Notification",
                 "s3:*Tagging",
               ],
               resources: [
                 attachmentsBucket.bucketArn,
                 `${attachmentsBucket.bucketArn}/*`,
+              ],
+            }),
+            new iam.PolicyStatement({
+              sid: "AllowPutValidationObject",
+              effect: iam.Effect.ALLOW,
+              actions: ["s3:PutObject"],
+              resources: [
+                `${attachmentsBucket.bucketArn}/malware-protection-resource-validation-object`,
               ],
             }),
           ],
@@ -137,19 +159,25 @@ export function createUploadsComponents(props: CreateUploadsComponentsProps) {
     })
   );
 
-  new guardduty.CfnMalwareProtectionPlan(scope, "MalwareProtectionPlan", {
-    actions: {
-      tagging: {
-        status: "ENABLED",
+  const malwareProtectionPlan = new guardduty.CfnMalwareProtectionPlan(
+    scope,
+    "MalwareProtectionPlan",
+    {
+      actions: {
+        tagging: {
+          status: "ENABLED",
+        },
       },
-    },
-    protectedResource: {
-      s3Bucket: {
-        bucketName: attachmentsBucketName,
+      protectedResource: {
+        s3Bucket: {
+          bucketName: attachmentsBucket.bucketName,
+        },
       },
-    },
-    role: s3MalwareProtectionRole.roleArn,
-  });
+      role: s3MalwareProtectionRole.roleArn,
+    }
+  );
+  malwareProtectionPlan.node.addDependency(attachmentsBucket);
+  malwareProtectionPlan.node.addDependency(s3MalwareProtectionRole);
 
   return attachmentsBucket;
 }

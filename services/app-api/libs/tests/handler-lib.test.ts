@@ -1,7 +1,13 @@
 import handlerLib from "../handler-lib";
 import { testEvent } from "../../test-util/testEvents";
-import { isAuthorized } from "../authorization";
+import { authenticateUser, isAuthorized } from "../authorization";
+import {
+  NotFoundError,
+  ServiceUnavailableError,
+  UnauthenticatedError,
+} from "../httpErrors";
 import * as logger from "../debug-lib";
+import { AppRoles } from "../../types";
 
 jest.mock("../debug-lib", () => ({
   init: jest.fn(),
@@ -11,16 +17,23 @@ jest.mock("../debug-lib", () => ({
 }));
 
 jest.mock("../authorization", () => ({
+  authenticateUser: jest.fn(),
   isAuthorized: jest.fn(),
 }));
 
-describe("Test Lambda Handler Lib", () => {
-  test("Test successful authorized lambda workflow", async () => {
-    const testFunc = jest.fn().mockReturnValue({ test: "test" });
-    const handler = handlerLib(testFunc);
+const verifiedUser = { role: AppRoles.STATE_USER, state: "AL" };
 
+describe("Lambda handler wrapper", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    (authenticateUser as jest.Mock).mockResolvedValue(verifiedUser);
     (isAuthorized as jest.Mock).mockReturnValue(true);
-    const res = await handler(testEvent, null);
+  });
+
+  test("runs the handler with the verified user and returns 200", async () => {
+    const testFunc = jest.fn().mockReturnValue({ test: "test" });
+
+    const res = await handlerLib(testFunc)(testEvent, null);
 
     expect(res.statusCode).toBe(200);
     expect(res.body).toContain("test");
@@ -34,36 +47,62 @@ describe("Test Lambda Handler Lib", () => {
       })
     );
     expect(logger.flush).toHaveBeenCalled();
-    expect(testFunc).toHaveBeenCalledWith(testEvent, null);
+    expect(authenticateUser).toHaveBeenCalledWith(testEvent);
+    expect(isAuthorized).toHaveBeenCalledWith(testEvent, verifiedUser);
+    expect(testFunc).toHaveBeenCalledWith(testEvent, null, verifiedUser);
   });
 
-  test("Test unsuccessful authorization lambda workflow", async () => {
+  test("returns 403 when the user isn't allowed", async () => {
     const testFunc = jest.fn();
-    const handler = handlerLib(testFunc);
-
     (isAuthorized as jest.Mock).mockReturnValue(false);
-    const res = await handler(testEvent, null);
+
+    const res = await handlerLib(testFunc)(testEvent, null);
 
     expect(res.statusCode).toBe(403);
     expect(res.body).toContain(
       "User is not authorized to access this resource."
     );
+    expect(testFunc).not.toHaveBeenCalled();
   });
 
-  test("Test Errored lambda workflow", async () => {
-    const err = new Error("Test Error");
-    const testFunc = jest.fn().mockImplementation(() => {
-      throw err;
-    });
-    const handler = handlerLib(testFunc);
+  test.each([
+    [
+      "an invalid or missing token",
+      401,
+      new UnauthenticatedError("Invalid authentication token"),
+    ],
+    [
+      "being unable to check the token",
+      503,
+      new ServiceUnavailableError("Unable to verify credentials right now"),
+    ],
+  ])("%s returns %i", async (_reason, status, error) => {
+    const testFunc = jest.fn();
+    (authenticateUser as jest.Mock).mockRejectedValue(error);
 
-    (isAuthorized as jest.Mock).mockReturnValue(true);
-    const res = await handler(testEvent, null);
+    const res = await handlerLib(testFunc)(testEvent, null);
 
-    expect(testFunc).toHaveBeenCalledWith(testEvent, null);
-    expect(logger.error).toHaveBeenCalledWith("Error: %O", err);
+    expect(res.statusCode).toBe(status);
+    expect(isAuthorized).not.toHaveBeenCalled();
+    expect(testFunc).not.toHaveBeenCalled();
     expect(logger.flush).toHaveBeenCalled();
-    expect(res.statusCode).toBe(500);
-    expect(res.body).toContain("Test Error");
+    expect(logger.error).not.toHaveBeenCalled();
   });
+
+  test.each([
+    ["an unexpected error", 500, new Error("Test Error")],
+    ["a not-found error", 404, new NotFoundError("Test Error")],
+  ])(
+    "a handler that throws %s returns %i and logs it",
+    async (_kind, status, error) => {
+      const testFunc = jest.fn().mockRejectedValue(error);
+
+      const res = await handlerLib(testFunc)(testEvent, null);
+
+      expect(res.statusCode).toBe(status);
+      expect(res.body).toContain("Test Error");
+      expect(logger.error).toHaveBeenCalledWith("Error: %O", error);
+      expect(logger.flush).toHaveBeenCalled();
+    }
+  );
 });

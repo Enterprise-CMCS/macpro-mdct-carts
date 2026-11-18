@@ -54,6 +54,33 @@ describe("<UserProfile />", () => {
     expect(roleTerm.tagName).toBe("DT");
     const roleValue = screen.getByText("State User");
     expect(roleValue.tagName).toBe("DD");
+
+    const stateTerm = screen.getByText("State:");
+    expect(stateTerm.tagName).toBe("DT");
+    const stateValue = screen.getByText("AL");
+    expect(stateValue.tagName).toBe("DD");
+  });
+
+  test("should render N/A for users without a state", () => {
+    const adminStore = mockStore({
+      stateUser: {
+        currentUser: {
+          email: "admin.user@example.com",
+          username: "adminuser",
+          firstname: "Admin",
+          lastname: "User",
+          role: "CMS_ADMIN",
+          state: { id: undefined },
+        },
+      },
+    });
+    render(
+      <Provider store={adminStore}>
+        <UserProfile />
+      </Provider>
+    );
+    const stateValue = screen.getByText("N/A");
+    expect(stateValue.tagName).toBe("DD");
   });
 
   testA11y(userProfile);

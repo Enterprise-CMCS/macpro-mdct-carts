@@ -20,6 +20,7 @@ global.fetch = jest.fn().mockImplementationOnce(() => {
 });
 
 jest.mock("../../../libs/authorization", () => ({
+  authenticateUser: jest.fn().mockResolvedValue({}),
   isAuthorized: jest.fn().mockReturnValue(true),
 }));
 
