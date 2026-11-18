@@ -13,9 +13,10 @@ jest.mock("../../../libs/dynamodb-lib", () => ({
 
 jest.mock("../../../libs/authorization", () => ({
   isAuthorized: jest.fn().mockReturnValue(true),
-  getUserCredentialsFromJwt: jest.fn().mockReturnValue({
+  authenticateUser: jest.fn().mockReturnValue({
     role: AppRoles.STATE_USER,
     state: "AL",
+    name: "Verified Name",
   }),
 }));
 
@@ -52,15 +53,15 @@ describe("Test Update State Status Handlers", () => {
 
     expect(res.statusCode).toBe(500);
     expect(res.body).toBe(
-      '{"error":"Cannot update State Status without a new status and username"}'
+      '{"error":"Cannot update State Status without a new status"}'
     );
   });
 
-  test("update state status as a state user uses correct query", async () => {
+  test("sets the signed-in user's name when updating a report status", async () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,
       pathParameters: { year: "2022", state: "AL" },
-      body: `{"status": "certified", "username": "test user"}`,
+      body: `{"status": "certified", "username": "Someone Else"}`,
     };
 
     const res = await updateStateStatus(event, null);
@@ -74,7 +75,7 @@ describe("Test Update State Status Handlers", () => {
       },
       ExpressionAttributeValues: {
         ":status": "certified",
-        ":username": "test user",
+        ":username": "Verified Name",
         ":lastChanged": new Date().toString(),
       },
       Key: {

@@ -2,15 +2,13 @@ import handler from "../../libs/handler-lib";
 import dynamoDb from "../../libs/dynamodb-lib";
 import s3 from "../../libs/s3-lib";
 import { fixLocalstackUrl } from "../../libs/localstack";
-import { getUserCredentialsFromJwt } from "../../libs/authorization";
 import { AppRoles } from "../../types";
 import { convertToDynamoExpression } from "../dynamoUtils/convertToDynamoExpressionVars";
 import { UnauthorizedError } from "../../libs/httpErrors";
 /**
  * Updates the Sections associated with a given year and state
  */
-export const psUpload = handler(async (event, _context) => {
-  const user = getUserCredentialsFromJwt(event);
+export const psUpload = handler(async (event, _context, user) => {
   if (user.role !== AppRoles.STATE_USER) {
     throw new UnauthorizedError("Unauthorized");
   }

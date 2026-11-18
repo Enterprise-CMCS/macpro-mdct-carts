@@ -1,6 +1,5 @@
 import handler from "../../libs/handler-lib";
 import dynamoDb from "../../libs/dynamodb-lib";
-import { getUserCredentialsFromJwt } from "../../libs/authorization";
 import { AppRoles } from "../../types";
 import s3 from "../../libs/s3-lib";
 import { UnauthorizedError } from "../../libs/httpErrors";
@@ -8,8 +7,7 @@ import { UnauthorizedError } from "../../libs/httpErrors";
 /**
  * Returns the report Sections associated with a given year and state
  */
-export const deleteUpload = handler(async (event, _context) => {
-  const user = getUserCredentialsFromJwt(event);
+export const deleteUpload = handler(async (event, _context, user) => {
   const state = event.pathParameters ? event.pathParameters["state"] : "";
   const fileId = event.pathParameters ? event.pathParameters["fileId"] : "";
 

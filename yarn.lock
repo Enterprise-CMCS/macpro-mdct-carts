@@ -8757,13 +8757,13 @@ __metadata:
     "@aws-sdk/lib-dynamodb": "npm:~3.1037.0"
     "@aws-sdk/s3-request-presigner": "npm:~3.1037.0"
     "@types/jest": "npm:^30.0.0"
+    aws-jwt-verify: "npm:^5.2.1"
     aws-sdk-client-mock: "npm:~4.1.0"
     dompurify: "npm:^3.4.17"
     happy-dom: "npm:^21.0.4"
     jest: "npm:30.4.2"
     jsonpath-plus: "npm:^10.4.0"
     jsonschema: "npm:^1.5.0"
-    jwt-decode: "npm:^4.0.0"
     ts-jest: "npm:^29.4.9"
     typescript: "npm:^6.0.3"
   languageName: unknown
@@ -8910,6 +8910,13 @@ __metadata:
   bin:
     cdk: bin/cdk
   checksum: 10c0/1356459f0563f3a9a1b998ec17e315b070c3823c419be4067e4f8125dd34d84c2674aacff0ce484f49bbd09f85b4093f198df49f32c60cc9e570fd3070748150
+  languageName: node
+  linkType: hard
+
+"aws-jwt-verify@npm:^5.2.1":
+  version: 5.2.1
+  resolution: "aws-jwt-verify@npm:5.2.1"
+  checksum: 10c0/f1944ddf28ffab0dc347abe130d4c41a912f282ab4686156c42c20c5b081545b7a9b1851e7749acf5153709d2e0cb77e7a21c6db8c32c381f6a8df3c0b495c44
   languageName: node
   linkType: hard
 
@@ -12140,13 +12147,6 @@ __metadata:
   version: 6.2.0
   resolution: "just-extend@npm:6.2.0"
   checksum: 10c0/d41cbdb6d85b986d4deaf2144d81d4f7266cd408fc95189d046d63f610c2dc486b141aeb6ef319c2d76fe904d45a6bb31f19b098ff0427c35688e0c383fc0511
-  languageName: node
-  linkType: hard
-
-"jwt-decode@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "jwt-decode@npm:4.0.0"
-  checksum: 10c0/de75bbf89220746c388cf6a7b71e56080437b77d2edb29bae1c2155048b02c6b8c59a3e5e8d6ccdfd54f0b8bda25226e491a4f1b55ac5f8da04cfbadec4e546c
   languageName: node
   linkType: hard
 
