@@ -1,4 +1,5 @@
 import handler from "../../libs/handler-lib";
+import { BadRequestError } from "../../libs/httpErrors";
 import dynamoDb from "../../libs/dynamodb-lib";
 import { AppRoles } from "../../types";
 
@@ -6,9 +7,10 @@ import { AppRoles } from "../../types";
  * Returns a list of the staged SEDS enrollment counts for a year
  */
 export const getEnrollmentCounts = handler(async (event, _context, user) => {
-  if (!event.pathParameters) throw new Error("No Path Parameters Object");
+  if (!event.pathParameters)
+    throw new BadRequestError("No Path Parameters Object");
   if (!event.pathParameters.state || !event.pathParameters.year) {
-    throw new Error("Be sure to include state, year in the path");
+    throw new BadRequestError("Be sure to include state, year in the path");
   }
 
   const { year, state } = event.pathParameters;

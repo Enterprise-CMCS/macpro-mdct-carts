@@ -1,4 +1,5 @@
 import handler from "../../libs/handler-lib";
+import { BadRequestError } from "../../libs/httpErrors";
 import dynamoDb from "../../libs/dynamodb-lib";
 /**
  * Updates the Sections associated with a given year and state
@@ -6,7 +7,7 @@ import dynamoDb from "../../libs/dynamodb-lib";
 export const viewUploaded = handler(async (event, _context) => {
   // State users are prohibited from accessing URLs for other states
   if (!event.pathParameters) {
-    throw new Error("Path Parameters required");
+    throw new BadRequestError("Path Parameters required");
   }
   const { state, year } = event.pathParameters;
   const body = event.body ? JSON.parse(event.body) : null;

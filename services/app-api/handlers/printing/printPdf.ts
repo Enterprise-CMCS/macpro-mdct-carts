@@ -1,4 +1,5 @@
 import handler from "../../libs/handler-lib";
+import { BadRequestError } from "../../libs/httpErrors";
 import * as logger from "../../libs/debug-lib";
 import createDOMPurify from "dompurify";
 import { Window } from "happy-dom";
@@ -18,7 +19,7 @@ export const print = handler(async (event, _context) => {
   const body = event.body ? JSON.parse(event.body) : {};
   const { encodedHtml } = body;
   if (!encodedHtml) {
-    throw new Error("Missing required html string");
+    throw new BadRequestError("Missing required html string");
   }
   const rawHtml = Buffer.from(encodedHtml, "base64").toString("utf8");
 

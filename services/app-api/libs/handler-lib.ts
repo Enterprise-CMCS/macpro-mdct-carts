@@ -7,6 +7,7 @@ import {
 } from "./authorization";
 import { failure, success, buildResponse } from "./response-lib";
 import {
+  BadRequestError,
   NotFoundError,
   ServiceUnavailableError,
   UnauthenticatedError,
@@ -56,6 +57,8 @@ export default function handler(lambda: LambdaFunction) {
           return buildResponse(403, body);
         case ServiceUnavailableError:
           return buildResponse(503, body);
+        case BadRequestError:
+          return buildResponse(400, body);
         case NotFoundError:
           return buildResponse(404, body);
         default:

@@ -2,6 +2,7 @@ import handlerLib from "../handler-lib";
 import { testEvent } from "../../test-util/testEvents";
 import { authenticateUser, isAuthorized } from "../authorization";
 import {
+  BadRequestError,
   NotFoundError,
   ServiceUnavailableError,
   UnauthenticatedError,
@@ -91,6 +92,7 @@ describe("Lambda handler wrapper", () => {
 
   test.each([
     ["an unexpected error", 500, new Error("Test Error")],
+    ["a bad-request error", 400, new BadRequestError("Test Error")],
     ["a not-found error", 404, new NotFoundError("Test Error")],
   ])(
     "a handler that throws %s returns %i and logs it",
