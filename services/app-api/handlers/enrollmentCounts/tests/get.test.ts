@@ -84,7 +84,7 @@ describe("Test Get Enrollment Count Handlers", () => {
 
     const res = await getEnrollmentCounts(event, null);
 
-    expect(res.statusCode).toBe(500);
+    expect(res.statusCode).toBe(400);
     expect(res.body).toBe(
       '{"error":"Be sure to include state, year in the path"}'
     );

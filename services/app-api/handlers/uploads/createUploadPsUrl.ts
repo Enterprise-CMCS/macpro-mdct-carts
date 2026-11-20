@@ -4,7 +4,7 @@ import s3 from "../../libs/s3-lib";
 import { fixLocalstackUrl } from "../../libs/localstack";
 import { AppRoles } from "../../types";
 import { convertToDynamoExpression } from "../dynamoUtils/convertToDynamoExpressionVars";
-import { UnauthorizedError } from "../../libs/httpErrors";
+import { BadRequestError, UnauthorizedError } from "../../libs/httpErrors";
 /**
  * Updates the Sections associated with a given year and state
  */
@@ -21,7 +21,7 @@ export const psUpload = handler(async (event, _context, user) => {
     !event.pathParameters.state ||
     !event.pathParameters.year
   ) {
-    throw new Error("Be sure to include state, year in the path");
+    throw new BadRequestError("Be sure to include state, year in the path");
   }
   const { state, year } = event.pathParameters;
   const username = user.email ?? "";

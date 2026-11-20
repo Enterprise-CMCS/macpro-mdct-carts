@@ -1,4 +1,5 @@
 import handler from "../../libs/handler-lib";
+import { BadRequestError } from "../../libs/httpErrors";
 import dynamoDb from "../../libs/dynamodb-lib";
 import { AppRoles } from "../../types";
 import { convertToDynamoExpression } from "../dynamoUtils/convertToDynamoExpressionVars";
@@ -10,12 +11,15 @@ export const updateStateStatus = handler(async (event, _context, user) => {
   const { body } = event;
   const { status } = JSON.parse(body || "{}");
 
-  if (!event.pathParameters) throw new Error("No Path Parameters Object");
+  if (!event.pathParameters)
+    throw new BadRequestError("No Path Parameters Object");
   if (!event.pathParameters.state || !event.pathParameters.year) {
-    throw new Error("Be sure to include state, year in the path");
+    throw new BadRequestError("Be sure to include state, year in the path");
   }
   if (!status) {
-    throw new Error("Cannot update State Status without a new status");
+    throw new BadRequestError(
+      "Cannot update State Status without a new status"
+    );
   }
 
   const { year, state } = event.pathParameters;
