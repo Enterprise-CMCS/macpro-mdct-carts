@@ -38,6 +38,8 @@ jest.mock("../../dynamoUtils/convertToDynamoExpressionVars", () => ({
 }));
 
 describe("Test Delete Upload Handler", () => {
+  beforeEach(() => jest.clearAllMocks());
+
   test("Should Call S3 delete when entry exists", async () => {
     const event: APIGatewayProxyEvent = {
       ...testEvent,
@@ -66,5 +68,20 @@ describe("Test Delete Upload Handler", () => {
         fileId: "uniqueIdString",
       },
     });
+  });
+
+  test("returns 404 and deletes nothing when the file doesn't exist", async () => {
+    (dbLib.query as jest.Mock).mockReturnValueOnce({ Items: [] });
+    const event: APIGatewayProxyEvent = {
+      ...testEvent,
+      pathParameters: { year: "2022", state: "AL", fileId: "missingFile" },
+    };
+
+    const res = await deleteUpload(event, null);
+
+    expect(res.statusCode).toBe(404);
+    expect(res.body).toBe('{"error":"No such item exists"}');
+    expect(s3Lib.deleteObject).not.toHaveBeenCalled();
+    expect(dbLib.delete).not.toHaveBeenCalled();
   });
 });

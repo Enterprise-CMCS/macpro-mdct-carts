@@ -2,7 +2,7 @@ import handler from "../../libs/handler-lib";
 import dynamoDb from "../../libs/dynamodb-lib";
 import { AppRoles } from "../../types";
 import s3 from "../../libs/s3-lib";
-import { UnauthorizedError } from "../../libs/httpErrors";
+import { NotFoundError, UnauthorizedError } from "../../libs/httpErrors";
 
 /**
  * Returns the report Sections associated with a given year and state
@@ -28,7 +28,7 @@ export const deleteUpload = handler(async (event, _context, user) => {
   };
   const results = await dynamoDb.query(documentParams);
   if (!results.Items || results.Items.length === 0) {
-    throw new Error("Unauthorized");
+    throw new NotFoundError("No such item exists");
   }
   const document = results.Items[0];
 
