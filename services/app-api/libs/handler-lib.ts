@@ -28,6 +28,9 @@ export default function handler(lambda: LambdaFunction) {
       pathParameters: event.pathParameters,
       queryStringParameters: event.queryStringParameters,
     });
+    // API Gateway's ID for this request. It's logged with any error and sent
+    // back on unexpected ones, so a user's report can be matched to the logs.
+    const requestId: string | undefined = event.requestContext?.requestId;
 
     try {
       const user = await authenticateUser(event);
@@ -46,7 +49,7 @@ export default function handler(lambda: LambdaFunction) {
         !(error instanceof UnauthenticatedError) &&
         !(error instanceof ServiceUnavailableError)
       ) {
-        logger.error("Error: %O", error);
+        logger.error("Error (request %s): %O", requestId, error);
       }
 
       const body = { error: error.message };
@@ -62,7 +65,9 @@ export default function handler(lambda: LambdaFunction) {
         case NotFoundError:
           return buildResponse(404, body);
         default:
-          return failure(body);
+          // Unexpected errors can carry internal details, so since its
+          // logged above; return a generic error.
+          return failure({ error: "Internal server error", requestId });
       }
     } finally {
       logger.flush();

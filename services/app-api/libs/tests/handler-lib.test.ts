@@ -23,6 +23,10 @@ jest.mock("../authorization", () => ({
 }));
 
 const verifiedUser = { role: AppRoles.STATE_USER, state: "AL" };
+const eventWithRequestId = {
+  ...testEvent,
+  requestContext: { requestId: "req-123" },
+};
 
 describe("Lambda handler wrapper", () => {
   beforeEach(() => {
@@ -90,20 +94,42 @@ describe("Lambda handler wrapper", () => {
     expect(logger.error).not.toHaveBeenCalled();
   });
 
+  test("a handler that throws an unexpected error returns a generic 500 with the request ID and logs the details", async () => {
+    const error = new Error("Table carts-main-sections not found");
+    const testFunc = jest.fn().mockRejectedValue(error);
+
+    const res = await handlerLib(testFunc)(eventWithRequestId, null);
+
+    expect(res.statusCode).toBe(500);
+    expect(JSON.parse(res.body)).toEqual({
+      error: "Internal server error",
+      requestId: "req-123",
+    });
+    expect(logger.error).toHaveBeenCalledWith(
+      "Error (request %s): %O",
+      "req-123",
+      error
+    );
+    expect(logger.flush).toHaveBeenCalled();
+  });
+
   test.each([
-    ["an unexpected error", 500, new Error("Test Error")],
-    ["a bad-request error", 400, new BadRequestError("Test Error")],
-    ["a not-found error", 404, new NotFoundError("Test Error")],
+    ["a bad-request", 400, new BadRequestError("Test Error")],
+    ["a not-found", 404, new NotFoundError("Test Error")],
   ])(
-    "a handler that throws %s returns %i and logs it",
+    "a handler that throws %s error returns %i with its message and logs it",
     async (_kind, status, error) => {
       const testFunc = jest.fn().mockRejectedValue(error);
 
-      const res = await handlerLib(testFunc)(testEvent, null);
+      const res = await handlerLib(testFunc)(eventWithRequestId, null);
 
       expect(res.statusCode).toBe(status);
-      expect(res.body).toContain("Test Error");
-      expect(logger.error).toHaveBeenCalledWith("Error: %O", error);
+      expect(JSON.parse(res.body)).toEqual({ error: "Test Error" });
+      expect(logger.error).toHaveBeenCalledWith(
+        "Error (request %s): %O",
+        "req-123",
+        error
+      );
       expect(logger.flush).toHaveBeenCalled();
     }
   );
