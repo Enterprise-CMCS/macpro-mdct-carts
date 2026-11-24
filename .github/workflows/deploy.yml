@@ -43,6 +43,11 @@ jobs:
           aws-region: us-east-1
       - name: deploy
         run: ./run deploy --stage $branch_name
+      - name: Check Kafka triggers
+        if: ${{ github.ref_name == 'val' || github.ref_name == 'production' }}
+        run: bash .github/check-kafka-triggers.sh "$branch_name"
+        env:
+          SLACK_WEBHOOK_SECURITY: ${{ secrets.SLACK_WEBHOOK_SECURITY }}
       - id: endpoint
         run: |
           APPLICATION_ENDPOINT=$(./scripts/output.ts ${{ env.PROJECT }}-$branch_name CloudFrontUrl)
