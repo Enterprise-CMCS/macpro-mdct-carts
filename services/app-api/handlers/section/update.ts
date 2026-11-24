@@ -3,7 +3,7 @@ import handler from "../../libs/handler-lib";
 import dynamoDb from "../../libs/dynamodb-lib";
 import { AppRoles, StateStatus } from "../../types";
 import { convertToDynamoExpression } from "../dynamoUtils/convertToDynamoExpressionVars";
-import { UnauthorizedError } from "../../libs/httpErrors";
+import { BadRequestError, UnauthorizedError } from "../../libs/httpErrors";
 import { Validator } from "jsonschema";
 import { sectionSchema } from "../../libs/validation/backend-section.schema";
 
@@ -14,9 +14,10 @@ export const updateSections = handler(async (event, _context, user) => {
   const { body } = event;
   const reportData = JSON.parse(body || "{}");
 
-  if (!event.pathParameters) throw new Error("No Path Parameters Object");
+  if (!event.pathParameters)
+    throw new BadRequestError("No Path Parameters Object");
   if (!event.pathParameters.state || !event.pathParameters.year) {
-    throw new Error("Be sure to include state, year in the path");
+    throw new BadRequestError("Be sure to include state, year in the path");
   }
 
   const { year, state } = event.pathParameters;
@@ -36,7 +37,7 @@ export const updateSections = handler(async (event, _context, user) => {
       sectionSchema
     );
     if (validationResults.errors && validationResults.errors.length > 0)
-      throw new Error("Invalid section object.");
+      throw new BadRequestError("Invalid section object.");
   }
 
   // Update each of the Sections for the report associated with the given year and state

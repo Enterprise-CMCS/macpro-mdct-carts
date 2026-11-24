@@ -76,7 +76,8 @@ describe("Test Print PDF handler", () => {
     };
 
     const res = await print(event, null);
-    expect(res.statusCode).toBe(500);
+    expect(res.statusCode).toBe(400);
+    expect(res.body).toBe('{"error":"Missing required html string"}');
   });
 
   test("should throw an error if API key is missing", async () => {

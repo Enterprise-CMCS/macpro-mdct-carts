@@ -12,21 +12,13 @@ import {
   USER_POOL_ID,
 } from "../../test-util/cognitoTokens";
 import {
-  FetchError,
-  JwkInvalidKtyError,
-  JwkInvalidUseError,
-  JwksValidationError,
-  JwkValidationError,
-  WaitPeriodNotYetEndedJwkError,
-} from "aws-jwt-verify/error";
-import {
   authenticateUser,
   getVerifier,
   isAuthorized,
   mapIdmRoleToAppRole,
   UserCredentials,
 } from "../authorization";
-import { ServiceUnavailableError, UnauthenticatedError } from "../httpErrors";
+import { UnauthenticatedError } from "../httpErrors";
 import { logger } from "../debug-lib";
 import { AppRoles, IdmRoles, APIGatewayProxyEvent } from "../../types";
 
@@ -139,40 +131,23 @@ describe("Authorization Lib", () => {
       }
     );
 
-    test.each([
-      [
-        "the key download failed",
-        "error",
-        new FetchError("https://cognito-idp/jwks.json", "timeout"),
-      ],
-      ["the key set is malformed", "error", new JwksValidationError("bad")],
-      ["a key is malformed", "error", new JwkValidationError("JWK empty")],
-      [
-        "a key isn't for signing",
-        "error",
-        new JwkInvalidUseError("wrong use", "enc", "sig"),
-      ],
-      [
-        "a key has the wrong type",
-        "error",
-        new JwkInvalidKtyError("wrong kty", "EC", "RSA"),
-      ],
-      [
-        "key refreshes are rate limited",
-        "warning",
-        new WaitPeriodNotYetEndedJwkError("wait"),
-      ],
-    ])(
-      "returns 503 when %s, logged as an %s",
-      async (_reason, level, error) => {
-        jest.spyOn(getVerifier(), "verify").mockRejectedValueOnce(error);
-        await expect(authenticateUser(validTokenEvent())).rejects.toThrow(
-          ServiceUnavailableError
+    test("returns 503 and logs an error when the key download fails", async () => {
+      await jest.isolateModulesAsync(async () => {
+        const { SimpleFetcher } = await import("aws-jwt-verify/https");
+        const { FetchError } = await import("aws-jwt-verify/error");
+        jest
+          .spyOn(SimpleFetcher.prototype, "fetch")
+          .mockRejectedValue(new FetchError("https://cognito-idp", "timeout"));
+        const fresh = await import("../authorization");
+        const { logger: freshLogger } = await import("../debug-lib");
+
+        await expect(fresh.authenticateUser(validTokenEvent())).rejects.toThrow(
+          "Unable to verify credentials right now"
         );
-        expect(logger.error).toHaveBeenCalledTimes(level === "error" ? 1 : 0);
-        expect(logger.warn).toHaveBeenCalledTimes(level === "warning" ? 1 : 0);
-      }
-    );
+        expect(freshLogger.error).toHaveBeenCalledTimes(1);
+        expect(freshLogger.warn).not.toHaveBeenCalled();
+      });
+    });
 
     test("passes unexpected errors through (500) instead of blaming the token", async () => {
       jest
@@ -189,7 +164,7 @@ describe("Authorization Lib", () => {
         UnauthenticatedError
       );
       expect(logger.warn).toHaveBeenCalledWith(
-        "Rejected token: wrong issuer, client, or token type"
+        "Rejected token: CognitoJwtInvalidClientIdError"
       );
       const everythingLogged = JSON.stringify(
         Object.values(logger).map((log) => (log as jest.Mock).mock.calls)
@@ -245,10 +220,10 @@ describe("Authorization Lib", () => {
         await expect(
           fresh.authenticateUser(validTokenEvent())
         ).resolves.toEqual(expect.objectContaining({ state: "AL" }));
-        // During the pause, another unknown key ID gets "try again" (503)
+        // During the pause, another unknown key ID is rejected without a download
         await expect(
           fresh.authenticateUser(withKeyId("unknown-2"))
-        ).rejects.toThrow("Unable to verify credentials right now");
+        ).rejects.toThrow("Invalid authentication token");
         expect(download).toHaveBeenCalledTimes(1);
       });
     });

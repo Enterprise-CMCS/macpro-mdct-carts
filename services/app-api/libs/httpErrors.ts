@@ -15,3 +15,6 @@ export class UnauthorizedError extends HttpError {}
 
 /** 503: couldn't check the token right now */
 export class ServiceUnavailableError extends HttpError {}
+
+/** 400: the request itself is wrong (missing or invalid input) */
+export class BadRequestError extends HttpError {}

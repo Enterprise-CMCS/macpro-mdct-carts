@@ -36,7 +36,7 @@ describe("Test Update State Status Handlers", () => {
 
     const res = await updateStateStatus(event, null);
 
-    expect(res.statusCode).toBe(500);
+    expect(res.statusCode).toBe(400);
     expect(res.body).toBe(
       '{"error":"Be sure to include state, year in the path"}'
     );
@@ -51,7 +51,7 @@ describe("Test Update State Status Handlers", () => {
 
     const res = await updateStateStatus(event, null);
 
-    expect(res.statusCode).toBe(500);
+    expect(res.statusCode).toBe(400);
     expect(res.body).toBe(
       '{"error":"Cannot update State Status without a new status"}'
     );

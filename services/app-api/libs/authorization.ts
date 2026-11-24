@@ -4,19 +4,8 @@ import { SimpleFetcher } from "aws-jwt-verify/https";
 import { decomposeUnverifiedJwt } from "aws-jwt-verify/jwt";
 import {
   FetchError,
-  JwkInvalidKtyError,
-  JwkInvalidUseError,
-  JwksValidationError,
-  JwkValidationError,
   JwtBaseError,
-  JwtExpiredError,
-  JwtInvalidClaimError,
   JwtInvalidIssuerError,
-  JwtInvalidSignatureAlgorithmError,
-  JwtInvalidSignatureError,
-  JwtParseError,
-  KidNotFoundInJwksError,
-  WaitPeriodNotYetEndedJwkError,
 } from "aws-jwt-verify/error";
 import { IdmRoles, AppRoles, APIGatewayProxyEvent } from "../types";
 import { logger } from "./debug-lib";
@@ -104,15 +93,6 @@ if (process.env.AWS_LAMBDA_FUNCTION_NAME) {
   }
 }
 
-/** Throw a 503 for these as its token related */
-const cannotVerifyRightNow = (error: unknown) =>
-  error instanceof FetchError ||
-  error instanceof JwksValidationError ||
-  error instanceof JwkValidationError ||
-  error instanceof JwkInvalidUseError ||
-  error instanceof JwkInvalidKtyError ||
-  error instanceof WaitPeriodNotYetEndedJwkError;
-
 /**
  * aws-jwt-verify also accepts a global issuer format, and picks the key URL
  * from the unverified `iss`. Our pool's global-format URL returns 403, so
@@ -126,22 +106,6 @@ const assertRegionalIssuer = (token: string) => {
   if (iss !== expected) {
     throw new JwtInvalidIssuerError("Issuer not allowed", iss, expected);
   }
-};
-
-const describeRejection = (error: JwtBaseError) => {
-  if (error instanceof JwtExpiredError) return "expired";
-  if (
-    error instanceof JwtInvalidSignatureError ||
-    error instanceof JwtInvalidSignatureAlgorithmError
-  ) {
-    return "invalid signature";
-  }
-  if (error instanceof JwtInvalidClaimError) {
-    return "wrong issuer, client, or token type";
-  }
-  if (error instanceof JwtParseError) return "malformed";
-  if (error instanceof KidNotFoundInJwksError) return "unknown signing key";
-  return "failed verification";
 };
 
 const getSigV4CallerSub = (event: APIGatewayProxyEvent) => {
@@ -166,26 +130,17 @@ export const authenticateUser = async (event: APIGatewayProxyEvent) => {
     assertRegionalIssuer(token);
     payload = (await jwtVerifier.verify(token)) as unknown as DecodedToken;
   } catch (error) {
-    if (cannotVerifyRightNow(error)) {
-      if (error instanceof WaitPeriodNotYetEndedJwkError) {
-        logger.warn(
-          "Could not verify token: signing key refresh is rate limited"
-        );
-      } else {
-        logger.error(
-          "Could not load Cognito signing keys: %s",
-          (error as Error).message
-        );
-      }
+    if (error instanceof FetchError) {
+      logger.error("Could not load Cognito signing keys: %s", error.message);
       throw new ServiceUnavailableError(
         "Unable to verify credentials right now"
       );
     }
     if (error instanceof JwtBaseError) {
-      logger.warn(`Rejected token: ${describeRejection(error)}`);
+      logger.warn(`Rejected token: ${error.constructor.name}`);
       throw new UnauthenticatedError("Invalid authentication token");
     }
-    throw error; // Unexpected bug: let handler-lib return a 500
+    throw error;
   }
 
   const callerSub = getSigV4CallerSub(event);

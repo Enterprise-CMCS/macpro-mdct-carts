@@ -31,6 +31,7 @@ const mockDate = new Date("2025-01-01T12:00:00Z");
 
 describe("Test Update Sections Handler", () => {
   beforeEach(() => {
+    jest.clearAllMocks();
     console.error = jest.fn();
     jest.useFakeTimers().setSystemTime(mockDate);
   });
@@ -92,9 +93,24 @@ describe("Test Update Sections Handler", () => {
 
     const res = await updateSections(event, null);
 
-    expect(res.statusCode).toBe(500);
+    expect(res.statusCode).toBe(400);
     expect(res.body).toBe(
       '{"error":"Be sure to include state, year in the path"}'
     );
+  });
+
+  test("updating sections with contents that don't match the section schema returns 400", async () => {
+    const event: APIGatewayProxyEvent = {
+      ...testEvent,
+      // a section must have a year and subsections
+      body: `[{"pk": "AL-2022", "sectionId": 0, "contents": {"section": {"id": "2022-00"}}, "year": 2022, "stateId": "AL"}]`,
+      pathParameters: { year: "2022", state: "AL" },
+    };
+
+    const res = await updateSections(event, null);
+
+    expect(res.statusCode).toBe(400);
+    expect(res.body).toBe('{"error":"Invalid section object."}');
+    expect(dbLib.update).not.toHaveBeenCalled();
   });
 });
