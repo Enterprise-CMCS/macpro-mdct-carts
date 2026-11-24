@@ -19,6 +19,7 @@ type CustomFixtures = {
   comboReport: SeededReport;
   section1SeededReport: SeededReport;
   submittableReport: SeededReport;
+  certifiedReport: SeededReport;
 };
 
 const TEST_USERNAME = "Playwright E2E";
@@ -100,6 +101,22 @@ export const test = base.extend<CustomFixtures>({
   submittableReport: async ({}, use) => {
     const state = STATE_ABBREVIATION;
     const year = await resolveSubmittableReportYear(state);
+    await use({ year, state });
+    await updateReportStatus(year, state, "in_progress", TEST_USERNAME);
+  },
+
+  // Arrange: certify AL 2025 as the state user. Teardown returns it to in
+  // progress so the report is editable again, even if the test fails.
+  certifiedReport: async ({}, use) => {
+    const state = "AL";
+    const year = 2025;
+    await updateReportStatus(
+      year,
+      state,
+      "certified",
+      process.env.CYPRESS_STATE_USER_EMAIL!,
+      STATE_USER_AUTH
+    );
     await use({ year, state });
     await updateReportStatus(year, state, "in_progress", TEST_USERNAME);
   },

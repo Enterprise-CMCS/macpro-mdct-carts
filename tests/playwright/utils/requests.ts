@@ -231,16 +231,34 @@ export async function getReport(
   );
 }
 
+const SAVE_REPORT_MAX_ATTEMPTS = 3;
+
+/**
+ * Retries only on 502s, which LocalStack returns when it recycles a Lambda
+ * sandbox mid-invoke. Other failures are thrown immediately.
+ */
 export async function saveReport(
   year: number,
   state: string,
   sections: ReportSection[],
   storageStatePath?: string
 ): Promise<void> {
-  await authenticatedRequest(
-    "PUT",
-    `/save_report/${year}/${state}`,
-    sections,
-    storageStatePath
-  );
+  for (let attempt = 1; ; attempt++) {
+    try {
+      await authenticatedRequest(
+        "PUT",
+        `/save_report/${year}/${state}`,
+        sections,
+        storageStatePath
+      );
+      return;
+    } catch (error) {
+      const is502 =
+        error instanceof Error && error.message.includes(" -> 502 ");
+      if (!is502 || attempt >= SAVE_REPORT_MAX_ATTEMPTS) throw error;
+      console.warn(
+        `save_report/${year}/${state} returned 502 (attempt ${attempt}/${SAVE_REPORT_MAX_ATTEMPTS}); retrying`
+      );
+    }
+  }
 }

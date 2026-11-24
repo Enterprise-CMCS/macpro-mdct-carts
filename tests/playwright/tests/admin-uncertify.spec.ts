@@ -1,27 +1,14 @@
-import { expect, test } from "@playwright/test";
-import { ADMIN_USER_AUTH, STATE_USER_AUTH } from "../utils";
-import { updateReportStatus } from "../utils/requests";
-
-// Certifies AL 2025 through the API before the test, then uncertifies it in the
-// UI. The report is left In Progress afterward, and the beforeAll resets it.
-const STATE = "AL";
-const YEAR = 2025;
+import { ADMIN_USER_AUTH } from "../utils";
+import { expect, test } from "./fixtures/base";
 
 test.use({ storageState: ADMIN_USER_AUTH });
 
-test.describe("Admin user uncertifies a certified report", () => {
-  test.beforeAll(async () => {
-    // Certify a report through the API as the state user
-    await updateReportStatus(
-      YEAR,
-      STATE,
-      "certified",
-      process.env.CYPRESS_STATE_USER_EMAIL!,
-      STATE_USER_AUTH
-    );
-  });
-
-  test("admin uncertifies a certified report", async ({ page }) => {
+test.describe("Uncertifying a certified report", () => {
+  test("An admin should be able to uncertify a certified report", async ({
+    page,
+    certifiedReport,
+  }) => {
+    const { state: STATE, year: YEAR } = certifiedReport;
     await page.goto("/");
     const uncertifyButton = page.getByRole("button", {
       name: `Uncertify ${STATE} ${YEAR} report`,
