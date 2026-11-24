@@ -1,9 +1,15 @@
 import { expect, Page, test as setup } from "@playwright/test";
-import { STATE_USER_HOME_HEADING } from "../../utils";
+import {
+  ADMIN_HOME_HEADING,
+  ADMIN_USER_AUTH,
+  STATE_USER_HOME_HEADING,
+} from "../../utils";
 
 const stateUserAuthPath: string = ".auth/user.json";
 const stateUser = process.env.CYPRESS_STATE_USER_EMAIL!;
 const statePassword = process.env.CYPRESS_STATE_USER_PASSWORD!; // pragma: allowlist secret
+const adminUser = process.env.CYPRESS_ADMIN_USER_EMAIL!;
+const adminPassword = process.env.CYPRESS_ADMIN_USER_PASSWORD!; // pragma: allowlist secret
 
 /**
  * Fallback to UI authentication
@@ -48,4 +54,15 @@ setup("authenticate as user", async ({ page }) => {
     "state user"
   );
   await page.context().storageState({ path: stateUserAuthPath });
+});
+
+setup("authenticate as admin", async ({ page }) => {
+  await authenticateWithUI(
+    page,
+    adminUser,
+    adminPassword,
+    ADMIN_HOME_HEADING,
+    "admin user"
+  );
+  await page.context().storageState({ path: ADMIN_USER_AUTH });
 });

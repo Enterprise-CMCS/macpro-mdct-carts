@@ -198,7 +198,12 @@ const CMSHomepage = () => {
     actions: { header: "Actions", sort: false },
   };
 
-  const columns = generateColumns(sortableHeadRow, true, customCells);
+  // Memoized so cell components keep their identity across renders; a new
+  // component type each render remounts the action cell and closes its dialog.
+  const columns = useMemo(
+    () => generateColumns(sortableHeadRow, true, customCells),
+    [currentUserRole]
+  );
 
   return (
     <Main className="homepage">
